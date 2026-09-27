@@ -1,0 +1,921 @@
+<!doctype html>
+<html lang="he">
+<head>
+<meta charset="utf-8">
+<title>Switching TV · Reel</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script>
+/*
+  Switching TV — "מבחן השמש" reel.
+  Every frame is a pure function of time: render(t). The renderer (render.mjs) steps t at 30 fps
+  and pipes the frames to ffmpeg. Query: ?w=1080&h=1920 (Reels/Stories) or ?w=1080&h=1350 (Feed 4:5).
+*/
+const Q = new URLSearchParams(location.search);
+const W = +(Q.get('w') || 1080), H = +(Q.get('h') || 1920);
+const ST = H / W > 1.5;               // true: 9:16, false: 4:5
+const S = (a, b) => ST ? a : b;
+const DUR = 26;
+const cv = document.getElementById('c'); cv.width = W; cv.height = H;
+const MAIN = cv.getContext('2d');
+let X = MAIN;
+
+const C = { ink:'#07131F', ink2:'#22313F', mute:'#55636F', paper:'#F5F7FA', line:'#DCE3EA', line2:'#C9D3DD', blue:'#1789C9', blueInk:'#0E6399',
+  cyan:'#34CFE8', sun:'#F5A524', sunInk:'#8A5300', sunSoft:'#FFF3DC', r:'#FF4D3D', g:'#2BD46B', b:'#2F7BFF', white:'#FFFFFF' };
+const F = { disp:'Karantina', body:'Heebo', num:'"Big Shoulders Stencil Display"' };
+
+/* ---------------- math ---------------- */
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const lerp = (a, b, k) => a + (b - a) * k;
+const E = {
+  out: k => 1 - Math.pow(1 - k, 3), in: k => k * k * k, inOut: k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2,
+  quint: k => 1 - Math.pow(1 - k, 5), expo: k => k >= 1 ? 1 : 1 - Math.pow(2, -10 * k),
+  back: k => { const c1 = 1.9, c3 = c1 + 1; return 1 + c3 * Math.pow(k - 1, 3) + c1 * Math.pow(k - 1, 2); },
+  spring: k => k >= 1 ? 1 : 1 - Math.exp(-6 * k) * Math.cos(9 * k)
+};
+function rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const fmt = n => Math.round(n).toLocaleString('en-US');
+
+/* ---------------- layout ---------------- */
+const L = {
+  badgeY: S(246, 36), badgeW: S(300, 250),
+  hSize: S(158, 118), hY1: S(478, 194), hY2: S(636, 316),
+  sun: [W * 0.85, S(205, 100)],
+  meterY: S(690, 362), meterH: S(222, 214),
+  chipY: S(800, 520),
+  tivi2: { x: S(880, 900), feet: S(1470, 1085), s: S(13, 10) },
+  dev: { cx: 540, cy: S(1004, 640), w: S(960, 900) },
+  kickY: S(408, 112), labelY: S(600, 262), labelSize: S(190, 150),
+  plateY: S(1350, 966),
+  s5: { cy: S(1075, 800), port: S(396, 370), countY: S(646, 318), labelY: S(560, 250) },
+  q: { k1: S(440, 150), k2: S(540, 240), kSize: S(104, 88), stars: S(700, 332), q1: S(880, 486), q2: S(1040, 606), qSize: S(150, 118), att: S(1150, 690), att2: S(1210, 742) },
+  sp: { h1: S(470, 150), h2: S(610, 262), hSize: S(128, 104), top: S(700, 362), tileH: S(300, 330), gap: 24 },
+  t7: { x: 540, feet: S(1330, 1000), s: S(20, 16), bubCy: S(700, 440), bubW: S(840, 800), bubH: S(300, 270) },
+  end: { logoTop: S(468, 196), logoW: S(880, 780), tagY: S(730, 438), tagSize: S(88, 74), btnCy: S(882, 566), btnW: S(650, 580), btnH: S(132, 116),
+    urlY: S(1048, 712), phoneY: S(1118, 774), chipsY: S(1188, 832), tivi: { x: 540, feet: S(1440, 1108), s: S(10, 10) } }
+};
+
+/* ---------------- assets ---------------- */
+const IM = {}, IC = {}, FR = {};
+function img(src) { return new Promise((res, rej) => { const i = new Image(); i.onload = () => i.decode().then(() => res(i), () => res(i)); i.onerror = () => rej(new Error('load ' + src)); i.src = src; }); }
+async function loadAll() {
+  const P = [];
+  for (const n of ['s_pool', 's_poolnight', 's_garden', 's_cinema', 's_trans', 's_wall', 's_meira', 's_pizza'])
+    P.push(img('img/' + n + '.jpg').then(i => IM[n.slice(2)] = i));
+  P.push(img('img/logo-ink.svg').then(i => IM.logo = i));
+  for (const n of ['sun', 'drop', 'clock', 'shield', 'wa', 'tel', 'pin']) P.push(img(`img/i-${n}-ink.svg`).then(i => IC[n] = i));
+  for (const n of ['meira2', 'pizza', 'meira']) {
+    FR[n] = [];
+    for (let i = 1; i <= 90; i++) P.push(img(`work/${n}/${String(i).padStart(3, '0')}.jpg`).then(im => FR[n][i - 1] = im));
+  }
+  const faces = ['700 100px Karantina', '400 100px Karantina', '500 40px Heebo', '700 40px Heebo', '800 40px Heebo', '900 40px Heebo', `800 60px ${F.num}`, `900 60px ${F.num}`];
+  P.push(...faces.map(f => document.fonts.load(f, 'אבגד 0123 NIT')));
+  await Promise.all(P);
+  await document.fonts.ready;
+}
+
+/* grain */
+const GR = document.createElement('canvas'); GR.width = GR.height = 256;
+{ const g = GR.getContext('2d'), d = g.createImageData(256, 256), r = rng(7); for (let i = 0; i < d.data.length; i += 4) { const v = r() * 255; d.data[i] = d.data[i + 1] = d.data[i + 2] = v; d.data[i + 3] = 255; } g.putImageData(d, 0, 0); }
+
+/* ---------------- drawing helpers ---------------- */
+function rr(x, y, w, h, r) { r = Math.min(r, w / 2, h / 2); X.beginPath(); X.moveTo(x + r, y); X.arcTo(x + w, y, x + w, y + h, r); X.arcTo(x + w, y + h, x, y + h, r); X.arcTo(x, y + h, x, y, r); X.arcTo(x, y, x + w, y, r); X.closePath(); }
+const fnt = (w, s, fam) => `${w} ${s}px ${fam}`;
+const isLtr = s => !/[֐-׿]/.test(s);
+/* Isolate LTR runs (numbers, ranges, Latin) inside Hebrew so the bidi algorithm can't reorder them:
+   '400–600 NIT' must not become 'NIT 600–400', nor '4K · HDR' become 'HDR · 4K'. */
+function bidi(s) {
+  if (isLtr(s)) return '\u2066' + s + '\u2069';
+  return s.replace(/[A-Za-z0-9][A-Za-z0-9 ,.×–\-″:/·]*/g, m => { const core = m.replace(/[\s·.,:–-]+$/, ''); return '\u2066' + core + '\u2069' + m.slice(core.length); });
+}
+function tw(text, f) { X.font = f; X.letterSpacing = '0px'; return X.measureText(text).width; }
+
+/* A line of words, laid out right-to-left, each word with its own reveal/exit. */
+function words(list, o) {
+  const items = list.map(w => typeof w === 'string' ? { t: w } : w);
+  const f = fnt(o.w || 700, o.size, o.fam || F.disp);
+  X.font = f; X.letterSpacing = o.ls || '0px';
+  const gap = o.gap ?? o.size * 0.24;
+  const ws = items.map(it => X.measureText(it.t).width);
+  const total = ws.reduce((a, b) => a + b, 0) + gap * (items.length - 1);
+  let xr = o.align === 'right' ? o.x : o.align === 'left' ? o.x + total : o.x + total / 2;
+  const asc = o.size * 0.86, desc = o.size * 0.26;
+  items.forEach((it, i) => {
+    const p = o.rev ? clamp(o.rev(i)) : 1, q = o.exit ? clamp(o.exit(i)) : 0, w = ws[i];
+    if (p > 0 && q < 1) {
+      const e = E.quint(p), eq = E.in(q);
+      X.save();
+      if (o.mask !== false) { X.beginPath(); X.rect(xr - w - o.size * .4, o.y - asc - o.size * .3, w + o.size * .8, asc + desc + o.size * .45); X.clip(); }
+      if (it.hl && o.hl) {
+        const hp = E.out(clamp(o.hl(i))), hdy = (1 - e) * (o.rise ?? o.size * 1.1) - eq * o.size * 1.1;
+        if (hp > 0) { X.fillStyle = `rgba(245,165,36,${.62 * (1 - eq)})`; X.fillRect(xr - w * hp - o.size * .04, o.y - o.size * .27 + hdy, w * hp + o.size * .08, o.size * .25); }
+      }
+      const fx = it.fx ? it.fx() : null;
+      X.globalAlpha *= (fx && fx.alpha != null ? fx.alpha : 1);
+      if (fx && fx.blur) X.filter = `blur(${fx.blur}px)`;
+      X.fillStyle = (fx && fx.color) || it.color || o.color || C.ink;
+      X.direction = isLtr(it.t) ? 'ltr' : 'rtl'; X.textAlign = 'right'; X.textBaseline = 'alphabetic';
+      let dy = (1 - e) * (o.rise ?? o.size * 1.1) - eq * o.size * 1.1;
+      let sc = it.pop ? it.pop() : 1;
+      if (sc !== 1) { X.translate(xr - w / 2, o.y - o.size * .3); X.scale(sc, sc); X.translate(-(xr - w / 2), -(o.y - o.size * .3)); }
+      if (o.shadow) { X.shadowColor = o.shadow; X.shadowBlur = o.size * .35; }
+      X.fillText(it.t, xr, o.y + dy);
+      X.restore();
+    }
+    xr -= w + gap;
+  });
+  return total;
+}
+/* fit a list of words to maxW by shrinking the size */
+function fitSize(list, size, maxW, w = 700, fam = F.disp) {
+  X.font = fnt(w, size, fam); X.letterSpacing = '0px';
+  const tot = list.map(x => X.measureText(typeof x === 'string' ? x : x.t).width).reduce((a, b) => a + b, 0) + size * .24 * (list.length - 1);
+  return tot > maxW ? size * maxW / tot : size;
+}
+function text(t, x, y, o = {}) {
+  X.save(); X.font = fnt(o.w || 500, o.size || 40, o.fam || F.body); X.letterSpacing = o.ls || '0px';
+  X.fillStyle = o.color || C.ink; X.globalAlpha *= (o.alpha ?? 1);
+  X.direction = o.dir || (isLtr(t) ? 'ltr' : 'rtl'); X.textAlign = o.align || 'center'; X.textBaseline = o.base || 'alphabetic';
+  if (X.direction === 'rtl') t = bidi(t);
+  if (o.shadow) { X.shadowColor = o.shadow; X.shadowBlur = o.shadowBlur || 20; }
+  X.fillText(t, x, y); const m = X.measureText(t).width; X.restore(); return m;
+}
+/* pill: rounded chip with a status dot (site's .tag / .chip) */
+function pill(label, x, y, o = {}) {
+  const size = o.size || 32, padX = size * .72, h = size * 1.9, f = fnt(o.w || 600, size, F.body);
+  X.save(); X.font = f; X.letterSpacing = '0px';
+  const dot = o.dot ? size * .5 : 0, gap = o.dot ? size * .45 : 0;
+  label = bidi(label);
+  const w = X.measureText(label).width + padX * 2 + dot + gap;
+  const x0 = o.align === 'right' ? x - w : o.align === 'left' ? x : x - w / 2;
+  X.globalAlpha *= (o.alpha ?? 1);
+  if (o.sc) { X.translate(x0 + w / 2, y); X.scale(o.sc, o.sc); X.translate(-(x0 + w / 2), -y); }
+  if (o.shadow !== false) { X.shadowColor = 'rgba(7,19,31,.18)'; X.shadowBlur = size * .8; X.shadowOffsetY = size * .2; }
+  rr(x0, y - h / 2, w, h, h / 2); X.fillStyle = o.bg || C.white; X.fill();
+  X.shadowColor = 'transparent';
+  if (o.border) { X.lineWidth = o.border; X.strokeStyle = o.bc || C.line2; X.stroke(); }
+  if (o.dot) {
+    const dx = x0 + w - padX - dot / 2;
+    X.beginPath(); X.arc(dx, y, dot / 2 + size * .16, 0, 7); X.fillStyle = o.dot + '44'; X.fill();
+    X.beginPath(); X.arc(dx, y, dot / 2, 0, 7); X.fillStyle = o.dot; X.fill();
+  }
+  X.fillStyle = o.fg || C.ink; X.direction = 'rtl'; X.textAlign = 'right'; X.textBaseline = 'middle';
+  X.fillText(label, x0 + w - padX - dot - gap, y + size * .06);
+  X.restore(); return w;
+}
+function tag(label, x, y, real, alpha = 1) { // site's dark .tag, anchored at its right edge
+  return pill(label, x, y, { size: S(26, 22), bg: 'rgba(7,19,31,.74)', fg: '#fff', dot: real ? C.g : C.cyan, align: 'right', alpha, shadow: false, w: 600 });
+}
+function paperBG(t, glow = 1) {
+  X.fillStyle = C.paper; X.fillRect(0, 0, W, H);
+  const g = X.createRadialGradient(W * .9, H * .02, 0, W * .9, H * .02, W * 1.15);
+  g.addColorStop(0, `rgba(245,165,36,${.24 * glow})`); g.addColorStop(.45, `rgba(245,165,36,${.08 * glow})`); g.addColorStop(1, 'rgba(245,165,36,0)');
+  X.fillStyle = g; X.fillRect(0, 0, W, H);
+  const g2 = X.createRadialGradient(W * .05, H * .98, 0, W * .05, H * .98, W * .9);
+  g2.addColorStop(0, 'rgba(23,137,201,.10)'); g2.addColorStop(1, 'rgba(23,137,201,0)'); X.fillStyle = g2; X.fillRect(0, 0, W, H);
+  // faint LED matrix texture
+  X.save(); X.globalAlpha = .55; X.fillStyle = '#E3E9EF';
+  const p = 34, off = (t * 6) % p;
+  for (let y = -p + off; y < H + p; y += p) for (let x = (Math.round(y / p) % 2) * p / 2; x < W; x += p) { X.fillRect(x, y, 3, 3); }
+  X.restore();
+}
+function grain(t, a = .05) {
+  X.save(); X.globalAlpha = a; X.globalCompositeOperation = 'overlay';
+  const pat = X.createPattern(GR, 'repeat'); const r = rng(Math.floor(t * 30) + 11);
+  pat.setTransform(new DOMMatrix().translate(Math.floor(r() * 256), Math.floor(r() * 256)));
+  X.fillStyle = pat; X.fillRect(0, 0, W, H); X.restore();
+}
+function vignette(a = .3) {
+  const g = X.createRadialGradient(W / 2, H * .5, Math.min(W, H) * .35, W / 2, H * .5, Math.max(W, H) * .75);
+  g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, `rgba(3,8,14,${a})`); X.fillStyle = g; X.fillRect(0, 0, W, H);
+}
+function badge(alpha) { // small brand mark at the top
+  if (alpha <= 0) return;
+  const w = L.badgeW, h = w * 66.4 / 448.3;
+  X.save(); X.globalAlpha = alpha; X.drawImage(IM.logo, W / 2 - w / 2, L.badgeY - h / 2, w, h); X.restore();
+}
+function star(cx, cy, r, fill) {
+  X.beginPath(); for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, rad = i % 2 ? r * .45 : r; X.lineTo(cx + Math.cos(a) * rad, cy + Math.sin(a) * rad); }
+  X.closePath(); X.fillStyle = fill; X.fill();
+}
+
+/* ---------------- LED renderer ---------------- */
+const LC = document.createElement('canvas'), LX = LC.getContext('2d', { willReadFrequently: true });
+const LY = document.createElement('canvas'), LYX = LY.getContext('2d');
+const tiles = {};
+function ledTile(p, style, gapColor) {
+  const k = style + p.toFixed(2) + gapColor; if (tiles[k]) return tiles[k];
+  const n = Math.max(2, Math.round(p)), c = document.createElement('canvas'); c.width = c.height = n; const g = c.getContext('2d');
+  if (style === 'rgb') {
+    g.fillStyle = '#000'; g.fillRect(0, 0, n, n);
+    const bw = n * .24, bh = n * .74, y0 = (n - bh) / 2;
+    [['#ff2a1a', .06], ['#1aff4a', .38], ['#2a5bff', .70]].forEach(([col, x]) => { g.fillStyle = col; g.beginPath(); g.roundRect(n * x, y0, bw, bh, bw * .45); g.fill(); });
+  } else {
+    g.fillStyle = gapColor; g.fillRect(0, 0, n, n); g.globalCompositeOperation = 'destination-out';
+    g.beginPath(); g.arc(n / 2, n / 2, n * .42, 0, 7); g.fill();
+  }
+  return tiles[k] = c;
+}
+/* Draw src (region) into dest as an LED matrix of pitch p.
+   o.style: 'dot' | 'rgb'; o.wave(cx,cy) -> 0..1 per LED; o.bloom; o.gap (dot gap color); o.boost; o.clipR (rounded clip radius) */
+function led(src, sx, sy, sw, sh, dx, dy, dw, dh, o = {}) {
+  const p = Math.max(2, Math.round(o.pitch || 8));
+  const cols = Math.ceil(dw / p), rows = Math.ceil(dh / p);
+  LC.width = cols; LC.height = rows;
+  LX.imageSmoothingEnabled = true; LX.imageSmoothingQuality = 'high'; LX.filter = o.filter || 'none';
+  LX.drawImage(src, sx, sy, sw, sh, 0, 0, cols, rows); LX.filter = 'none';
+  if (o.wave || o.boost) {
+    const d = LX.getImageData(0, 0, cols, rows), a = d.data, b = o.boost || 1;
+    for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
+      const m = (o.wave ? clamp(o.wave(x / cols, y / rows, x, y)) : 1) * b, i = (y * cols + x) * 4;
+      a[i] = Math.min(255, a[i] * m); a[i + 1] = Math.min(255, a[i + 1] * m); a[i + 2] = Math.min(255, a[i + 2] * m);
+    }
+    LX.putImageData(d, 0, 0);
+  }
+  X.save();
+  X.beginPath(); if (o.clipR) { X.roundRect(dx, dy, dw, dh, o.clipR); } else X.rect(dx, dy, dw, dh); X.clip();
+  X.globalAlpha = o.alpha ?? 1;
+  if (o.style === 'rgb') {
+    LY.width = Math.ceil(dw); LY.height = Math.ceil(dh);
+    LYX.imageSmoothingEnabled = false; LYX.globalCompositeOperation = 'source-over'; LYX.drawImage(LC, 0, 0, cols * p, rows * p);
+    LYX.globalCompositeOperation = 'multiply'; const pat = LYX.createPattern(ledTile(p, 'rgb'), 'repeat'); LYX.fillStyle = pat; LYX.fillRect(0, 0, LY.width, LY.height);
+    X.fillStyle = '#000'; X.fillRect(dx, dy, dw, dh);
+    X.globalCompositeOperation = 'lighter'; X.drawImage(LY, dx, dy); X.drawImage(LY, dx, dy); X.globalAlpha *= .6; X.drawImage(LY, dx, dy);
+  } else {
+    X.imageSmoothingEnabled = false; X.drawImage(LC, dx, dy, cols * p, rows * p); X.imageSmoothingEnabled = true;
+    const pat = X.createPattern(ledTile(p, 'dot', o.gap || '#03070B'), 'repeat'); pat.setTransform(new DOMMatrix().translate(dx, dy));
+    X.fillStyle = pat; X.fillRect(dx, dy, dw, dh);
+  }
+  X.restore();
+  if (o.bloom > 0) {
+    X.save(); X.globalCompositeOperation = 'lighter'; X.globalAlpha = o.bloom; X.filter = `blur(${Math.round(p * .9 + (o.bloomR || 10))}px)`;
+    X.imageSmoothingEnabled = true; X.drawImage(LC, dx, dy, cols * p, rows * p); X.restore();
+  }
+}
+/* image cover-fit into a rect around a focus point; returns the source rect used */
+function coverRect(im, dw, dh, fx = .5, fy = .5, zoom = 1) {
+  const s = Math.max(dw / im.width, dh / im.height) * zoom, sw = dw / s, sh = dh / s;
+  const sx = clamp(im.width * fx - sw / 2, 0, im.width - sw), sy = clamp(im.height * fy - sh / 2, 0, im.height - sh);
+  return [sx, sy, sw, sh];
+}
+
+/* ---------------- device: the logo's TV box as a screen bezel ---------------- */
+function device(cx, cy, gw, gh, o = {}) {
+  const pad = S(13, 12), r = S(24, 22), x = cx - gw / 2 - pad, y = cy - gh / 2 - pad, w = gw + pad * 2, h = gh + pad * 2;
+  X.save(); X.globalAlpha = o.alpha ?? 1;
+  X.shadowColor = 'rgba(7,19,31,.42)'; X.shadowBlur = 70; X.shadowOffsetY = 34;
+  rr(x, y, w, h, r); X.fillStyle = C.ink; X.fill(); X.shadowColor = 'transparent';
+  rr(x + 5.5, y + 5.5, w - 11, h - 11, r - 5); X.lineWidth = 2; X.strokeStyle = 'rgba(255,255,255,.16)'; X.stroke();
+  // RGB power LEDs on the bottom edge, like the logo box
+  const ly = y + h - pad / 2 - 1, lw = S(13, 12);
+  [[C.r, -1], [C.g, 0], [C.b, 1]].forEach(([c, i]) => { X.fillStyle = c; X.fillRect(cx + i * (lw + 4) - lw / 2, ly - 2, lw, 4); });
+  X.restore();
+  return { x: cx - gw / 2, y: cy - gh / 2, w: gw, h: gh, r: S(11, 10) };
+}
+function sheen(g, k) { // light sweep across the glass
+  if (k <= 0 || k >= 1) return;
+  X.save(); rr(g.x, g.y, g.w, g.h, g.r); X.clip();
+  const x = lerp(g.x + g.w * 1.3, g.x - g.w * .5, E.inOut(k));
+  const gr = X.createLinearGradient(x - 160, g.y, x + 160, g.y + g.h);
+  gr.addColorStop(0, 'rgba(255,255,255,0)'); gr.addColorStop(.5, 'rgba(255,255,255,.22)'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+  X.fillStyle = gr; X.globalCompositeOperation = 'screen'; X.fillRect(g.x, g.y, g.w, g.h); X.restore();
+}
+
+/* ---------------- TIVI (pixel character born from the logo's TV box) ---------------- */
+const TV = { INK: C.ink, GAP: C.paper, SCR: '#0B1A28', DIO: '#15293C', AMB: C.sun, BLU: C.blue };
+const FACES = {
+  open: [[6, 5, 2, 2], [14, 5, 2, 2], [9, 8, 4, 1], [8, 7], [13, 7]],
+  look: [[5, 5, 2, 2], [13, 5, 2, 2], [8, 8, 4, 1], [7, 7], [12, 7]],
+  blink: [[6, 6, 2, 1], [14, 6, 2, 1], [9, 8, 4, 1], [8, 7], [13, 7]],
+  happy: [[5, 6], [6, 5], [7, 6], [13, 6], [14, 5], [15, 6], [8, 8, 6, 1], [7, 7], [14, 7], [9, 9, 4, 1]],
+  o: [[6, 4, 2, 2], [14, 4, 2, 2], [10, 7, 2, 3]],
+  think: [[7, 4, 2, 2], [15, 4, 2, 2], [9, 8, 3, 1]],
+  wink: [[5, 6], [6, 5], [7, 6], [14, 5, 2, 2], [8, 8, 6, 1], [7, 7], [14, 7], [9, 9, 4, 1]],
+  heart: [[7, 5, 2, 1], [12, 5, 2, 1], [6, 6, 8, 2], [7, 8, 6, 1], [8, 9, 4, 1]]
+};
+/* cx: center x, feet: y of the boot soles, s: pixel size. o: face, walk (phase), sq (squash 1=none), tilt, alpha, t (time), shadow */
+function tivi(cx, feet, s, o = {}) {
+  const x0 = cx - 11 * s, y0 = feet - 18 * s, face = o.face || 'open', t = o.t || 0;
+  X.save(); X.globalAlpha = o.alpha ?? 1;
+  if (o.shadow !== false) { // ground shadow
+    const g = X.createRadialGradient(cx, feet + s * .3, 0, cx, feet + s * .3, s * 12);
+    g.addColorStop(0, `rgba(7,19,31,${.28 * (o.shadowA ?? 1)})`); g.addColorStop(1, 'rgba(7,19,31,0)');
+    X.fillStyle = g; X.save(); X.translate(cx, feet + s * .3); X.scale(1, .18); X.translate(-cx, -(feet + s * .3)); X.fillRect(cx - s * 12, feet - s * 12, s * 24, s * 24); X.restore();
+  }
+  const px = (x, y, c, w = 1, h = 1) => { X.fillStyle = c; X.fillRect(x0 + x * s, y0 + y * s, w * s + .6, h * s + .6); };
+  const wl = o.walk != null ? (Math.sin(o.walk) > 0 ? -1 : 0) : 0, wr = o.walk != null ? (Math.sin(o.walk) > 0 ? 0 : -1) : 0;
+  px(5, 14 + wl, TV.INK, 2, 3 - wl); px(4, 17 + wl, TV.BLU, 4, 1);
+  px(15, 14 + wr, TV.INK, 2, 3 - wr); px(14, 17 + wr, TV.BLU, 4, 1);
+  // body (squash/stretch around the body's bottom center)
+  const bx = cx, by = y0 + 14 * s, sq = o.sq || 1;
+  X.translate(bx, by); X.rotate(o.tilt || 0); X.scale(1 / Math.sqrt(sq), sq); X.translate(-bx, -by);
+  for (let x = 1; x < 21; x++) { px(x, 0, TV.INK); px(x, 13, TV.INK); }
+  for (let y = 1; y < 13; y++) { px(0, y, TV.INK); px(21, y, TV.INK); }
+  for (let x = 2; x < 20; x++) { px(x, 1, TV.GAP); px(x, 12, TV.GAP); }
+  for (let y = 2; y < 12; y++) { px(1, y, TV.GAP); px(20, y, TV.GAP); }
+  px(0, 0, TV.INK); px(21, 0, TV.INK); px(0, 13, TV.INK); px(21, 13, TV.INK);
+  px(2, 2, TV.INK, 18, 10); px(3, 3, TV.SCR, 16, 8);
+  for (let y = 3; y < 11; y++) for (let x = 3; x < 19; x++) if ((x + y) % 2 === 0) px(x, y, TV.DIO);
+  // face on the LED screen, with glow
+  const cells = FACES[face] || FACES.open, col = face === 'heart' ? C.r : TV.AMB;
+  X.shadowColor = face === 'heart' ? 'rgba(255,77,61,.9)' : 'rgba(245,165,36,.95)'; X.shadowBlur = s * 1.6;
+  cells.forEach(([x, y, w = 1, h = 1]) => { X.fillStyle = col; X.beginPath(); X.roundRect(x0 + x * s + s * .06, y0 + y * s + s * .06, w * s - s * .12, h * s - s * .12, s * .22); X.fill(); });
+  if (face === 'think') [8, 11, 14].forEach((x, i) => { const on = ((t * 2.5 - i * .35) % 1 + 1) % 1 < .5; X.fillStyle = on ? TV.AMB : 'rgba(245,165,36,.25)'; X.fillRect(x0 + x * s, y0 + 9 * s, s, s); });
+  X.shadowBlur = 0;
+  // RGB LEDs on the bottom bezel, gently cycling
+  [[9, C.r], [10, C.g], [11, C.b]].forEach(([x, c], i) => { X.globalAlpha = (o.alpha ?? 1) * (((t * .9 + i / 3) % 1) < .12 ? .35 : 1); px(x, 13, c); });
+  X.restore();
+  return { sx: cx, sy: y0 + 7 * s }; // screen center (for the beam)
+}
+function bubble(cx, cy, w, h, tipX, tipY, p) { // speech bubble, site style: white, 3px ink border
+  if (p <= 0) return;
+  const e = E.back(clamp(p)), r = S(30, 28);
+  X.save(); X.translate(tipX, tipY); X.scale(e, e); X.translate(-tipX, -tipY); X.globalAlpha = clamp(p * 3);
+  X.shadowColor = 'rgba(7,19,31,.22)'; X.shadowBlur = 50; X.shadowOffsetY = 20;
+  rr(cx - w / 2, cy - h / 2, w, h, r); X.fillStyle = '#fff'; X.fill(); X.shadowColor = 'transparent';
+  X.lineWidth = S(5, 4); X.strokeStyle = C.ink; X.stroke();
+  const tx = clamp(tipX, cx - w / 2 + 60, cx + w / 2 - 60), ty = cy + h / 2;
+  X.beginPath(); X.moveTo(tx - 26, ty - 3); X.lineTo(tipX, tipY - S(26, 22)); X.lineTo(tx + 26, ty - 3); X.closePath(); X.fillStyle = '#fff'; X.fill();
+  X.beginPath(); X.moveTo(tx - 28, ty); X.lineTo(tipX, tipY - S(26, 22)); X.lineTo(tx + 28, ty); X.stroke();
+  X.restore();
+}
+
+/* ---------------- the sun ---------------- */
+function sunFlare(x, y, k, t) {
+  if (k <= 0) return;
+  X.save(); X.globalCompositeOperation = 'screen';
+  let g = X.createRadialGradient(x, y, 0, x, y, W * 1.25);
+  g.addColorStop(0, `rgba(255,251,240,${.95 * k})`); g.addColorStop(.08, `rgba(255,244,214,${.75 * k})`);
+  g.addColorStop(.3, `rgba(255,226,170,${.28 * k})`); g.addColorStop(.7, `rgba(255,214,150,${.08 * k})`); g.addColorStop(1, 'rgba(255,214,150,0)');
+  X.fillStyle = g; X.fillRect(0, 0, W, H);
+  X.globalCompositeOperation = 'lighter';
+  // rays
+  X.translate(x, y); X.rotate(t * .05);
+  for (let i = 0; i < 14; i++) {
+    X.rotate(Math.PI * 2 / 14); const len = W * (.55 + .25 * Math.sin(i * 2.3 + t * .7)), wd = 18 + 10 * Math.sin(i * 1.7);
+    const lg = X.createLinearGradient(0, 0, len, 0); lg.addColorStop(0, `rgba(255,242,212,${.085 * k})`); lg.addColorStop(.6, `rgba(255,242,212,${.03 * k})`); lg.addColorStop(1, 'rgba(255,242,212,0)');
+    X.fillStyle = lg; X.beginPath(); X.moveTo(0, -wd * .35); X.lineTo(len, 0); X.lineTo(0, wd * .35); X.fill();
+  }
+  X.setTransform(1, 0, 0, 1, 0, 0);
+  // anamorphic streak
+  g = X.createRadialGradient(x, y, 0, x, y, W * .9); g.addColorStop(0, `rgba(255,255,255,${.55 * k})`); g.addColorStop(.25, `rgba(190,230,255,${.18 * k})`); g.addColorStop(1, 'rgba(190,230,255,0)');
+  X.save(); X.translate(x, y); X.scale(1, .035); X.translate(-x, -y); X.fillStyle = g; X.fillRect(x - W, y - W, W * 2, W * 2); X.restore();
+  // disc
+  g = X.createRadialGradient(x, y, 0, x, y, S(120, 100)); g.addColorStop(0, `rgba(255,255,255,${k})`); g.addColorStop(.35, `rgba(255,252,238,${k})`); g.addColorStop(1, 'rgba(255,240,200,0)');
+  X.fillStyle = g; X.beginPath(); X.arc(x, y, S(120, 100), 0, 7); X.fill();
+  // ghosts along the axis through the frame center
+  const vx = W / 2 - x, vy = H * .55 - y;
+  [[.35, 40, '255,200,120', .12], [.6, 90, '120,210,255', .07], [.85, 26, '255,255,255', .14], [1.25, 150, '255,170,90', .05], [1.5, 60, '140,255,220', .06]].forEach(([d, r, c, a]) => {
+    const gx = x + vx * d, gy = y + vy * d, gg = X.createRadialGradient(gx, gy, 0, gx, gy, r);
+    gg.addColorStop(0, `rgba(${c},${a * k})`); gg.addColorStop(.7, `rgba(${c},${a * k * .6})`); gg.addColorStop(1, `rgba(${c},0)`);
+    X.fillStyle = gg; X.beginPath(); for (let i = 0; i < 6; i++) { const an = i * Math.PI / 3 + .3; X.lineTo(gx + Math.cos(an) * r, gy + Math.sin(an) * r); } X.fill();
+  });
+  X.restore();
+}
+
+/* =====================================================================
+   SCENES 1–3 · the sun test by the pool (0 – 7.0s)
+   ===================================================================== */
+const SCR = [377, 500, 691, 665], REF = [378, 768, 690, 942]; // in 1024-px source space
+const ZMAX = () => (W / (314 * Math.max(W, H) / 1024)) * 2.4;
+function poolCam(t) {
+  const base = Math.max(W, H) / 1024, fx = 534, fy = 583;
+  const ox0 = W / 2 - fx * base, oy0 = (H - 1024 * base) / 2, Sx = fx * base + ox0, Sy = fy * base + oy0;
+  let z = 1 + .055 * E.inOut(seg(t, 0, 3.6)) - .05 * E.inOut(seg(t, 4.0, 6.5));
+  z *= Math.pow(ZMAX(), E.in(seg(t, 6.5, 7.0)));
+  const k = base * z; return { k, ox: Sx - fx * k, oy: Sy - fy * k };
+}
+const scrContent = t => { // the live picture on the wall screen (a slow broadcast-like drift)
+  const z = 1.04 + .03 * Math.sin(t * .6);
+  const cw = 618 / z, ch = 322 / z, cx = 1068 + 8 * Math.sin(t * .8), cy = 1166;
+  return [cx - cw / 2, cy - ch / 2, cw, ch];
+};
+function scenePool(t) {
+  const c = poolCam(t), m = (x, y) => [x * c.k + c.ox, y * c.k + c.oy];
+  const [sx0, sy0] = m(SCR[0], SCR[1]), [sx1, sy1] = m(SCR[2], SCR[3]);
+  const g = { x: sx0 + 3 * c.k, y: sy0 + 3 * c.k, w: sx1 - sx0 - 6 * c.k, h: sy1 - sy0 - 6 * c.k };
+  const [rx0, ry0] = m(REF[0], REF[1]), [rx1, ry1] = m(REF[2], REF[3]);
+  const u = t - 3.65; // power-on clock
+  const night = u < 0 ? 0 : .6 * seg(u, 0, .06) * (1 - E.out(seg(u, .3, .95)));
+  const day = u < 0 ? 1 : lerp(.72, 1, 0) * (1 - night);
+  // shake at impact
+  const sh = u > 0 && u < .35 ? (1 - u / .35) * S(14, 11) : 0, shx = sh * Math.sin(u * 90), shy = sh * Math.cos(u * 70);
+  X.save(); X.translate(shx, shy);
+  // background, graded to harsh midday
+  X.filter = `brightness(${1 + .1 * day}) contrast(${1 - .1 * day}) saturate(${1 - .15 * day})`;
+  X.drawImage(IM.pool, c.ox, c.oy, 1024 * c.k, 1024 * c.k); X.filter = 'none';
+  // warm haze from the sun
+  const [sx, sy] = L.sun; const hz = X.createRadialGradient(sx, sy, 0, sx, sy, H * .95);
+  hz.addColorStop(0, `rgba(255,246,226,${.72 * day})`); hz.addColorStop(.35, `rgba(255,238,210,${.36 * day})`); hz.addColorStop(1, `rgba(255,236,210,${.06 * day})`);
+  X.fillStyle = hz; X.fillRect(-20, -20, W + 40, H + 40);
+  // the wall screen
+  const cr = scrContent(t);
+  X.save(); X.beginPath(); X.rect(g.x, g.y, g.w, g.h); X.clip();
+  if (u < 0) { // washed out by the sun
+    const w = .72 + .28 * E.inOut(seg(t, .3, 1.7));
+    X.drawImage(IM.pool, ...cr, g.x, g.y, g.w, g.h);
+    X.fillStyle = `rgba(252,250,244,${.55 + .38 * w})`; X.fillRect(g.x, g.y, g.w, g.h);
+    const gx = g.x + g.w * (.1 + .5 * seg(t, 0, 3.6)), gl = X.createLinearGradient(gx - g.w * .5, g.y, gx + g.w * .3, g.y + g.h);
+    gl.addColorStop(0, 'rgba(255,255,255,0)'); gl.addColorStop(.5, 'rgba(255,255,255,.75)'); gl.addColorStop(1, 'rgba(255,255,255,0)');
+    X.fillStyle = gl; X.fillRect(g.x, g.y, g.w, g.h);
+  } else {
+    X.fillStyle = '#020508'; X.fillRect(g.x, g.y, g.w, g.h);
+    const cx = g.x + g.w / 2, cy = g.y + g.h / 2;
+    // 1. a single amber LED wakes up
+    const dotA = seg(u, .03, .1) * (1 - seg(u, .2, .3));
+    if (dotA > 0) { X.save(); X.shadowColor = C.sun; X.shadowBlur = 30; X.fillStyle = `rgba(245,165,36,${dotA})`; X.beginPath(); X.arc(cx, cy, S(9, 7), 0, 7); X.fill(); X.restore(); }
+    // 2. LED wave from the center, RGB sub-pixels, pitch shrinking
+    const wv = seg(u, .24, .72), pitch = lerp(S(24, 18), S(4, 3), E.inOut(seg(u, .3, 1.0)));
+    if (u > .22) {
+      const R = E.out(wv) * 1.25, rg = rng(3);
+      const jit = []; for (let i = 0; i < 4000; i++) jit.push(rg() * .18);
+      led(IM.pool, ...cr, g.x, g.y, g.w, g.h, {
+        pitch, style: pitch > 7 ? 'rgb' : 'dot', boost: 1.25, filter: 'saturate(1.45) contrast(1.15)',
+        wave: (nx, ny, ix, iy) => { const d = Math.hypot(nx - .5, (ny - .5) * g.h / g.w) * 2; return clamp((R - d - jit[(ix * 7 + iy * 13) % 4000]) * 6); },
+        alpha: 1 - seg(u, .85, 1.2), bloom: .45 * seg(u, .3, .8), bloomR: 16
+      });
+    }
+    // 3. scan line (the site's power-on)
+    const sw = E.out(seg(u, .1, .22)), sv = seg(u, .22, .36);
+    if (sw > 0 && sv < 1) {
+      X.save(); X.globalCompositeOperation = 'lighter';
+      const hgt = lerp(4, g.h * 1.1, E.in(sv)), a = 1 - sv;
+      const lg = X.createLinearGradient(cx - g.w / 2, 0, cx + g.w / 2, 0);
+      lg.addColorStop(0, 'rgba(52,207,232,0)'); lg.addColorStop(.2, `rgba(255,255,255,${a})`); lg.addColorStop(.5, `rgba(52,207,232,${a})`); lg.addColorStop(.8, `rgba(255,255,255,${a})`); lg.addColorStop(1, 'rgba(52,207,232,0)');
+      X.fillStyle = lg; X.shadowColor = C.cyan; X.shadowBlur = 24; X.fillRect(cx - g.w / 2 * sw, cy - hgt / 2, g.w * sw, hgt); X.restore();
+    }
+    // 4. resolved: a crisp, saturated picture with a fine LED texture
+    const cp = seg(u, .85, 1.2);
+    if (cp > 0) {
+      X.save(); X.globalAlpha = cp; X.filter = 'saturate(1.45) contrast(1.15) brightness(1.12)'; X.drawImage(IM.pool, ...cr, g.x, g.y, g.w, g.h); X.filter = 'none';
+      const zr = c.k / (Math.max(W, H) / 1024), fly = seg(t, 6.45, 6.95);
+      X.globalAlpha = cp * (.22 + .78 * fly); const pat = X.createPattern(ledTile(Math.max(3, Math.round(S(4, 3) * zr * (1 + fly))), 'dot', '#000'), 'repeat'); pat.setTransform(new DOMMatrix().translate(g.x, g.y)); X.fillStyle = pat; X.fillRect(g.x, g.y, g.w, g.h);
+      X.restore();
+    }
+  }
+  X.restore();
+  // halo on the wall once the LEDs are on
+  if (u > .3) {
+    X.save(); X.globalCompositeOperation = 'screen'; X.globalAlpha = .55 * seg(u, .3, .9); X.filter = 'blur(38px) saturate(1.6)';
+    X.drawImage(IM.pool, ...cr, g.x - g.w * .08, g.y - g.h * .1, g.w * 1.16, g.h * 1.2); X.restore();
+  }
+  // reflection in the pool
+  X.save(); X.beginPath(); X.rect(rx0, ry0, rx1 - rx0, ry1 - ry0); X.clip();
+  if (u < 0) { X.fillStyle = 'rgba(245,246,240,.42)'; X.fillRect(rx0, ry0, rx1 - rx0, ry1 - ry0); }
+  else {
+    const a = .5 * seg(u, .5, 1.1), rh = ry1 - ry0, slices = 40;
+    X.globalAlpha = a; X.globalCompositeOperation = 'screen'; X.filter = 'saturate(1.5) blur(1px)';
+    for (let i = 0; i < slices; i++) {
+      const y = ry0 + rh * i / slices, off = Math.sin(i * .7 + t * 5) * S(5, 4) * (i / slices + .3);
+      const srcY = cr[1] + cr[3] * (1 - (i + 1) / slices);
+      X.drawImage(IM.pool, cr[0], srcY, cr[2], cr[3] / slices, rx0 + off, y, rx1 - rx0, rh / slices + 1);
+    }
+  }
+  X.restore();
+  // night flash (the switch)
+  if (night > 0) { X.fillStyle = `rgba(3,8,16,${night})`; X.fillRect(-20, -20, W + 40, H + 40); }
+  // the sun
+  const sk = (u < 0 ? .78 + .22 * E.inOut(seg(t, .2, 1.6)) : lerp(.12, .72, E.inOut(seg(u, .35, 1.3)))) * (1 - seg(t, 6.45, 6.8));
+  sunFlare(sx, sy, sk, t);
+  vignette(.22);
+  X.restore();
+  return g;
+}
+function pool(t) {
+  const g = scenePool(t);
+  const cx = W / 2, fo = 1 - seg(t, 6.42, 6.66);
+  X.save(); X.globalAlpha = fo;
+  badge(fo);
+  // chip under the screen headline zone
+  const chipIn = seg(t, .9, 1.25), chipOut = seg(t, 3.5, 3.7);
+  if (chipIn > 0 && chipOut < 1) pill('טלוויזיה ביתית · 400–600 NIT', cx, L.chipY + (1 - E.back(chipIn)) * 40, { size: S(34, 28), dot: C.r, alpha: chipIn * (1 - chipOut), w: 700 });
+  tag('הדמיה', g.x + g.w - 16, g.y + S(34, 28), false, .9 * (1 - seg(t, 6.6, 6.9)));
+  // ---- headline 1: the problem
+  const l1 = ['בשמש', 'של', 'אוגוסט,'], l2 = ['הטלוויזיה', { t: 'נעלמת.', fx: () => ({ alpha: 1 - .82 * E.inOut(seg(t, 1.25, 2.0)), blur: 7 * seg(t, 1.25, 2.0) }) }];
+  const ex1 = i => seg(t, 2.52 + i * .04, 2.82 + i * .04);
+  let s1 = Math.min(fitSize(l1, L.hSize, W - 110), fitSize(l2, L.hSize, W - 110));
+  if (t < 2.95) {
+    words(l1, { x: cx, y: L.hY1, size: s1, align: 'center', rev: i => seg(t, .12 + i * .07, .6 + i * .07), exit: ex1 });
+    words(l2, { x: cx, y: L.hY2, size: s1, align: 'center', rev: i => seg(t, .42 + i * .1, .92 + i * .1), exit: i => ex1(i + 3) });
+  }
+  // ---- headline 2: the switch
+  if (t >= 2.7 && t < 4.6) {
+    const pop = () => 1 + .35 * (1 - E.spring(seg(t, 3.65, 4.25)));
+    const l3 = ['עד', 'שעושים'], l4 = [{ t: 'סוויצ׳.', hl: true, pop }];
+    const ex = i => seg(t, 4.1 + i * .04, 4.3 + i * .04);
+    words(l3, { x: cx, y: L.hY1, size: s1, align: 'center', rev: i => seg(t, 2.94 + i * .09, 3.34 + i * .09), exit: ex });
+    words(l4, { x: cx, y: L.hY2 + S(14, 10), size: s1 * 1.22, align: 'center', rev: () => seg(t, 3.6, 3.78), exit: () => ex(2), hl: () => seg(t, 3.72, 3.98), mask: t < 3.62 || t > 4.1 });
+  }
+  // ---- headline 3: the claim
+  if (t >= 4.38) {
+    const l5 = ['ברור', 'כמו', 'לילה.'], l6 = ['גם', 'בשמש', 'של', { t: 'אוגוסט.', hl: true }];
+    const s3 = Math.min(fitSize(l5, L.hSize * 1.08, W - 110), fitSize(l6, L.hSize, W - 110));
+    words(l5, { x: cx, y: L.hY1, size: s3, align: 'center', rev: i => seg(t, 4.4 + i * .07, 4.85 + i * .07) });
+    words(l6, { x: cx, y: L.hY2, size: s3, align: 'center', rev: i => seg(t, 4.62 + i * .07, 5.07 + i * .07), hl: () => seg(t, 5.07, 5.42) });
+  }
+  // ---- brightness meter
+  const mi = seg(t, 5.25, 5.6);
+  if (mi > 0) {
+    const y0 = L.meterY + (1 - E.out(mi)) * 50, h = L.meterH, x0 = S(60, 60), w = W - x0 * 2;
+    X.save(); X.globalAlpha *= E.out(mi);
+    X.shadowColor = 'rgba(7,19,31,.25)'; X.shadowBlur = 50; X.shadowOffsetY = 18; rr(x0, y0, w, h, S(28, 26)); X.fillStyle = 'rgba(255,255,255,.96)'; X.fill(); X.shadowColor = 'transparent';
+    const fill = E.inOut(seg(t, 5.5, 6.35)), pad = S(38, 34), bh = S(20, 18);
+    const rows = [['טלוויזיה ביתית', '400–600 NIT', 600 / 6500, C.line2, C.mute], ['מסך LED של סוויצ׳ינג', fmt(6500 * fill) + ' NIT', 1, C.sun, C.ink]];
+    rows.forEach(([lab, val, frac, col, vc], i) => {
+      const ry = y0 + pad + i * (h - pad * 2) / 1.62;
+      text(lab, x0 + w - pad, ry + S(30, 26), { size: S(36, 30), w: 700, align: 'right', color: C.ink2 });
+      const nv = val.replace(' NIT', ''), nwid = text(nv, x0 + pad, ry + S(34, 30), { size: S(48, 42), w: 800, fam: F.num, align: 'left', color: vc, dir: 'ltr' });
+      text('NIT', x0 + pad + nwid + 10, ry + S(34, 30), { size: S(30, 26), w: 800, align: 'left', color: vc, dir: 'ltr' });
+      const by = ry + S(56, 50), bw = w - pad * 2;
+      rr(x0 + pad, by, bw, bh, bh / 2); X.fillStyle = '#E8EDF2'; X.fill();
+      const fw = Math.max(bh, bw * frac * fill);
+      rr(x0 + pad + bw - fw, by, fw, bh, bh / 2);
+      if (i === 1) { const lg = X.createLinearGradient(x0 + pad + bw - fw, 0, x0 + pad + bw, 0); lg.addColorStop(0, '#FFD27A'); lg.addColorStop(1, C.sun); X.fillStyle = lg; X.shadowColor = 'rgba(245,165,36,.8)'; X.shadowBlur = 18; }
+      else X.fillStyle = col;
+      X.fill(); X.shadowColor = 'transparent';
+    });
+    X.restore();
+  }
+  // ---- TIVI: pops in, sees the washed-out TV, and sends his light to it
+  const T2 = L.tivi2, ti = seg(t, 2.6, 2.95), to = seg(t, 4.5, 4.85);
+  if (ti > 0 && to < 1) {
+    const rise = (1 - E.spring(seg(t, 2.6, 3.2))) * S(260, 200) + E.in(to) * S(420, 300);
+    const land = seg(t, 2.86, 3.1), sq = 1 - .12 * Math.sin(Math.PI * land) + .1 * Math.sin(Math.PI * seg(t, 3.18, 3.4));
+    const face = t < 2.84 ? 'open' : t < 3.02 ? 'o' : t < 3.16 ? 'look' : t < 3.9 ? 'happy' : (t < 4.3 ? 'wink' : 'happy');
+    const sc = tivi(T2.x, T2.feet + rise, T2.s, { face, sq, t, alpha: clamp(ti * 3) });
+    // the beam: an amber seed arcs from TIVI's screen to the wall screen
+    const bk = seg(t, 3.2, 3.64);
+    if (bk > 0 && bk < 1) {
+      const tx = g.x + g.w / 2, ty = g.y + g.h / 2, cx1 = (sc.sx + tx) / 2 + S(120, 90), cy1 = Math.min(sc.sy, ty) - S(260, 170);
+      const B = k => [(1 - k) * (1 - k) * sc.sx + 2 * (1 - k) * k * cx1 + k * k * tx, (1 - k) * (1 - k) * sc.sy + 2 * (1 - k) * k * cy1 + k * k * ty];
+      const e = E.inOut(bk);
+      X.save(); X.globalCompositeOperation = 'lighter';
+      for (let i = 14; i >= 0; i--) { const k = Math.max(0, e - i * .018); const [x, y] = B(k); const r = S(12, 10) * (1 - i / 16); X.fillStyle = `rgba(245,165,36,${(1 - i / 15) * .8})`; X.beginPath(); X.arc(x, y, r, 0, 7); X.fill(); }
+      const [x, y] = B(e); X.shadowColor = C.sun; X.shadowBlur = 40; X.fillStyle = '#FFE3A6'; X.beginPath(); X.arc(x, y, S(12, 10), 0, 7); X.fill();
+      X.restore();
+    }
+  }
+  X.restore();
+}
+
+/* =====================================================================
+   SCENE 4 · range of solutions (7.0 – 12.0s)
+   ===================================================================== */
+const RANGE = [
+  { im: 'poolnight', fx: .6, fy: .52, label: 'לבריכה.', plate: ['IP65', '6,500 NIT', 'עד 200 אינץ׳'] },
+  { im: 'garden', fx: .56, fy: .45, label: 'לחצר.', plate: ['IP65', 'עד 6×3.5 מ׳', 'בית חכם'] },
+  { im: 'cinema', fx: .4, fy: .5, label: 'לקולנוע הביתי.', plate: ['4K · HDR', 'מ-110 אינץ׳ ועד קיר שלם'] },
+  { im: 'trans', fx: .5, fy: .45, label: 'לחלון הראווה.', plate: ['מסך שקוף', 'אפקט הולוגרמה'] },
+  { im: 'wall', fx: .47, fy: .45, label: 'לחדר הישיבות.', plate: ['Fine Pitch', 'Zoom · Teams'] }
+];
+function glassSize(t) { // device glass size, morphing between landscape and portrait in scene 5
+  const lw = L.dev.w, lh = lw * 9 / 16, pw = L.s5.port, ph = pw * 16 / 9;
+  const k = t < 12 ? 0 : t < 13 ? E.inOut(seg(t, 12, 12.32)) : t < 14 ? 1 - E.inOut(seg(t, 13, 13.32)) : E.inOut(seg(t, 14, 14.32));
+  const cy = lerp(L.dev.cy, L.s5.cy, E.inOut(seg(t, 11.9, 12.3)));
+  return { w: lerp(lw, pw, k), h: lerp(lh, ph, k), cy };
+}
+function sceneRange(t) {
+  paperBG(t);
+  badge(1);
+  const gs = glassSize(t), cx = L.dev.cx;
+  const intro = seg(t, 7.0, 7.4);
+  const g = device(cx, gs.cy + (1 - E.out(intro)) * 60, gs.w, gs.h, { alpha: E.out(intro) });
+  X.save(); rr(g.x, g.y, g.w, g.h, g.r); X.fillStyle = '#020508'; X.fill(); X.restore();
+  const i = clamp(Math.floor(t - 7), 0, 4), u = t - 7 - i, it = RANGE[i], im = IM[it.im];
+  const [sx, sy, sw, sh] = coverRect(im, g.w, g.h, it.fx, it.fy, 1.06 + .05 * u);
+  const ledIn = seg(u, 0, .34), ledOut = i < 4 ? seg(u, .86, 1) : 0;
+  const pitch = ledOut > 0 ? lerp(S(3, 3), S(30, 26), E.in(ledOut)) : lerp(S(30, 26), S(3, 3), E.out(ledIn));
+  const crisp = seg(u, .22, .4) * (1 - seg(u, .86, .94) * (i < 4 ? 1 : 0));
+  // RTL sweep: LEDs light up from right to left
+  led(im, sx, sy, sw, sh, g.x, g.y, g.w, g.h, {
+    pitch, style: pitch > 9 ? 'rgb' : 'dot', clipR: g.r, boost: 1.1, filter: 'saturate(1.25)',
+    wave: ledOut > 0 ? (nx) => 1 - clamp((E.in(ledOut) * 1.3 - nx) * 5) * 0 - ledOut * .6 : (nx) => clamp(((E.out(ledIn) * 1.35) - (1 - nx)) * 5),
+    bloom: .25 * (1 - crisp)
+  });
+  if (crisp > 0) { X.save(); rr(g.x, g.y, g.w, g.h, g.r); X.clip(); X.globalAlpha = crisp; X.filter = 'saturate(1.12) contrast(1.05)'; X.drawImage(im, sx, sy, sw, sh, g.x, g.y, g.w, g.h); X.restore(); }
+  sheen(g, seg(u, .3, .75));
+  tag('הדמיה', g.x + g.w - 16, g.y + S(34, 28), false, crisp);
+  // kicker + counter
+  const kIn = seg(t, 7.05, 7.4);
+  text('מסכי LED ענקיים לבית ולעסק', W / 2, L.kickY, { size: S(38, 32), w: 700, color: C.blueInk, alpha: kIn, ls: '1px' });
+  text(`0${i + 1}/05`, S(64, 56), L.kickY, { size: S(40, 34), w: 800, fam: F.num, color: C.sunInk, align: 'left', alpha: kIn, dir: 'ltr' });
+  // big label, rolling per item
+  const size = Math.min(L.labelSize, fitSize([it.label], L.labelSize, W - 120));
+  words([it.label], { x: W / 2, y: L.labelY + S(40, 30), size, align: 'center', rev: () => seg(u, .02, .3), exit: () => i < 4 ? seg(u, .86, 1) : 0 });
+  // plates
+  const pIn = k => seg(u, .18 + k * .07, .4 + k * .07), pOut = i < 4 ? seg(u, .82, .95) : 0;
+  let tot = 0; const pw = it.plate.map(p => { X.font = fnt(700, S(32, 28), F.body); return X.measureText(p).width + S(46, 40); }); tot = pw.reduce((a, b) => a + b, 0) + 16 * (pw.length - 1);
+  let xr = W / 2 + tot / 2;
+  it.plate.forEach((p, k) => { const e = E.back(pIn(k)); pill(p, xr - pw[k] / 2, L.plateY + (1 - e) * 30, { size: S(32, 28), alpha: pIn(k) * (1 - pOut), w: 700, bg: '#fff', border: 1.5 }); xr -= pw[k] + 16; });
+  return g;
+}
+
+/* =====================================================================
+   SCENE 5 · real installations (12.0 – 15.0s)
+   ===================================================================== */
+const REAL = [{ fr: 'meira2', note: 'תפריט LED מעל הדלפק' }, { fr: 'pizza', note: 'פיצריה, שלט מעל הקופה' }, { fr: 'meira', note: 'חזית של מסעדה' }];
+function sceneReal(t) {
+  paperBG(t);
+  badge(1);
+  const gs = glassSize(t), cx = L.dev.cx, i = clamp(Math.floor(t - 12), 0, 2), u = t - 12 - i, clip = FR[REAL[i].fr];
+  // power-off at the end
+  const off = seg(t, 14.84, 15.0), sy = off > 0 ? Math.max(.012, 1 - E.in(off)) : 1;
+  const g = device(cx, gs.cy, gs.w, gs.h * sy + (off > 0 ? 0 : 0), { alpha: 1 - seg(t, 14.95, 15.0) });
+  X.save(); rr(g.x, g.y, g.w, g.h, g.r); X.clip();
+  const f = clip[clamp(Math.floor(u * 30 + (i === 0 ? 0 : 0)), 0, 89)];
+  const [a, b, c, d] = coverRect(f, g.w, g.h / sy, .5, .5, 1.04);
+  X.fillStyle = '#000'; X.fillRect(g.x, g.y, g.w, g.h);
+  X.filter = 'contrast(1.06) saturate(1.1)'; X.drawImage(f, a, b, c, d, g.x, g.y - (g.h / sy - g.h) / 2, g.w, g.h / sy); X.filter = 'none';
+  // quick LED cut between clips
+  const cut = u < .12 ? 1 - u / .12 : 0;
+  if (cut > 0 && t > 12.05) { X.globalAlpha = cut; X.fillStyle = '#fff'; X.fillRect(g.x, g.y, g.w, g.h); }
+  if (off > 0) { X.globalAlpha = off; X.fillStyle = '#fff'; X.fillRect(g.x, g.y, g.w, g.h); }
+  X.restore();
+  if (off > 0) { X.save(); X.globalCompositeOperation = 'lighter'; X.shadowColor = C.cyan; X.shadowBlur = 30; X.fillStyle = '#fff'; X.fillRect(g.x, gs.cy - 2, g.w * (1 - seg(t, 14.96, 15.0)), 4); X.restore(); }
+  if (off === 0) {
+    tag('מהשטח · צילום אמיתי', g.x + g.w - 16, g.y + S(34, 28), true, seg(t, 12.1, 12.3));
+    pill(REAL[i].note, g.x + 16, g.y + g.h - S(34, 28), { size: S(26, 22), bg: 'rgba(255,255,255,.92)', align: 'left', alpha: seg(u, .15, .3) * (1 - seg(u, .9, 1)), shadow: false, w: 700 });
+  }
+  // headline
+  const x = W / 2, ex = seg(t, 14.8, 15.0);
+  text('תפריטים ושילוט לעסקים', x, L.kickY - S(20, 0), { size: S(38, 32), w: 700, color: C.blueInk, alpha: seg(t, 12.0, 12.25) * (1 - ex) });
+  const rl = [{ t: 'מהשטח.' }, { t: 'לא', color: C.mute }, { t: 'מהדמיה.', color: C.mute }];
+  words(rl, { x, y: L.s5.labelY, size: Math.min(L.labelSize * .82, fitSize(rl, L.labelSize * .82, W - 110)), align: 'center', rev: k => seg(t, 12.0 + k * .09, 12.35 + k * .09), exit: () => ex });
+  const cu = E.out(seg(t, 12.3, 13.3));
+  text(`${fmt(200 * cu)}+ פרויקטים בכל הארץ · 10 שנות ניסיון`, x, L.s5.countY, { size: S(40, 32), w: 800, color: C.ink, alpha: seg(t, 12.3, 12.5) * (1 - ex) });
+}
+
+/* =====================================================================
+   SCENE 6 · trust: the quote, then the specs (15.0 – 20.0s)
+   ===================================================================== */
+function sceneTrust(t) {
+  paperBG(t);
+  badge(1);
+  const x = W / 2;
+  if (t < 17.1) {
+    const ex = k => seg(t, 16.86 + k * .03, 17.08 + k * .03);
+    words(['זה', 'לא', 'סלוגן.'], { x, y: L.q.k1, size: L.q.kSize, align: 'center', color: C.mute, rev: k => seg(t, 15.08 + k * .06, 15.4 + k * .06), exit: ex });
+    words(['זה', 'לקוח.'], { x, y: L.q.k2, size: L.q.kSize, align: 'center', color: C.blueInk, rev: k => seg(t, 15.4 + k * .07, 15.7 + k * .07), exit: k => ex(k + 3) });
+    for (let k = 0; k < 5; k++) { const e = E.back(seg(t, 15.7 + k * .06, 15.95 + k * .06)); if (e > 0) { X.save(); X.globalAlpha = clamp(e) * (1 - ex(5)); star(x + (k - 2) * S(70, 60), L.q.stars, S(26, 22) * e, C.sun); X.restore(); } }
+    const qs = Math.min(L.q.qSize, fitSize(['״בשמש', 'של', 'אוגוסט,'], L.q.qSize, W - 110));
+    words(['״בשמש', 'של', 'אוגוסט,'], { x, y: L.q.q1, size: qs, align: 'center', rev: k => seg(t, 15.85 + k * .07, 16.25 + k * .07), exit: k => ex(k + 6) });
+    words(['ברור', 'כמו', { t: 'לילה.״', hl: true }], { x, y: L.q.q2, size: qs, align: 'center', rev: k => seg(t, 16.05 + k * .07, 16.45 + k * .07), exit: k => ex(k + 9), hl: () => seg(t, 16.4, 16.7) });
+    text('דרור כ., הרצליה פיתוח', x, L.q.att, { size: S(44, 36), w: 800, alpha: seg(t, 16.3, 16.55) * (1 - ex(12)) });
+    text('מסך LED של 4×2.5 מ׳ ליד הבריכה', x, L.q.att2, { size: S(36, 30), w: 500, color: C.mute, alpha: seg(t, 16.4, 16.65) * (1 - ex(12)) });
+  } else {
+    const ex = seg(t, 19.78, 20.02);
+    words(['לא', 'מוכרים', 'פנלים.'], { x, y: L.sp.h1, size: L.sp.hSize, align: 'center', color: C.mute, rev: k => seg(t, 17.1 + k * .06, 17.45 + k * .06), exit: () => ex });
+    words(['מספקים', 'מסך', { t: 'שעובד.', hl: true }], { x, y: L.sp.h2, size: L.sp.hSize, align: 'center', rev: k => seg(t, 17.3 + k * .06, 17.65 + k * .06), exit: () => ex, hl: () => seg(t, 17.7, 17.95) });
+    const TILES = [
+      { ic: 'sun', n: 6500, pre: '', suf: '', unit: 'NIT', lab: 'בהירות לשמש ישירה' },
+      { ic: 'drop', n: 65, pre: 'IP', suf: '', lab: 'עמיד למים ולאבק', fixed: true },
+      { ic: 'clock', big: 'יום אחד', lab: 'התקנה, בכל הארץ' },
+      { ic: 'shield', n: 3, pre: '', suf: '', lab: 'אחריות מלאה', word: 'שנים', fixed: true }
+    ];
+    const tw_ = (W - S(60, 60) * 2 - L.sp.gap) / 2, th = L.sp.tileH;
+    TILES.forEach((tl, k) => {
+      const col = k % 2, row = Math.floor(k / 2), p = seg(t, 17.55 + k * .22, 17.95 + k * .22), e = E.back(p);
+      if (p <= 0) return;
+      const tx = W - S(60, 60) - (col + 1) * tw_ - col * L.sp.gap, ty = L.sp.top + row * (th + L.sp.gap) + (1 - e) * 60;
+      const out = E.in(clamp((ex - k * .08) * 1.4));
+      X.save(); X.globalAlpha = clamp(p * 2.5) * (1 - out); X.translate(tx + tw_ / 2, ty + th / 2); X.scale(.85 + .15 * e - .1 * out, .85 + .15 * e - .1 * out); X.translate(-(tx + tw_ / 2), -(ty + th / 2));
+      X.shadowColor = 'rgba(7,19,31,.14)'; X.shadowBlur = 40; X.shadowOffsetY = 14; rr(tx, ty, tw_, th, S(28, 26)); X.fillStyle = '#fff'; X.fill(); X.shadowColor = 'transparent';
+      const is = S(78, 70); X.drawImage(IC[tl.ic], tx + tw_ - S(34, 30) - is, ty + S(30, 26), is, is);
+      const cu = tl.fixed ? 1 : E.out(seg(t, 17.6 + k * .22, 18.5 + k * .22));
+      const nw = tl.big ? text(tl.big, tx + tw_ - S(34, 30), ty + th - S(88, 82), { size: S(96, 86), w: 700, fam: F.disp, align: 'right', dir: 'rtl' })
+        : text(tl.pre + fmt(tl.n * cu) + tl.suf, tx + tw_ - S(34, 30), ty + th - S(88, 82), { size: S(84, 76), w: 900, fam: F.num, align: 'right', dir: 'ltr' });
+      if (tl.unit) text(tl.unit, tx + tw_ - S(34, 30) - nw - 12, ty + th - S(88, 82), { size: S(40, 36), w: 800, align: 'right', dir: 'ltr' });
+      if (tl.word) text(tl.word, tx + tw_ - S(34, 30) - nw - 14, ty + th - S(88, 82), { size: S(56, 50), w: 700, fam: F.disp, align: 'right' });
+      text(tl.lab, tx + tw_ - S(34, 30), ty + th - S(34, 30), { size: S(32, 28), w: 700, align: 'right', color: C.ink2 });
+      X.restore();
+    });
+  }
+}
+
+/* =====================================================================
+   SCENE 7 · TIVI + call to action (20.0 – 26.0s)
+   ===================================================================== */
+function sceneCTA(t) {
+  paperBG(t, 1.2);
+  badge(1 - seg(t, 22.4, 22.7));
+  const T = L.t7, EN = L.end;
+  // TIVI walks in from the right, lands, talks, then steps down under the end card
+  const walk = seg(t, 20.0, 20.85), mv = E.out(walk), land = seg(t, 20.85, 21.1);
+  const toEnd = E.inOut(seg(t, 22.55, 23.2));
+  const tx = lerp(lerp(W + 260, T.x, mv), EN.tivi.x, toEnd), feet = lerp(T.feet, EN.tivi.feet, toEnd), s = lerp(T.s, EN.tivi.s, toEnd);
+  const face = t < 20.85 ? 'happy' : t < 21.3 ? 'open' : t < 21.95 ? 'think' : t < 22.55 ? 'happy' : t < 24.6 ? (t % 3 > 2.85 ? 'blink' : 'happy') : t < 25.2 ? 'wink' : 'heart';
+  const hop = t > 24.6 ? Math.max(0, Math.sin(Math.PI * seg(t, 25.1, 25.45))) * s * 2.2 : 0;
+  const sq = 1 - .14 * Math.sin(Math.PI * land) + .06 * Math.sin(Math.PI * seg(t, 25.1, 25.3));
+  tivi(tx, feet - hop - (walk < 1 ? Math.abs(Math.sin(walk * Math.PI * 7)) * s * .8 : 0), s, { face, walk: walk < 1 ? walk * Math.PI * 14 : null, sq, t, tilt: walk < 1 ? -.05 : 0 });
+  // speech bubble
+  const bIn = seg(t, 21.05, 21.35), bOut = seg(t, 22.45, 22.65);
+  if (bIn > 0 && bOut < 1) {
+    const bw = T.bubW, bh = T.bubH, bcy = T.bubCy;
+    X.save(); X.globalAlpha = 1 - bOut;
+    bubble(W / 2, bcy, bw, bh, tx, feet - 18 * s - S(16, 12), bIn);
+    if (bIn >= 1) {
+      const l1 = 'איזה מסך מתאים לכם?', l2 = '3 שאלות, ואני יודע.';
+      const n1 = Math.floor(l1.length * seg(t, 21.3, 21.75)), n2 = Math.floor(l2.length * seg(t, 21.85, 22.25));
+      text(l1.slice(0, n1), W / 2, bcy - S(18, 14), { size: S(66, 58), w: 800, dir: 'rtl' });
+      text(l2.slice(0, n2), W / 2, bcy + S(66, 58), { size: S(58, 50), w: 500, color: C.ink2, dir: 'rtl' });
+    }
+    X.restore();
+  }
+  // end card
+  const lp = seg(t, 22.6, 23.25);
+  if (lp > 0) {
+    const lw = EN.logoW, lh = lw * 66.4 / 448.3, lx = W / 2 - lw / 2, ly = EN.logoTop;
+    OFF2c.clearRect(0, 0, W, H); OFF2c.drawImage(IM.logo, lx, ly, lw, lh);
+    if (lp < 1) {
+      const pitch = lerp(S(22, 20), 2, E.out(lp));
+      X.save(); led(OFF2, lx - 20, ly - 20, lw + 40, lh + 40, lx - 20, ly - 20, lw + 40, lh + 40, { pitch, gap: C.paper, wave: nx => clamp((E.out(lp) * 1.4 - nx) * 5), alpha: 1 }); X.restore();
+      X.save(); X.globalAlpha = seg(lp, .6, 1); X.drawImage(OFF2, 0, 0); X.restore();
+    } else X.drawImage(OFF2, 0, 0);
+  }
+  const tg = ['ברור', 'כמו', 'לילה.', 'גם', 'בשמש', 'של', { t: 'אוגוסט.', hl: true }];
+  const ts = Math.min(EN.tagSize, fitSize(tg, EN.tagSize, W - 100));
+  if (t > 23.0) words(tg, { x: W / 2, y: EN.tagY, size: ts, align: 'center', rev: k => seg(t, 23.05 + k * .045, 23.4 + k * .045), hl: () => seg(t, 23.5, 23.8) });
+  // CTA button
+  const bp = seg(t, 23.45, 23.8);
+  if (bp > 0) {
+    const e = E.back(bp), bw = EN.btnW, bh = EN.btnH, bx = W / 2 - bw / 2, by = EN.btnCy - bh / 2, pulse = t > 24.2 ? .5 + .5 * Math.sin((t - 24.2) * 5) : 0;
+    X.save(); X.globalAlpha = clamp(bp * 2); X.translate(W / 2, EN.btnCy); X.scale(e, e); X.translate(-W / 2, -EN.btnCy);
+    X.shadowColor = `rgba(245,165,36,${.25 + .35 * pulse})`; X.shadowBlur = 40 + 30 * pulse; X.shadowOffsetY = 12;
+    rr(bx, by, bw, bh, S(26, 24)); X.fillStyle = C.ink; X.fill(); X.shadowColor = 'transparent';
+    const dx = bx + bw - S(70, 62);
+    X.beginPath(); X.arc(dx, EN.btnCy, S(13, 12) + 8 * pulse, 0, 7); X.fillStyle = `rgba(245,165,36,${.35 - .2 * pulse})`; X.fill();
+    X.beginPath(); X.arc(dx, EN.btnCy, S(13, 12), 0, 7); X.fillStyle = C.sun; X.fill();
+    text('לייעוץ חינם', dx - S(36, 32), EN.btnCy + S(20, 18), { size: S(58, 52), w: 800, color: '#fff', align: 'right' });
+    const ax = bx + S(66, 60), ay = EN.btnCy; X.strokeStyle = C.sun; X.lineWidth = S(7, 6); X.lineCap = 'round'; X.lineJoin = 'round';
+    X.beginPath(); X.moveTo(ax + S(34, 30), ay); X.lineTo(ax - 4, ay); X.moveTo(ax + S(14, 12), ay - S(18, 16)); X.lineTo(ax - 4, ay); X.lineTo(ax + S(14, 12), ay + S(18, 16)); X.stroke();
+    X.restore();
+  }
+  const up = seg(t, 23.75, 24.05), pp = seg(t, 23.9, 24.2), cp = seg(t, 24.05, 24.35);
+  text('switching.co.il', W / 2, EN.urlY + (1 - E.out(up)) * 20, { size: S(62, 54), w: 800, alpha: up, dir: 'ltr' });
+  if (pp > 0) {
+    const ph = '054-638-8090', f = fnt(700, S(46, 40), F.body); const pw = tw(ph, f), is = S(46, 40), gap = 14, tot = pw + is + gap;
+    X.save(); X.globalAlpha = pp; X.drawImage(IC.wa, W / 2 + tot / 2 - is, EN.phoneY - is * .82, is, is); X.restore();
+    text(ph, W / 2 - tot / 2, EN.phoneY, { size: S(46, 40), w: 700, color: C.ink2, align: 'left', dir: 'ltr', alpha: pp });
+  }
+  text('התקנה בכל הארץ · אחריות 3 שנים · 200+ פרויקטים', W / 2, EN.chipsY, { size: S(32, 28), w: 600, color: C.mute, alpha: cp });
+}
+const OFF2 = document.createElement('canvas'); OFF2.width = W; OFF2.height = H; const OFF2c = OFF2.getContext('2d');
+const OFF = document.createElement('canvas'); OFF.width = W; OFF.height = H; const OFFc = OFF.getContext('2d');
+
+/* =====================================================================
+   timeline
+   ===================================================================== */
+function render(t) {
+  X = MAIN; X.setTransform(1, 0, 0, 1, 0, 0); X.globalAlpha = 1; X.globalCompositeOperation = 'source-over'; X.filter = 'none'; X.letterSpacing = '0px';
+  if (t < 7.0) {
+    pool(t);
+    // the camera dives into the LED screen, then a flash of daylight
+    const f = E.in(seg(t, 6.84, 7.0)); if (f > 0) { X.fillStyle = `rgba(245,247,250,${f})`; X.fillRect(0, 0, W, H); }
+  }
+  else if (t < 12.0) sceneRange(t);
+  else if (t < 15.0) sceneReal(t);
+  else if (t < 20.0) sceneTrust(t);
+  else sceneCTA(t);
+  X = MAIN; X.setTransform(1, 0, 0, 1, 0, 0);
+  grain(t, t < 7 ? .06 : .045);
+}
+
+/* =====================================================================
+   STATIC ADS · same engine, same assets (?still=name)
+   ===================================================================== */
+/* the pool scene cropped around the wall screen into rect g; state: 'washed' | 'vivid' */
+function poolPanel(g, state, ws = 600) {
+  const k = g.w / ws, hs = g.h / k, sx0 = 534 - ws / 2, sy0 = clamp(583 - hs / 2 + (state === 'vivid' ? 40 : 40), 0, 1024 - hs);
+  const m = (x, y) => [g.x + (x - sx0) * k, g.y + (y - sy0) * k];
+  X.save(); rr(g.x, g.y, g.w, g.h, g.r || 0); X.clip();
+  X.filter = state === 'washed' ? 'brightness(1.12) contrast(.9) saturate(.85)' : 'brightness(1.04) contrast(1.02)';
+  X.drawImage(IM.pool, sx0 * 2, sy0 * 2, ws * 2, hs * 2, g.x, g.y, g.w, g.h); X.filter = 'none';
+  const [a0, b0] = m(SCR[0] + 3, SCR[1] + 3), [a1, b1] = m(SCR[2] - 3, SCR[3] - 3), sg = { x: a0, y: b0, w: a1 - a0, h: b1 - b0 };
+  const cr = scrContent(2.0);
+  if (state === 'washed') {
+    const hz = X.createRadialGradient(g.x + g.w, g.y, 0, g.x + g.w, g.y, g.w * 1.3);
+    hz.addColorStop(0, 'rgba(255,248,230,.9)'); hz.addColorStop(.45, 'rgba(255,240,214,.4)'); hz.addColorStop(1, 'rgba(255,240,214,.08)');
+    X.fillStyle = hz; X.fillRect(g.x, g.y, g.w, g.h);
+    X.drawImage(IM.pool, ...cr, sg.x, sg.y, sg.w, sg.h); X.fillStyle = 'rgba(252,250,244,.9)'; X.fillRect(sg.x, sg.y, sg.w, sg.h);
+    const gl = X.createLinearGradient(sg.x, sg.y, sg.x + sg.w, sg.y + sg.h); gl.addColorStop(.3, 'rgba(255,255,255,0)'); gl.addColorStop(.55, 'rgba(255,255,255,.8)'); gl.addColorStop(.8, 'rgba(255,255,255,0)');
+    X.fillStyle = gl; X.fillRect(sg.x, sg.y, sg.w, sg.h);
+    const [r0, q0] = m(REF[0], REF[1]), [r1, q1] = m(REF[2], REF[3]); X.fillStyle = 'rgba(240,244,240,.62)'; X.fillRect(r0, q0, r1 - r0, q1 - q0);
+    sunFlareLocal(g.x + g.w * .9, g.y + g.h * .08, g, .9);
+  } else {
+    X.save(); X.globalCompositeOperation = 'screen'; X.globalAlpha = .5; X.filter = 'blur(30px) saturate(1.6)'; X.drawImage(IM.pool, ...cr, sg.x - sg.w * .08, sg.y - sg.h * .1, sg.w * 1.16, sg.h * 1.2); X.restore();
+    X.filter = 'saturate(1.45) contrast(1.15) brightness(1.12)'; X.drawImage(IM.pool, ...cr, sg.x, sg.y, sg.w, sg.h); X.filter = 'none';
+    X.save(); X.globalAlpha = .22; const pat = X.createPattern(ledTile(3, 'dot', '#000'), 'repeat'); pat.setTransform(new DOMMatrix().translate(sg.x, sg.y)); X.fillStyle = pat; X.fillRect(sg.x, sg.y, sg.w, sg.h); X.restore();
+    const hz = X.createRadialGradient(g.x + g.w, g.y, 0, g.x + g.w, g.y, g.w * 1.2);
+    hz.addColorStop(0, 'rgba(255,248,230,.55)'); hz.addColorStop(1, 'rgba(255,240,214,0)'); X.fillStyle = hz; X.fillRect(g.x, g.y, g.w, g.h);
+    sunFlareLocal(g.x + g.w * .9, g.y + g.h * .08, g, .6);
+  }
+  X.restore();
+  return sg;
+}
+function sunFlareLocal(x, y, g, k) { X.save(); rr(g.x, g.y, g.w, g.h, g.r || 0); X.clip(); sunFlare(x, y, k * .8, 1.3); X.restore(); }
+function ctaButton(label, cx, cy, w, h, o = {}) {
+  X.save(); X.shadowColor = 'rgba(245,165,36,.35)'; X.shadowBlur = 40; X.shadowOffsetY = 12;
+  rr(cx - w / 2, cy - h / 2, w, h, h * .22); X.fillStyle = C.ink; X.fill(); X.shadowColor = 'transparent';
+  const ds = h * .1, dx = cx + w / 2 - h * .5;
+  X.beginPath(); X.arc(dx, cy, ds + 8, 0, 7); X.fillStyle = 'rgba(245,165,36,.3)'; X.fill();
+  X.beginPath(); X.arc(dx, cy, ds, 0, 7); X.fillStyle = C.sun; X.fill();
+  text(label, dx - h * .28, cy + h * .15, { size: o.size || h * .42, w: 800, color: '#fff', align: 'right' });
+  const ax = cx - w / 2 + h * .48; X.strokeStyle = C.sun; X.lineWidth = h * .055; X.lineCap = 'round'; X.lineJoin = 'round';
+  X.beginPath(); X.moveTo(ax + h * .26, cy); X.lineTo(ax - 3, cy); X.moveTo(ax + h * .11, cy - h * .14); X.lineTo(ax - 3, cy); X.lineTo(ax + h * .11, cy + h * .14); X.stroke();
+  X.restore();
+}
+function logo(cx, cy, w) { const h = w * 66.4 / 448.3; X.drawImage(IM.logo, cx - w / 2, cy - h / 2, w, h); }
+function toggle(cx, cy, w) { // the "switch": an ON toggle on the seam
+  const h = w * .52; X.save(); X.shadowColor = 'rgba(7,19,31,.3)'; X.shadowBlur = 30; X.shadowOffsetY = 10;
+  rr(cx - w / 2, cy - h / 2, w, h, h / 2); X.fillStyle = C.ink; X.fill(); X.shadowColor = 'transparent';
+  rr(cx - w / 2 + 4, cy - h / 2 + 4, w - 8, h - 8, h / 2); X.lineWidth = 2; X.strokeStyle = 'rgba(255,255,255,.2)'; X.stroke();
+  X.shadowColor = C.sun; X.shadowBlur = 26; X.beginPath(); X.arc(cx + w / 2 - h / 2, cy, h * .36, 0, 7); X.fillStyle = C.sun; X.fill(); X.restore();
+  text('ON', cx - w * .14, cy + h * .13, { size: h * .36, w: 800, color: '#fff', dir: 'ltr' });
+}
+function quoteCard(x, y, w, h, lines, who) { // lines at 50px rhythm, name below
+  X.save(); X.shadowColor = 'rgba(7,19,31,.14)'; X.shadowBlur = 40; X.shadowOffsetY = 14; rr(x, y, w, h, 28); X.fillStyle = '#fff'; X.fill(); X.restore();
+  for (let k = 0; k < 5; k++) star(x + w - 50 - k * 44, y + 52, 17, C.sun);
+  lines.forEach((l, i) => text(l, x + w - 40, y + 114 + i * 54, { size: 40, w: 700, align: 'right' }));
+  text(who, x + w - 40, y + 114 + lines.length * 54 + 12, { size: 30, w: 500, color: C.mute, align: 'right' });
+}
+const STILLS = {
+  // 1. the sun test, before / after (4:5)
+  'sun-test-4x5'() {
+    paperBG(0); logo(W / 2, 74, 300);
+    words(['ברור', 'כמו', 'לילה.'], { x: W / 2, y: 238, size: 134, align: 'center' });
+    words(['גם', 'בשמש', 'של', { t: 'אוגוסט.', hl: true }], { x: W / 2, y: 366, size: 134, align: 'center', hl: () => 1 });
+    const p1 = { x: 60, y: 420, w: 960, h: 345, r: 28 }, p2 = { x: 60, y: 795, w: 960, h: 345, r: 28 };
+    poolPanel(p1, 'washed'); poolPanel(p2, 'vivid');
+    pill('טלוויזיה ביתית · 400–600 NIT · נעלמת בשמש', p1.x + p1.w - 22, p1.y + 44, { size: 27, dot: C.r, align: 'right', w: 700 });
+    pill('מסך LED של סוויצ׳ינג · עד 6,500 NIT', p2.x + p2.w - 22, p2.y + p2.h - 44, { size: 27, dot: C.g, align: 'right', w: 700 });
+    tag('הדמיה', p2.x + 150, p2.y + p2.h - 34, false);
+    toggle(W / 2, 780, 150);
+    ctaButton('לייעוץ חינם', 790, 1238, 460, 108);
+    text('switching.co.il', 318, 1232, { size: 48, w: 800, dir: 'ltr' });
+    text('054-638-8090 · התקנה בכל הארץ', 318, 1282, { size: 28, w: 600, color: C.mute });
+  },
+  // 2. the sun test, side by side (1:1)
+  'sun-test-1x1'() {
+    paperBG(0); logo(W / 2, 66, 270);
+    words(['ברור', 'כמו', 'לילה.', 'גם', 'בשמש', 'של', { t: 'אוגוסט.', hl: true }], { x: W / 2, y: 210, size: fitSize(['ברור', 'כמו', 'לילה.', 'גם', 'בשמש', 'של', 'אוגוסט.'], 104, W - 100), align: 'center', hl: () => 1 });
+    const pr = { x: 555, y: 260, w: 465, h: 590, r: 26 }, pl = { x: 60, y: 260, w: 465, h: 590, r: 26 };
+    poolPanel(pr, 'washed', 330); poolPanel(pl, 'vivid', 330);
+    pill('טלוויזיה ביתית', pr.x + pr.w / 2, pr.y + pr.h - 92, { size: 28, dot: C.r, w: 800 });
+    text('400–600 NIT', pr.x + pr.w / 2, pr.y + pr.h - 26, { size: 34, w: 800, color: C.ink, dir: 'ltr', shadow: 'rgba(255,255,255,.9)', shadowBlur: 16 });
+    pill('LED של סוויצ׳ינג', pl.x + pl.w / 2, pl.y + pl.h - 92, { size: 28, dot: C.g, w: 800 });
+    text('עד 6,500 NIT', pl.x + pl.w / 2, pl.y + pl.h - 26, { size: 34, w: 800, color: '#fff', shadow: 'rgba(0,0,0,.6)', shadowBlur: 16 });
+    tag('הדמיה', pl.x + 150, pl.y + 40, false);
+    toggle(W / 2, 555, 124);
+    ctaButton('לייעוץ חינם', 770, 962, 420, 100);
+    text('switching.co.il', 300, 956, { size: 44, w: 800, dir: 'ltr' });
+    text('054-638-8090', 300, 1002, { size: 30, w: 600, color: C.mute, dir: 'ltr' });
+  },
+  // 3. TIVI asks (1:1)
+  'tivi-1x1'() {
+    paperBG(0, 1.3); logo(W / 2, 70, 300);
+    const bcy = 290; bubble(W / 2, bcy, 880, 250, W / 2, 452, 1);
+    text('איזה מסך מתאים לכם?', W / 2, bcy - 14, { size: 72, w: 800, dir: 'rtl' });
+    text('3 שאלות, ואני יודע.', W / 2, bcy + 66, { size: 58, w: 500, color: C.ink2, dir: 'rtl' });
+    tivi(W / 2, 790, 16, { face: 'happy', t: .5 });
+    text('מסכי LED ענקיים לבריכה, לחצר, לקולנוע ולעסק', W / 2, 856, { size: 36, w: 700, color: C.ink2 });
+    ctaButton('לתכנן מסך באתר', W / 2, 950, 560, 104);
+    text('switching.co.il · התקנה בכל הארץ · 3 שנות אחריות', W / 2, 1044, { size: 28, w: 600, color: C.mute });
+  },
+  // 4. story: the vivid pool with the offer (9:16)
+  'story-9x16'() {
+    const g = scenePool(6.4); badge(1);
+    words(['ברור', 'כמו', 'לילה.'], { x: W / 2, y: L.hY1, size: L.hSize * 1.05, align: 'center' });
+    words(['גם', 'בשמש', 'של', { t: 'אוגוסט.', hl: true }], { x: W / 2, y: L.hY2, size: L.hSize, align: 'center', hl: () => 1 });
+    const specs = [['6,500 NIT', C.sun], ['IP65 · עמיד מים', C.cyan], ['התקנה ביום אחד', C.g], ['אחריות 3 שנים', C.b]];
+    specs.forEach(([s_, c], i) => pill(s_, i % 2 ? 300 : 780, 745 + Math.floor(i / 2) * 92, { size: 34, dot: c, w: 800 }));
+    tag('הדמיה', g.x + g.w - 16, g.y + 34, false);
+    ctaButton('לייעוץ חינם', W / 2, 1348, 600, 124);
+    text('switching.co.il · 054-638-8090', W / 2 - 30, 1462, { size: 40, w: 800, color: '#fff', shadow: 'rgba(0,0,0,.55)', shadowBlur: 18 });
+    tivi(958, 1640, 8, { face: 'happy', t: .5 });
+  },
+  // 5. business: real installation + customer quote (4:5)
+  'business-4x5'() {
+    paperBG(0); logo(W / 2, 70, 300);
+    text('שילוט דיגיטלי ותפריטי LED לעסקים', W / 2, 160, { size: 38, w: 700, color: C.blueInk });
+    words([{ t: 'מהשטח.' }, { t: 'לא', color: C.mute }, { t: 'מהדמיה.', color: C.mute }], { x: W / 2, y: 290, size: 124, align: 'center' });
+    const g = device(W / 2, 598, 900, 900 * 9 / 16);
+    X.save(); rr(g.x, g.y, g.w, g.h, g.r); X.clip(); const [a, b, c, d] = coverRect(IM.meira, g.w, g.h, .5, .42, 1.02); X.drawImage(IM.meira, a, b, c, d, g.x, g.y, g.w, g.h); X.restore();
+    tag('מהשטח · צילום אמיתי', g.x + g.w - 16, g.y + 34, true);
+    pill('תפריט LED מעל הדלפק · מסעדה', g.x + 16, g.y + g.h - 34, { size: 24, bg: 'rgba(255,255,255,.92)', align: 'left', shadow: false, w: 700 });
+    quoteCard(60, 896, 960, 262, ['״התקנו לנו שילוט דיגיטלי בכניסה לעסק.', 'ההמרה עלתה מהיום הראשון.״'], 'שירה ל., מסעדה, תל אביב');
+    ctaButton('לייעוץ חינם', 790, 1240, 460, 108);
+    text('200+ פרויקטים בכל הארץ', 318, 1234, { size: 38, w: 800 });
+    text('switching.co.il · 054-638-8090', 318, 1282, { size: 28, w: 600, color: C.mute });
+  }
+};
+window.drawStill = name => { X = MAIN; X.setTransform(1, 0, 0, 1, 0, 0); X.globalAlpha = 1; X.globalCompositeOperation = 'source-over'; X.filter = 'none'; STILLS[name](); grain(0, .03); };
+window.render = render;
+window.META = { W, H, DUR, FPS: 30 };
+window.READY = loadAll().then(() => { Q.get('still') ? window.drawStill(Q.get('still')) : render(+(Q.get('t') || 0)); return true; });
+</script>
+</body>
+</html>
