@@ -215,6 +215,26 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;bac
 .meter i{display:block;height:100%;background:var(--ink);transition:width .15s}
 .fine{font-size:13.5px;color:var(--mute);margin:0}
 
+/* ---------- film ---------- */
+.film{background:radial-gradient(ellipse 70% 60% at 22% 45%,rgba(23,137,201,.3),transparent 70%),radial-gradient(ellipse 45% 45% at 85% 85%,rgba(245,165,36,.16),transparent 70%),var(--ink);color:#fff;overflow:hidden}
+.film .h2{color:#fff}.film .lead{color:#C4D0DB}.film .eyebrow{color:var(--cyan)}
+.film-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(32px,6vw,96px);align-items:center}
+.film-points{list-style:none;margin:26px 0 0;padding:0;display:flex;flex-direction:column;gap:12px}
+.film-points li{display:flex;gap:12px;align-items:flex-start;color:#DCE5EE;font-size:17px}
+.film-points li::before{content:"";flex:none;width:10px;height:10px;margin-top:9px;border-radius:3px;background:var(--sun);box-shadow:0 0 12px rgba(245,165,36,.7)}
+.film .btn.ghost{--fg:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.7)}
+.film .btn.ghost:hover{--bg:#fff;--fg:var(--ink)}
+.film-phone{position:relative;justify-self:center;width:min(360px,78vw);aspect-ratio:9/16;border-radius:44px;padding:11px;background:#0B1926;box-shadow:0 50px 100px -30px rgba(0,0,0,.85),inset 0 0 0 1.5px rgba(255,255,255,.14),0 0 90px -24px rgba(23,137,201,.6)}
+.film-phone::before{content:"";position:absolute;inset:5px;border-radius:39px;border:1.5px solid rgba(255,255,255,.1);pointer-events:none}
+.film-phone::after{content:"";position:absolute;left:50%;bottom:3px;width:33px;height:3px;margin-left:-16px;background:linear-gradient(90deg,var(--r) 0 30%,transparent 30% 35%,var(--g) 35% 65%,transparent 65% 70%,var(--b) 70%)}
+.film-phone video{width:100%;height:100%;object-fit:cover;border-radius:34px;display:block;background:#000}
+.film-snd{position:absolute;left:24px;bottom:24px;z-index:2;width:50px;height:50px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:var(--ink);display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.35)}
+.film-snd svg{width:24px;height:24px}
+.film-snd[aria-pressed="false"]::after{content:"";position:absolute;width:30px;height:2.5px;border-radius:2px;background:currentColor;transform:rotate(-45deg)}
+.film-lnk{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--sun);padding-bottom:1px}
+.film-lnk svg{width:14px;height:14px;color:var(--sun)}
+@media (max-width:860px){.film-grid{grid-template-columns:1fr}}
+
 /* ---------- planner ---------- */
 .pl{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:22px;margin-top:40px;align-items:start}
 .pl-in{background:#fff;border-radius:20px;box-shadow:var(--sh1);padding:clamp(20px,3vw,32px);display:flex;flex-direction:column;gap:28px}
@@ -706,7 +726,7 @@ html.a-still .tivi *{animation:none!important}
     <a class="btn" href="#planner" data-preset="home"><span class="pw" aria-hidden="true"></span>מסך לבית</a>
     <a class="btn ghost" href="#planner" data-preset="biz">מסך לעסק</a>
    </div>
-   <div class="trust"><span><span class="stars" aria-hidden="true">★★★★★</span><b class="num" style="font-size:19px">5.0</b> לקוחות ממליצים</span><span><svg><use href="#i-shield"/></svg>IP65 עמיד מים</span><span><svg><use href="#i-bolt"/></svg>התקנה ביום אחד</span></div>
+   <div class="trust"><span><span class="stars" aria-hidden="true">★★★★★</span><b class="num" style="font-size:19px">5.0</b> לקוחות ממליצים</span><span><svg><use href="#i-shield"/></svg>IP65 עמיד מים</span><span><svg><use href="#i-bolt"/></svg>התקנה ביום אחד</span><a class="film-lnk" href="#film"><svg><use href="#i-play"/></svg>הסרט, 26 שניות</a></div>
   </div>
   <div class="screen-wrap">
    <div class="screen" id="heroScreen">
@@ -724,6 +744,26 @@ html.a-still .tivi *{animation:none!important}
 </section>
 
 <section class="stats" aria-label="המספרים של סוויצ׳ינג"><div class="wrap" id="stats"><div class="stat"><span class="num" data-to="200">200<small>+</small></span><span>פרויקטים בכל הארץ</span></div><div class="stat"><span class="num" data-to="10">10</span><span>שנות ניסיון בשטח</span></div><div class="stat"><span class="num" data-to="3">3</span><span>שנות אחריות מלאה</span></div><div class="stat"><span class="num" data-to="6,500">6,500<small>NIT</small></span><span>בהירות מרבית</span></div></div><div class="wrap stats-note">נתוני העסק. מספרי המפרט מתייחסים לדגמים המובילים.</div></section>
+
+<section class="sec film" id="film" aria-labelledby="filmH">
+ <div class="wrap film-grid">
+  <div class="rv">
+   <span class="eyebrow">הסרט · 26 שניות</span>
+   <h2 class="h2" id="filmH">מבחן השמש, בלי לגרור כלום.</h2>
+   <p class="lead">בצהריים של אוגוסט טלוויזיה רגילה נעלמת. מסך LED של סוויצ׳ינג נשאר ברור כמו לילה. טיבי מראה את ההבדל בסרט אחד קצר.</p>
+   <ul class="film-points">
+    <li>עד <bdi dir="ltr">6,500 NIT</bdi>, לעומת <bdi dir="ltr">400–600</bdi> בטלוויזיה ביתית</li>
+    <li>עמידות IP65, התקנה ביום אחד ו-3 שנות אחריות</li>
+    <li>צילומים אמיתיים מהשטח, וכל הדמיה מסומנת</li>
+   </ul>
+   <div class="hero-cta"><button class="btn sun" type="button" id="filmPlay"><svg><use href="#i-sound"/></svg>לצפות עם סאונד</button><a class="btn ghost" href="#sun">לנסות את מבחן השמש</a></div>
+  </div>
+  <div class="film-phone rv">
+   <video id="filmVid" data-src="m/ad_reel.mp4" poster="m/ad_reel_poster.jpg" muted loop playsinline preload="none" aria-label="סרטון: מבחן השמש של סוויצ׳ינג TV, 26 שניות"></video>
+   <button class="film-snd" type="button" id="filmSnd" aria-pressed="false" aria-label="הפעלת סאונד"><svg><use href="#i-sound"/></svg></button>
+  </div>
+ </div>
+</section>
 
 <section class="sec" id="solutions" aria-labelledby="solH">
  <div class="wrap">
@@ -1184,6 +1224,17 @@ function heroEntry(){
 function countUp(){ if(reduce())return; $$('#stats .num').forEach(n=>{const raw=n.dataset.to; const val=parseFloat(raw.replace(/,/g,'')); if(!isFinite(val))return; const small=n.querySelector('small'); const suf=small?small.outerHTML:''; const t0=performance.now(), D=1400;
   (function f(t){const k=Math.min(1,(t-t0)/D), e=1-Math.pow(1-k,3), x=Math.round(val*e); n.innerHTML=(raw.includes(',')?x.toLocaleString('en-US'):x)+suf; if(k<1)requestAnimationFrame(f);})(t0);});}
 
+/* ---------- film ---------- */
+function film(){
+ const v=$('#filmVid'), snd=$('#filmSnd'), play=$('#filmPlay'); if(!v)return;
+ const load=()=>{ if(!v.getAttribute('src'))v.src=v.dataset.src; };
+ const setSnd=on=>{ v.muted=!on; snd.setAttribute('aria-pressed',String(on)); snd.setAttribute('aria-label',on?'השתקת הסאונד':'הפעלת סאונד'); };
+ // plays muted while on screen (never under reduced motion); sound only on request
+ new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ load(); if(!reduce()||!v.muted)v.play().catch(()=>{}); } else v.pause(); }),{threshold:.35}).observe(v);
+ snd.addEventListener('click',()=>{ load(); setSnd(v.muted); v.play().catch(()=>{}); });
+ play.addEventListener('click',()=>{ load(); setSnd(true); v.currentTime=0; v.play().catch(()=>{}); v.scrollIntoView({behavior:reduce()?'auto':'smooth',block:'center'}); });
+}
+
 /* ---------- sun test ---------- */
 function sunTest(){
  const r=$('#sunR'), sc=$('#scene'); let touched=false;
@@ -1623,6 +1674,7 @@ const TIVI=(()=>{
  }
  const go=sel=>{const t=document.querySelector(sel); t&&t.scrollIntoView({behavior:reduce()?'auto':'smooth'});};
  const TIPS=[
+  ['#film','film',()=>'זה הסרט שלנו. 26 שניות, ועם סאונד זה עוד יותר טוב.','#filmPlay',[['להפעיל עם סאונד',()=>{const b=document.querySelector('#filmPlay');b&&b.click();}]]],
   ['#solutions','sol',()=>'כל כרטיס כאן נפתח למפרט מלא: טבלת השוואה, שאלות, מחיר ודגם.','.sol.big'],
   ['#sun','sun',()=>'גררו את השמש לצהריים ותראו מה קורה לטלוויזיה רגילה. אני כבר יודע.','#sunR',null,'sun'],
   ['#planner','plan',()=>'שלוש שאלות, ואני מחשב לכם גודל, פיקסל ובהירות. בלי להשאיר פרטים.','#plOut',[['לתכנן עכשיו',()=>{go('#planner');setTimeout(()=>{const b=document.querySelector('#plSpace .opt');b&&b.focus({preventScroll:true});},600);}]]],
@@ -1667,7 +1719,7 @@ const TIVI=(()=>{
 window.TIVI=TIVI;
 
 /* ---------- boot ---------- */
-applyContent(); renderStatic(); reelUI(); sunTest(); planner();
+applyContent(); renderStatic(); reelUI(); film(); sunTest(); planner();
 POSTS_IDX=GUIDES; renderGuides();
 $$('.rv').forEach(e=>rio.observe(e));
 heroEntry();
