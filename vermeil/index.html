@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VERMEIL — הטעם של הרגע</title>
+<meta name="description" content="ורמיי: יין ואלכוהול מכל העולם, בחנויות שעוצבו כמו גלריה.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script>document.documentElement.classList.add('fl');(function(){var d=document.documentElement,done=function(){d.classList.remove('fl')};setTimeout(done,3000);window.__vf=function(){Promise.all(['400 1em Bellefair','400 1em Assistant','italic 500 1em "Cormorant Garamond"','600 1em "Cormorant Garamond"'].map(function(f){return document.fonts.load(f)})).then(done,done)};})();</script>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bellefair&family=Assistant:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" onload="this.onload=null;this.rel='stylesheet';window.__vf&&window.__vf()"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bellefair&family=Assistant:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap"></noscript>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23120709'/%3E%3Cpath d='M28 30 L50 76 L72 30' fill='none' stroke='%23E6CD98' stroke-width='7'/%3E%3C/svg%3E">
+<style>
+:root{--ink:#120709;--ink2:#1B0B10;--wine:#4A1020;--wine2:#6B1A2E;--gold:#C9A46A;--gold2:#E6CD98;--cream:#F3EBDD;--muted:#BFAE9C;--line:rgba(201,164,106,.22);--line2:rgba(201,164,106,.5);--disp:'Bellefair','Frank Ruhl Libre',Georgia,serif;--lat:'Cormorant Garamond',Georgia,serif;--sans:'Assistant','Segoe UI',system-ui,sans-serif;color-scheme:dark}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#120709}}
+:root[data-theme="dark"]{--ink:#120709}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html.fl main,html.fl .nav,html.fl footer,html.fl .gate h1,html.fl .gate p,html.fl .gate .row{visibility:hidden}
+.gate h1,.gate p,.gate .row{transition:opacity .5s}
+.box::before,.tagbox::before,.pick::before,.xc::after,.frame::before,.mcard::after{pointer-events:none}
+html{overflow-x:hidden;scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 90px);background:var(--ink)}
+body{margin:0;background:var(--ink);color:var(--cream);font:400 18px/1.7 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+::selection{background:var(--gold);color:var(--ink)}
+.wrap{width:min(1240px,100% - 48px);margin-inline:auto}
+.disp{font-family:var(--disp);font-weight:400;line-height:1.05;letter-spacing:.005em}
+.lat{font-family:var(--lat);font-style:italic}
+.eyebrow{font:600 13px var(--sans);letter-spacing:.34em;color:var(--gold);text-transform:uppercase;direction:ltr;display:inline-block}
+h2.disp{font-size:clamp(46px,6.2vw,96px);margin:14px 0 0}
+.lead{color:var(--muted);font-size:clamp(17px,1.5vw,20px);max-width:620px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;height:56px;padding:0 34px;font:600 16px var(--sans);letter-spacing:.06em;text-decoration:none;cursor:pointer;border:1px solid var(--gold);transition:background .35s,color .35s,transform .35s}
+.btn-gold{background:var(--gold);color:var(--ink)}
+.btn-gold:hover{background:var(--gold2)}
+.btn-line{background:transparent;color:var(--gold)}
+.btn-line:hover{background:rgba(201,164,106,.12)}
+:focus-visible{outline:2px solid var(--gold2);outline-offset:3px}
+.rv{opacity:0;transform:translateY(34px);transition:opacity 1.2s cubic-bezier(.2,.7,.2,1),transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+.mask{display:block;overflow:hidden}.mask>span{display:block;transform:translateY(105%);transition:transform 1.3s cubic-bezier(.2,.75,.15,1)}
+.in .mask>span,.mask.in>span{transform:none}
+.mask:nth-child(2)>span{transition-delay:.12s}.mask:nth-child(3)>span{transition-delay:.24s}
+
+/* age gate */
+.gate{position:fixed;inset:0;z-index:300;display:grid;place-items:center;background:radial-gradient(ellipse at center,#2A0E17,#0B0405 70%);padding:24px;transition:opacity .9s}
+.gate.out{opacity:0;pointer-events:none}
+.gate .box{text-align:center;width:min(520px,100%);height:min(500px,84vh);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 30px;border:1px solid var(--line2);position:relative}
+.gate .box::before{content:"";position:absolute;inset:9px;border:1px solid var(--line)}
+.gate h1{font:400 clamp(34px,9vw,44px)/1.1 var(--disp);margin:26px 0 10px;min-height:1.1em}
+.gate p{color:var(--muted);margin:0 0 30px;min-height:3.4em;display:flex;align-items:center;justify-content:center}
+.gate .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.seal{width:92px;height:92px;margin:auto}
+.seal circle,.seal path{fill:none;stroke:var(--gold);stroke-width:1.2;stroke-dasharray:1;stroke-dashoffset:1;animation:dr 1.6s .2s cubic-bezier(.6,0,.2,1) forwards}
+.seal path{animation-delay:.8s}
+@keyframes dr{to{stroke-dashoffset:0}}
+
+/* nav */
+.nav{position:fixed;inset-inline:0;top:0;z-index:50;padding-top:env(safe-area-inset-top,0px);transition:background .5s,border-color .5s;border-bottom:1px solid transparent}
+.nav.s{background:rgba(18,7,9,.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-color:var(--line)}
+.nav-in{height:86px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
+.nav-l{display:flex;gap:30px;font-size:15px;letter-spacing:.04em}
+.nav-l a{text-decoration:none;color:var(--muted);transition:color .3s;position:relative}
+.nav-l a:hover{color:var(--gold2)}
+.logo{display:flex;flex-direction:column;align-items:center;text-decoration:none;gap:2px}
+.logo b{font:600 26px/1 var(--lat);font-style:normal;letter-spacing:.42em;margin-inline-start:.42em;direction:ltr;color:var(--cream)}
+.logo small{font:600 9px var(--sans);letter-spacing:.5em;color:var(--gold);direction:ltr}
+.nav-r{display:flex;justify-content:flex-end;gap:10px}
+.icn{width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line);color:var(--gold);border-radius:50%;background:none;cursor:pointer;text-decoration:none;position:relative}
+.icn:hover{border-color:var(--gold)}
+.cnt{position:absolute;top:-4px;left:-4px;min-width:20px;height:20px;border-radius:10px;background:var(--gold);color:var(--ink);font:700 11px/20px var(--sans);text-align:center;padding:0 5px}
+.burger{display:none}
+@media (max-width:980px){.nav-l{display:none}.burger{display:grid}.nav-in{grid-template-columns:auto 1fr auto}.logo{align-items:flex-start}}
+.mnav{position:fixed;inset:0;z-index:60;background:rgba(18,7,9,.97);display:flex;flex-direction:column;justify-content:center;padding:32px;opacity:0;pointer-events:none;transition:opacity .4s}
+.mnav.open{opacity:1;pointer-events:auto}
+.mnav a{font:400 42px/1.5 var(--disp);text-decoration:none;border-bottom:1px solid var(--line)}
+.mnav .icn{position:absolute;top:calc(env(safe-area-inset-top,0px) + 22px);left:24px}
+
+/* hero */
+.hero{position:relative;min-height:100vh;min-height:100svh;overflow:hidden;display:grid;align-items:start;background:radial-gradient(ellipse 80% 60% at 50% 30%,#3A1220 0%,#1B0B10 45%,#0B0405 100%)}
+.beam{position:absolute;top:-220px;left:50%;width:1400px;height:1400px;margin-left:-700px;background:conic-gradient(from 180deg at 50% 0%,transparent 160deg,rgba(230,205,152,.2) 175deg,rgba(230,205,152,.34) 180deg,rgba(230,205,152,.2) 185deg,transparent 200deg);transform-origin:50% 0;animation:sway 11s ease-in-out infinite alternate;will-change:transform;pointer-events:none}
+@keyframes sway{from{transform:rotate(-11deg)}to{transform:rotate(11deg)}}
+#dust{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.shelf{position:absolute;inset-inline:0;bottom:7%;display:flex;justify-content:center;align-items:flex-end;gap:clamp(8px,2vw,34px)}
+.shelf .b{width:clamp(40px,4.6vw,72px);transform-origin:bottom;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.shelf .b:nth-child(odd){margin-bottom:-2px}
+.shelf .b svg{width:100%;height:auto;display:block;filter:drop-shadow(0 20px 26px rgba(0,0,0,.6))}
+.board{position:absolute;inset-inline:6%;bottom:calc(7% - 14px);height:14px;background:linear-gradient(180deg,#5B3A24,#2A170D);box-shadow:0 30px 60px rgba(0,0,0,.7);border-top:1px solid rgba(230,205,152,.3)}
+.hero-copy{position:relative;z-index:3;text-align:center;padding-top:clamp(120px,15vh,150px)}
+.hero h1{font:400 clamp(62px,min(9vw,15vh),150px)/.95 var(--disp);margin:18px 0 0;text-shadow:0 10px 60px rgba(0,0,0,.6)}
+.hero h1 .gold{color:var(--gold2)}
+.hero .lead{margin:22px auto 0}
+.hero .ctas{display:flex;gap:12px;justify-content:center;margin-top:34px;flex-wrap:wrap}
+@media (max-width:760px){.shelf{bottom:6%}.board{bottom:calc(6% - 14px)}.shelf .b:nth-child(n+6){display:none}.shelf .b{width:56px}.hero .btn{height:50px;padding:0 24px}}
+
+/* framed story */
+.story{padding:clamp(120px,15vw,210px) 0}
+.frame{position:relative;border:1px solid var(--line2);padding:clamp(40px,6vw,90px) clamp(26px,7vw,110px)}
+.frame::before{content:"";position:absolute;inset:10px;border:1px solid var(--line);pointer-events:none}
+.frame .mono{position:absolute;top:50%;left:clamp(-40px,-4vw,-24px);transform:translateY(-50%);background:var(--ink);padding:22px 0}
+.frame .mono svg{width:clamp(80px,10vw,140px);height:auto;display:block}
+.story-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center;padding-inline-start:0;padding-inline-end:clamp(50px,9vw,130px)}
+.story p{color:var(--muted)}
+.story .sig{font:500 34px var(--lat);color:var(--gold2);margin-top:26px;direction:ltr;text-align:right}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line)}
+.facts div{background:var(--ink);padding:28px}
+.facts b{display:block;font:400 48px/1 var(--disp);color:var(--gold2)}
+.facts span{color:var(--muted);font-size:15px}
+@media (max-width:900px){.story-grid{grid-template-columns:1fr;padding:0}.frame .mono{top:0;left:50%;transform:translate(-50%,-50%);padding:0 18px}.frame .mono svg{width:64px}.frame{padding-top:70px}}
+/* collection */
+.coll{padding:40px 0 150px}
+.head>div{min-width:0;max-width:100%}.head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:46px}
+.tabs{display:flex;gap:6px;flex-wrap:nowrap;overflow-x:auto;max-width:100%;scrollbar-width:none;border-bottom:1px solid var(--line);padding-bottom:0}
+.tab{white-space:nowrap;flex:none;background:none;border:0;border-bottom:1px solid transparent;margin-bottom:-1px;color:var(--muted);font:500 16px var(--sans);padding:12px 16px;cursor:pointer;transition:color .3s,border-color .3s}
+.tab[aria-selected="true"]{color:var(--gold2);border-color:var(--gold)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;padding:1px}
+.grid .prod{box-shadow:0 0 0 1px #3A2419}
+@keyframes pin{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.prod.pin{animation:pin .7s cubic-bezier(.2,.75,.15,1) both}
+.prod{position:relative;background:var(--ink);padding:34px 26px 30px;display:flex;flex-direction:column;align-items:center;text-align:center;overflow:hidden;cursor:pointer;min-height:520px;transition:background .5s}
+.prod::before{content:"";position:absolute;left:50%;top:40px;width:260px;height:260px;margin-left:-130px;border-radius:50%;background:radial-gradient(closest-side,rgba(230,205,152,.22),transparent);opacity:.35;transition:opacity .6s,transform .8s;transform:scale(.8)}
+.prod:hover{background:#1A0A0E}
+.prod:hover::before{opacity:1;transform:scale(1.1)}
+.prod .bt{height:270px;display:flex;align-items:flex-end;position:relative;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.prod .bt svg{height:100%;width:auto;filter:drop-shadow(0 26px 20px rgba(0,0,0,.65))}
+.prod:hover .bt{transform:translateY(-14px) rotate(-3deg)}
+.prod .ped{width:130px;height:10px;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.8),transparent);margin-top:2px}
+.prod .reg{font:600 11px var(--sans);letter-spacing:.3em;color:var(--gold);margin-top:22px}
+.prod h3{font:400 26px/1.2 var(--disp);margin:8px 0 6px}
+.prod .notes{color:var(--muted);font-size:14px;min-height:22px}
+.prod .pr{display:flex;align-items:center;gap:14px;margin-top:16px}
+.prod .pr b{font:500 26px var(--lat);font-style:normal;color:var(--gold2)}
+.add{width:40px;height:40px;border:1px solid var(--line2);background:none;color:var(--gold);cursor:pointer;display:grid;place-items:center;transition:background .3s}
+.add:hover{background:var(--gold);color:var(--ink)}
+.prod.hide{display:none}
+@media (max-width:1000px){.grid{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.prod{min-height:440px}.prod .bt{height:210px}}
+
+/* band */
+.band{position:relative;min-height:80vh;display:grid;place-items:center;overflow:hidden;isolation:isolate;background:#0B0405}
+.band .pat{position:absolute;inset:-30% 0;z-index:-2;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='260' viewBox='0 0 90 260'%3E%3Cpath d='M30 250 V110 Q30 88 40 80 V20 H50 V80 Q60 88 60 110 V250 Z' fill='none' stroke='%23C9A46A' stroke-opacity='.16' stroke-width='1.2'/%3E%3C/svg%3E");background-size:90px 260px;will-change:transform}
+.band::after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse at center,rgba(18,7,9,.4),rgba(11,4,5,.96) 72%)}
+.tagbox{text-align:center;padding:42px clamp(26px,7vw,90px);border:1px solid var(--line2);position:relative;background:rgba(11,4,5,.5)}
+.tagbox::before{content:"";position:absolute;inset:9px;border:1px solid var(--line)}
+.tagbox strong{display:block;font:500 clamp(40px,6vw,92px)/1 var(--lat);letter-spacing:.06em;direction:ltr;color:var(--gold2)}
+.tagbox span{display:block;margin-top:16px;color:var(--muted);letter-spacing:.08em}
+
+/* sommelier */
+.som{padding:150px 0;background:linear-gradient(180deg,var(--ink),#1A0A0E 50%,var(--ink))}
+.som-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+.q{margin-top:34px}
+.q b{display:block;font:400 26px var(--disp);margin-bottom:14px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{border:1px solid var(--line2);background:none;color:var(--cream);font:500 15px var(--sans);padding:11px 18px;cursor:pointer;transition:all .3s}
+.opt:hover{border-color:var(--gold)}
+.opt[aria-pressed="true"]{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+.pick{position:relative;min-height:560px;border:1px solid var(--line2);display:grid;place-items:center;text-align:center;padding:40px;overflow:hidden}
+.pick::before{content:"";position:absolute;inset:10px;border:1px solid var(--line)}
+.pick .glow{position:absolute;left:50%;top:18%;width:420px;height:420px;margin-left:-210px;border-radius:50%;background:radial-gradient(closest-side,rgba(230,205,152,.22),transparent)}
+.pick .res{position:relative;transition:opacity .5s,transform .7s}
+.pick .res.swap{opacity:0;transform:translateY(20px)}
+.pick .bt{height:280px;display:flex;justify-content:center}
+.pick .bt svg{height:100%;width:auto;filter:drop-shadow(0 26px 22px rgba(0,0,0,.7))}
+.pick h3{font:400 32px var(--disp);margin:24px 0 6px}
+.pick p{color:var(--muted);max-width:380px;margin:0 auto}
+.pick .why{margin-top:14px;color:var(--gold2);font:500 22px var(--lat)}
+.pick .ph{color:var(--muted);font:400 26px var(--disp)}
+@media (max-width:900px){.som-grid{grid-template-columns:1fr}}
+
+/* experiences */
+.exp{padding:150px 0}
+.exp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:56px}
+.xc{position:relative;border:1px solid var(--line);padding:46px 34px 38px;transition:border-color .5s,transform .6s;overflow:hidden}
+.xc::after{content:"";position:absolute;inset:9px;border:1px solid var(--line);opacity:0;transition:opacity .5s}
+.xc:hover{border-color:var(--gold);transform:translateY(-6px)}.xc:hover::after{opacity:1}
+.xc svg{color:var(--gold)}
+.xc .n{position:absolute;top:26px;left:30px;font:500 40px var(--lat);color:rgba(201,164,106,.28)}
+.xc h3{font:400 32px var(--disp);margin:26px 0 10px}
+.xc p{color:var(--muted);margin:0 0 24px}
+.xc a{color:var(--gold);text-decoration:none;font-weight:600;letter-spacing:.05em;border-bottom:1px solid var(--line2);padding-bottom:4px}
+@media (max-width:900px){.exp-grid{grid-template-columns:1fr}}
+
+/* branches */
+.br{padding:120px 0 150px}
+.br-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:60px}
+.search{display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line2);padding:10px 0;margin-top:30px}
+.search input{flex:1;background:none;border:0;color:var(--cream);font:400 20px var(--sans);outline:none}
+.blist{display:grid;grid-template-columns:1fr 1fr;gap:1px;padding:1px}
+.blist .bi{box-shadow:0 0 0 1px #3A2419}
+.bi{background:var(--ink);padding:26px 28px;transition:background .4s}
+.bi:hover{background:#1A0A0E}
+.bi h3{font:400 28px var(--disp);margin:0 0 6px;display:flex;justify-content:space-between;align-items:baseline}
+.bi h3 small{font:600 11px var(--sans);letter-spacing:.2em;color:var(--gold)}
+.bi p{margin:0;color:var(--muted);font-size:15px}
+.bi .tg{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+.bi .tg span{font-size:12px;border:1px solid var(--line2);padding:3px 10px;color:var(--gold2)}
+@media (max-width:900px){.br-grid{grid-template-columns:1fr}.blist{grid-template-columns:1fr}}
+
+/* club */
+.club{padding:140px 0;overflow:hidden}
+.club-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+.card3d{perspective:1200px}
+.mcard{aspect-ratio:1.586;max-width:460px;margin:auto;border-radius:18px;position:relative;padding:30px;background:linear-gradient(135deg,#2A1016,#4A1020 45%,#2A1016);border:1px solid rgba(230,205,152,.45);box-shadow:0 50px 90px -30px rgba(0,0,0,.9);transform-style:preserve-3d;transition:transform .2s ease-out;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between}
+.mcard::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,240,210,.22) calc(var(--sh,50%) - 6%),rgba(255,240,210,.05) var(--sh,50%),transparent 70%);mix-blend-mode:screen}
+.mcard .top{display:flex;justify-content:space-between;align-items:center}
+.mcard .chip{width:46px;height:34px;border-radius:6px;background:linear-gradient(135deg,#E6CD98,#9C7A43);opacity:.9}
+.mcard .nm{font:500 18px var(--lat);letter-spacing:.3em;color:var(--gold2);direction:ltr}
+.mcard .tier{font:400 30px var(--disp);color:var(--cream)}
+.jform{display:flex;gap:10px;margin-top:30px;flex-wrap:wrap}
+.jform input{flex:1;min-width:200px;height:56px;background:transparent;border:1px solid var(--line2);color:var(--cream);padding:0 18px;font:400 17px var(--sans)}
+.jnote{color:var(--gold2);min-height:26px;margin-top:12px}
+@media (max-width:900px){.club-grid{grid-template-columns:1fr}}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding-top:70px}
+.fg{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr}
+.fg>div{padding-inline:28px;border-inline-start:1px solid var(--line)}
+.fg>div:first-child{border:0;padding-inline-start:0}
+.fg h3.fh,.fg h4{font:600 12px var(--sans);letter-spacing:.3em;color:var(--gold);margin:0 0 16px}
+.fg a{display:block;text-decoration:none;color:var(--muted);line-height:2.1;font-size:15px}
+.fg a:hover{color:var(--gold2)}
+.warn{display:flex;justify-content:center;margin:60px 0 24px}
+.warn span{border:1px solid var(--line2);padding:10px 22px;font-weight:600;font-size:15px;text-align:center}
+.cred{border-top:1px solid var(--line);padding:18px 0 26px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:13px;color:var(--muted)}
+.cred a{color:var(--gold2);text-decoration:underline;text-underline-offset:3px}
+@media (max-width:860px){.fg{grid-template-columns:1fr 1fr;row-gap:34px}.fg>div:nth-child(3){border:0;padding-inline-start:0}}
+.toast{position:fixed;bottom:calc(env(safe-area-inset-bottom,0px) + 24px);left:50%;transform:translate(-50%,120px);background:var(--gold);color:var(--ink);padding:14px 26px;font-weight:600;z-index:80;transition:transform .5s cubic-bezier(.2,.8,.2,1.2)}
+.toast.on{transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}.mask>span{transform:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="seal" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="none" stroke="#C9A46A" stroke-width="1.2"></circle><circle cx="50" cy="50" r="41" fill="none" stroke="#C9A46A" stroke-opacity=".5" stroke-width=".6"></circle><path d="M30 30 L50 74 L70 30 M25 30 H36 M64 30 H75" fill="none" stroke="#E6CD98" stroke-width="2.2"></path></symbol>
+</defs></svg>
+
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateT">
+  <div class="box">
+    <svg class="seal" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" pathLength="1"></circle><path d="M30 30 L50 74 L70 30 M25 30 H36 M64 30 H75" pathLength="1"></path></svg>
+    <h1 id="gateT">ברוכים הבאים לורמיי</h1>
+    <p id="gateP">האתר מציג יין ואלכוהול. האם מלאו לך 18?</p>
+    <div class="row" id="gateBtns"><button class="btn btn-gold" id="gYes" type="button">כן, מלאו לי 18</button><button class="btn btn-line" id="gNo" type="button">עדיין לא</button></div>
+  </div>
+</div>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <nav class="nav-l" aria-label="ניווט ראשי"><a href="#collection">הקולקציה</a><a href="#sommelier">הסומלייה</a><a href="#experiences">חוויות</a><a href="#branches">סניפים</a><a href="#club">מועדון</a></nav>
+    <button class="icn burger" id="burger" type="button" aria-label="תפריט"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 8h16M8 16h12"></path></svg></button>
+    <a class="logo" href="#top" aria-label="VERMEIL, לראש העמוד"><b>VERMEIL</b><small>WINE &amp; SPIRITS</small></a>
+    <div class="nav-r">
+      <a class="icn" href="#branches" aria-label="חיפוש סניף"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"></path><circle cx="12" cy="9" r="2.5"></circle></svg></a>
+      <button class="icn" type="button" aria-label="סל הקניות"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2z"></path><path d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg><span class="cnt" id="cnt" hidden>0</span></button>
+    </div>
+  </div>
+</header>
+<nav class="mnav" id="mnav" aria-label="תפריט נייד"><button class="icn" id="mclose" type="button" aria-label="סגירה"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+<a href="#collection">הקולקציה</a><a href="#sommelier">הסומלייה</a><a href="#experiences">חוויות</a><a href="#branches">סניפים</a><a href="#club">מועדון</a></nav>
+
+<main id="top">
+<section class="hero" id="hero" aria-label="פתיחה">
+  <div class="beam" aria-hidden="true"></div>
+  <canvas id="dust" aria-hidden="true"></canvas>
+  <div class="board" aria-hidden="true"></div>
+  <div class="shelf" id="shelf" aria-hidden="true"></div>
+  <div class="wrap hero-copy">
+    <span class="eyebrow">Maison Vermeil · Est. 2011</span>
+    <h1><span class="mask"><span>הטעם</span></span><span class="mask"><span class="gold">של הרגע.</span></span></h1>
+    <p class="lead rv">אלפי יינות ומשקאות מכל העולם, בחנויות שעוצבו כמו גלריה, עם סומלייה שמכיר כל בקבוק.</p>
+    <div class="ctas rv"><a class="btn btn-gold" href="#collection">לקולקציה</a><a class="btn btn-line" href="#sommelier">מה לשתות הערב?</a></div>
+  </div>
+</section>
+
+<section class="story" aria-labelledby="storyT">
+  <div class="wrap">
+    <div class="frame rv">
+      <span class="mono" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#seal"></use></svg></span>
+      <div class="story-grid">
+        <div>
+          <span class="eyebrow">Our Story</span>
+          <h2 class="disp" id="storyT">בקבוק טוב הוא יותר ממשקה.</h2>
+          <p style="margin-top:24px">ורמיי נולדה מתוך אמונה פשוטה: כל בקבוק הוא רגע שמחכה לקרות. בחנויות שלנו כל מדף מוצג כמו יצירה, לכל יין יש סיפור, ובכל סניף מחכה סומלייה שיודע להתאים את הבקבוק הנכון לאדם הנכון.</p>
+          <p>מארוחת שישי משפחתית ועד הרמת כוסית שאף אחד לא ישכח, אנחנו כאן כדי שהבחירה תהיה חלק מהחוויה.</p>
+          <div class="sig">Maison Vermeil</div>
+        </div>
+        <div class="facts">
+          <div><b>12</b><span>חנויות ברחבי הארץ</span></div>
+          <div><b>4,000+</b><span>תוויות על המדפים</span></div>
+          <div><b>38</b><span>ארצות ייצור</span></div>
+          <div><b>180</b><span>ערבי טעימה בשנה</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="coll" id="collection" aria-labelledby="collT">
+  <div class="wrap">
+    <div class="head rv">
+      <div><span class="eyebrow">The Collection</span><h2 class="disp" id="collT">נבחרת העונה</h2></div>
+      <div class="tabs" role="tablist" id="tabs">
+        <button class="tab" role="tab" aria-selected="true" data-f="all">הכל</button><button class="tab" role="tab" aria-selected="false" data-f="red">אדום</button><button class="tab" role="tab" aria-selected="false" data-f="white">לבן ורוזה</button><button class="tab" role="tab" aria-selected="false" data-f="bubbly">מבעבעים</button><button class="tab" role="tab" aria-selected="false" data-f="spirits">משקאות חריפים</button>
+      </div>
+    </div>
+    <div class="grid rv" id="grid"></div>
+  </div>
+</section>
+
+<section class="band" aria-label="הסיפור שבכל בקבוק">
+  <div class="pat" id="pat" aria-hidden="true"></div>
+  <div class="tagbox rv"><strong>EVERY BOTTLE TELLS A STORY</strong><span>ואנחנו כאן כדי לספר אותו</span></div>
+</section>
+
+<section class="som" id="sommelier" aria-labelledby="somT">
+  <div class="wrap som-grid">
+    <div class="rv">
+      <span class="eyebrow">The Sommelier</span>
+      <h2 class="disp" id="somT">מה לשתות הערב?</h2>
+      <p class="lead" style="margin-top:20px">שתי שאלות, והסומלייה הדיגיטלי של ורמיי בוחר עבורכם את הבקבוק המדויק.</p>
+      <div class="q"><b>מה על השולחן?</b><div class="opts" data-q="dish">
+        <button class="opt" type="button" data-v="meat" aria-pressed="false">בשר על האש</button><button class="opt" type="button" data-v="fish" aria-pressed="false">דגים ופירות ים</button><button class="opt" type="button" data-v="pasta" aria-pressed="false">פסטה ופיצה</button><button class="opt" type="button" data-v="cheese" aria-pressed="false">גבינות</button><button class="opt" type="button" data-v="dessert" aria-pressed="false">קינוח</button><button class="opt" type="button" data-v="none" aria-pressed="false">רק ערב טוב</button>
+      </div></div>
+      <div class="q"><b>ומה האווירה?</b><div class="opts" data-q="mood">
+        <button class="opt" type="button" data-v="family" aria-pressed="false">ארוחה משפחתית</button><button class="opt" type="button" data-v="date" aria-pressed="false">ערב זוגי</button><button class="opt" type="button" data-v="celebrate" aria-pressed="false">חגיגה</button><button class="opt" type="button" data-v="gift" aria-pressed="false">מתנה</button>
+      </div></div>
+    </div>
+    <div class="pick rv" aria-live="polite"><div class="glow"></div><div class="res" id="res"><p class="ph">בחרו מנה ואווירה,<br>והבקבוק יופיע כאן.</p></div></div>
+  </div>
+</section>
+
+<section class="exp" id="experiences" aria-labelledby="expT">
+  <div class="wrap">
+    <div class="rv"><span class="eyebrow">Experiences</span><h2 class="disp" id="expT">יותר מחנות</h2></div>
+    <div class="exp-grid">
+      <article class="xc rv"><span class="n">01</span><svg width="44" height="44" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h16l-1 12a7 7 0 0 1-14 0z"></path><path d="M24 23v17M16 44h16M17 12h14"></path></svg><h3>טעימות מודרכות</h3><p>ערבי טעימה אינטימיים עם הסומלייה שלנו. שישה יינות, סיפור אחד, ואנשים שאוהבים לגלות.</p><a href="#contact">לתאריכים הקרובים</a></article>
+      <article class="xc rv"><span class="n">02</span><svg width="44" height="44" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="24" cy="24" rx="15" ry="19"></ellipse><path d="M10 16h28M10 32h28M24 5v38"></path></svg><h3>אירועים ובר נייד</h3><p>מחתונה ועד השקה: בר מעוצב, צוות מקצועי ובחירת יינות שנבנית סביב האירוע שלכם.</p><a href="#contact">לתכנון אירוע</a></article>
+      <article class="xc rv"><span class="n">03</span><svg width="44" height="44" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="18" width="34" height="24"></rect><path d="M4 12h40v6H4zM24 12v30M24 12c-4-8-12-6-10 0M24 12c4-8 12-6 10 0"></path></svg><h3>מתנות לעסקים</h3><p>מארזים ממותגים בעבודת יד, עם כרטיס אישי ומשלוח לכל הארץ.</p><a href="#contact">לקטלוג המארזים</a></article>
+    </div>
+  </div>
+</section>
+
+<section class="br" id="branches" aria-labelledby="brT">
+  <div class="wrap br-grid">
+    <div class="rv">
+      <span class="eyebrow">Boutiques</span><h2 class="disp" id="brT">הסניף הקרוב אליכם</h2>
+      <p class="lead" style="margin-top:20px">כל חנות עוצבה בנפרד, וכולן נותנות את אותה תחושה: להיכנס לרגע ולצאת עם הבקבוק הנכון.</p>
+      <label class="search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C9A46A" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg><input id="bq" placeholder="חיפוש לפי עיר" aria-label="חיפוש סניף לפי עיר"></label>
+    </div>
+    <div class="blist rv" id="blist"></div>
+  </div>
+</section>
+
+<section class="club" id="club" aria-labelledby="clubT">
+  <div class="wrap club-grid">
+    <div class="card3d rv"><div class="mcard" id="mcard"><div class="top"><span class="nm">VERMEIL</span><span class="chip"></span></div><div><div class="tier">חבר מועדון · זהב</div><div style="color:var(--muted);font-size:14px;margin-top:6px;direction:ltr;text-align:right">MEMBER SINCE 2026</div></div></div></div>
+    <div class="rv">
+      <span class="eyebrow">The Club</span><h2 class="disp" id="clubT">מועדון ורמיי</h2>
+      <p class="lead" style="margin-top:20px">הזמנות מוקדמות לטעימות, מבצעים לחברים בלבד, והמלצות אישיות מהסומלייה ישר לנייד.</p>
+      <form class="jform" id="jform"><input id="jphone" inputmode="tel" placeholder="מספר נייד" aria-label="מספר נייד" dir="ltr" style="text-align:right"><button class="btn btn-gold" type="submit">הצטרפות</button></form>
+      <div class="jnote" id="jnote" role="status"></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer id="contact">
+  <div class="wrap fg">
+    <div><a class="logo" href="#top" style="align-items:flex-start"><b>VERMEIL</b><small>WINE &amp; SPIRITS</small></a><p style="color:var(--muted);font-size:15px;margin:20px 0 0;max-width:300px">יין ואלכוהול מכל העולם, בחנויות שעוצבו כמו גלריה.</p></div>
+    <div><h3 class="fh">ORIENTATION</h3><a href="#collection">הקולקציה</a><a href="#sommelier">הסומלייה</a><a href="#experiences">חוויות</a><a href="#branches">סניפים</a></div>
+    <div><h3 class="fh">SERVICE</h3><a href="#experiences">אירועים ובר נייד</a><a href="#experiences">מתנות לעסקים</a><a href="#club">מועדון לקוחות</a></div>
+    <div><h3 class="fh">INFO</h3><a href="#top" data-info>תנאי שימוש</a><a href="#top" data-info>מדיניות פרטיות</a><a href="#top" data-info>הצהרת נגישות</a></div>
+  </div>
+  <div class="wrap warn"><span>אזהרה: צריכה מופרזת של אלכוהול מסכנת חיים ומזיקה לבריאות! מכירת אלכוהול מותרת מגיל 18 ומעלה.</span></div>
+  <div class="wrap cred"><span>© 2026 Maison Vermeil. מותג קונספט.</span><span dir="ltr">Concept, Design &amp; Development: <a href="../">AILGEN</a></span></div>
+</footer>
+<div class="toast" id="toast" role="status"></div>
+<script>
+(()=>{
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let gid=0;
+const K={
+ bdx:{d:'M32,392 Q32,398 38,398 H82 Q88,398 88,392 V172 Q88,142 71,130 V44 H49 V130 Q32,142 32,172 Z',cap:'M47,24 H73 V96 H47 Z',ly:238},
+ bgd:{d:'M30,392 Q30,398 36,398 H84 Q90,398 90,392 V222 Q90,158 71,124 V44 H49 V124 Q30,158 30,222 Z',cap:'M47,24 H73 V96 H47 Z',ly:258},
+ chp:{d:'M26,392 Q26,398 33,398 H87 Q94,398 94,392 V214 Q94,160 73,126 V52 H47 V126 Q26,160 26,214 Z',cap:'M44,34 H76 V128 Q85,142 89,164 H31 Q35,142 44,128 Z',ly:256},
+ wsk:{d:'M20,398 H100 V214 Q100,190 78,184 V122 H42 V184 Q20,190 20,214 Z',cap:'M44,92 H76 V124 H44 Z M40,82 Q60,62 80,82 V94 H40 Z',ly:262},
+ gin:{d:'M36,392 Q36,398 42,398 H78 Q84,398 84,392 V150 Q84,128 68,118 V40 H52 V118 Q36,128 36,150 Z',cap:'M50,22 H70 V58 H50 Z',ly:230}
+};
+function bottle(p){
+  const k=K[p.k],id='g'+(++gid),[a,b]=p.glass,lab=p.lab,lw=p.k==='wsk'?64:(p.k==='gin'?40:46),lx=60-lw/2;
+  return `<svg viewBox="0 0 120 400" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" x2="1"><stop offset="0" stop-color="${a}"/><stop offset=".3" stop-color="${b}"/><stop offset=".48" stop-color="${a}"/><stop offset=".85" stop-color="${a}"/><stop offset="1" stop-color="#000" stop-opacity=".6"/></linearGradient>
+  <linearGradient id="${id}c" x1="0" x2="1"><stop offset="0" stop-color="${p.cap}"/><stop offset=".35" stop-color="#fff" stop-opacity=".35"/><stop offset=".5" stop-color="${p.cap}"/><stop offset="1" stop-color="#000" stop-opacity=".5"/></linearGradient></defs>
+  <path d="${k.d}" fill="url(#${id})"/>
+  <path d="${k.cap}" fill="${p.cap}"/><path d="${k.cap}" fill="url(#${id}c)" opacity=".7"/>
+  <rect x="${lx}" y="${k.ly}" width="${lw}" height="${p.k==='wsk'?70:84}" fill="${lab.bg}"/>
+  <rect x="${lx+3}" y="${k.ly+3}" width="${lw-6}" height="${(p.k==='wsk'?70:84)-6}" fill="none" stroke="${lab.fg}" stroke-opacity=".45" stroke-width=".6"/>
+  <text x="60" y="${k.ly+30}" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="${lw>50?9:7}" letter-spacing="1.2" fill="${lab.fg}">${lab.t1}</text>
+  <text x="60" y="${k.ly+44}" text-anchor="middle" font-family="Cormorant Garamond,serif" font-style="italic" font-size="${lw>50?8:6.2}" fill="${lab.fg}">${lab.t2}</text>
+  <path d="M${lx+10} ${k.ly+54} H${lx+lw-10}" stroke="${lab.fg}" stroke-opacity=".5" stroke-width=".5"/>
+  <rect x="${p.k==='wsk'?28:(p.k==='gin'?41:37)}" y="${p.k==='wsk'?214:180}" width="4" height="${p.k==='wsk'?170:200}" rx="2" fill="#fff" opacity=".2"/>
+  <rect x="${p.k==='wsk'?90:(p.k==='gin'?77:81)}" y="${p.k==='wsk'?220:190}" width="1.6" height="${p.k==='wsk'?150:180}" rx="1" fill="#fff" opacity=".12"/></svg>`;
+}
+const P=[
+ {id:1,cat:'red',k:'bdx',glass:['#10160E','#34432A'],cap:'#6B1A2E',lab:{bg:'#EFE4CF',fg:'#3A1A10',t1:'CHÂTEAU',t2:'La Mercière'},name:'שאטו לה מרסייר 2018',reg:'BORDEAUX · FRANCE',notes:'דובדבן שחור, אלון, טבק',price:189,s:{meat:3,cheese:2,date:1,gift:2}},
+ {id:2,cat:'red',k:'bgd',glass:['#150F09','#46331A'],cap:'#1A0B10',lab:{bg:'#F3EBDD',fg:'#4A1020',t1:'BRUNELLO',t2:'di Montalcino'},name:'ברונלו די מונטלצ׳ינו 2017',reg:'TOSCANA · ITALIA',notes:'שזיף, עור, תבלינים',price:249,s:{pasta:4,meat:2,cheese:2,date:2}},
+ {id:3,cat:'white',k:'bgd',glass:['#5C672A','#B8C26E'],cap:'#C9A46A',lab:{bg:'#FAF5EA',fg:'#2A2A18',t1:'SANCERRE',t2:"L'Atelier"},name:'סנסר ל׳אטלייה 2022',reg:'LOIRE · FRANCE',notes:'הדרים, צור, פרחים לבנים',price:139,s:{fish:4,cheese:1,family:1}},
+ {id:4,cat:'bubbly',k:'chp',glass:['#0F160D','#2B3A22'],cap:'#C9A46A',lab:{bg:'#1A0B10',fg:'#E6CD98',t1:'VERMEIL',t2:'Brut Réserve'},name:'ורמיי ברוט רזרב',reg:'CHAMPAGNE · FRANCE',notes:'בריוש, תפוח ירוק, בועה עדינה',price:299,s:{celebrate:5,dessert:2,fish:2,none:1}},
+ {id:5,cat:'red',k:'bdx',glass:['#12100C','#3A2E1E'],cap:'#C9A46A',lab:{bg:'#EDE3D0',fg:'#1B0B10',t1:'GALIL',t2:'Cabernet Sauvignon'},name:'גליל עליון, קברנה 2020',reg:'GALILEE · ISRAEL',notes:'אוכמניות, מנטה, שוקולד מריר',price:119,s:{meat:3,family:4}},
+ {id:6,cat:'spirits',k:'wsk',glass:['#6E3510','#E09448'],cap:'#3A2414',lab:{bg:'#120709',fg:'#E6CD98',t1:'GLEN ARON',t2:'18 Years'},name:'גלן ארון 18, סינגל מאלט',reg:'SPEYSIDE · SCOTLAND',notes:'דבש, אגוזים, עשן עדין',price:459,s:{gift:5,none:2,cheese:1}},
+ {id:7,cat:'spirits',k:'gin',glass:['#5F8C94','#D6ECEE'],cap:'#1A2A3A',lab:{bg:'#F5F7F4',fg:'#1A2A3A',t1:'HAGAN',t2:'Botanical Gin'},name:'ג׳ין בוטני ״הגן״',reg:'JERUSALEM · ISRAEL',notes:'ערער, לימון, זעתר',price:169,s:{none:4,fish:1,celebrate:1}},
+ {id:8,cat:'white',k:'bdx',glass:['#C66F79','#F6C2B8'],cap:'#E6CD98',lab:{bg:'#FFF8F0',fg:'#6B1A2E',t1:'CÔTES',t2:'de Provence'},name:'רוזה פרובאנס 2023',reg:'PROVENCE · FRANCE',notes:'תות, אפרסק, מלח ים',price:99,s:{fish:2,dessert:3,date:3,family:1}}
+];
+/* hero shelf */
+$('#shelf').innerHTML=[3,1,6,4,2,7,8].map(i=>`<div class="b">${bottle(P[i-1])}</div>`).join('');
+/* grid */
+const plus='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>';
+$('#grid').innerHTML=P.map(p=>`<article class="prod" data-cat="${p.cat}"><div class="bt">${bottle(p)}</div><div class="ped"></div><div class="reg" dir="ltr">${p.reg}</div><h3>${p.name}</h3><div class="notes">${p.notes}</div><div class="pr"><b dir="ltr">₪${p.price}</b><button class="add" type="button" data-add="${p.id}" aria-label="הוספת ${p.name} לסל">${plus}</button></div></article>`).join('');
+$$('#tabs .tab').forEach(t=>t.onclick=()=>{$$('#tabs .tab').forEach(x=>x.setAttribute('aria-selected',x===t));const f=t.dataset.f;let k=0;$$('.prod').forEach(p=>{const h=f!=='all'&&p.dataset.cat!==f;p.classList.toggle('hide',h);p.classList.remove('pin');if(!h){void p.offsetWidth;p.style.animationDelay=(k++*70)+'ms';p.classList.add('pin');}});});
+let cart=0; const toast=(m)=>{const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),2200);};
+document.addEventListener('click',e=>{const a=e.target.closest('[data-add]'); if(a){cart++;const c=$('#cnt');c.hidden=false;c.textContent=cart;toast('נוסף לסל: '+P[a.dataset.add-1].name);}
+  if(e.target.closest('[data-info]')){e.preventDefault();toast('במותג הקונספט, העמוד הזה מסמן מיקום בלבד');}});
+/* sommelier */
+const sel={dish:null,mood:null};
+const DL={meat:'טאנינים עמוקים שמחזיקים את הבשר',fish:'חומציות רעננה שמאירה את הדג',pasta:'חומציות שפוגשת בדיוק את העגבניות',cheese:'עומק שמתחבר לגבינות בשלות',dessert:'פירותיות ובועות שסוגרות ארוחה',none:'טוב גם לבד, בלי שום תירוץ'};
+const ML={family:'וקל לאהוב אותו סביב שולחן גדול.',date:'ויש בו רומנטיקה שקטה.',celebrate:'והוא הופך כל רגע לחגיגה.',gift:'ובאריזה נכונה, זו מתנה שזוכרים.'};
+function recommend(){
+  if(!sel.dish||!sel.mood)return; const best=P.map(p=>({p,sc:(p.s[sel.dish]||0)*1.2+(p.s[sel.mood]||0)})).sort((a,b)=>b.sc-a.sc)[0].p;
+  const r=$('#res'); r.classList.add('swap');
+  setTimeout(()=>{r.innerHTML=`<div class="bt">${bottle(best)}</div><h3>${best.name}</h3><p>${best.notes}</p><div class="why">${DL[sel.dish]}, ${ML[sel.mood]}</div><div style="margin-top:22px"><button class="btn btn-gold" type="button" data-add="${best.id}">להוספה לסל · <span dir="ltr">₪${best.price}</span></button></div>`;r.classList.remove('swap');},reduce?0:420);
+}
+$$('.opts').forEach(g=>g.querySelectorAll('.opt').forEach(o=>o.onclick=()=>{g.querySelectorAll('.opt').forEach(x=>x.setAttribute('aria-pressed',x===o));sel[g.dataset.q]=o.dataset.v;recommend();}));
+/* branches */
+const B=[['תל אביב','נמל תל אביב','א׳–ה׳ 10:00–23:00, ו׳ 9:00–16:00',['בר טעימות','סומלייה']],['הרצליה','הרצליה פיתוח','א׳–ה׳ 10:00–22:00, ו׳ 9:00–15:00',['חניה','מארזים']],['ירושלים','מתחם התחנה','א׳–ה׳ 10:00–22:00, ו׳ 9:00–14:00',['בר טעימות']],['חיפה','מרכז הכרמל','א׳–ה׳ 9:30–22:00, ו׳ 9:00–15:00',['סומלייה','חניה']],['ראשון לציון','מערב העיר','א׳–ה׳ 10:00–22:00, ו׳ 9:00–15:00',['מארזים']],['מודיעין','מרכז העיר','א׳–ה׳ 10:00–22:00, ו׳ 9:00–15:00',['חניה']],['באר שבע','רובע הבירה','א׳–ה׳ 10:00–22:00, ו׳ 9:00–14:00',['סומלייה']],['נתניה','עיר ימים','א׳–ה׳ 10:00–22:00, ו׳ 9:00–15:00',['בר טעימות','חניה']]];
+function drawB(q=''){const L=B.filter(b=>(b[0]+b[1]).includes(q.trim()));$('#blist').innerHTML=L.map(b=>`<div class="bi"><h3>${b[0]}<small>${b[1]}</small></h3><p>${b[2]}</p><div class="tg">${b[3].map(t=>`<span>${t}</span>`).join('')}</div></div>`).join('')||'<div class="bi"><p>לא מצאנו סניף בעיר הזו. נסו עיר קרובה.</p></div>';}
+drawB(); $('#bq').addEventListener('input',e=>drawB(e.target.value));
+/* club card */
+const mc=$('#mcard'); if(matchMedia('(hover:hover)').matches){mc.parentElement.addEventListener('pointermove',e=>{const r=mc.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;mc.style.transform=`rotateY(${(x-.5)*18}deg) rotateX(${(.5-y)*14}deg)`;mc.style.setProperty('--sh',(x*100)+'%');});mc.parentElement.addEventListener('pointerleave',()=>{mc.style.transform='';});}
+$('#jform').onsubmit=e=>{e.preventDefault();const v=$('#jphone').value.replace(/\D/g,'');$('#jnote').textContent=v.length>=9?'ברוכים הבאים למועדון. ההטבה הראשונה כבר בדרך אליכם.':'נא להזין מספר נייד תקין.';};
+/* gate */
+const gate=$('#gate'); let ok=false; try{ok=sessionStorage.getItem('vmAge')==='1';}catch(_){}
+function enter(){gate.classList.add('out');setTimeout(()=>gate.remove(),900);$('#hero').classList.add('in');$$('#hero .rv').forEach(x=>x.classList.add('in'));}
+if(ok){gate.remove();setTimeout(()=>{$('#hero').classList.add('in');$$('#hero .rv').forEach(x=>x.classList.add('in'));},100);}
+$('#gYes').onclick=()=>{try{sessionStorage.setItem('vmAge','1');}catch(_){}enter();};
+$('#gNo').onclick=()=>{$('#gateT').textContent='נתראה בגיל 18.';$('#gateP').textContent='בינתיים, ההמלצה של הסומלייה: מיץ ענבים קר ומעולה.';$('#gateBtns').hidden=true;};
+/* reveals, nav, parallax */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!e.target.closest('#hero')){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+$$('.rv').forEach(x=>io.observe(x));
+const nav=$('#nav'),pat=$('#pat');
+addEventListener('scroll',()=>{nav.classList.toggle('s',scrollY>40);const r=pat.parentElement.getBoundingClientRect();pat.style.transform=`translateY(${(r.top)*-.25}px)`;$$('.shelf .b').forEach((b,i)=>{b.style.transform=`translateY(${scrollY*(.06+.03*(i%3))}px)`;});},{passive:true});
+const mnav=$('#mnav');$('#burger').onclick=()=>mnav.classList.add('open');$('#mclose').onclick=()=>mnav.classList.remove('open');mnav.querySelectorAll('a').forEach(a=>a.onclick=()=>mnav.classList.remove('open'));
+/* dust in the beam */
+const cv=$('#dust'),cx=cv.getContext('2d');let W,H,D=[];
+function rs(){const r=cv.getBoundingClientRect();W=r.width;H=r.height;const d=Math.min(devicePixelRatio||1,2);cv.width=W*d;cv.height=H*d;cx.setTransform(d,0,0,d,0,0);D=Array.from({length:W<700?50:110},()=>({x:W/2+(Math.random()-.5)*W*.5,y:Math.random()*H,r:Math.random()*1.6+.3,v:Math.random()*.25+.05,p:Math.random()*6}));}
+rs();addEventListener('resize',rs);let run=true;new IntersectionObserver(e=>run=e[0].isIntersecting).observe(cv);
+(function f(t){if(run&&!reduce){cx.clearRect(0,0,W,H);for(const d of D){d.y-=d.v;d.x+=Math.sin(t/2000+d.p)*.2;if(d.y<0){d.y=H;}const a=.15+.35*Math.abs(Math.sin(t/1500+d.p));cx.fillStyle=`rgba(230,205,152,${a})`;cx.beginPath();cx.arc(d.x,d.y,d.r,0,6.28);cx.fill();}}requestAnimationFrame(f);})(0);
+})();
+</script>
+</body>
+</html>
