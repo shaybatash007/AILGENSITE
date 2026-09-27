@@ -67,7 +67,15 @@ audience), five headlines ≤ 40 characters, one description, one CTA. Example: 
 - If the ad promises something the live site doesn't have yet (a planner, a mascot), point the ad to WhatsApp
   until the new site is live, and say so in the campaign README.
 
-## 5. Beyond the engine: the signature scene
+## 5. The signature scene
+
+Every film needs one moment no template can tell. The engine now has a generic one, `morph`: a real photo of
+the problem shatters into particles, they swirl in the brand's vortex, become the clean material, assemble into
+what the business makes of it, and close into the logo (Talor Karadi: demolition dust → recycled aggregate →
+a protective shelter → the four-blade symbol). Give it the photo, a silhouette of the result and the symbol
+with alpha; 6.5–7 s; it adds its own cues (glitch, swishes, riser, hit, chime).
+
+## 6. Beyond the engine: a hand-crafted scene
 
 When the brand has a moment no template can tell (Switching: the sun washes out a TV, TIVI sends its light,
 thousands of LEDs switch on), write it by hand on the same principles: a pure `render(t)` on canvas, stepped

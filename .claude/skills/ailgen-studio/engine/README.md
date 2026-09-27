@@ -54,6 +54,7 @@ overrides, `size`, and `mascot: { at, say, mood, finale, x, y, cell }`.
 | `quote` | `kicker`, `text`, `who`, `where`, `stars` (5) | balanced lines, stars pop, a watermark quote mark; music breaks down |
 | `cards` | `headline[]`, `cards: [{ icon, value, display, unit, label }]` | 2×2 (4×1 in 16:9), numeric values count up |
 | `cta` | `headline[]`, `button`, `sub[]` (site, phone), `logoW` | the logo lights up with the motif; button with a light sweep |
+| `morph` | `image` + `tag`, `shape` (silhouette PNG/SVG with alpha), `final` (symbol with alpha, optional), `steps[]` (up to 5 captions), `stepColors[]` (3 colours: raw, clean, shape), `cols` | **signature scene**: the photo shatters into particles, they swirl in the brand's four-blade vortex, change colour, assemble into the shape, then into the symbol. "Your waste becomes a shelter", "flour becomes bread". Example: `projects/talorkaradi/film.json` |
 
 ### Cues (for the soundtrack)
 `render.mjs` writes `out/cues.json`: `whoosh` (scene changes), `intro`, `glitch` (strike), `hit`/`drop` (reveal),

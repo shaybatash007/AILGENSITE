@@ -134,6 +134,47 @@ p{margin:0}
 @media (max-width:980px){.pipe{grid-template-columns:1fr}.stages{grid-template-columns:1fr 1fr}.out{grid-template-columns:repeat(2,1fr)}.c2,.c3,.c4,.c6{grid-column:span 2}.story{grid-template-columns:repeat(4,1fr)}}
 @media (max-width:560px){.stages{grid-template-columns:1fr}}
 
+
+/* the full creation flow: one real, closed case */
+.flow{background:var(--paper)}
+.flow .ba{position:relative;margin-top:36px;border-radius:18px;overflow:hidden;aspect-ratio:16/10;background:#000;border:1px solid var(--line);max-width:100%}
+.flow .ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+.flow .ba .new{clip-path:inset(0 0 0 var(--cut,50%))}
+.flow .ba .line{position:absolute;top:0;bottom:0;left:var(--cut,50%);width:3px;background:var(--amber);box-shadow:0 0 12px rgba(255,178,62,.8)}
+.flow .ba .line::after{content:"⟷";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:var(--amber);color:var(--ink);display:grid;place-items:center;font:700 18px var(--body)}
+.flow .ba .lb1,.flow .ba .lb2{position:absolute;top:12px;padding:6px 10px;border-radius:8px;font:600 12.5px var(--mono);background:rgba(7,11,46,.8);color:#fff}
+.flow .ba .lb1{left:12px}.flow .ba .lb2{right:12px;background:var(--amber);color:var(--ink)}
+.flow .ba input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.flow .ba input:focus-visible+.line{outline:3px solid var(--ultra)}
+.fsteps{list-style:none;padding:0;margin:48px 0 0;position:relative}
+.fsteps::before{content:"";position:absolute;inset-block:10px;inset-inline-start:27px;width:2px;background:linear-gradient(var(--ultra),var(--amber))}
+.fstep{display:grid;grid-template-columns:56px 1fr;gap:18px;padding-bottom:40px;position:relative}
+.fstep .dot{width:56px;height:56px;border-radius:14px;background:var(--ink);color:var(--amber);display:grid;place-items:center;font:600 16px var(--mono);position:relative;z-index:1}
+.fstep h3{font-size:clamp(24px,2.6vw,32px)}
+.fstep .tm{font:600 12.5px var(--mono);color:var(--ultra);margin-top:6px;display:flex;flex-wrap:wrap;gap:6px 14px}
+.fstep p{color:var(--mute);margin-top:8px;max-width:70ch}
+.fstep .vis{display:grid;gap:12px;margin-top:16px;grid-template-columns:repeat(var(--n,2),1fr)}
+.fstep .vis>*{min-width:0}
+.fstep figure{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.fstep figure img,.fstep figure video{width:100%;display:block;background:#0B1B2E}
+.fstep figcaption{padding:10px 12px;font-size:13.5px;color:var(--mute);display:flex;justify-content:space-between;gap:8px;align-items:center}
+.fstep .facts{display:grid;gap:8px}
+.fstep .facts div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:14.5px}
+.fstep .facts b{font-family:var(--mono);color:var(--ink)}
+.fstep .facts small{display:block;color:var(--mute);font:500 12px var(--mono);margin-top:4px;direction:ltr;text-align:right}
+.pal{display:flex;gap:6px;padding:12px}
+.pal span{flex:1;height:46px;border-radius:8px;border:1px solid rgba(0,0,0,.08)}
+.sbx{display:grid;place-items:center;padding:18px;background:#F4F5F0}
+.sbx svg{width:120px;height:150px;shape-rendering:crispEdges}
+.sbstates{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:10px;background:#F4F5F0}
+.sbstates div{display:grid;justify-items:center;gap:2px;font:500 11px var(--mono);color:#5A6670}
+.sbstates svg{width:44px;height:56px;shape-rendering:crispEdges}
+.fstep .go{display:inline-flex;margin-top:14px}
+.closed{margin-top:8px;padding:22px 24px;border-radius:18px;background:var(--ink);color:#EEF0FB;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.closed div b{display:block;font:600 clamp(22px,2.4vw,30px)/1.1 var(--mono);color:var(--amber);direction:ltr;text-align:right}
+.closed div span{color:var(--mist);font-size:14px}
+@media (max-width:760px){.fstep .vis{grid-template-columns:1fr!important}.closed{grid-template-columns:1fr 1fr}.fstep{grid-template-columns:44px 1fr;gap:12px}.fstep .dot{width:44px;height:44px}.fsteps::before{inset-inline-start:21px}}
+
 /* deliverables */
 .gets{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:44px}
 .get{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px}

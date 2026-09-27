@@ -45,7 +45,7 @@ async function ask(q){
   const r=await sample(turns,{cache:false,modelTier:'quick',tools:[leadTool],onText:u=>{b.textContent=u.text;body.scrollTop=body.scrollHeight;}});
   b.textContent=r.text; hist.push({role:'assistant',content:r.text});
  }catch(e){ const a=FALLBACK.find(([re])=>re.test(q))[1]; await new Promise(r=>setTimeout(r,600)); b.textContent=a; hist.push({role:'assistant',content:a}); }
- busyA=false; $('#advF button').disabled=false; body.scrollTop=body.scrollHeight;
+ SABABI.glance(); busyA=false; $('#advF button').disabled=false; body.scrollTop=body.scrollHeight;
 }
 $('#advF').addEventListener('submit',e=>{e.preventDefault();ask(ain.value);});
 $$('#advChips button').forEach(c=>c.addEventListener('click',()=>ask(c.textContent)));
@@ -66,7 +66,7 @@ $('#leadForm').addEventListener('submit',async e=>{
   const f=e.target; [...f.children].forEach(c=>c.hidden=true);
   const d=document.createElement('div'); d.className='sent'; d.setAttribute('role','status'); d.tabIndex=-1;
   d.innerHTML=`<svg viewBox="0 0 512 512" aria-hidden="true"><use href="#sym"/></svg><h3>קיבלנו. המעגל התחיל.</h3><p>נחזור אליכם בהקדם. אם דחוף, המוקד זמין ב-<bdi dir="ltr">${esc(C.phone)}</bdi>.</p>`;
-  f.appendChild(d); d.focus();
+  f.appendChild(d); d.focus(); SABABI.celebrate();
   if(!reduce())$('svg',d).animate([{transform:'rotate(-180deg) scale(.4)',opacity:0},{transform:'none',opacity:1}],{duration:900,easing:'cubic-bezier(.2,.8,.2,1)'});
  }catch(_){ const t=`שלום, אני ${name} (${phone})${l.co?', '+l.co:''}. ${l.svc?l.svc+'. ':''}${l.where?'אתר: '+l.where+'. ':''}${l.msg} ${l.spec}`.trim();
   note.innerHTML=`לא הצלחנו לשמור את הפנייה בתצוגה הזו. חייגו למוקד <bdi dir="ltr">${esc(C.phone)}</bdi>, או שלחו את הפרטים ל-<bdi dir="ltr">${esc(C.email)}</bdi>:<br><span style="display:block;margin-top:8px;padding:10px;border-radius:10px;background:var(--paper);user-select:all">${esc(t)}</span>`; }
@@ -167,11 +167,13 @@ function renderAdmin(){
   $('#qSave').onclick=()=>{col(); C.faq=C.faq.filter(q=>q[0].trim()); saveSite($('#qMsg'));};
  }
  if(tab==='agent'){
-  m.innerHTML=`<h2>המוקד הדיגיטלי</h2><p class="sub">עונה למבקרים בעברית על בסיס המידע באתר, ושומר פניות כשמבקשים שיחזרו.</p><div class="cform">
+  m.innerHTML=`<h2>המוקד הדיגיטלי וסבבי</h2><p class="sub">עונה למבקרים בעברית על בסיס המידע באתר, ושומר פניות כשמבקשים שיחזרו.</p><div class="cform">
    <div class="box" style="display:flex;justify-content:space-between;gap:10px;align-items:center"><div><b>המוקד פעיל</b><br><span class="fnote">כשהוא כבוי, המבקרים מקבלים תשובות קבועות מהאתר</span></div><label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="aOn" style="width:22px;height:22px" ${C.agentOn!==false?'checked':''}> פעיל</label></div>
    <div class="box"><label for="aNotes">ידע נוסף למוקד</label><textarea id="aNotes" style="min-height:160px" placeholder="למשל: שעות פעילות, אזורי שירות, זמני אספקה, מבצעים…">${esc(C.agentNotes)}</textarea></div>
+   <div class="box" style="display:flex;justify-content:space-between;gap:10px;align-items:center"><div><b>סבבי, הדמות של האתר</b><br><span class="fnote">מכוון מבקרים, לכל היותר 6 פעמים בביקור</span></div><label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="sOn" style="width:22px;height:22px" ${C.sababiOn!==false?'checked':''}> פעיל</label></div>
+   <div class="box"><label for="sHello">משפט הפתיחה של סבבי (ריק = ברירת מחדל)</label><input id="sHello" value="${esc(C.sababiHello)}" placeholder="היי, אני סבבי…"></div>
    <div class="savebar"><button class="btn" id="aSave" type="button">שמירה</button><span id="aMsg" class="fnote" role="status"></span></div></div>`;
-  $('#aSave').onclick=()=>{C.agentOn=$('#aOn').checked;C.agentNotes=$('#aNotes').value;saveSite($('#aMsg'));};
+  $('#aSave').onclick=()=>{C.agentOn=$('#aOn').checked;C.agentNotes=$('#aNotes').value;C.sababiOn=$('#sOn').checked;C.sababiHello=$('#sHello').value.trim();saveSite($('#aMsg'));};
  }
 }
 $('#admBtn').addEventListener('click',openAdmin);

@@ -57,10 +57,10 @@ Read the one closest to the new project before starting. Each shows the whole ch
 | Signature | the four blades of the logo = the four stages of the circle; the symbol redrawn as a vector from a 1983px image |
 | Entry | four blades fly in and lock into the symbol, which flies to the header; the hero symbol is built from four field photos |
 | Proof tool | "מאזן פסולת": project type + built area (or demolition volume) → tonnes to declare for the permit, the ±15% band, what returns to building; styled as a weighbridge ticket |
-| Mascot | none: B2B trust comes from data and real footage; the voice is "the digital dispatcher" (*9084) |
-| Film | engine, new motif `spin`, Rubik + IBM Plex Mono, 26.9 s, no testimonial (none is real); the company's own sentence as the quote scene |
+| Mascot | **סבבי**, born from the four blades (first version skipped the mascot; the owner asked for the full chain: every brand gets one unless it truly harms trust) |
+| Film | engine, motif `spin`, 29 s; signature `morph` scene: demolition photo → particles → four-blade vortex → clean material → shelter → symbol; סבבי opens ("רגע. זה לא פסולת.") and closes |
 | Measured | 33 min of agent work, $10.36, 84 model calls; renders 356 s (9:16) + 268 s (4:5) in the background (`projects/talorkaradi/meter-report.json`) |
-| Files | site `talorkaradi/` (src + `build.sh`), kit `projects/talorkaradi/`, campaign `campaigns/talorkaradi/`; not published as a live link until the client approves |
+| Files | site `talorkaradi/` (src + `build.sh`), kit `projects/talorkaradi/`, campaign `campaigns/talorkaradi/`; live preview https://claude.ai/artifact/7aj1NcY14KNP9ygLgadNYL (with a "preview by AILGEN" banner); the studio shows the whole case as a closed flow: https://claude.ai/artifact/RgdAN2WDjEuDNhiZBMs7td |
 
 ## What they share (the method)
 

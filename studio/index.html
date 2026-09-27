@@ -134,6 +134,47 @@ p{margin:0}
 @media (max-width:980px){.pipe{grid-template-columns:1fr}.stages{grid-template-columns:1fr 1fr}.out{grid-template-columns:repeat(2,1fr)}.c2,.c3,.c4,.c6{grid-column:span 2}.story{grid-template-columns:repeat(4,1fr)}}
 @media (max-width:560px){.stages{grid-template-columns:1fr}}
 
+
+/* the full creation flow: one real, closed case */
+.flow{background:var(--paper)}
+.flow .ba{position:relative;margin-top:36px;border-radius:18px;overflow:hidden;aspect-ratio:16/10;background:#000;border:1px solid var(--line);max-width:100%}
+.flow .ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+.flow .ba .new{clip-path:inset(0 0 0 var(--cut,50%))}
+.flow .ba .line{position:absolute;top:0;bottom:0;left:var(--cut,50%);width:3px;background:var(--amber);box-shadow:0 0 12px rgba(255,178,62,.8)}
+.flow .ba .line::after{content:"⟷";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:var(--amber);color:var(--ink);display:grid;place-items:center;font:700 18px var(--body)}
+.flow .ba .lb1,.flow .ba .lb2{position:absolute;top:12px;padding:6px 10px;border-radius:8px;font:600 12.5px var(--mono);background:rgba(7,11,46,.8);color:#fff}
+.flow .ba .lb1{left:12px}.flow .ba .lb2{right:12px;background:var(--amber);color:var(--ink)}
+.flow .ba input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.flow .ba input:focus-visible+.line{outline:3px solid var(--ultra)}
+.fsteps{list-style:none;padding:0;margin:48px 0 0;position:relative}
+.fsteps::before{content:"";position:absolute;inset-block:10px;inset-inline-start:27px;width:2px;background:linear-gradient(var(--ultra),var(--amber))}
+.fstep{display:grid;grid-template-columns:56px 1fr;gap:18px;padding-bottom:40px;position:relative}
+.fstep .dot{width:56px;height:56px;border-radius:14px;background:var(--ink);color:var(--amber);display:grid;place-items:center;font:600 16px var(--mono);position:relative;z-index:1}
+.fstep h3{font-size:clamp(24px,2.6vw,32px)}
+.fstep .tm{font:600 12.5px var(--mono);color:var(--ultra);margin-top:6px;display:flex;flex-wrap:wrap;gap:6px 14px}
+.fstep p{color:var(--mute);margin-top:8px;max-width:70ch}
+.fstep .vis{display:grid;gap:12px;margin-top:16px;grid-template-columns:repeat(var(--n,2),1fr)}
+.fstep .vis>*{min-width:0}
+.fstep figure{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.fstep figure img,.fstep figure video{width:100%;display:block;background:#0B1B2E}
+.fstep figcaption{padding:10px 12px;font-size:13.5px;color:var(--mute);display:flex;justify-content:space-between;gap:8px;align-items:center}
+.fstep .facts{display:grid;gap:8px}
+.fstep .facts div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:14.5px}
+.fstep .facts b{font-family:var(--mono);color:var(--ink)}
+.fstep .facts small{display:block;color:var(--mute);font:500 12px var(--mono);margin-top:4px;direction:ltr;text-align:right}
+.pal{display:flex;gap:6px;padding:12px}
+.pal span{flex:1;height:46px;border-radius:8px;border:1px solid rgba(0,0,0,.08)}
+.sbx{display:grid;place-items:center;padding:18px;background:#F4F5F0}
+.sbx svg{width:120px;height:150px;shape-rendering:crispEdges}
+.sbstates{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:10px;background:#F4F5F0}
+.sbstates div{display:grid;justify-items:center;gap:2px;font:500 11px var(--mono);color:#5A6670}
+.sbstates svg{width:44px;height:56px;shape-rendering:crispEdges}
+.fstep .go{display:inline-flex;margin-top:14px}
+.closed{margin-top:8px;padding:22px 24px;border-radius:18px;background:var(--ink);color:#EEF0FB;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.closed div b{display:block;font:600 clamp(22px,2.4vw,30px)/1.1 var(--mono);color:var(--amber);direction:ltr;text-align:right}
+.closed div span{color:var(--mist);font-size:14px}
+@media (max-width:760px){.fstep .vis{grid-template-columns:1fr!important}.closed{grid-template-columns:1fr 1fr}.fstep{grid-template-columns:44px 1fr;gap:12px}.fstep .dot{width:44px;height:44px}.fsteps::before{inset-inline-start:21px}}
+
 /* deliverables */
 .gets{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:44px}
 .get{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px}
@@ -273,7 +314,7 @@ footer a{color:var(--mist)}
 <header class="hdr" id="hdr">
  <div class="wrap in">
   <a class="logo" href="#top" aria-label="AILGEN, סטודיו"><svg aria-hidden="true"><use href="#mk"/></svg>AILGEN<small>סטודיו</small></a>
-  <nav class="nav" aria-label="ניווט ראשי"><a href="#demo">הדגמה</a><a href="#gets">מה מקבלים</a><a href="#how">איך זה עובד</a><a href="#plans">מחירים</a><a href="#domain">דומיין</a><a href="#proof">עבודות</a><a href="#faq">שאלות</a></nav>
+  <nav class="nav" aria-label="ניווט ראשי"><a href="#demo">הדגמה</a><a href="#flow">תהליך מלא</a><a href="#gets">מה מקבלים</a><a href="#how">איך זה עובד</a><a href="#plans">מחירים</a><a href="#domain">דומיין</a><a href="#proof">עבודות</a><a href="#faq">שאלות</a></nav>
   <button class="mini" id="admBtn" type="button">מרכז בקרה</button>
   <a class="btn cta" href="#order">להזמנה</a>
  </div>
@@ -312,6 +353,17 @@ footer a{color:var(--mist)}
     <div class="foot"><p id="bFoot"></p><a class="btn" href="#order" id="bOrder">רוצים את זה לעסק שלכם?</a></div>
    </div>
   </div>
+ </div>
+</section>
+
+<section class="sec flow" id="flow" aria-labelledby="flowH">
+ <div class="wrap">
+  <p class="eyebrow">יצירה אמיתית וסגורה · טלאור כראדי</p>
+  <h2 id="flowH">תהליך יצירה מלא, מקישור לעסק שלם.</h2>
+  <p class="lead">זו לא הדמיה. זו הריצה המלאה של הסטודיו על קבוצת טלאור כראדי, מהאתר הקיים שלהם ועד אתר חדש, דמות, סרטון וקמפיין. כל שלב עם התוצר האמיתי שלו והזמן שנמדד.</p>
+  <div class="ba" id="ba"><img src="img/tk-old.webp" alt="האתר הקיים של טלאור כראדי"><img class="new" src="img/tk-site.webp" alt="האתר החדש של טלאור כראדי"><span class="lb1">לפני · האתר הקיים</span><span class="lb2">אחרי · הסטודיו</span><input type="range" min="0" max="100" value="50" id="baR" aria-label="השוואה בין האתר הקיים לאתר החדש"><span class="line" aria-hidden="true"></span></div>
+  <ol class="fsteps" id="fsteps"></ol>
+  <div class="closed" id="closed"></div>
  </div>
 </section>
 
@@ -438,7 +490,7 @@ let C=structuredClone(DEF);
 const STAGES=[
  ['קריאת מצב','סוג הקלט, סוג העסק והרוח','מכונה'],
  ['איסוף','סריקת האתר או מחקר קטגוריה','מכונה'],
- ['DNA של המותג','רעיון, טענה, סמל, צבע, פונט','מכונה + אדם'],
+ ['DNA ודמות','רעיון, טענה, סמל, צבע, פונט, דמות','מכונה + אדם'],
  ['אתר','אתר חי, כלי הוכחה, כניסה מהלוגו','מכונה'],
  ['מרכז בקרה וסוכן','פניות, תוכן, מוקד דיגיטלי','מכונה'],
  ['סרטון השקה','9:16 ו-4:5, פסקול, סטילס','מכונה'],
@@ -490,6 +542,39 @@ const DEFAULT_SPIRIT={type:'עסק שירות',spirit:'בטוח ואנושי',pa
 const FONTS_OK=['Frank Ruhl Libre','Heebo','Rubik','Assistant','Secular One','Suez One','Karantina','Varela Round','Amatic SC','Bellefair','David Libre','Noto Serif Hebrew','IBM Plex Sans Hebrew','Alef','Miriam Libre','Fredoka','Noto Sans Hebrew','Bona Nova'];
 </script>
 <script>
+/* ---------- the full creation flow (the real Talor Karadi case) ---------- */
+const SB={"name": "סבבי", "grid": ["........................", ".......HHHHHHHHHH.......", "......hhhhhHHhhhhh......", ".....hhhhhhHHhhhhhh.....", "...hhhhhhhhhhhhhhhhhh...", ".....gGGGGG..bbbbbb.....", "....ggGGGGG.bbbbbbbb....", "...gggGGGGGbbbbbbbbbb...", "...ggggGGG.bbbbbBBBBB...", "..gggggGGKKKKKKBBBBBBB..", "..gggggGKKKKKKKKBBBBBB..", "...gggggKKKKKKKKBBBBBB..", ".B..gggKKKKKKKKKK..BBBB.", ".BB..ggKKKKKKKKKKgg..BB.", ".BBBB..KKKKKKKKKKggg..B.", "..BBBBBBKKKKKKKKggggg...", "..BBBBBBKKKKKKKKGggggg..", "..BBBBBBBKKKKKKGGggggg..", "...BBBBBbbbbb.GGGgggg...", "...bbbbbbbbbbGGGGGggg...", "....bbbbbbbb.GGGGGgg....", ".....bbbbbb..GGGGGg.....", "......bbbb..GGGGGg......", "........KK.GGGKK........", "........KK....KK........", ".......hhh....hhh......."], "colors": {"K": "#0B1B2E", "g": "#9ACB63", "G": "#2E8B3E", "b": "#7FBEE6", "B": "#2560A8", "h": "#C9F03A", "H": "#A8CC1E", "r": "#FF5A4E", "w": "#FFFFFF"}, "faces": {"idle": [[9, 11, 2, 2, "h"], [13, 11, 2, 2, "h"], [10, 15, 4, 1, "h"]], "blink": [[9, 12, 2, 1, "h"], [13, 12, 2, 1, "h"], [10, 15, 4, 1, "h"]], "look": [[8, 11, 2, 2, "h"], [12, 11, 2, 2, "h"], [10, 15, 3, 1, "h"]], "happy": [[8, 12, 1, 1, "h"], [9, 11, 2, 1, "h"], [11, 12, 1, 1, "h"], [12, 12, 1, 1, "h"], [13, 11, 2, 1, "h"], [15, 12, 1, 1, "h"], [9, 14, 6, 1, "h"], [10, 15, 4, 1, "h"]], "think": [[9, 10, 2, 1, "h"], [13, 10, 2, 1, "h"], [9, 15, 1, 1, "h"], [11, 15, 1, 1, "h"], [13, 15, 1, 1, "h"]], "sleep": [[9, 12, 2, 1, "h"], [13, 12, 2, 1, "h"], [11, 15, 2, 1, "h"]], "surprised": [[9, 10, 2, 3, "h"], [13, 10, 2, 3, "h"], [11, 14, 2, 2, "h"]], "love": [[8, 11, 1, 1, "r"], [10, 11, 1, 1, "r"], [8, 12, 3, 1, "r"], [9, 13, 1, 1, "r"], [13, 11, 1, 1, "r"], [15, 11, 1, 1, "r"], [13, 12, 3, 1, "r"], [14, 13, 1, 1, "r"], [10, 15, 4, 1, "h"]]}, "cell": 11, "hub": [11.5, 13.0, 4.9]};
+const TK_LIVE='https://claude.ai/artifact/7aj1NcY14KNP9ygLgadNYL'; /* the live preview of the Talor Karadi site */
+function sbSVG(face='idle',spinning=false){ const px=(x,y,c,w=1,h=1)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${c}"/>`;
+ let s=''; SB.grid.forEach((row,y)=>[...row].forEach((ch,x)=>{ if(ch!=='.')s+=px(x,y,SB.colors[ch]); }));
+ s+=(SB.faces[face]||[]).map(([x,y,w,h,k])=>px(x,y,SB.colors[k],w,h)).join('');
+ return `<svg viewBox="-1 -2 26 30" aria-hidden="true">${s}</svg>`; }
+const FLOW=[
+ ['01','הקלט: קישור אחד','https://talorkaradi.co.il/','אתר וורדפרס ואלמנטור של קבוצה שעוסקת במיחזור פסולת בניין, הריסות, בטון, הנדסה ומיגון. זה כל מה שהסטודיו קיבל.',
+  ()=>`<figure><img src="img/tk-old.webp" alt="האתר הקיים" loading="lazy"><figcaption><span>האתר הקיים, צילום מסך של הסורק</span><span class="lbl">מהשטח</span></figcaption></figure>`,1,'2:40 קריאת מצב'],
+ ['02','איסוף: כל האתר, בנימוס','30 עמודים · 82 תמונות · 5 סרטונים','הסורק קרא כל עמוד, הוריד תמונות וסרטונים, אסף טלפונים וכתובות, וזיהה צבעים ופונטים. כל מספר נכנס לדף עובדות עם העמוד שממנו הגיע.',
+  ()=>`<div class="facts"><div><b>מעל 90%</b> מהפסולת שמגיעה ממוחזרת<small>/sevices/recycling-plants/</small></div><div><b>1,000+</b> מכולות, כ-40 משאיות, אחת תמורת אחת<small>/sevices/waste-disposal/</small></div><div><b>25–30 ט׳</b> פסולת לכל 100 מ"ר בבנייה רגילה<small>מאמר: חישוב כמויות פסולת בניין</small></div><div><b>"יוצאת מהאתר בחלק ממיגונית"</b> המשפט שהפך לקונספט<small>/south/</small></div></div>`,1,'3:01 סריקה · 7:12 כולל קריאה'],
+ ['03','DNA: הלוגו מוביל הכול','לפני ואחרי','הסמל היה תמונה מטושטשת של 249 פיקסלים. הסטודיו שרטט אותו מחדש בווקטור מתמונה של 1983 פיקסלים, וגילה בו את הקונספט: ארבעה להבים הם ארבעה שלבים במעגל. הפלטה נבדקה לניגודיות, והפונטים נבחרו לעברית.',
+  ()=>`<figure><img src="img/tk-logo-old.png" alt="הלוגו הקיים, רסטר מטושטש" loading="lazy" style="image-rendering:pixelated;background:#fff;padding:18px"><figcaption><span>לפני: 249×60 פיקסלים</span></figcaption></figure><figure><div style="background:#0B1B2E;padding:22px;display:grid;place-items:center"><img src="img/tk-symbol.svg" alt="הסמל בווקטור" style="width:120px;background:none"></div><figcaption><span>אחרי: ווקטור, 4 להבים = 4 שלבים</span></figcaption></figure><figure><div class="pal">${['#0B1B2E','#F4F5F0','#1E7A38','#9ACB63','#2560A8','#C9F03A'].map(c=>`<span style="background:${c}"></span>`).join('')}</div><figcaption><span>פלטה: כל הזוגות AA ומעלה · Rubik + IBM Plex Mono</span></figcaption></figure>`,3,'2:36'],
+ ['04','הדמות: סבבי','נולד מארבעת הלהבים','הגוף שלו הוא המעגל של הלוגו, הפנים על הרכזת, וכובע מגן בצבע זוהר. השם מחבר "סבב" ו"סבבה". שמונה מצבים, נימוסים קבועים (עד 6 טיפים בביקור, שקט לשבוע), והוא מסתובב כשמחשבים את מאזן הפסולת. אותה רשת פיקסלים באתר ובסרטון.',
+  ()=>`<figure><div class="sbx">${sbSVG('happy')}</div><figcaption><span>סבבי</span><span class="lbl demo">דמות</span></figcaption></figure><figure><div class="sbstates">${[['idle','רגיל'],['look','מסתכל'],['think','חושב'],['sleep','ישן'],['surprised','מופתע'],['happy','שמח'],['love','אוהב'],['blink','ממצמץ']].map(([f,n])=>`<div>${sbSVG(f)}<span>${n}</span></div>`).join('')}</div><figcaption><span>8 מצבים</span></figcaption></figure>`,2,'v2'],
+ ['05','האתר: המעגל, כתוב בקוד','כניסה מהלוגו · 9 שירותים · מרכז בקרה','הלהבים ננעלים לסמל בכניסה, והסמל בנוי מארבעה צילומי שטח. "המעגל" האינטראקטיבי, מפת 5 מתקנים, פרויקטים מהיוטיוב שלהם, מוקד דיגיטלי שעונה רק מהעובדות, ומרכז בקרה לבעלים.',
+  ()=>`<figure><img src="img/tk-site.webp" alt="האתר החדש, מסך הפתיחה" loading="lazy"><figcaption><span>האתר החדש, דסקטופ</span><span class="lbl">צילום מסך</span></figcaption></figure><figure><img src="img/tk-circle.webp" alt="המעגל האינטראקטיבי" loading="lazy"><figcaption><span>המעגל: 4 שלבים, 90%+</span></figcaption></figure>`,2,'16:18'],
+ ['06','כלי ההוכחה: מאזן פסולת','השאלה הראשונה של כל קבלן','כמה פסולת להצהיר בהיתר, כדי לא להיתקע בטופס 4? סוג הפרויקט והשטח, והכלי מחשב טווח, כמות להצהרה ורצועת ±15%, לפי הנוסחאות מהמדריך של הקבוצה, כתעודת שקילה. כל חישוב נשלח כפנייה עם המפרט.',
+  ()=>`<figure><img src="img/tk-calc.webp" alt="מאזן הפסולת" loading="lazy"><figcaption><span>דסקטופ</span></figcaption></figure><figure><img src="img/tk-mcalc.webp" alt="מאזן הפסולת בנייד" loading="lazy" style="max-height:420px;object-fit:cover;object-position:top"><figcaption><span>נייד</span></figcaption></figure>`,2,''],
+ ['07','הסרטון: סצנת חתימה','29 שניות · 9:16 ו-4:5 · פסקול מקורי','צילום אמיתי של הריסה מתפרק לאלפי חלקיקים, נשאב למערבולת של ארבעת הלהבים, הופך לחומר נקי, מתגבש למיגונית, ונסגר ללוגו. סבבי פותח ("רגע. זה לא פסולת.") ומסיים. כל מעבר הוא הלהבים מסתובבים.',
+  ()=>`<figure><video controls playsinline preload="none" poster="img/tk-film-poster.jpg" src="img/tk-film.mp4" style="aspect-ratio:9/16;max-height:640px;margin-inline:auto"></video><figcaption><span>הסרטון, 9:16</span><span class="lbl">מהשטח + קוד</span></figcaption></figure><figure><div class="story" style="grid-template-columns:repeat(3,1fr);padding:10px;background:#0B1B2E">${['tk-m1','tk-m2','tk-m3','tk-m4','tk-m5','tk-m6'].map((f,i)=>`<div style="background:#0B1B2E url(img/${f}.webp) center/cover"><small style="background:rgba(7,11,46,.7);padding:2px 4px;border-radius:4px;color:#fff">${['פסולת','חלקיקים','מערבולת','חומר נקי','מיגונית','לוגו'][i]}</small></div>`).join('')}</div><figcaption><span>סצנת החתימה, פריים אחרי פריים</span></figcaption></figure>`,2,'2:24 תסריט · רינדור ברקע'],
+ ['08','הקמפיין','3 סטילס · 3 טקסטים · 5 כותרות','A/B לשבוע הראשון: הסרטון מול "מעל 90%" מול "מאזן פסולת". קהל: קבלנים ויזמים בדרום ובמרכז, UTM מוכן, והערה ברורה: עד שהאתר החדש באוויר, המודעות מפנות למוקד.',
+  ()=>['ad-feed','ad-square','ad-story'].map((f,i)=>`<figure><img src="img/tk-${f}.webp" alt="מודעה ${i+1}" loading="lazy"><figcaption><span>${['פיד 4:5','ריבוע 1:1','סטורי 9:16'][i]}</span></figcaption></figure>`).join(''),3,''],
+ ['09','דומיין ומסירה','talorkaradi.co.il · קיים','הדומיין כבר שלהם. מחברים www ב-CNAME, מעבירים את הדומיין הראשי לשרתי השמות של ספק האחסון אחרי העתקת רשומות המייל, ו-HTTPS עולה לבד. לפני כן: קישור תצוגה לאישור, עם תווית "תצוגה מקדימה".',
+  ()=>`<div class="facts"><div><b>www → CNAME</b> לפרויקט באחסון<small>DNS</small></div><div><b>@ → nameservers</b> אחרי העתקת MX ו-TXT<small>DNS</small></div><div><b>תצוגה מקדימה</b> קישור לאישור הלקוח<small id="tkLiveNote">בהמתנה לאישור</small></div></div>`,1,'']];
+function renderFlow(){
+ $('#fsteps').innerHTML=FLOW.map(([n,t,sub,p,vis,cols,tm])=>`<li class="fstep"><span class="dot">${n}</span><div><h3>${esc(t)}</h3><div class="tm"><span>${esc(sub)}</span>${tm?`<span>זמן: ${esc(tm)}</span>`:''}</div><p>${esc(p)}</p><div class="vis" style="--n:${cols}">${vis()}</div>${(n==='05'||n==='09')&&TK_LIVE?`<a class="btn go" href="${TK_LIVE}" target="_blank" rel="noopener">לאתר החי של טלאור כראדי ↗</a>`:''}</div></li>`).join('');
+ const r=$('#baR'), ba=$('#ba'); const upd=()=>ba.style.setProperty('--cut',r.value+'%'); r.addEventListener('input',upd); upd();
+ if(TK_LIVE){const n=document.getElementById('tkLiveNote'); if(n)n.textContent='הקישור מוכן';}
+}
+</script>
+<script>
 /* ---------- static sections ---------- */
 function renderStatic(){
  $('#getsList').innerHTML=GETS.map(([t,p,ic])=>`<div class="get"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ic}</svg><h3>${esc(t)}</h3><p>${esc(p)}</p></div>`).join('');
@@ -527,16 +612,16 @@ const EXAMPLE=[
  [['intake','30 עמודים · 82 תמונות · 5 סרטוני יוטיוב · טלפונים, כתובות, נוסחאות'],()=>card('c3','איסוף',`<div class="spec"><b dir="ltr" style="text-align:right">30 · 82 · 5</b><small>עמודים · תמונות · סרטונים, ב-3:01 דקות, בנימוס (השהיה בין בקשות)</small></div><p style="color:var(--mist);font-size:13.5px;margin-top:8px">כל מספר נכנס לדף עובדות עם העמוד שממנו הגיע.</p>`,'מהשטח')],
  [['brand','סמל שורטט מחדש בווקטור · פלטה עם בדיקת ניגודיות · Rubik + IBM Plex Mono'],()=>{card('c2 icon','סמל ואייקון',`<div class="ic" style="background:#0B1B2E;padding:12px"><img src="img/tk-symbol.svg" alt="הסמל של טלאור כראדי בווקטור"></div><small style="color:var(--mist);font:500 12px var(--mono)">ארבעה להבים = ארבעה שלבים</small>`,'מהשטח'); card('c4','פלטה ופונטים',swatches(['#0B1B2E','#F4F5F0','#1E7A38','#9ACB63','#2560A8','#C9F03A'],['night','paper','green','leaf','blue','hi-vis'])+`<div class="spec" style="margin-top:8px"><b style="font-family:Rubik,var(--body);font-weight:800">מה שיוצא מהאתר, חוזר לבנות.</b><small>Rubik 800 · IBM Plex Mono לנתונים (כמו תעודת שקילה)</small></div>`,'מהשטח');}],
  [['site','אתר: כניסה מהלוגו · המעגל · 9 שירותים · מאזן פסולת · מפת מתקנים · פרויקטים'],()=>{card('c4','אתר',`<div class="shot"><img src="img/tk-site.webp" alt="מסך הפתיחה של האתר החדש של טלאור כראדי"><span class="lbl">צילום מסך אמיתי</span></div>`); card('c2','כלי הוכחה',`<div class="shot" style="aspect-ratio:auto;height:100%;min-height:140px"><img src="img/tk-calc.webp" alt="מחשבון מאזן הפסולת"><span class="lbl">מאזן פסולת</span></div>`);}],
- [['admin','מרכז בקרה: פניות · תוכן · שאלות · פרויקטים · המלצות · מוקד דיגיטלי'],()=>card('c6','מרכז בקרה וסוכן',`<div style="display:flex;flex-wrap:wrap;gap:8px">${['פניות עם סטטוס','מקור הפנייה (טופס / מאזן / מוקד)','עריכת טקסטים ומספרים','שאלות נפוצות','פרויקטים מיוטיוב ומהשטח','המלצות אמיתיות בלבד','מוקד דיגיטלי עם ידע נוסף'].map(t=>`<span class="lbl" style="background:rgba(63,82,224,.3)">${t}</span>`).join('')}</div>`)],
- [['film','סרטון 26 שניות · מוטיב "spin" מהסמל · 9:16 ו-4:5 · פסקול מקורי'],()=>card('c6','סרטון השקה',`<div class="story" id="exStory">${FILMSTRIP.map(([src,t])=>`<div style="background:#0B1B2E url(${src}) center/cover"><small style="background:rgba(7,11,46,.7);padding:2px 4px;border-radius:4px">${esc(t)}</small></div>`).join('')}</div>`,'מהשטח')],
+ [['admin','מרכז בקרה: פניות · תוכן · שאלות · פרויקטים · המלצות · מוקד דיגיטלי'],()=>{card('c2 icon','הדמות: סבבי',`<div class="ic" style="background:#F4F5F0;width:96px;height:110px">${sbSVG('happy')}</div><small style="color:var(--mist);font:500 12px var(--mono)">נולד מהלהבים · 8 מצבים</small>`,'דמות'); card('c4','מרכז בקרה וסוכן',`<div style="display:flex;flex-wrap:wrap;gap:8px">${['פניות עם סטטוס','מקור הפנייה (טופס / מאזן / מוקד)','עריכת טקסטים ומספרים','שאלות נפוצות','פרויקטים מיוטיוב ומהשטח','המלצות אמיתיות בלבד','מוקד דיגיטלי עם ידע נוסף'].map(t=>`<span class="lbl" style="background:rgba(63,82,224,.3)">${t}</span>`).join('')}</div>`);}],
+ [['film','סרטון 29 שניות · סצנת חתימה: פסולת → מערבולת → מיגונית → לוגו · סבבי · 9:16 ו-4:5'],()=>card('c6','סרטון השקה',`<video controls playsinline preload="none" poster="img/tk-film-poster.jpg" src="img/tk-film.mp4" style="width:100%;max-height:420px;border-radius:10px;background:#000;margin-bottom:10px"></video><div class="story" id="exStory">${FILMSTRIP.map(([src,t])=>`<div style="background:#0B1B2E url(${src}) center/cover"><small style="background:rgba(7,11,46,.7);padding:2px 4px;border-radius:4px">${esc(t)}</small></div>`).join('')}</div>`,'מהשטח')],
  [['domain','דומיין קיים: talorkaradi.co.il · CNAME www + A @ · HTTPS אוטומטי'],()=>card('c3 dom','דומיין',`<div>talorkaradi.co.il<span>קיים, מחברים</span></div><div>www → CNAME<span>לספק האחסון</span></div><div>HTTPS<span>אוטומטי</span></div>`)],
  [['qa','אפס שגיאות · 390px בלי גלילה לצד · מקלדת · הפחתת תנועה · תוויות "מהשטח"'],()=>card('c3','בקרה',`<div style="display:grid;gap:6px;font-size:14px">${['אפס שגיאות בקונסול','נייד 390px בלי גלילה לצדדים','ניווט מקלדת ודיאלוגים','הפחתת תנועה','כל תמונה מסומנת','כל מספר עם מקור'].map(t=>`<span>✓ ${t}</span>`).join('')}</div>`)]];
-const FILMSTRIP=[['img/tk-f1.webp','פתיחה'],['img/tk-f2.webp','הגילוי'],['img/tk-f3.webp','90%+'],['img/tk-f4.webp','המעגל'],['img/tk-f5.webp','המיגונית'],['img/tk-f6.webp','במספרים'],['img/tk-f7.webp','מוקד']];
+const FILMSTRIP=[['img/tk-m1.webp','פתיחה'],['img/tk-m2.webp','חלקיקים'],['img/tk-m3.webp','מערבולת'],['img/tk-m4.webp','חומר נקי'],['img/tk-m5.webp','מיגונית'],['img/tk-m6.webp','המעגל נסגר'],['img/tk-f7.webp','סבבי']];
 
 function showExample(){ RUNMODE='example'; stageList(STAGES.map(()=> 'done')); out().innerHTML=''; log().innerHTML='';
  EXAMPLE.forEach(([[k,t],f])=>{logLine(k,t); f();});
  $('#bTitle').textContent=RUN.host; $('#bClock').textContent='ריצה מלאה · נמדדה';
- $('#bFoot').textContent='כל כרטיס כאן הוא תוצר אמיתי של הסטודיו מהריצה על talorkaradi.co.il. הזמנים בצד: זמן אמיתי לכל שלב.'; }
+ $('#bFoot').innerHTML='כל כרטיס כאן הוא תוצר אמיתי של הסטודיו מהריצה על talorkaradi.co.il. הזמנים בצד: זמן אמיתי לכל שלב. <a href="https://claude.ai/artifact/7aj1NcY14KNP9ygLgadNYL" target="_blank" rel="noopener" style="color:#FFB23E">לאתר החי ↗</a>'; }
 async function replayExample(){
  if(running)return; running=true; RUNMODE='example'; const st=STAGES.map(()=>''); out().innerHTML=''; log().innerHTML=''; const t0=performance.now();
  const clock=setInterval(()=>$('#bClock').textContent=((performance.now()-t0)/1000).toFixed(1)+'s · הדמיה מואצת',100);
@@ -698,7 +783,7 @@ $('#lg').addEventListener('click',e=>{if(e.target.id==='lg'||e.target.closest('[
  draw(); })();
 
 /* ---------- init ---------- */
-renderStatic(); renderPlans(); showExample();
+renderStatic(); renderPlans(); renderFlow(); showExample();
 if(cl){
  cl.use('db').then(d=>{db=d; if(!db)return; db.doc('data/site').onSnapshot(s=>{ if(s.exists){ const d=s.data()||{}; C={...structuredClone(DEF),...d}; if(!Array.isArray(C.plans)||!C.plans.length)C.plans=structuredClone(DEF.plans); renderPlans(); } },()=>{}); });
  cl.use('user').then(async u=>{ if(!u)return; try{uid=await u.id(); isOwner=await u.isOwner();}catch(_){} if(isOwner)$('#admBtn').style.display='inline-flex'; });

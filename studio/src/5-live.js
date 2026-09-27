@@ -86,7 +86,7 @@ $('#lg').addEventListener('click',e=>{if(e.target.id==='lg'||e.target.closest('[
  draw(); })();
 
 /* ---------- init ---------- */
-renderStatic(); renderPlans(); showExample();
+renderStatic(); renderPlans(); renderFlow(); showExample();
 if(cl){
  cl.use('db').then(d=>{db=d; if(!db)return; db.doc('data/site').onSnapshot(s=>{ if(s.exists){ const d=s.data()||{}; C={...structuredClone(DEF),...d}; if(!Array.isArray(C.plans)||!C.plans.length)C.plans=structuredClone(DEF.plans); renderPlans(); } },()=>{}); });
  cl.use('user').then(async u=>{ if(!u)return; try{uid=await u.id(); isOwner=await u.isOwner();}catch(_){} if(isOwner)$('#admBtn').style.display='inline-flex'; });

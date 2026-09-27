@@ -432,6 +432,54 @@ html.a-font body,html.a-font h1,html.a-font h2,html.a-font h3{font-family:Arial,
 .confirm{display:flex;gap:6px;align-items:center;font-size:14px}
 @media (max-width:800px){.adm{grid-template-columns:1fr;grid-template-rows:auto 1fr}.adm nav{flex-direction:row;overflow:auto;padding:10px}.adm nav b{display:none}.adm .tab{white-space:nowrap}.kpis{grid-template-columns:1fr 1fr}.lead-row{grid-template-columns:1fr}}
 
+
+/* preview banner */
+.pv{background:#C9F03A;color:#0B1B2E;font:600 13px/1.4 var(--mono);text-align:center;padding:7px 16px;position:relative;z-index:61}
+.pv b{font-family:var(--display)}
+/* סבבי */
+.sb{position:fixed;inset-inline-end:16px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:74;opacity:0;transform:translateY(24px) scale(.8);transition:opacity .35s,transform .5s var(--ease)}
+.sb.on{opacity:1;transform:none}
+.sb.pre-born{opacity:0!important}
+@media (max-width:760px){.sb{bottom:calc(76px + env(safe-area-inset-bottom,0px));inset-inline-end:10px}}
+.sb-btn{display:block;width:70px;height:88px;padding:0;border:0;background:none;cursor:pointer;filter:drop-shadow(0 10px 12px rgba(7,19,31,.3));transition:transform .35s var(--ease)}
+.sb-btn:hover{transform:translateY(-3px)}
+@media (max-width:760px){.sb-btn{width:54px;height:68px}}
+.sb-btn svg,.sb-mini svg{width:100%;height:100%;overflow:visible;shape-rendering:crispEdges}
+.sb .f,.sb-mini .f,.sb .zz,.sb-mini .zz{display:none}
+.sb[data-st="idle"] .f-idle,.sb[data-st="blink"] .f-blink,.sb[data-st="look"] .f-look,.sb[data-st="happy"] .f-happy,.sb[data-st="spin"] .f-happy,.sb[data-st="think"] .f-think,.sb[data-st="sleep"] .f-sleep,.sb[data-st="surprised"] .f-surprised,.sb[data-st="love"] .f-love,.sb-mini .f-idle{display:inline}
+.sb[data-st="sleep"] .zz{display:inline;animation:zz 2s infinite}
+@keyframes zz{50%{opacity:.35;transform:translateY(-1px)}}
+.sb[data-st="spin"] .wheel{animation:sbspin .9s cubic-bezier(.4,0,.2,1)}
+@keyframes sbspin{to{transform:rotate(360deg)}}
+.sb[data-walk] .sb-btn svg{animation:bob .26s infinite alternate}
+@keyframes bob{to{transform:translateY(-2px)}}
+.sb-bub{position:absolute;bottom:96px;inset-inline-end:-4px;width:max-content;max-width:min(320px,calc(100vw - 32px));background:#fff;color:#0B1B2E;padding:14px 16px;padding-inline-end:40px;font:500 15px/1.55 var(--display);border-radius:14px;border:2px solid #0B1B2E;opacity:0;transform:translateY(8px) scale(.96);transition:opacity .28s,transform .38s var(--ease);box-shadow:0 18px 30px -10px rgba(7,19,31,.3)}
+@media (max-width:760px){.sb-bub{bottom:76px;font-size:14px}}
+.sb-bub.on{opacity:1;transform:none}
+.sb-bub::after{content:"";position:absolute;inset-inline-end:26px;bottom:-9px;width:14px;height:14px;background:#fff;border-inline-start:2px solid #0B1B2E;border-bottom:2px solid #0B1B2E;transform:rotate(-45deg)}
+.sb-bub p{margin:0}
+.sb-x{position:absolute;top:8px;inset-inline-end:8px;width:26px;height:26px;border-radius:50%;border:0;background:#EEF1EC;cursor:pointer;font-size:13px;color:#0B1B2E}
+.sb-acts{display:flex;flex-wrap:wrap;gap:8px}
+.sb-acts button{margin-top:10px;min-height:36px;padding:0 12px;border-radius:999px;border:0;background:#0B1B2E;color:#C9F03A;font:600 13.5px var(--display);cursor:pointer}
+.sb-menu{position:absolute;bottom:96px;inset-inline-end:0;width:240px;background:#0B1B2E;color:#EEF3F6;border-radius:16px;padding:12px;display:grid;gap:4px;box-shadow:0 24px 50px -20px rgba(0,0,0,.6)}
+.sb-menu b{padding:4px 8px 8px;font-size:15px}
+.sb-menu button{min-height:40px;border-radius:10px;border:0;background:transparent;color:inherit;text-align:start;padding:0 10px;cursor:pointer;font:500 15px var(--display);display:flex;gap:10px;align-items:center}
+.sb-menu button:hover,.sb-menu button:focus-visible{background:rgba(201,240,58,.14)}
+.sb-menu button i{width:8px;height:8px;background:#C9F03A;border-radius:2px}
+.sb-menu button.dim{opacity:.7}
+.sb-beam{position:fixed;z-index:80;width:26px;height:26px;pointer-events:none;background:conic-gradient(#9ACB63 0 25%,#3FA3DC 0 50%,#9ACB63 0 75%,#3FA3DC 0);border-radius:50%;box-shadow:0 0 18px 6px rgba(201,240,58,.6)}
+.sb-lit{outline:3px solid #C9F03A!important;outline-offset:6px;border-radius:12px;transition:outline-color .3s}
+.sb-seed{position:fixed;z-index:160;width:36px;height:36px;border-radius:50%;pointer-events:none;background:conic-gradient(#9ACB63 0 25%,#3FA3DC 0 50%,#9ACB63 0 75%,#3FA3DC 0);box-shadow:0 0 24px 8px rgba(201,240,58,.55)}
+.sb-conf{position:fixed;z-index:80;width:8px;height:8px;border-radius:2px;pointer-events:none}
+.sb-mini{display:inline-block;width:40px;height:50px;flex:none}
+.meet{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;margin-top:28px;padding:20px 22px;border-radius:18px;border:1px dashed rgba(201,240,58,.35)}
+.meet .sb-mini{width:84px;height:104px}
+.meet b{font:800 24px var(--display);color:#fff}
+.meet p{color:var(--onNightMute);margin-top:6px;max-width:60ch}
+.meet .states{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.meet .states span{font:600 11.5px var(--mono);padding:4px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.18)}
+#sbBack{background:none;border:0;padding:0;color:var(--onNightMute);cursor:pointer;font-size:15px}
+
 /* reveal + intro */
 .rv{transition:opacity .8s var(--ease),transform .8s var(--ease)}
 .js .rv.pre{opacity:0;transform:translateY(22px)}
@@ -456,6 +504,7 @@ html.a-font body,html.a-font h1,html.a-font h2,html.a-font h3{font-family:Arial,
 </defs>
 </svg>
 <a class="skip" href="#main">דלג לתוכן</a>
+<div class="pv" id="pv" hidden>תצוגה מקדימה של האתר החדש · <b>הוכן על ידי AILGEN</b> עבור קבוצת טלאור כראדי</div>
 
 <header class="hdr" id="hdr">
  <div class="wrap in">
@@ -515,6 +564,18 @@ html.a-font body,html.a-font h1,html.a-font h2,html.a-font h3{font-family:Arial,
   <div class="closing rv">
    <div class="ph"><img src="img/shelter.webp" alt="מיגונית של הקבוצה, מצוירת, בתחנת דלק" loading="lazy"><span class="tag">מהשטח</span></div>
    <blockquote>״אותה פסולת בניין שנאספה מאתר הבנייה… יוצאת מהאתר בחלק ממיגונית, שתפקידה להציל חיים.״<cite>מתוך העמוד של פארק תעשיות דרום ירוק</cite></blockquote>
+  </div>
+  <div class="meet"><span class="sb-mini" aria-hidden="true"></span><div><b>הכירו את סבבי.</b><p>הוא נולד מארבעת הלהבים של הלוגו: הגוף שלו הוא המעגל, והפנים על הרכזת. הוא מלווה אתכם באתר, מסתובב כשמחשבים את מאזן הפסולת, ונרדם כשאין אף אחד.</p><div class="states"><span>סובב</span><span>מכוון</span><span>חושב</span><span>נרדם</span><span>מאושר</span></div></div></div>
+ </div>
+</section>
+
+<section class="sec night film" id="film" aria-labelledby="filmH" hidden>
+ <div class="wrap">
+  <p class="eyebrow">סרטון ההשקה</p>
+  <h2 id="filmH">המעגל, ב-29 שניות.</h2>
+  <div class="in">
+   <video id="filmV" controls playsinline preload="none" muted></video>
+   <div><p class="lead" id="filmTxt"></p><div class="facts" id="filmFacts"></div></div>
   </div>
  </div>
 </section>
@@ -592,16 +653,6 @@ html.a-font body,html.a-font h1,html.a-font h2,html.a-font h3{font-family:Arial,
  </div>
 </section>
 
-<section class="sec night film" id="film" aria-labelledby="filmH" hidden>
- <div class="wrap">
-  <p class="eyebrow">סרטון ההשקה</p>
-  <h2 id="filmH">המעגל, ב-26 שניות.</h2>
-  <div class="in">
-   <video id="filmV" controls playsinline preload="none" muted></video>
-   <div><p class="lead" id="filmTxt"></p><div class="facts" id="filmFacts"></div></div>
-  </div>
- </div>
-</section>
 
 <section class="sec about" id="about" aria-labelledby="abH">
  <div class="wrap">
@@ -629,7 +680,7 @@ html.a-font body,html.a-font h1,html.a-font h2,html.a-font h3{font-family:Arial,
   <div class="faqw">
    <div class="faq" id="faqList"></div>
    <aside class="agent" aria-label="המוקד הדיגיטלי">
-    <header><svg viewBox="0 0 512 512" aria-hidden="true"><use href="#sym"/></svg><div><b>המוקד הדיגיטלי</b><span>עונה בעברית, על בסיס המידע באתר</span></div><i class="live" aria-hidden="true"></i></header>
+    <header><span class="sb-mini" aria-hidden="true"></span><div><b>המוקד הדיגיטלי של סבבי</b><span>עונה בעברית, על בסיס המידע באתר</span></div><i class="live" aria-hidden="true"></i></header>
     <div id="advBody" aria-live="polite"></div>
     <div id="advChips"><button type="button">מה צריך להיתר?</button><button type="button">איך עובד "אחת תמורת אחת"?</button><button type="button">אילו חומרים ממוחזרים יש?</button><button type="button">הריסה ליד בית ספר</button></div>
     <form id="advF"><label for="advIn" class="skip" style="position:absolute;top:-9999px">שאלה למוקד</label><input id="advIn" placeholder="כתבו שאלה…" autocomplete="off"><button type="submit">שליחה</button></form>
@@ -673,7 +724,7 @@ html.a-font body,html.a-font h1,html.a-font h2,html.a-font h3{font-family:Arial,
  <div class="wrap in">
   <a class="logo" href="#top"><svg viewBox="0 0 512 512" aria-hidden="true"><use href="#sym"/></svg><span class="wm"><small>קבוצת</small><b>טלאור כראדי</b></span></a>
   <nav aria-label="ניווט בתחתית"><a href="#circle">המעגל</a><a href="#services">שירותים</a><a href="#calc">מאזן פסולת</a><a href="#sites">מתקנים</a><a href="#projects">פרויקטים</a><a href="#jobs">דרושים</a><a href="#contact">צור קשר</a></nav>
-  <div class="fine"><span>© <span id="yr"></span> קבוצת טלאור כראדי בע"מ</span><button class="lk" type="button" data-legal="privacy">מדיניות פרטיות</button><button class="lk" type="button" data-legal="a11y">הצהרת נגישות</button><span>עיצוב ופיתוח: AILGEN</span></div>
+  <div class="fine"><span>© <span id="yr"></span> קבוצת טלאור כראדי בע"מ</span><button class="lk" type="button" data-legal="privacy">מדיניות פרטיות</button><button class="lk" type="button" data-legal="a11y">הצהרת נגישות</button><span>עיצוב ופיתוח: AILGEN</span><button type="button" id="sbBack" hidden>להחזיר את סבבי</button></div>
  </div>
 </footer>
 
@@ -694,6 +745,22 @@ html.a-font body,html.a-font h1,html.a-font h2,html.a-font h3{font-family:Arial,
 <dialog id="lb" class="lb" aria-label="תמונה"><figure><button class="x" type="button" aria-label="סגירה" data-close>✕</button><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure></dialog>
 <dialog id="lg" aria-labelledby="lgT"><div class="dlg"><button class="x" type="button" aria-label="סגירה" data-close>✕</button><h3 id="lgT"></h3><div id="lgTxt" style="white-space:pre-wrap;color:var(--steel)"></div></div></dialog>
 
+<div class="sb" id="sb" hidden data-st="idle">
+ <div class="sb-bub" id="sbBub" role="status" hidden><button class="sb-x" id="sbX" type="button" aria-label="סגירת ההודעה">✕</button><p id="sbTxt"></p><div class="sb-acts" id="sbActs"></div></div>
+ <div class="sb-menu" id="sbMenu" hidden role="menu" aria-label="התפריט של סבבי">
+  <b>לאן לקחת אתכם?</b>
+  <button type="button" data-go="#calc" role="menuitem"><i></i>מאזן פסולת</button>
+  <button type="button" data-go="#circle" role="menuitem"><i></i>המעגל</button>
+  <button type="button" data-go="#sites" role="menuitem"><i></i>המתקנים</button>
+  <button type="button" data-go="adv" role="menuitem"><i></i>לשאול את המוקד</button>
+  <button type="button" data-go="#contact" role="menuitem"><i></i>לדבר עם הצוות</button>
+  <button type="button" data-go="mute" role="menuitem" class="dim"><i></i>שקט לשבוע</button>
+  <button type="button" data-go="hide" role="menuitem" class="dim"><i></i>להסתיר את סבבי</button>
+ </div>
+ <button class="sb-btn" id="sbBtn" type="button" aria-label="סבבי, המדריך של האתר. פתיחת תפריט" aria-expanded="false" aria-controls="sbMenu"></button>
+</div>
+<i class="sb-beam" id="sbBeam" hidden aria-hidden="true"></i>
+
 <div class="adm" id="adm" role="dialog" aria-modal="true" aria-label="מרכז הבקרה">
  <nav><b>מרכז הבקרה</b>
   <button class="tab on" type="button" data-t="ov">סקירה</button>
@@ -702,7 +769,7 @@ html.a-font body,html.a-font h1,html.a-font h2,html.a-font h3{font-family:Arial,
   <button class="tab" type="button" data-t="faq">שאלות נפוצות</button>
   <button class="tab" type="button" data-t="projects">פרויקטים</button>
   <button class="tab" type="button" data-t="reviews">המלצות</button>
-  <button class="tab" type="button" data-t="agent">המוקד הדיגיטלי</button>
+  <button class="tab" type="button" data-t="agent">המוקד וסבבי</button>
   <button class="tab" type="button" data-t="close">סגירה ✕</button>
  </nav>
  <main id="admMain"></main>
@@ -734,7 +801,7 @@ const DEF={
   ['אתם מבצעים הריסות בלב שכונה או ליד מוסדות?','כן. בניין בשכונה צפופה, גשר ליד כביש סואן, או ליד בתי ספר ומרכזים מסחריים. כל פרויקט מתחיל בתכנון ובתיאום עם העירייה, המשטרה והרשויות, עם הפחתת אבק ורעש והתאמת שעות העבודה.'],
   ['האם נתיבים דרום עובדת עם קבלני משנה?','לא. נתיבים דרום, זרוע התשתיות של הקבוצה (סיווג ג׳5), מבצעת את כל העבודות בעצמה, עם ציוד חדיש וצוות קבוע.'],
   ['איך מזמינים?','חייגו למוקד ‎*9084, או השאירו פרטים בטופס ונחזור אליכם. לשאלות על מיגון ומבנים טרומיים: יוסי 052-8077702 או פיני 050-7366632.']],
- testimonials:[], extraProjects:[], agentOn:true, agentNotes:'', privacy:'', a11yText:''
+ testimonials:[], extraProjects:[], agentOn:true, agentNotes:'', sababiOn:true, sababiHello:'', privacy:'', a11yText:''
 };
 let C=structuredClone(DEF);
 
@@ -816,8 +883,9 @@ const TYPES=[
  {k:'pre',t:'מתועשת / טרומית',s:'10–12 ט׳ ל-100 מ"ר',lo:10,hi:12},
  {k:'pub',t:'ציבור, משרדים, מסחר',s:'15–20 ט׳ ל-100 מ"ר',lo:15,hi:20},
  {k:'dem',t:'הריסה',s:'נפח × 0.4–0.5',lo:.4,hi:.5,vol:true}];
-const FILM={src:'m/film-web.mp4',poster:'m/film-poster.jpg',txt:'26 שניות שנבנו כולן בקוד מתוך המותג: ארבעת הלהבים של הסמל מסובבים כל מעבר, וכל מספר מגיע מהאתר של הקבוצה.',
- facts:[['9:16, 4:5','לריילס, לסטוריז ולפיד'],['פסקול','מקורי, נבנה סביב התמונה'],['תמונות','כולן מהשטח'],['מספרים','מעל 90% · 1,000+ מכולות · 5 מתקנים']]};
+const FILM={src:'m/film-web.mp4',poster:'m/film-poster.jpg',txt:'29 שניות שנבנו כולן בקוד מתוך המותג. בסצנת החתימה, צילום אמיתי של הריסה מתפרק לחלקיקים, נשאב למערבולת של ארבעת הלהבים, הופך לחומר נקי, מתגבש למיגונית, ונסגר ללוגו.',
+ facts:[['חתימה','פסולת → מיחזור → חומר נקי → מיגונית → לוגו'],['9:16, 4:5','לריילס, לסטוריז ולפיד'],['פסקול','מקורי, נבנה סביב התמונה'],['סבבי','פותח ומסיים את הסרט']]};
+const PREVIEW=true; /* the preview banner: set false when the site goes live on the client's domain */
 </script>
 <script>
 /* ================= render ================= */
@@ -919,8 +987,8 @@ let SPEC='';
 function calcUI(){
  $('#calcType').innerHTML=TYPES.map((t,i)=>`<div class="chip"><input type="radio" name="ct" id="ct${t.k}" value="${t.k}"${i===0?' checked':''}><label for="ct${t.k}"><b>${esc(t.t)}</b><span>${esc(t.s)}</span></label></div>`).join('');
  const R=$('#areaR'),N=$('#areaN'); R.value=N.value=2400;
- R.oninput=()=>{N.value=R.value;calc();}; N.oninput=()=>{R.value=Math.min(30000,Math.max(100,+N.value||0));calc();};
- $$('#calcF input').forEach(i=>i.addEventListener('input',calc)); calc();
+ R.oninput=()=>{N.value=R.value;calc();SABABI.spin();}; N.oninput=()=>{R.value=Math.min(30000,Math.max(100,+N.value||0));calc();SABABI.spin();};
+ $$('#calcF input').forEach(i=>i.addEventListener('input',()=>{calc(); SABABI.spin();})); calc();
  $('#calcSend').onclick=()=>{SPEC=calc(); const s=$('#fSpec'); s.hidden=false; s.textContent=SPEC; $('#fSvc').value=SVCS.permits.t; $('#contact').scrollIntoView({behavior:reduce()?'auto':'smooth'}); setTimeout(()=>$('#fName').focus({preventScroll:true}),reduce()?0:700);};
 }
 function calc(){
@@ -971,7 +1039,7 @@ function renderVids(){
 }
 
 /* film (filled after the launch film is rendered) */
-function filmUI(){ if(!FILM)return; const s=$('#film'); s.hidden=false; const v=$('#filmV'); v.poster=FILM.poster; v.src=FILM.src; $('#filmTxt').textContent=FILM.txt; $('#filmFacts').innerHTML=(FILM.facts||[]).map(([a,b])=>`<div><b>${esc(a)}</b><span>${esc(b)}</span></div>`).join(''); }
+function filmUI(){ $('#pv').hidden=!PREVIEW; if(!FILM)return; const s=$('#film'); s.hidden=false; const v=$('#filmV'); v.poster=FILM.poster; v.src=FILM.src; $('#filmTxt').textContent=FILM.txt; $('#filmFacts').innerHTML=(FILM.facts||[]).map(([a,b])=>`<div><b>${esc(a)}</b><span>${esc(b)}</span></div>`).join(''); }
 
 /* about */
 function renderAbout(){
@@ -987,7 +1055,7 @@ function entry(){
  const heroIn=()=>{ if(reduce())return; blades.forEach((b,i)=>b.animate([{transform:'rotate(-70deg) scale(.55)',opacity:0},{transform:'none',opacity:1}],{duration:900,delay:120+i*110,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'}));
   [$('#heroKick'),$('#h1'),$('#heroSub'),$('.hero .ctas')].forEach((e,i)=>e.animate([{opacity:0,transform:'translateY(18px)'},{opacity:1,transform:'none'}],{duration:700,delay:200+i*90,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'}));};
  let seen=false; try{seen=!!localStorage.getItem('tkSeen'); localStorage.setItem('tkSeen','1');}catch(_){}
- if(reduce()||seen)return heroIn();
+ if(reduce()||seen){ heroIn(); SABABI.start(); return; }
  const o=document.createElement('div'); o.id='intro'; o.setAttribute('aria-hidden','true');
  o.innerHTML=`<svg viewBox="0 0 512 512">${[0,1,2,3].map(i=>`<g class="ib" style="transform-origin:256px 256px"><use href="#${i%2?'bB':'bG'}" transform="rotate(${90*i} 256 256)"/></g>`).join('')}</svg>`;
  document.body.appendChild(o); document.body.style.overflow='hidden';
@@ -1001,8 +1069,113 @@ function entry(){
   svg.animate([{transform:'rotate(180deg)'},{transform:`translate(${dx}px,${dy}px) scale(${s}) rotate(180deg)`}],{duration:620,easing:'cubic-bezier(.6,0,.2,1)',fill:'forwards'});
   o.animate([{background:getComputedStyle(o).backgroundColor},{background:'rgba(11,27,46,0)'}],{duration:620,easing:'ease-in',fill:'forwards'});
   heroIn();},1640);
- setTimeout(()=>{o.remove(); document.body.style.overflow='';},2300);
+ setTimeout(()=>{o.remove(); document.body.style.overflow=''; SABABI.start();},2300);
 }
+</script>
+<script>
+/* ================= סבבי: the mascot, born from the four blades of the logo ================= */
+const SB={"name": "סבבי", "grid": ["........................", ".......HHHHHHHHHH.......", "......hhhhhHHhhhhh......", ".....hhhhhhHHhhhhhh.....", "...hhhhhhhhhhhhhhhhhh...", ".....gGGGGG..bbbbbb.....", "....ggGGGGG.bbbbbbbb....", "...gggGGGGGbbbbbbbbbb...", "...ggggGGG.bbbbbBBBBB...", "..gggggGGKKKKKKBBBBBBB..", "..gggggGKKKKKKKKBBBBBB..", "...gggggKKKKKKKKBBBBBB..", ".B..gggKKKKKKKKKK..BBBB.", ".BB..ggKKKKKKKKKKgg..BB.", ".BBBB..KKKKKKKKKKggg..B.", "..BBBBBBKKKKKKKKggggg...", "..BBBBBBKKKKKKKKGggggg..", "..BBBBBBBKKKKKKGGggggg..", "...BBBBBbbbbb.GGGgggg...", "...bbbbbbbbbbGGGGGggg...", "....bbbbbbbb.GGGGGgg....", ".....bbbbbb..GGGGGg.....", "......bbbb..GGGGGg......", "........KK.GGGKK........", "........KK....KK........", ".......hhh....hhh......."], "colors": {"K": "#0B1B2E", "g": "#9ACB63", "G": "#2E8B3E", "b": "#7FBEE6", "B": "#2560A8", "h": "#C9F03A", "H": "#A8CC1E", "r": "#FF5A4E", "w": "#FFFFFF"}, "faces": {"idle": [[9, 11, 2, 2, "h"], [13, 11, 2, 2, "h"], [10, 15, 4, 1, "h"]], "blink": [[9, 12, 2, 1, "h"], [13, 12, 2, 1, "h"], [10, 15, 4, 1, "h"]], "look": [[8, 11, 2, 2, "h"], [12, 11, 2, 2, "h"], [10, 15, 3, 1, "h"]], "happy": [[8, 12, 1, 1, "h"], [9, 11, 2, 1, "h"], [11, 12, 1, 1, "h"], [12, 12, 1, 1, "h"], [13, 11, 2, 1, "h"], [15, 12, 1, 1, "h"], [9, 14, 6, 1, "h"], [10, 15, 4, 1, "h"]], "think": [[9, 10, 2, 1, "h"], [13, 10, 2, 1, "h"], [9, 15, 1, 1, "h"], [11, 15, 1, 1, "h"], [13, 15, 1, 1, "h"]], "sleep": [[9, 12, 2, 1, "h"], [13, 12, 2, 1, "h"], [11, 15, 2, 1, "h"]], "surprised": [[9, 10, 2, 3, "h"], [13, 10, 2, 3, "h"], [11, 14, 2, 2, "h"]], "love": [[8, 11, 1, 1, "r"], [10, 11, 1, 1, "r"], [8, 12, 3, 1, "r"], [9, 13, 1, 1, "r"], [13, 11, 1, 1, "r"], [15, 11, 1, 1, "r"], [13, 12, 3, 1, "r"], [14, 13, 1, 1, "r"], [10, 15, 4, 1, "h"]]}, "cell": 11, "hub": [11.5, 13.0, 4.9]};
+function sababiSVG(){
+ const g=SB.grid, cx=SB.hub[0], cy=SB.hub[1], hr=SB.hub[2]; let wheel='', hub='', rest='';
+ const px=(x,y,c,w=1,h=1)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${c}"/>`;
+ g.forEach((row,y)=>[...row].forEach((ch,x)=>{ if(ch==='.')return; const c=SB.colors[ch], r=Math.hypot(x-cx,y-cy);
+  if('gGbB'.includes(ch)&&y>=5&&y<=22) wheel+=px(x,y,c); else if(ch==='K'&&r<=hr+.2) hub+=px(x,y,c); else rest+=px(x,y,c); }));
+ const faces=Object.entries(SB.faces).map(([k,cells])=>`<g class="f f-${k}">${cells.map(([x,y,w,h,ck])=>px(x,y,SB.colors[ck],w,h)).join('')}</g>`).join('');
+ const zz=`<g class="zz">${px(21,-4,'#0B1B2E',3,1)}${px(22,-3,'#0B1B2E')}${px(21,-2,'#0B1B2E',3,1)}${px(25,-7,'#0B1B2E',2,1)}${px(25,-6,'#0B1B2E')}${px(25,-5,'#0B1B2E',2,1)}</g>`;
+ return `<svg viewBox="-1 -8 28 35" aria-hidden="true"><g class="wheel" style="transform-origin:${cx+.5}px ${cy+.5}px">${wheel}</g>${hub}${rest}${faces}${zz}</svg>`;
+}
+const SABABI=(()=>{
+ const el=$('#sb'), btn=$('#sbBtn'), bub=$('#sbBub'), txt=$('#sbTxt'), acts=$('#sbActs'), menu=$('#sbMenu'), beam=$('#sbBeam');
+ btn.innerHTML=sababiSVG(); $$('.sb-mini').forEach(m=>m.innerHTML=sababiSVG());
+ const LS='sbPrefs', SS='sbSeen';
+ let prefs={}; try{prefs=JSON.parse(localStorage.getItem(LS)||'{}')}catch(_){}
+ let seen=[]; try{seen=JSON.parse(sessionStorage.getItem(SS)||'[]')}catch(_){}
+ const save=()=>{try{localStorage.setItem(LS,JSON.stringify(prefs));sessionStorage.setItem(SS,JSON.stringify(seen))}catch(_){}};
+ let alive=false,last=0,count=0,hideT=0,mood='idle',idleT=0,sleepT=0,walkT=0;
+ const enabled=()=>C.sababiOn!==false&&!prefs.hidden;
+ const quiet=()=>prefs.mutedUntil&&Date.now()<prefs.mutedUntil;
+ const set=s=>{mood=s;el.dataset.st=s;};
+ set('idle');
+ (function blinkLoop(){setTimeout(()=>{if(mood==='idle'){set('blink');setTimeout(()=>{if(mood==='blink')set('idle');},140);}blinkLoop();},2400+Math.random()*3600);})();
+ function wake(){clearTimeout(idleT);clearTimeout(sleepT);if(!alive)return;if(mood==='think'||mood==='sleep')set('idle');
+  idleT=setTimeout(()=>{if(bub.hidden&&menu.hidden)set('think');},23000);sleepT=setTimeout(()=>{if(bub.hidden&&menu.hidden)set('sleep');},68000);}
+ function show(){if(!enabled())return;el.hidden=false;requestAnimationFrame(()=>el.classList.add('on'));alive=true;wake();}
+ function hideBubble(){bub.classList.remove('on');clearTimeout(hideT);setTimeout(()=>{if(!bub.classList.contains('on'))bub.hidden=true;},320);if(mood!=='sleep')set('idle');}
+ function busy(){return document.querySelector('#adm.open,.drawer.open,dialog[open]');}
+ function say(id,text,opt={}){
+  if(!alive||!enabled())return false;
+  if(!opt.force){ if(quiet())return false; if(id&&seen.includes(id))return false; if(Date.now()-last<11000||count>=6)return false; if(busy())return false;
+   const a=document.activeElement; if(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName))return false; }
+  menu.hidden=true; btn.setAttribute('aria-expanded','false');
+  txt.textContent=text; acts.innerHTML='';
+  (opt.actions||[]).forEach(([label,fn])=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.onclick=()=>{hideBubble();fn();};acts.appendChild(b);});
+  bub.hidden=false; requestAnimationFrame(()=>bub.classList.add('on'));
+  const md=opt.mood||'happy'; set(md); setTimeout(()=>{if(mood===md)set('idle');},opt.hold||1400);
+  if(opt.target)setTimeout(()=>beacon(opt.target),350);
+  if(id&&!seen.includes(id)){seen.push(id);save();} last=Date.now(); if(!opt.force)count++;
+  clearTimeout(hideT); const hold=()=>{hideT=setTimeout(()=>{if(bub.matches(':hover,:focus-within'))hold();else hideBubble();},Math.min(opt.ms||8500,innerWidth<620?5200:99999));}; hold();
+  return true;
+ }
+ function beacon(target){ // it points by sending its light: a small blade flies to the target and lights it
+  const t=typeof target==='string'?document.querySelector(target):target; if(!t||reduce())return;
+  const a=btn.getBoundingClientRect(), r=t.getBoundingClientRect(); if(r.bottom<0||r.top>innerHeight)return;
+  const sx=a.left+a.width*.5, sy=a.top+a.height*.5, tx=r.left+r.width/2, ty=r.top+Math.min(r.height/2,48), dx=tx-sx, dy=ty-sy;
+  set('happy'); beam.style.left=sx+'px'; beam.style.top=sy+'px'; beam.hidden=false;
+  const T=(x,y,s=1,rot=0)=>`translate(calc(${x}px - 50%),calc(${y}px - 50%)) scale(${s}) rotate(${rot}deg)`;
+  const an=beam.animate([{transform:T(0,0,.6,0)},{transform:T(dx*.5,dy*.5-Math.min(140,Math.abs(dx)*.3+60),1.2,360),offset:.45},{transform:T(dx,dy,1.4,720),offset:.7},{transform:T(dx,dy,.1,900),opacity:0}],{duration:2000,easing:'cubic-bezier(.3,.7,.2,1)'});
+  setTimeout(()=>t.classList.add('sb-lit'),800); setTimeout(()=>t.classList.remove('sb-lit'),2900);
+  an.onfinish=()=>{beam.hidden=true;};
+ }
+ function greet(){const sm=innerWidth<620;
+  const msg=(C.sababiHello||'').trim()||(sm?'היי, אני סבבי. צריכים כיוון? לחצו עליי.':'היי, אני סבבי. נולדתי מארבעת הלהבים של הלוגו, ואני סובב את המעגל. צריכים כיוון באתר? לחצו עליי.');
+  say('hello',msg,{force:true,mood:'happy',ms:sm?4200:7500});}
+ function birth(){ // born from the hero symbol: one spark leaves the blades and becomes סבבי in the corner
+  if(!enabled())return; const first=!seen.includes('hello'); el.hidden=false; const dock=btn.getBoundingClientRect();
+  const hs=$('#bladesSvg').getBoundingClientRect(), p={x:hs.left+hs.width/2,y:hs.top+hs.height/2};
+  if(first&&!reduce()&&hs.bottom>0){
+   el.classList.add('pre-born','on');
+   const d=document.createElement('i'); d.className='sb-seed'; d.setAttribute('aria-hidden','true'); d.style.left=p.x+'px'; d.style.top=p.y+'px'; document.body.appendChild(d);
+   const dx=dock.left+dock.width*.5-p.x, dy=dock.top+dock.height*.45-p.y;
+   d.animate([{transform:'translate(-50%,-50%) scale(1) rotate(0)'},{transform:`translate(calc(${dx*.45}px - 50%),calc(${dy*.45-160}px - 50%)) scale(1.6) rotate(540deg)`,offset:.45},{transform:`translate(calc(${dx}px - 50%),calc(${dy}px - 50%)) scale(1) rotate(900deg)`}],{duration:1500,easing:'cubic-bezier(.45,0,.2,1)'}).onfinish=()=>{d.remove();el.classList.remove('pre-born');alive=true;wake();set('happy');setTimeout(greet,450);};
+  } else { show(); if(first)setTimeout(greet,500); }
+ }
+ const go=sel=>{const t=document.querySelector(sel); t&&t.scrollIntoView({behavior:reduce()?'auto':'smooth'});};
+ const TIPS=[
+  ['#circle','circle',()=>'זה המעגל. כל להב אצלי הוא שלב בעבודה. לחצו על שלב ותראו מה קורה בו.','#ring'],
+  ['#calc','calc',()=>'כמה פסולת להצהיר בהיתר? סוג הפרויקט והשטח, ואני מסתובב ומחשב.','#ticket',[['לחשב עכשיו',()=>{go('#calc');setTimeout(()=>$('#areaN').focus({preventScroll:true}),600);}]],'spin'],
+  ['#sites','sites',()=>'5 מתקנים. הבית שלי הוא אשל הנשיא: 50 דונם, והמעגל כולו במקום אחד.','#map'],
+  ['#film','film',()=>'זה הסרט שלנו, 29 שניות. חפשו אותי בסוף.','#filmV'],
+  ['#faq','faq',()=>'לא מצאתם תשובה? המוקד הדיגיטלי עונה מיד, על בסיס המידע באתר.','#advIn',[['לשאול עכשיו',()=>{go('#faq');setTimeout(()=>$('#advIn').focus({preventScroll:true}),600);}]]],
+  ['#contact','form',()=>'שם וטלפון מספיקים. את כל השאר נשאל בשיחה.','#fName']];
+ const tio=new IntersectionObserver(es=>es.forEach(e=>{const tip=TIPS.find(t=>document.querySelector(t[0])===e.target); if(!tip)return; clearTimeout(e.target.__sbT);
+   if(e.isIntersecting&&e.intersectionRatio>=.25)e.target.__sbT=setTimeout(()=>say(tip[1],tip[2](),{target:tip[3],actions:tip[4],mood:tip[5]||'happy',hold:tip[5]?2400:1400}),1300);}),{threshold:[0,.25,.5]});
+ addEventListener('scroll',()=>{if(!alive||reduce())return; el.dataset.walk=''; clearTimeout(walkT); walkT=setTimeout(()=>{delete el.dataset.walk;},260); wake();},{passive:true});
+ ['pointermove','keydown','touchstart'].forEach(ev=>addEventListener(ev,wake,{passive:true}));
+ function toggleMenu(open){const o=open??menu.hidden; menu.hidden=!o; btn.setAttribute('aria-expanded',String(o));
+  if(o){hideBubble();set('happy');setTimeout(()=>{if(mood==='happy')set('idle');},900);setTimeout(()=>{const f=menu.querySelector('button');f&&f.focus();},30);} }
+ btn.addEventListener('click',()=>{wake();toggleMenu();});
+ menu.addEventListener('click',e=>{const b=e.target.closest('button[data-go]'); if(!b)return; toggleMenu(false); btn.focus({preventScroll:true}); const g=b.dataset.go;
+  if(g==='mute'){prefs.mutedUntil=Date.now()+7*864e5;save();say(null,'בסדר, אני בשקט לשבוע. אם תצטרכו, אני כאן בפינה.',{force:true,mood:'blink',ms:4500});return;}
+  if(g==='hide'){prefs.hidden=true;save();el.classList.remove('on');setTimeout(()=>{el.hidden=true;},450);$('#sbBack').hidden=false;return;}
+  if(g==='adv'){go('#faq');setTimeout(()=>$('#advIn').focus({preventScroll:true}),800);return;}
+  go(g); });
+ $('#sbX').onclick=()=>{hideBubble();btn.focus({preventScroll:true});};
+ addEventListener('keydown',e=>{if(e.key!=='Escape')return; if(!menu.hidden){toggleMenu(false);btn.focus({preventScroll:true});} else if(!bub.hidden)hideBubble();});
+ document.addEventListener('click',e=>{if(!menu.hidden&&!e.target.closest('#sb'))toggleMenu(false);});
+ $('#sbBack').onclick=()=>{prefs.hidden=false;prefs.mutedUntil=0;save();$('#sbBack').hidden=true;show();say(null,'חזרתי. המעגל ממשיך.',{force:true,ms:3000});};
+ if(prefs.hidden)$('#sbBack').hidden=false;
+ function confetti(){if(reduce())return; const a=btn.getBoundingClientRect();
+  for(let i=0;i<16;i++){const c=document.createElement('i'); c.className='sb-conf'; c.style.left=(a.left+a.width/2)+'px'; c.style.top=(a.top+a.height*.35)+'px'; c.style.background=['#9ACB63','#3FA3DC','#C9F03A','#2560A8'][i%4]; document.body.appendChild(c);
+   const ang=-Math.PI/2+(Math.random()-.5)*2.4, v=70+Math.random()*100;
+   c.animate([{transform:'translate(0,0) rotate(0)'},{transform:`translate(${Math.cos(ang)*v}px,${Math.sin(ang)*v}px) rotate(200deg)`,offset:.45},{transform:`translate(${Math.cos(ang)*v*1.25}px,${Math.sin(ang)*v+90}px) rotate(400deg)`,opacity:0}],{duration:1150,easing:'cubic-bezier(.2,.75,.15,1)'}).onfinish=()=>c.remove();}}
+ let spinT=0;
+ return {
+  start(){ setTimeout(birth,reduce()?150:500); TIPS.forEach(t=>{const n=document.querySelector(t[0]); n&&tio.observe(n);}); },
+  celebrate(){if(!alive||!enabled())return; say(null,'קיבלנו. המעגל התחיל, ונחזור אליכם בהקדם.',{force:true,mood:'love',hold:2400,ms:6500}); confetti();},
+  spin(){if(!alive||!enabled())return; clearTimeout(spinT); set('spin'); spinT=setTimeout(()=>{if(mood==='spin')set('idle');},1100);},
+  glance(){if(!alive||mood==='sleep')return; set('look'); setTimeout(()=>{if(mood==='look')set('idle');},1500);}
+ };
+})();
 </script>
 <script>
 /* ================= legal ================= */
@@ -1051,7 +1224,7 @@ async function ask(q){
   const r=await sample(turns,{cache:false,modelTier:'quick',tools:[leadTool],onText:u=>{b.textContent=u.text;body.scrollTop=body.scrollHeight;}});
   b.textContent=r.text; hist.push({role:'assistant',content:r.text});
  }catch(e){ const a=FALLBACK.find(([re])=>re.test(q))[1]; await new Promise(r=>setTimeout(r,600)); b.textContent=a; hist.push({role:'assistant',content:a}); }
- busyA=false; $('#advF button').disabled=false; body.scrollTop=body.scrollHeight;
+ SABABI.glance(); busyA=false; $('#advF button').disabled=false; body.scrollTop=body.scrollHeight;
 }
 $('#advF').addEventListener('submit',e=>{e.preventDefault();ask(ain.value);});
 $$('#advChips button').forEach(c=>c.addEventListener('click',()=>ask(c.textContent)));
@@ -1072,7 +1245,7 @@ $('#leadForm').addEventListener('submit',async e=>{
   const f=e.target; [...f.children].forEach(c=>c.hidden=true);
   const d=document.createElement('div'); d.className='sent'; d.setAttribute('role','status'); d.tabIndex=-1;
   d.innerHTML=`<svg viewBox="0 0 512 512" aria-hidden="true"><use href="#sym"/></svg><h3>קיבלנו. המעגל התחיל.</h3><p>נחזור אליכם בהקדם. אם דחוף, המוקד זמין ב-<bdi dir="ltr">${esc(C.phone)}</bdi>.</p>`;
-  f.appendChild(d); d.focus();
+  f.appendChild(d); d.focus(); SABABI.celebrate();
   if(!reduce())$('svg',d).animate([{transform:'rotate(-180deg) scale(.4)',opacity:0},{transform:'none',opacity:1}],{duration:900,easing:'cubic-bezier(.2,.8,.2,1)'});
  }catch(_){ const t=`שלום, אני ${name} (${phone})${l.co?', '+l.co:''}. ${l.svc?l.svc+'. ':''}${l.where?'אתר: '+l.where+'. ':''}${l.msg} ${l.spec}`.trim();
   note.innerHTML=`לא הצלחנו לשמור את הפנייה בתצוגה הזו. חייגו למוקד <bdi dir="ltr">${esc(C.phone)}</bdi>, או שלחו את הפרטים ל-<bdi dir="ltr">${esc(C.email)}</bdi>:<br><span style="display:block;margin-top:8px;padding:10px;border-radius:10px;background:var(--paper);user-select:all">${esc(t)}</span>`; }
@@ -1173,11 +1346,13 @@ function renderAdmin(){
   $('#qSave').onclick=()=>{col(); C.faq=C.faq.filter(q=>q[0].trim()); saveSite($('#qMsg'));};
  }
  if(tab==='agent'){
-  m.innerHTML=`<h2>המוקד הדיגיטלי</h2><p class="sub">עונה למבקרים בעברית על בסיס המידע באתר, ושומר פניות כשמבקשים שיחזרו.</p><div class="cform">
+  m.innerHTML=`<h2>המוקד הדיגיטלי וסבבי</h2><p class="sub">עונה למבקרים בעברית על בסיס המידע באתר, ושומר פניות כשמבקשים שיחזרו.</p><div class="cform">
    <div class="box" style="display:flex;justify-content:space-between;gap:10px;align-items:center"><div><b>המוקד פעיל</b><br><span class="fnote">כשהוא כבוי, המבקרים מקבלים תשובות קבועות מהאתר</span></div><label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="aOn" style="width:22px;height:22px" ${C.agentOn!==false?'checked':''}> פעיל</label></div>
    <div class="box"><label for="aNotes">ידע נוסף למוקד</label><textarea id="aNotes" style="min-height:160px" placeholder="למשל: שעות פעילות, אזורי שירות, זמני אספקה, מבצעים…">${esc(C.agentNotes)}</textarea></div>
+   <div class="box" style="display:flex;justify-content:space-between;gap:10px;align-items:center"><div><b>סבבי, הדמות של האתר</b><br><span class="fnote">מכוון מבקרים, לכל היותר 6 פעמים בביקור</span></div><label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="sOn" style="width:22px;height:22px" ${C.sababiOn!==false?'checked':''}> פעיל</label></div>
+   <div class="box"><label for="sHello">משפט הפתיחה של סבבי (ריק = ברירת מחדל)</label><input id="sHello" value="${esc(C.sababiHello)}" placeholder="היי, אני סבבי…"></div>
    <div class="savebar"><button class="btn" id="aSave" type="button">שמירה</button><span id="aMsg" class="fnote" role="status"></span></div></div>`;
-  $('#aSave').onclick=()=>{C.agentOn=$('#aOn').checked;C.agentNotes=$('#aNotes').value;saveSite($('#aMsg'));};
+  $('#aSave').onclick=()=>{C.agentOn=$('#aOn').checked;C.agentNotes=$('#aNotes').value;C.sababiOn=$('#sOn').checked;C.sababiHello=$('#sHello').value.trim();saveSite($('#aMsg'));};
  }
 }
 $('#admBtn').addEventListener('click',openAdmin);

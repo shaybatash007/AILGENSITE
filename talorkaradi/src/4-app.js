@@ -98,8 +98,8 @@ let SPEC='';
 function calcUI(){
  $('#calcType').innerHTML=TYPES.map((t,i)=>`<div class="chip"><input type="radio" name="ct" id="ct${t.k}" value="${t.k}"${i===0?' checked':''}><label for="ct${t.k}"><b>${esc(t.t)}</b><span>${esc(t.s)}</span></label></div>`).join('');
  const R=$('#areaR'),N=$('#areaN'); R.value=N.value=2400;
- R.oninput=()=>{N.value=R.value;calc();}; N.oninput=()=>{R.value=Math.min(30000,Math.max(100,+N.value||0));calc();};
- $$('#calcF input').forEach(i=>i.addEventListener('input',calc)); calc();
+ R.oninput=()=>{N.value=R.value;calc();SABABI.spin();}; N.oninput=()=>{R.value=Math.min(30000,Math.max(100,+N.value||0));calc();SABABI.spin();};
+ $$('#calcF input').forEach(i=>i.addEventListener('input',()=>{calc(); SABABI.spin();})); calc();
  $('#calcSend').onclick=()=>{SPEC=calc(); const s=$('#fSpec'); s.hidden=false; s.textContent=SPEC; $('#fSvc').value=SVCS.permits.t; $('#contact').scrollIntoView({behavior:reduce()?'auto':'smooth'}); setTimeout(()=>$('#fName').focus({preventScroll:true}),reduce()?0:700);};
 }
 function calc(){
@@ -150,7 +150,7 @@ function renderVids(){
 }
 
 /* film (filled after the launch film is rendered) */
-function filmUI(){ if(!FILM)return; const s=$('#film'); s.hidden=false; const v=$('#filmV'); v.poster=FILM.poster; v.src=FILM.src; $('#filmTxt').textContent=FILM.txt; $('#filmFacts').innerHTML=(FILM.facts||[]).map(([a,b])=>`<div><b>${esc(a)}</b><span>${esc(b)}</span></div>`).join(''); }
+function filmUI(){ $('#pv').hidden=!PREVIEW; if(!FILM)return; const s=$('#film'); s.hidden=false; const v=$('#filmV'); v.poster=FILM.poster; v.src=FILM.src; $('#filmTxt').textContent=FILM.txt; $('#filmFacts').innerHTML=(FILM.facts||[]).map(([a,b])=>`<div><b>${esc(a)}</b><span>${esc(b)}</span></div>`).join(''); }
 
 /* about */
 function renderAbout(){
@@ -166,7 +166,7 @@ function entry(){
  const heroIn=()=>{ if(reduce())return; blades.forEach((b,i)=>b.animate([{transform:'rotate(-70deg) scale(.55)',opacity:0},{transform:'none',opacity:1}],{duration:900,delay:120+i*110,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'}));
   [$('#heroKick'),$('#h1'),$('#heroSub'),$('.hero .ctas')].forEach((e,i)=>e.animate([{opacity:0,transform:'translateY(18px)'},{opacity:1,transform:'none'}],{duration:700,delay:200+i*90,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'}));};
  let seen=false; try{seen=!!localStorage.getItem('tkSeen'); localStorage.setItem('tkSeen','1');}catch(_){}
- if(reduce()||seen)return heroIn();
+ if(reduce()||seen){ heroIn(); SABABI.start(); return; }
  const o=document.createElement('div'); o.id='intro'; o.setAttribute('aria-hidden','true');
  o.innerHTML=`<svg viewBox="0 0 512 512">${[0,1,2,3].map(i=>`<g class="ib" style="transform-origin:256px 256px"><use href="#${i%2?'bB':'bG'}" transform="rotate(${90*i} 256 256)"/></g>`).join('')}</svg>`;
  document.body.appendChild(o); document.body.style.overflow='hidden';
@@ -180,6 +180,6 @@ function entry(){
   svg.animate([{transform:'rotate(180deg)'},{transform:`translate(${dx}px,${dy}px) scale(${s}) rotate(180deg)`}],{duration:620,easing:'cubic-bezier(.6,0,.2,1)',fill:'forwards'});
   o.animate([{background:getComputedStyle(o).backgroundColor},{background:'rgba(11,27,46,0)'}],{duration:620,easing:'ease-in',fill:'forwards'});
   heroIn();},1640);
- setTimeout(()=>{o.remove(); document.body.style.overflow='';},2300);
+ setTimeout(()=>{o.remove(); document.body.style.overflow=''; SABABI.start();},2300);
 }
 </script>

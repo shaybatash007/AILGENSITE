@@ -59,6 +59,9 @@ touching quality:
 - **Budget per phase** (measured + 30%): brief 5 min, intake 9, brand 4, site 21, film 4, QA 10. Over budget:
   stop at the gate and say why.
 - **Look once:** one desktop + one mobile screenshot pass per build, fix, then deliver.
+- **Never skip a link of the chain** unless the owner says so: mascot (born from the logo), signature film scene
+  (`morph` or hand-crafted), live preview link, the film on the client's site, and the case in the studio
+  (`studio/`: before/after slider + every stage with its real output) and in the AILGEN portfolio.
 
 ## The operating law
 

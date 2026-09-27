@@ -65,7 +65,7 @@ async function loadAll() {
   const srcs = new Set();
   const logo = CFG.logo || {}; ['light', 'dark'].forEach(k => logo[k] && srcs.add(logo[k]));
   for (const s of CFG.scenes) {
-    s.image && srcs.add(s.image); s.bg && /\./.test(s.bg) && srcs.add(s.bg);
+    s.image && srcs.add(s.image); s.bg && /\./.test(s.bg) && srcs.add(s.bg); s.shape && srcs.add(s.shape); s.final && srcs.add(s.final);
     (s.items || []).forEach(i => i.image && srcs.add(i.image)); (s.cards || []).forEach(c => c.icon && srcs.add(c.icon));
   }
   await Promise.all([...srcs].map(s => loadImg(s).then(i => IMG[s] = i)));
@@ -87,6 +87,7 @@ function layout() {
     if (i) cue(o.t0 - .12, 'whoosh');
     if (s.type === 'hook') { cue(o.t0, 'intro', { until: o.t1 }); if (s.strike) cue(o.t0 + s.dur * .56, 'glitch'); }
     if (s.type === 'reveal') { cue(o.t0 + .15, 'hit'); cue(o.t0 + .15, 'drop'); }
+    if (s.type === 'morph') { const D = s.dur; cue(o.t0 + D * .11, 'glitch'); [.3, .38, .46].forEach(f => cue(o.t0 + D * f, 'swish')); cue(o.t0 + D * .5, 'riser', { until: o.t0 + D * .68 }); cue(o.t0 + D * .68, 'hit'); if (s.final) cue(o.t0 + D * .93, 'chime', { n: 2 }); }
     if (s.type === 'stat') { cue(o.t0 + .3, 'ticks', { until: o.t0 + 1.5 }); cue(o.t0 + 1.5, 'pop'); }
     if (s.type === 'gallery') galleryTimes(o).forEach(([a]) => cue(a, 'swish'));
     if (s.type === 'quote') { cue(o.t0, 'break', { until: o.t1 }); for (let k = 0; k < (s.stars ?? 5); k++) cue(o.t0 + .35 + k * .09, 'chime', { n: k }); }
@@ -475,6 +476,92 @@ SC.reveal = (s, lt) => {
   }
   const tb = headline(s.title || [], { y: r.y + r.h + gapT, size: tf.size, color: ink(th), lt, start: 1.0 });
   if (s.sub) text(s.sub, W / 2, tb + 60 * U, { size: 40 * U, color: mute(th), alpha: seg(lt, 1.7, 2.2) });
+};
+/* morph (signature): a real photo shatters into particles, they swirl in the brand's vortex, change into clean
+   material, assemble into a shape (what the business turns it into), and finally into the logo symbol.
+   Fields: image, tag, shape (silhouette with alpha), final (symbol with alpha, optional), steps[] (captions),
+   stepColors[] (particle colour per step), cols (particle columns, default 96). Pure function of lt. */
+const MORPH = {};
+function maskPoints(im, box, step, key) {
+  if (MORPH[key]) return MORPH[key];
+  const c = document.createElement('canvas'); c.width = W; c.height = H; const g = c.getContext('2d', { willReadFrequently: true });
+  const s = Math.min(box.w / im.width, box.h / im.height), w = im.width * s, h = im.height * s, x0 = box.x + (box.w - w) / 2, y0 = box.y + (box.h - h) / 2;
+  g.drawImage(im, x0, y0, w, h); const d = g.getImageData(0, 0, W, H).data, pts = [];
+  for (let y = Math.floor(y0); y < y0 + h; y += step) for (let x = Math.floor(x0); x < x0 + w; x += step) {
+    const i = (Math.round(y) * W + Math.round(x)) * 4; if (d[i + 3] > 140) pts.push([x, y, d[i], d[i + 1], d[i + 2]]);
+  }
+  return MORPH[key] = pts;
+}
+function morphParts(s) {
+  const key = 'p' + s.i; if (MORPH[key]) return MORPH[key];
+  const im = IMG[s.image], cols = s.cols || pick(96, 110, 110, 150), cs = W / cols, rows = Math.ceil(H / cs);
+  const smp = sampleImg(im, W, H, cols, 'morph' + s.i), R = rng(77 + s.i), cx = W / 2, cy = H * pick(.5, .52, .52, .52);
+  const box = { x: BOX.x0 + BOX.w * .08, y: cy - BOX.h * pick(.2, .3, .3, .32), w: BOX.w * .84, h: BOX.h * pick(.4, .56, .56, .6) };
+  const sp = maskPoints(IMG[s.shape], box, cs * .92, 'shape' + s.i);
+  const fb = { x: cx - Math.min(W, H) * .3, y: cy - Math.min(W, H) * .3, w: Math.min(W, H) * .6, h: Math.min(W, H) * .6 };
+  const lp = s.final ? maskPoints(IMG[s.final], fb, cs * .78, 'final' + s.i) : null;
+  const P = [];
+  for (let j = 0; j < smp.rows; j++) for (let i = 0; i < smp.cols; i++) {
+    const q = (j * smp.cols + i) * 4, x = i * cs + cs / 2, y = j * cs + cs / 2;
+    const d = Math.hypot(x - cx, y - cy) / Math.hypot(cx, cy);
+    P.push({ x, y, c: [smp.d[q], smp.d[q + 1], smp.d[q + 2]], d, a: R() * Math.PI * 2, r: Math.min(W, H) * (.1 + .34 * Math.sqrt(R())), w: .8 + R() * .7, jit: R() });
+  }
+  // every particle gets a place in the shape and in the logo (shuffled, so they travel across the vortex)
+  const order = P.map((_, k) => k).sort(() => R() - .5);
+  order.forEach((k, n) => { const t = sp[n % sp.length]; P[k].sx = t[0]; P[k].sy = t[1]; P[k].extra = n >= sp.length;
+    if (lp) { const l = lp[n % lp.length]; P[k].lx = l[0]; P[k].ly = l[1]; P[k].lc = [l[2], l[3], l[4]]; P[k].lextra = n >= lp.length; } });
+  return MORPH[key] = { P, cs, cx, cy, box };
+}
+const hex3 = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+SC.morph = (s, lt) => {
+  const th = s.theme || 'dark', D = s.dur, u = clamp(lt / D);
+  ground(th, lt);
+  const M = morphParts(s), cs = M.cs, cx = M.cx, cy = M.cy, spin = lt * 1.35;
+  const cols = (s.stepColors || ['#8C8C84', '#D8C9A8', '#E9ECEE']).map(hex3);
+  // 1. the photo, full frame, dissolving as its particles leave
+  const pa = 1 - seg(u, .1, .3);
+  if (pa > 0) { X.save(); X.globalAlpha = pa; cover(IMG[s.image], 0, 0, W, H, 1.1 - .06 * u); X.fillStyle = hexA('#000000', .25 * seg(u, 0, .1)); X.fillRect(0, 0, W, H); X.restore(); }
+  // 2. the vortex: the brand's four spiral edges turning behind the particles
+  const va = seg(u, .2, .3) * (1 - seg(u, .6, .7));
+  if (va > 0) {
+    const pal = CFG.motifColors || [C.accent, C.accent2];
+    X.save(); X.globalCompositeOperation = 'screen'; X.lineCap = 'round';
+    for (let b = 0; b < 4; b++) { X.strokeStyle = pal[b % pal.length]; X.globalAlpha = va * .8; X.lineWidth = Math.min(W, H) * .012; X.shadowColor = pal[b % pal.length]; X.shadowBlur = Math.min(W, H) * .03;
+      X.beginPath(); for (let q = 0; q <= 24; q++) { const k = q / 24, rr2 = Math.min(W, H) * .46 * k, aa = -Math.PI / 2 + b * Math.PI / 2 + spin + SPIN_TWIST * k; X.lineTo(cx + Math.cos(aa) * rr2, cy + Math.sin(aa) * rr2); } X.stroke(); }
+    X.restore();
+  }
+  // 3. particles: photo → vortex → shape → logo
+  const k3s = .83, sz = cs * .8;
+  X.save();
+  for (const p of M.P) {
+    const k1 = E.inOut(seg(u, .1 + p.d * .1, .3 + p.d * .06));
+    if (k1 <= 0) continue;
+    const ang = p.a + spin * p.w, rv = p.r * (1 - .25 * seg(u, .3, .5)), vx = cx + Math.cos(ang) * rv, vy = cy + Math.sin(ang) * rv;
+    const k2 = E.inOut(seg(u, .5 + p.jit * .08, .7 + p.jit * .04)), k3 = s.final ? E.inOut(seg(u, k3s + p.jit * .05, .96)) : 0;
+    let x = lerp(p.x, vx, k1), y = lerp(p.y, vy, k1);
+    x = lerp(x, p.sx, k2); y = lerp(y, p.sy, k2);
+    if (k3 > 0) { x = lerp(x, p.lx, k3); y = lerp(y, p.ly, k3); }
+    // colour: photo → step colour (clean material) → shape colour → logo colour
+    const m1 = seg(u, .28, .44);
+    let c = p.c.map((v, i) => lerp(v, cols[1][i], m1)); c = c.map((v, i) => lerp(v, cols[2][i], k2));
+    if (k3 > 0) c = c.map((v, i) => lerp(v, p.lc[i], k3));
+    let a = 1; if (p.extra && k3 === 0) a = 1 - k2 * .92; if (p.lextra) a *= 1 - k3;
+    if (a <= .02) continue;
+    X.globalAlpha = a; X.fillStyle = `rgb(${c[0] | 0},${c[1] | 0},${c[2] | 0})`;
+    const z = sz * (k2 > .5 && k3 < .5 ? .92 : 1);
+    X.fillRect(x - z / 2, y - z / 2, z, z);
+  }
+  X.restore();
+  // 4. captions: the step, counted like a process
+  const steps = s.steps || [];
+  if (steps.length) {
+    const at = [0, .3, .44, .66, .86].slice(0, steps.length), n = at.filter(a => u >= a).length - 1, st = at[n], en = n + 1 < at.length ? at[n + 1] : 1.01;
+    const al = seg(u, st, st + .04) * (1 - seg(u, en - .03, en));
+    const ty = pick(BOX.y0 + 40 * U, BOX.y0 + 30 * U, BOX.y0 + 20 * U, BOX.y0 + 10 * U);
+    text(`${String(n + 1).padStart(2, '0')} / ${String(steps.length).padStart(2, '0')}`, W / 2, ty, { size: 30 * U, w: 600, fam: F.num, color: C.accent, alpha: al, ls: '4px' });
+    X.save(); X.globalAlpha = al; headline([steps[n]], { y: ty + 30 * U, size: pick(96, 80, 76, 76) * U, color: ink(th), lt: (u - st) * D + 1, start: 1 }); X.restore();
+  }
+  if (s.tag && pa > .05) tagPill(s.tag, null, pa);
 };
 /* stat: one number that proves the claim, with an honest comparison */
 SC.stat = (s, lt) => {

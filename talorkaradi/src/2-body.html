@@ -14,6 +14,7 @@
 </defs>
 </svg>
 <a class="skip" href="#main">דלג לתוכן</a>
+<div class="pv" id="pv" hidden>תצוגה מקדימה של האתר החדש · <b>הוכן על ידי AILGEN</b> עבור קבוצת טלאור כראדי</div>
 
 <header class="hdr" id="hdr">
  <div class="wrap in">
@@ -73,6 +74,18 @@
   <div class="closing rv">
    <div class="ph"><img src="img/shelter.webp" alt="מיגונית של הקבוצה, מצוירת, בתחנת דלק" loading="lazy"><span class="tag">מהשטח</span></div>
    <blockquote>״אותה פסולת בניין שנאספה מאתר הבנייה… יוצאת מהאתר בחלק ממיגונית, שתפקידה להציל חיים.״<cite>מתוך העמוד של פארק תעשיות דרום ירוק</cite></blockquote>
+  </div>
+  <div class="meet"><span class="sb-mini" aria-hidden="true"></span><div><b>הכירו את סבבי.</b><p>הוא נולד מארבעת הלהבים של הלוגו: הגוף שלו הוא המעגל, והפנים על הרכזת. הוא מלווה אתכם באתר, מסתובב כשמחשבים את מאזן הפסולת, ונרדם כשאין אף אחד.</p><div class="states"><span>סובב</span><span>מכוון</span><span>חושב</span><span>נרדם</span><span>מאושר</span></div></div></div>
+ </div>
+</section>
+
+<section class="sec night film" id="film" aria-labelledby="filmH" hidden>
+ <div class="wrap">
+  <p class="eyebrow">סרטון ההשקה</p>
+  <h2 id="filmH">המעגל, ב-29 שניות.</h2>
+  <div class="in">
+   <video id="filmV" controls playsinline preload="none" muted></video>
+   <div><p class="lead" id="filmTxt"></p><div class="facts" id="filmFacts"></div></div>
   </div>
  </div>
 </section>
@@ -150,16 +163,6 @@
  </div>
 </section>
 
-<section class="sec night film" id="film" aria-labelledby="filmH" hidden>
- <div class="wrap">
-  <p class="eyebrow">סרטון ההשקה</p>
-  <h2 id="filmH">המעגל, ב-26 שניות.</h2>
-  <div class="in">
-   <video id="filmV" controls playsinline preload="none" muted></video>
-   <div><p class="lead" id="filmTxt"></p><div class="facts" id="filmFacts"></div></div>
-  </div>
- </div>
-</section>
 
 <section class="sec about" id="about" aria-labelledby="abH">
  <div class="wrap">
@@ -187,7 +190,7 @@
   <div class="faqw">
    <div class="faq" id="faqList"></div>
    <aside class="agent" aria-label="המוקד הדיגיטלי">
-    <header><svg viewBox="0 0 512 512" aria-hidden="true"><use href="#sym"/></svg><div><b>המוקד הדיגיטלי</b><span>עונה בעברית, על בסיס המידע באתר</span></div><i class="live" aria-hidden="true"></i></header>
+    <header><span class="sb-mini" aria-hidden="true"></span><div><b>המוקד הדיגיטלי של סבבי</b><span>עונה בעברית, על בסיס המידע באתר</span></div><i class="live" aria-hidden="true"></i></header>
     <div id="advBody" aria-live="polite"></div>
     <div id="advChips"><button type="button">מה צריך להיתר?</button><button type="button">איך עובד "אחת תמורת אחת"?</button><button type="button">אילו חומרים ממוחזרים יש?</button><button type="button">הריסה ליד בית ספר</button></div>
     <form id="advF"><label for="advIn" class="skip" style="position:absolute;top:-9999px">שאלה למוקד</label><input id="advIn" placeholder="כתבו שאלה…" autocomplete="off"><button type="submit">שליחה</button></form>
@@ -231,7 +234,7 @@
  <div class="wrap in">
   <a class="logo" href="#top"><svg viewBox="0 0 512 512" aria-hidden="true"><use href="#sym"/></svg><span class="wm"><small>קבוצת</small><b>טלאור כראדי</b></span></a>
   <nav aria-label="ניווט בתחתית"><a href="#circle">המעגל</a><a href="#services">שירותים</a><a href="#calc">מאזן פסולת</a><a href="#sites">מתקנים</a><a href="#projects">פרויקטים</a><a href="#jobs">דרושים</a><a href="#contact">צור קשר</a></nav>
-  <div class="fine"><span>© <span id="yr"></span> קבוצת טלאור כראדי בע"מ</span><button class="lk" type="button" data-legal="privacy">מדיניות פרטיות</button><button class="lk" type="button" data-legal="a11y">הצהרת נגישות</button><span>עיצוב ופיתוח: AILGEN</span></div>
+  <div class="fine"><span>© <span id="yr"></span> קבוצת טלאור כראדי בע"מ</span><button class="lk" type="button" data-legal="privacy">מדיניות פרטיות</button><button class="lk" type="button" data-legal="a11y">הצהרת נגישות</button><span>עיצוב ופיתוח: AILGEN</span><button type="button" id="sbBack" hidden>להחזיר את סבבי</button></div>
  </div>
 </footer>
 
@@ -252,6 +255,22 @@
 <dialog id="lb" class="lb" aria-label="תמונה"><figure><button class="x" type="button" aria-label="סגירה" data-close>✕</button><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure></dialog>
 <dialog id="lg" aria-labelledby="lgT"><div class="dlg"><button class="x" type="button" aria-label="סגירה" data-close>✕</button><h3 id="lgT"></h3><div id="lgTxt" style="white-space:pre-wrap;color:var(--steel)"></div></div></dialog>
 
+<div class="sb" id="sb" hidden data-st="idle">
+ <div class="sb-bub" id="sbBub" role="status" hidden><button class="sb-x" id="sbX" type="button" aria-label="סגירת ההודעה">✕</button><p id="sbTxt"></p><div class="sb-acts" id="sbActs"></div></div>
+ <div class="sb-menu" id="sbMenu" hidden role="menu" aria-label="התפריט של סבבי">
+  <b>לאן לקחת אתכם?</b>
+  <button type="button" data-go="#calc" role="menuitem"><i></i>מאזן פסולת</button>
+  <button type="button" data-go="#circle" role="menuitem"><i></i>המעגל</button>
+  <button type="button" data-go="#sites" role="menuitem"><i></i>המתקנים</button>
+  <button type="button" data-go="adv" role="menuitem"><i></i>לשאול את המוקד</button>
+  <button type="button" data-go="#contact" role="menuitem"><i></i>לדבר עם הצוות</button>
+  <button type="button" data-go="mute" role="menuitem" class="dim"><i></i>שקט לשבוע</button>
+  <button type="button" data-go="hide" role="menuitem" class="dim"><i></i>להסתיר את סבבי</button>
+ </div>
+ <button class="sb-btn" id="sbBtn" type="button" aria-label="סבבי, המדריך של האתר. פתיחת תפריט" aria-expanded="false" aria-controls="sbMenu"></button>
+</div>
+<i class="sb-beam" id="sbBeam" hidden aria-hidden="true"></i>
+
 <div class="adm" id="adm" role="dialog" aria-modal="true" aria-label="מרכז הבקרה">
  <nav><b>מרכז הבקרה</b>
   <button class="tab on" type="button" data-t="ov">סקירה</button>
@@ -260,7 +279,7 @@
   <button class="tab" type="button" data-t="faq">שאלות נפוצות</button>
   <button class="tab" type="button" data-t="projects">פרויקטים</button>
   <button class="tab" type="button" data-t="reviews">המלצות</button>
-  <button class="tab" type="button" data-t="agent">המוקד הדיגיטלי</button>
+  <button class="tab" type="button" data-t="agent">המוקד וסבבי</button>
   <button class="tab" type="button" data-t="close">סגירה ✕</button>
  </nav>
  <main id="admMain"></main>
