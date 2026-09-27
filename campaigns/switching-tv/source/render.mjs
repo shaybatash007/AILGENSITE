@@ -23,8 +23,8 @@ await new Promise(r => server.listen(0, '127.0.0.1', r));
 const URL_ = `http://127.0.0.1:${server.address().port}/reel.html?w=${W}&h=${H}`;
 const browser = await chromium.launch({ args: ['--disable-gpu-vsync', '--force-color-profile=srgb'] });
 
-async function openPage() {
-  const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
+async function openPage(br = browser) {
+  const page = await br.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
   page.on('pageerror', e => console.error('PAGE ERROR', String(e)));
   page.on('console', m => { if (m.type() === 'error') console.error('console:', m.text()); });
   await page.goto(URL_);
@@ -55,7 +55,9 @@ if (args.still) {
   const chunks = Array.from({ length: jobs }, (_, j) => [Math.floor(N * j / jobs), Math.floor(N * (j + 1) / jobs)]);
   const t0 = Date.now();
   await Promise.all(chunks.map(async ([a, b], j) => {
-    const page = await openPage();
+    // one browser per job: screenshot PNG encoding runs in the browser process, so a shared browser is single-threaded
+    const own = await chromium.launch({ args: ['--disable-gpu-vsync', '--force-color-profile=srgb'] });
+    const page = await openPage(own);
     const ff = spawn('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'png', '-i', '-',
       '-c:v', 'libx264', '-preset', 'medium', '-crf', '10', '-pix_fmt', 'yuv444p', `${tmp}/part${j}.mkv`], { stdio: ['pipe', 'inherit', 'inherit'] });
     for (let i = a; i < b; i++) {
@@ -63,7 +65,7 @@ if (args.still) {
       if (!ff.stdin.write(buf)) await new Promise(r => ff.stdin.once('drain', r));
       if ((i - a) % 60 === 0) console.log(`job ${j}: frame ${i}/${b} (${((Date.now() - t0) / 1000).toFixed(0)}s)`);
     }
-    ff.stdin.end(); await new Promise(r => ff.on('close', r)); await page.close();
+    ff.stdin.end(); await new Promise(r => ff.on('close', r)); await page.close(); await own.close();
   }));
   fs.writeFileSync(`${tmp}/list.txt`, chunks.map((_, j) => `file 'part${j}.mkv'`).join('\n'));
   const out = path.resolve(args.out || '../video/reel.mp4'); fs.mkdirSync(path.dirname(out), { recursive: true });
