@@ -1,0 +1,437 @@
+{
+ "name": "AILGEN",
+ "lang": "he",
+ "fps": 30,
+ "fonts": "fonts/fonts.css",
+ "type": {
+  "display": "Frank Ruhl Libre",
+  "displayWeight": 900,
+  "body": "IBM Plex Sans Hebrew",
+  "bodyWeight": 500,
+  "num": "Frank Ruhl Libre",
+  "numWeight": 900
+ },
+ "colors": {
+  "bg": "#070B2E",
+  "surface": "#131C5E",
+  "paper": "#F4F5FA",
+  "ink": "#111A5A",
+  "inkMuted": "#4A5290",
+  "text": "#F4F5FA",
+  "muted": "#AEB4D8",
+  "accent": "#FFB23E",
+  "accent2": "#3F52E0",
+  "accentInk": "#111A5A",
+  "line": "rgba(244,245,250,.14)",
+  "real": "#2BD46B",
+  "concept": "#FFB23E",
+  "stock": "#AEB4D8"
+ },
+ "logo": {
+  "light": "/brand/logo/wordmark-white.svg",
+  "dark": "/brand/logo/wordmark-navy.svg"
+ },
+ "motif": "particles",
+ "motifColors": [
+  "#FFB23E",
+  "#F4F5FA",
+  "#3F52E0"
+ ],
+ "highlight": "color",
+ "transition": 0.5,
+ "labels": {
+  "real": "עבודה אמיתית",
+  "stock": "צילום: Unsplash"
+ },
+ "mascot": {
+  "name": "איילי",
+  "grid": [
+   "........wwwwwwwwww",
+   "........wwwwwwwwws",
+   "........wwwwwwwwws",
+   ".......wwwwwwwwwwws",
+   ".......wwwwwwwwwwws",
+   ".......wwwwwwwwwwws",
+   ".......wwwwwwwwwwws",
+   "......wwwwwwwwwwwwss",
+   "......wppwwwwwwwwpps",
+   "......wwwwwwwwwwwwss",
+   ".....wwwwwwwwwwwwwsss",
+   ".....wwwwwwwwwwwwwsss",
+   ".....wwwwwwwwwwwwwsss",
+   "....wwwwwwws..wwwwssss",
+   "....wwwwwwws..wwwwssss",
+   "....wwwwwws....wwwssss",
+   "....wwwwwws....wwwssss",
+   "...wwwwwws......wwsssss",
+   "...wwwwwws.aaaa.wwsssss",
+   "...wwwwww..ahha..wwwwss",
+   "..wwwwwww..ahaa..wwwwsss",
+   "..wwwwww...oooo...wwwsss",
+   "..wwwwww..........wwwsss",
+   ".wwwwww............wwssss",
+   ".wwwwww............wwssss",
+   "bbbbbbb............bbbbbbb",
+   "nnnnnnn............nnnnnnn"
+  ],
+  "colors": {
+   "w": "#F4F5FA",
+   "s": "#C9CEEA",
+   "b": "#3446C8",
+   "n": "#1D2873",
+   "a": "#FFB23E",
+   "h": "#FFE2A6",
+   "o": "#D9861A",
+   "p": "#F4A3A8",
+   "k": "#070B2E",
+   "e": "#8FA0FF"
+  },
+  "faces": {
+   "idle": [
+    [
+     9,
+     4,
+     2,
+     3,
+     "k"
+    ],
+    [
+     15,
+     4,
+     2,
+     3,
+     "k"
+    ],
+    [
+     9,
+     4,
+     1,
+     1,
+     "e"
+    ],
+    [
+     15,
+     4,
+     1,
+     1,
+     "e"
+    ],
+    [
+     12,
+     8,
+     2,
+     1,
+     "k"
+    ],
+    [
+     11,
+     7,
+     1,
+     1,
+     "k"
+    ],
+    [
+     14,
+     7,
+     1,
+     1,
+     "k"
+    ]
+   ],
+   "blink": [
+    [
+     9,
+     6,
+     2,
+     1,
+     "k"
+    ],
+    [
+     15,
+     6,
+     2,
+     1,
+     "k"
+    ],
+    [
+     12,
+     8,
+     2,
+     1,
+     "k"
+    ],
+    [
+     11,
+     7,
+     1,
+     1,
+     "k"
+    ],
+    [
+     14,
+     7,
+     1,
+     1,
+     "k"
+    ]
+   ],
+   "happy": [
+    [
+     8,
+     6,
+     1,
+     1,
+     "k"
+    ],
+    [
+     9,
+     5,
+     2,
+     1,
+     "k"
+    ],
+    [
+     11,
+     6,
+     1,
+     1,
+     "k"
+    ],
+    [
+     14,
+     6,
+     1,
+     1,
+     "k"
+    ],
+    [
+     15,
+     5,
+     2,
+     1,
+     "k"
+    ],
+    [
+     17,
+     6,
+     1,
+     1,
+     "k"
+    ],
+    [
+     12,
+     7,
+     2,
+     2,
+     "k"
+    ]
+   ],
+   "look": [
+    [
+     10,
+     4,
+     2,
+     3,
+     "k"
+    ],
+    [
+     16,
+     4,
+     2,
+     3,
+     "k"
+    ],
+    [
+     11,
+     4,
+     1,
+     1,
+     "e"
+    ],
+    [
+     17,
+     4,
+     1,
+     1,
+     "e"
+    ],
+    [
+     12,
+     8,
+     2,
+     1,
+     "k"
+    ],
+    [
+     11,
+     7,
+     1,
+     1,
+     "k"
+    ],
+    [
+     14,
+     7,
+     1,
+     1,
+     "k"
+    ]
+   ],
+   "sleep": [
+    [
+     8,
+     6,
+     3,
+     1,
+     "k"
+    ],
+    [
+     15,
+     6,
+     3,
+     1,
+     "k"
+    ]
+   ]
+  },
+  "cell": 9
+ },
+ "audio": {
+  "mood": "tech"
+ },
+ "scenes": [
+  {
+   "type": "hook",
+   "dur": 3.0,
+   "image": "/assets/band-night-window.jpg",
+   "tag": "stock",
+   "fx": 0.3,
+   "fy": 0.35,
+   "lines": [
+    "23:40. הודעה נכנסת.",
+    "מי שעונה *ראשון,* זוכה."
+   ],
+   "y": 0.44
+  },
+  {
+   "type": "reveal",
+   "dur": 3.4,
+   "logo": true,
+   "title": [
+    "קדימה.",
+    "או *מאחור.*"
+   ],
+   "mascot": {
+    "at": 2.1,
+    "say": "היי, אני איילי.",
+    "mood": "idle"
+   }
+  },
+  {
+   "type": "cards",
+   "dur": 3.4,
+   "headline": [
+    "מה העסק שלכם",
+    "*מקבל*"
+   ],
+   "cards": [
+    {
+     "icon": "img/i-agent-white.svg",
+     "value": "24/7",
+     "label": "סוכן AI שעונה בשניות"
+    },
+    {
+     "icon": "img/i-web-white.svg",
+     "value": "אתר",
+     "label": "שנטען מהר ומביא פניות"
+    },
+    {
+     "icon": "img/i-flow-white.svg",
+     "value": "ליד←יומן",
+     "label": "אוטומציה מקצה לקצה"
+    },
+    {
+     "icon": "img/i-dash-white.svg",
+     "value": "1",
+     "unit": "מסך",
+     "label": "כל המספרים של העסק"
+    }
+   ]
+  },
+  {
+   "type": "gallery",
+   "dur": 4.2,
+   "headline": "העבודה מדברת",
+   "items": [
+    {
+     "image": "/assets/switching-hero-poster.jpg",
+     "title": "סוויצ׳ינג TV",
+     "sub": "אתר, מתכנן מסך ויועץ AI",
+     "tag": "real"
+    },
+    {
+     "image": "/assets/vermeil-shelf-poster.jpg",
+     "title": "VERMEIL",
+     "sub": "חוויית מותג ומסחר",
+     "tag": "concept"
+    },
+    {
+     "image": "/assets/ailgen-loop-poster.jpg",
+     "title": "AILGEN",
+     "sub": "אתר, סוכן ומרכז בקרה",
+     "tag": "real"
+    }
+   ]
+  },
+  {
+   "type": "stat",
+   "dur": 3.0,
+   "theme": "dark",
+   "headline": [
+    "האתר הזה נמדד."
+   ],
+   "value": 100,
+   "suffix": "",
+   "unit": "/100",
+   "label": "Lighthouse 12 · ביצועים, דסקטופ"
+  },
+  {
+   "type": "cta",
+   "dur": 4.4,
+   "headline": [
+    "העסק הבא שמתקדם",
+    "יכול להיות *שלכם.*"
+   ],
+   "button": "לשיחת אפיון",
+   "sub": [
+    "סטודיו לבינה מלאכותית ואוטומציה"
+   ],
+   "mascot": {
+    "at": 1.9,
+    "say": "גם אני ערה ב-23:40.",
+    "x": 0.5,
+    "finale": "happy"
+   }
+  }
+ ],
+ "stills": [
+  {
+   "name": "feed-4x5",
+   "w": 1080,
+   "h": 1350,
+   "t": 8.9
+  },
+  {
+   "name": "square-1x1",
+   "w": 1080,
+   "h": 1080,
+   "t": 5.9
+  },
+  {
+   "name": "story-9x16",
+   "w": 1080,
+   "h": 1920,
+   "t": 20.8
+  }
+ ]
+}

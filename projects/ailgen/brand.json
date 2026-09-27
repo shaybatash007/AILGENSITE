@@ -1,0 +1,163 @@
+{
+  "name": "AILGEN",
+  "slug": "ailgen",
+  "status": "own-brand",
+  "source": {
+    "mode": "name",
+    "brief": "a studio for AI and automation for businesses"
+  },
+  "business": {
+    "type": "AI & automation studio",
+    "sector": "services B2B/SMB",
+    "audience": [
+      "small business owners who live from customers: salons, clinics, cafes, shops"
+    ],
+    "offer": [
+      "websites and landing pages",
+      "AI agents",
+      "automations",
+      "dashboards",
+      "integrations",
+      "AI content"
+    ],
+    "proof": [
+      "the site itself is the demo (live agent, admin)",
+      "measured Lighthouse scores",
+      "real case studies"
+    ],
+    "objections": [
+      "price",
+      "time",
+      "do I need technical knowledge",
+      "security"
+    ]
+  },
+  "concept": {
+    "idea": "A small house with a lit window: a business that answers even when everyone is asleep.",
+    "claim": "Forward. Or behind.",
+    "signature": "the amber square window of the logo (16 units on a 96x100 grid)",
+    "spirit": "nocturnal, confident, human-tech",
+    "twist": "the loader's logo physically becomes the hero: it breaks into particles that stream into place"
+  },
+  "voice": {
+    "tone": [
+      "confident",
+      "short",
+      "no AI clichés (no robots, no brains)"
+    ],
+    "slogan": "קדימה. או מאחור.",
+    "do": [
+      "the visitor's situation first (23:40, a message arrives)"
+    ],
+    "dont": [
+      "revolution / the future is here"
+    ]
+  },
+  "palette": {
+    "ink": "#070B2E",
+    "night": "#111A5A",
+    "panel": "#131C5E",
+    "panel2": "#1D2873",
+    "paper": "#F4F5FA",
+    "mist": "#AEB4D8",
+    "soft": "#C9CEEA",
+    "amber": "#FFB23E",
+    "ultra": "#3F52E0"
+  },
+  "type": {
+    "display": {
+      "family": "Frank Ruhl Libre",
+      "weights": [
+        500,
+        700,
+        900
+      ],
+      "use": "headlines"
+    },
+    "body": {
+      "family": "IBM Plex Sans Hebrew",
+      "weights": [
+        300,
+        400,
+        500,
+        600,
+        700
+      ],
+      "use": "running text"
+    }
+  },
+  "logo": {
+    "files": {
+      "mark": "brand/logo/mark-white.svg",
+      "wordmark": "brand/logo/wordmark-white.svg",
+      "mark_navy": "brand/logo/mark-navy.svg"
+    },
+    "construction": "assets/ailgen-logo-system.jpg"
+  },
+  "icons": {
+    "grid": 24,
+    "stroke": 1.6,
+    "signature": "a 3.4-unit amber square in every icon"
+  },
+  "mascot": {
+    "name": "איילי",
+    "born_from": "the amber window pixel leaves the logo",
+    "build": "24x27 pixel figure in the roof shape carrying the amber heart",
+    "states": [
+      "idle",
+      "blink",
+      "happy",
+      "look",
+      "point",
+      "think",
+      "sleep"
+    ],
+    "rules": [
+      "same rules as TIVI: ≤6 tips, mute/hide, beam to targets"
+    ]
+  },
+  "site": {
+    "entry": "honest loader (fonts) → roof draws → particles stream to the hero mark",
+    "proof_tool": [
+      "live AI agent that saves leads"
+    ],
+    "sections": [
+      "hero particles",
+      "manifesto (word-by-word)",
+      "capabilities bento",
+      "who it's for (real photos)",
+      "night band",
+      "portfolio index + case studies",
+      "live agent demo",
+      "process",
+      "standards",
+      "about + workbench",
+      "FAQ",
+      "CTA form"
+    ],
+    "agent": "studio agent, no invented prices",
+    "admin": [
+      "leads",
+      "kanban plan",
+      "content",
+      "agent"
+    ]
+  },
+  "campaign": {
+    "film": "brand/ads (24 s reel, 3 formats) · projects/ailgen/film.json (engine version)",
+    "motif": "particles",
+    "hook": "23:40, a message arrives",
+    "cta": "book a scoping call"
+  },
+  "honesty": {
+    "labels": {
+      "demo": "נתוני הדגמה"
+    },
+    "notes": "own brand; admin screenshots use demo data"
+  },
+  "outputs": {
+    "site": "index.html",
+    "live": "https://claude.ai/artifact/KEyTNCaGtF4GhgHZDLPwNk",
+    "brand": "brand/"
+  }
+}

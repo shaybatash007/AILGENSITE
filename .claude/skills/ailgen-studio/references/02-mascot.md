@@ -1,0 +1,74 @@
+# Phase 3 · The mascot (optional)
+
+A mascot is the brand's signature element **come to life**. It guides visitors on the site, appears in the
+film, and gives the ads a face. It is never a generic robot or a stock character.
+
+## Decide first
+
+Have one when the brand is friendly and the visitor benefits from guidance (home tech, SMB services, kids,
+cafés). Skip it for luxury, legal, medical seriousness: give the brand a **voice** instead (VERMEIL's
+sommelier). If in doubt, skip: a weak character costs more than none.
+
+## Born from the logo
+
+| Brand | Logo element | Character |
+|---|---|---|
+| Switching TV | the TV box of the wordmark: double bezel, RGB LEDs | **טיבי (TIVI)**: a small TV on legs; its face is drawn on its own screen pixels; standby = a red LED |
+| AILGEN | the amber window in the roof mark | **איילי (AILI)**: a figure shaped like the roof carrying the amber pixel as a heart; born when the pixel leaves the logo |
+
+The birth is part of the brand story: on the first visit the character is **born from the hero** (TIVI from
+the hero screen, AILI from the logo's window pixel) and flies to its corner.
+
+## Build it on a pixel grid
+
+A grid keeps it sharp at every size and lets the same drawing serve the site (SVG rects) and the film (canvas):
+
+```json
+"mascot": {
+  "name": "טיבי",
+  "grid": [".KKKKKKKKKKKKKKKKKKKK.", "K.gggggggggggggggggg.K", "KgKKKKKKKKKKKKKKKKKKgK", "..."],
+  "colors": { "K": "#07131F", "g": "#F5F7FA", "s": "#0B1A28", "d": "#15293C", "a": "#F5A524", "r": "#FF4D3D" },
+  "faces": {
+    "idle":  [[6,5,2,2,"a"], [14,5,2,2,"a"], [9,8,4,1,"a"]],
+    "blink": [[6,6,2,1,"a"], [14,6,2,1,"a"], [9,8,4,1,"a"]],
+    "happy": [...], "look": [...], "love": [[7,5,2,1,"r"], [12,5,2,1,"r"], [6,6,8,2,"r"], "..."]
+  },
+  "cell": 11
+}
+```
+
+- `grid`: one string per row, one character per cell, `.` is transparent. 18–28 cells wide is enough.
+- `faces`: rectangles `[x, y, w, h, colourKey]` drawn over the body for each mood. The engine blinks `idle`
+  automatically. Full example: `projects/switching-tv/film.json`.
+- On the site, generate the same rects as an inline `<svg>` with `shape-rendering="crispEdges"`, one `<g>`
+  per face, and switch faces with a `data-st` attribute (see `tiviSVG()` in `switching-tv/index.html`).
+
+## States (6–8, each with a job)
+
+`idle` · `blink` (every 2.4–6 s, random) · `look` (something changed nearby) · `happy` (a success, a hop) ·
+`think` (dots, after 22–24 s idle) · `sleep` (after 65–70 s idle: standby light / Zz) · one **brand state**
+(TIVI `sun` when the visitor drags the sun to noon; `love` after a lead is sent).
+
+## Manners (non-negotiable)
+
+- At most **6 tips per visit**, at least **11 s apart**, each tip once per session; never while the visitor
+  types in a field or a dialog is open.
+- A menu on click: go to the proof tool, the agent, contact; **"quiet for a week"** and **"hide"** (both
+  remembered in localStorage), and a footer link to bring it back.
+- It **points by sending its light** (a beam that lands on the target and lights its outline for ~2 s).
+- On phones: smaller, shorter bubbles, above the call bar; never covers content.
+- `prefers-reduced-motion` and the site's "stop animations": no walking, no beam, instant appearance.
+- Owner can switch it off and rewrite its greeting in the admin.
+
+## In the film
+
+Add `"mascot": { "at": 1.9, "say": "3 שאלות, ואני יודע.", "finale": "love" }` to any scene. It pops in with a
+back-ease, types its line in a bubble (the soundtrack types with it), and can end on its brand state. In
+9:16 it stands in the free band under the content; in 4:5 / 1:1 / 16:9 it shrinks into the end corner.
+
+## Gate
+
+- [ ] Reads at 56 px and at full screen; silhouette recognisable in one colour.
+- [ ] Reviewed for unintended readings (a gesture, a symbol, a face that reads wrong in Hebrew culture).
+- [ ] All states drawn; blink and sleep work; reduced motion respected.
+- [ ] The same grid renders in the site and in `film.json`.

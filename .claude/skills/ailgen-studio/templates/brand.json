@@ -1,0 +1,119 @@
+{
+  "name": "",
+  "slug": "",
+  "status": "real-client | concept | own-brand",
+  "source": {
+    "mode": "url | concept | name",
+    "url": "",
+    "brief": ""
+  },
+  "business": {
+    "type": "",
+    "sector": "",
+    "audience": [],
+    "offer": [],
+    "proof": [],
+    "objections": []
+  },
+  "concept": {
+    "idea": "",
+    "claim": "",
+    "signature": "",
+    "spirit": "",
+    "twist": ""
+  },
+  "voice": {
+    "tone": [],
+    "slogan": "",
+    "do": [],
+    "dont": []
+  },
+  "palette": {
+    "ink": "",
+    "paper": "",
+    "accent": "",
+    "accent2": ""
+  },
+  "type": {
+    "display": {
+      "family": "",
+      "weights": [],
+      "use": "headlines"
+    },
+    "body": {
+      "family": "",
+      "weights": [],
+      "use": "running text"
+    },
+    "num": {
+      "family": "",
+      "weights": [],
+      "use": "numbers"
+    }
+  },
+  "logo": {
+    "files": {
+      "light": "",
+      "dark": "",
+      "mark": ""
+    },
+    "construction": ""
+  },
+  "icons": {
+    "grid": 24,
+    "stroke": 1.6,
+    "signature": ""
+  },
+  "mascot": {
+    "name": "",
+    "born_from": "",
+    "build": "",
+    "states": [
+      "idle",
+      "blink",
+      "happy",
+      "look",
+      "think",
+      "sleep"
+    ],
+    "rules": [
+      "≤6 tips per visit, 11 s apart",
+      "mute for a week / hide, remembered",
+      "reduced motion: no walking, no beam"
+    ]
+  },
+  "site": {
+    "entry": "",
+    "proof_tool": [],
+    "sections": [],
+    "agent": "",
+    "admin": [
+      "leads",
+      "content",
+      "reviews",
+      "projects",
+      "faq",
+      "agent"
+    ]
+  },
+  "campaign": {
+    "film": "film.json",
+    "motif": "light",
+    "hook": "",
+    "cta": ""
+  },
+  "honesty": {
+    "labels": {
+      "real": "מהשטח",
+      "render": "הדמיה",
+      "concept": "קונספט",
+      "demo": "נתוני הדגמה"
+    },
+    "notes": ""
+  },
+  "outputs": {
+    "site": "",
+    "live": "",
+    "campaign": ""
+  }
+}

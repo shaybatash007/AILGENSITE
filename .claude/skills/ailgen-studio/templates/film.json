@@ -1,0 +1,141 @@
+{
+ "name": "",
+ "lang": "he",
+ "fps": 30,
+ "fonts": "fonts/fonts.css",
+ "type": {
+  "display": "",
+  "displayWeight": 700,
+  "body": "",
+  "bodyWeight": 500,
+  "num": "",
+  "numWeight": 800
+ },
+ "colors": {
+  "bg": "",
+  "surface": "",
+  "paper": "",
+  "ink": "",
+  "inkMuted": "",
+  "text": "#FFFFFF",
+  "muted": "",
+  "accent": "",
+  "accent2": "",
+  "accentInk": ""
+ },
+ "logo": {
+  "light": "img/logo-light.svg",
+  "dark": "img/logo-dark.svg"
+ },
+ "motif": "light",
+ "motifColors": [],
+ "highlight": "marker",
+ "transition": 0.45,
+ "mascot": null,
+ "audio": {
+  "mood": "bright"
+ },
+ "scenes": [
+  {
+   "type": "hook",
+   "dur": 2.8,
+   "image": "",
+   "tag": "real",
+   "lines": [
+    "",
+    ""
+   ],
+   "strike": ""
+  },
+  {
+   "type": "reveal",
+   "dur": 3.2,
+   "image": "",
+   "tag": "real",
+   "title": [
+    ""
+   ]
+  },
+  {
+   "type": "stat",
+   "dur": 3.2,
+   "headline": [
+    ""
+   ],
+   "value": 0,
+   "unit": "",
+   "label": "",
+   "compare": {
+    "label": "",
+    "value": 0
+   }
+  },
+  {
+   "type": "gallery",
+   "dur": 5,
+   "headline": "",
+   "items": [
+    {
+     "image": "",
+     "title": "",
+     "tag": "real"
+    }
+   ]
+  },
+  {
+   "type": "quote",
+   "dur": 3,
+   "kicker": "",
+   "text": "",
+   "who": "",
+   "where": ""
+  },
+  {
+   "type": "cards",
+   "dur": 3.2,
+   "headline": [
+    ""
+   ],
+   "cards": [
+    {
+     "icon": "",
+     "value": "",
+     "unit": "",
+     "label": ""
+    }
+   ]
+  },
+  {
+   "type": "cta",
+   "dur": 4,
+   "headline": [
+    ""
+   ],
+   "button": "",
+   "sub": [
+    "",
+    ""
+   ]
+  }
+ ],
+ "stills": [
+  {
+   "name": "feed-4x5",
+   "w": 1080,
+   "h": 1350,
+   "t": 0
+  },
+  {
+   "name": "square-1x1",
+   "w": 1080,
+   "h": 1080,
+   "t": 0
+  },
+  {
+   "name": "story-9x16",
+   "w": 1080,
+   "h": 1920,
+   "t": 0
+  }
+ ]
+}

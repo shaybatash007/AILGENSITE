@@ -1,0 +1,616 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Brand film engine</title>
+<style>html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script>
+/*
+  Brand film engine. One file renders a launch film for any brand from a project's film.json.
+  Every frame is a pure function of time, render(t), so render.mjs can step it at 30 fps and
+  pipe frames to ffmpeg. The same scenes lay themselves out for 9:16, 4:5, 1:1 and 16:9.
+
+  Query:  ?p=/projects/<slug>/  &w=1080 &h=1920  [&t=4.2 | &still=feed-4x5]
+  Scenes: hook · reveal · stat · gallery · quote · cards · cta   (see engine/README.md)
+  Motifs: pixels · light · ink · particles · iris · wipe   (the brand's signature transition)
+*/
+const Q = new URLSearchParams(location.search);
+const W = +(Q.get('w') || 1080), H = +(Q.get('h') || 1920);
+const P = (Q.get('p') || './').replace(/\/?$/, '/');
+const AR = H / W, TALL = AR > 1.5, PORT = AR > 1.1 && !TALL, SQ = AR >= .9 && AR <= 1.1;
+const pick = (tall, port, sq = port, wide = sq) => TALL ? tall : PORT ? port : SQ ? sq : wide;
+const U = Math.min(W, H) / 1080;
+const SAFE = { top: H * pick(.12, .065, .065, .08), bottom: H * pick(.2, .075, .075, .09), side: W * pick(.075, .07, .07, .06) };
+const BOX = { x0: SAFE.side, x1: W - SAFE.side, y0: SAFE.top, y1: H - SAFE.bottom };
+BOX.w = BOX.x1 - BOX.x0; BOX.h = BOX.y1 - BOX.y0;
+const cv = document.getElementById('c'); cv.width = W; cv.height = H;
+const MAIN = cv.getContext('2d');
+let X = MAIN;
+let CFG, C, F, RTL, DUR = 0, SCN = [], CUES = [];
+
+/* ---------------- math ---------------- */
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const lerp = (a, b, k) => a + (b - a) * k;
+const E = {
+  out: k => 1 - Math.pow(1 - k, 3), in: k => k * k * k, inOut: k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2,
+  quint: k => 1 - Math.pow(1 - k, 5), expo: k => k >= 1 ? 1 : 1 - Math.pow(2, -10 * k),
+  back: k => { const c1 = 1.9, c3 = c1 + 1; return 1 + c3 * Math.pow(k - 1, 3) + c1 * Math.pow(k - 1, 2); },
+};
+function rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const fmtNum = (n, like) => { const s = Math.round(n).toLocaleString('en-US'); return /,/.test(String(like)) ? s : s.replace(/,/g, ''); };
+const hexA = (hex, a) => { const h = hex.replace('#', ''); const n = parseInt(h.length === 3 ? h.split('').map(x => x + x).join('') : h, 16); return `rgba(${n >> 16 & 255},${n >> 8 & 255},${n & 255},${a})`; };
+
+/* ---------------- assets ---------------- */
+const IMG = {};
+const url = p => /^(\/|https?:|data:)/.test(p) ? p : P + p;
+function loadImg(src) { return new Promise((res, rej) => { const i = new Image(); i.onload = () => i.decode().then(() => res(i), () => res(i)); i.onerror = () => rej(new Error('image not found: ' + src)); i.src = url(src); }); }
+async function loadAll() {
+  CFG = await (await fetch(P + 'film.json')).json();
+  RTL = CFG.dir ? CFG.dir === 'rtl' : /^(he|ar|fa|yi)/.test(CFG.lang || 'he');
+  document.documentElement.lang = CFG.lang || 'he';
+  C = Object.assign({ bg: '#0B0F1A', surface: '#151B2B', paper: '#F5F5F2', ink: '#111318', inkMuted: '#5A6070', text: '#FFFFFF', muted: '#A7ADC0',
+    accent: '#FFB23E', accent2: '#4F7CFF', accentInk: '#111318', line: 'rgba(255,255,255,.14)', real: '#2BD46B', render: '#34CFE8', concept: '#FFB23E', demo: '#A7ADC0', stock: '#A7ADC0' }, CFG.colors || {});
+  const T = CFG.type || {};
+  F = { disp: q(T.display || 'serif'), body: q(T.body || 'sans-serif'), num: q(T.num || T.display || 'sans-serif'), dw: T.displayWeight || 700, bw: T.bodyWeight || 500, nw: T.numWeight || 800 };
+  if (CFG.fonts) {
+    const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = url(CFG.fonts);
+    await new Promise(r => { l.onload = r; l.onerror = r; document.head.appendChild(l); });
+  }
+  const sample = RTL ? 'אבגדה 0123 Aa' : 'Aa Bb 0123';
+  await Promise.all([`${F.dw} 100px ${F.disp}`, `${F.bw} 40px ${F.body}`, `700 40px ${F.body}`, `${F.nw} 80px ${F.num}`].map(f => document.fonts.load(f, sample).catch(() => {})));
+  const srcs = new Set();
+  const logo = CFG.logo || {}; ['light', 'dark'].forEach(k => logo[k] && srcs.add(logo[k]));
+  for (const s of CFG.scenes) {
+    s.image && srcs.add(s.image); s.bg && /\./.test(s.bg) && srcs.add(s.bg);
+    (s.items || []).forEach(i => i.image && srcs.add(i.image)); (s.cards || []).forEach(c => c.icon && srcs.add(c.icon));
+  }
+  await Promise.all([...srcs].map(s => loadImg(s).then(i => IMG[s] = i)));
+  await document.fonts.ready;
+  layout();
+}
+function q(fam) { return /^["']|,/.test(fam) || !/\s/.test(fam) ? fam : `"${fam}"`; }
+
+/* grain tile */
+const GR = document.createElement('canvas'); GR.width = GR.height = 256;
+{ const g = GR.getContext('2d'), d = g.createImageData(256, 256), r = rng(7); for (let i = 0; i < d.data.length; i += 4) { const v = r() * 255; d.data[i] = d.data[i + 1] = d.data[i + 2] = v; d.data[i + 3] = 255; } g.putImageData(d, 0, 0); }
+
+/* ---------------- timeline + cues ---------------- */
+function layout() {
+  let t = 0; SCN = []; CUES = [];
+  const cue = (at, kind, extra = {}) => CUES.push({ t: +at.toFixed(3), kind, ...extra });
+  CFG.scenes.forEach((s, i) => {
+    const o = { ...s, i, t0: t, t1: t + s.dur }; SCN.push(o); t += s.dur;
+    if (i) cue(o.t0 - .12, 'whoosh');
+    if (s.type === 'hook') { cue(o.t0, 'intro', { until: o.t1 }); if (s.strike) cue(o.t0 + s.dur * .56, 'glitch'); }
+    if (s.type === 'reveal') { cue(o.t0 + .15, 'hit'); cue(o.t0 + .15, 'drop'); }
+    if (s.type === 'stat') { cue(o.t0 + .3, 'ticks', { until: o.t0 + 1.5 }); cue(o.t0 + 1.5, 'pop'); }
+    if (s.type === 'gallery') galleryTimes(o).forEach(([a]) => cue(a, 'swish'));
+    if (s.type === 'quote') { cue(o.t0, 'break', { until: o.t1 }); for (let k = 0; k < (s.stars ?? 5); k++) cue(o.t0 + .35 + k * .09, 'chime', { n: k }); }
+    if (s.type === 'cards') (s.cards || []).forEach((c, k) => cue(o.t0 + .55 + k * .16, 'pop', { n: k }));
+    if (s.type === 'cta') { cue(o.t0 - .6, 'riser', { until: o.t0 }); cue(o.t0 + .15, 'hit'); cue(o.t0 + .15, 'final'); cue(o.t0 + 1.35, 'pop'); }
+    if (s.mascot) { cue(o.t0 + (s.mascot.at ?? .4), 'chip'); if (s.mascot.say) cue(o.t0 + (s.mascot.at ?? .4) + .35, 'type', { until: o.t0 + (s.mascot.at ?? .4) + .35 + s.mascot.say.length * .03 }); }
+  });
+  DUR = t;
+}
+
+/* ---------------- drawing helpers ---------------- */
+function rr(x, y, w, h, r) { r = Math.min(r, w / 2, h / 2); X.beginPath(); X.moveTo(x + r, y); X.arcTo(x + w, y, x + w, y + h, r); X.arcTo(x + w, y + h, x, y + h, r); X.arcTo(x, y + h, x, y, r); X.arcTo(x, y, x + w, y, r); X.closePath(); }
+const fnt = (w, s, fam) => `${w} ${s}px ${fam}`;
+const isLtrRun = s => !/[֐-׿؀-ۿ]/.test(s);
+/* Isolate LTR runs (numbers, Latin, ranges) so Hebrew bidi never reorders '400–600 NIT' or '4K · HDR'. */
+function bidi(s) {
+  if (!RTL) return s;
+  if (isLtrRun(s)) return '⁦' + s + '⁩';
+  return s.replace(/[A-Za-z0-9₪$€%+][A-Za-z0-9 ,.×–\-″:/·%+₪$€]*/g, m => { const core = m.replace(/[\s·.,:–-]+$/, ''); return '⁦' + core + '⁩' + m.slice(core.length); });
+}
+/* "*word*" marks a highlighted word, as in the sites' heroLine field */
+function parseLine(line) { return String(line).split(/\s+/).filter(Boolean).map(w => { const hl = /^\*.*\*[.,!?:]?$/.test(w) || /^\*/.test(w) && /\*/.test(w.slice(1)); return { t: w.replace(/\*/g, ''), hl }; }); }
+
+/* A line of words in reading order, each with its own reveal and exit. Returns the line width. */
+function words(items, o) {
+  X.font = fnt(o.w || F.dw, o.size, o.fam || F.disp); X.letterSpacing = '0px';
+  const gap = o.gap ?? o.size * .24;
+  const ws = items.map(it => X.measureText(bidi(it.t)).width);
+  const total = ws.reduce((a, b) => a + b, 0) + gap * (items.length - 1);
+  const align = o.align || 'center';
+  const left = align === 'center' ? o.x - total / 2 : (align === 'start') === RTL ? o.x - total : o.x;
+  let cur = RTL ? left + total : left;
+  const asc = o.size * .9, desc = o.size * .3;
+  items.forEach((it, i) => {
+    const w = ws[i], x0 = RTL ? cur - w : cur;
+    it._x = x0; it._w = w;
+    const p = o.rev ? clamp(o.rev(i)) : 1, qx = o.exit ? clamp(o.exit(i)) : 0;
+    if (p > 0 && qx < 1) {
+      const e = E.quint(p), eq = E.in(qx);
+      const dy = (1 - e) * (o.rise ?? o.size * 1.05) - eq * o.size * .9;
+      X.save();
+      if (o.mask !== false) { X.beginPath(); X.rect(x0 - o.size * .4, o.y - asc - o.size * .25, w + o.size * .8, asc + desc + o.size * .27); X.clip(); } // a rising word stays hidden below its own line
+      const fx = it.fx ? it.fx() : null;
+      if (fx) { X.globalAlpha *= fx.alpha ?? 1; if (fx.blur) X.filter = `blur(${fx.blur}px)`; if (fx.dy) X.translate(0, fx.dy); }
+      if (it.hl && (CFG.highlight || 'marker') === 'marker') {
+        const hp = E.out(clamp((o.hl ? o.hl(i) : p * 1.4 - .4)));
+        if (hp > 0) { X.fillStyle = hexA(C.accent, .8 * (1 - eq)); const bx = RTL ? x0 + w - w * hp : x0; X.fillRect(bx - o.size * .04, o.y - o.size * .3 + dy, w * hp + o.size * .08, o.size * .27); }
+      }
+      X.fillStyle = it.hl && CFG.highlight === 'color' ? C.accent : (it.color || o.color || C.text);
+      if (o.shadow) { X.shadowColor = o.shadow; X.shadowBlur = o.size * .35; }
+      X.direction = isLtrRun(it.t) ? 'ltr' : 'rtl'; X.textAlign = 'left'; X.textBaseline = 'alphabetic';
+      if (X.direction === 'rtl') { X.textAlign = 'right'; X.fillText(bidi(it.t), x0 + w, o.y + dy); } else X.fillText(it.t, x0, o.y + dy);
+      X.restore();
+    }
+    cur += RTL ? -(w + gap) : w + gap;
+  });
+  return total;
+}
+function lineWidth(items, size, w = F.dw, fam = F.disp) { X.font = fnt(w, size, fam); X.letterSpacing = '0px'; return items.map(it => X.measureText(bidi(it.t)).width).reduce((a, b) => a + b, 0) + size * .24 * (items.length - 1); }
+/* Kinetic headline: lines rise word by word. Size shrinks to fit the safe box. Returns the bottom y. */
+function headline(lines, o) {
+  const parsed = (Array.isArray(lines) ? lines : [lines]).map(parseLine);
+  let size = o.size;
+  parsed.forEach(ws => { const lw = lineWidth(ws, size, o.w, o.fam); if (lw > (o.maxW || BOX.w)) size *= (o.maxW || BOX.w) / lw; });
+  const lh = size * (o.lh || 1.02);
+  const x = o.x ?? (o.align === 'start' ? (RTL ? BOX.x1 : BOX.x0) : W / 2);
+  parsed.forEach((ws, li) => {
+    const y = o.y + size * .8 + li * lh;
+    const t0 = (o.start || 0) + li * (o.stagger ?? .12);
+    words(ws, { ...o, size, x, y, align: o.align || 'center', rev: i => o.lt == null ? 1 : seg(o.lt, t0 + i * .045, t0 + i * .045 + .55), exit: o.exit ? i => o.exit(li, i) : null, fx: null });
+    if (o.onLine) o.onLine(li, ws, y, size);
+  });
+  return o.y + size * .8 + (parsed.length - 1) * lh + size * .3;
+}
+function text(t, x, y, o = {}) {
+  X.save(); X.font = fnt(o.w || F.bw, o.size || 40, o.fam || F.body); X.letterSpacing = o.ls || '0px';
+  X.fillStyle = o.color || C.text; X.globalAlpha *= (o.alpha ?? 1);
+  const rtl = RTL && !isLtrRun(t);
+  X.direction = rtl ? 'rtl' : 'ltr'; X.textAlign = o.align || 'center'; X.textBaseline = o.base || 'alphabetic';
+  if (o.shadow) { X.shadowColor = o.shadow; X.shadowBlur = o.shadowBlur || 20; }
+  const s = rtl ? bidi(t) : t; X.fillText(s, x, y); const m = X.measureText(s).width; X.restore(); return m;
+}
+/* Size and height a headline will take, without drawing it (for vertical centering). */
+function hlFit(lines, size, maxW = BOX.w, lh = 1.02) {
+  const parsed = (Array.isArray(lines) ? lines : [lines]).filter(Boolean).map(parseLine);
+  parsed.forEach(ws => { const lw = lineWidth(ws, size); if (lw > maxW) size *= maxW / lw; });
+  return { size, h: parsed.length ? size * .8 + (parsed.length - 1) * size * lh + size * .3 : 0 };
+}
+/* Top of a block of height h inside the safe box. Tall formats sit a little high: the bottom belongs to the app's UI. */
+const blockTop = (h, avail = BOX.h) => BOX.y0 + Math.max(0, avail - h) * pick(.4, .5, .5, .5);
+/* Wrap body text to lines no wider than maxW. */
+function wrap(t, size, maxW, w = F.bw, fam = F.body) {
+  X.font = fnt(w, size, fam); const out = []; let line = '';
+  for (const word of String(t).split(/\s+/)) { const tr = line ? line + ' ' + word : word; if (X.measureText(bidi(tr)).width > maxW && line) { out.push(line); line = word; } else line = tr; }
+  if (line) out.push(line); return out;
+}
+/* Same line count as a greedy wrap, but with even line lengths (no one-word orphan). */
+function wrapBalanced(t, size, maxW, w = F.bw, fam = F.body) {
+  const g = wrap(t, size, maxW, w, fam); if (g.length < 2) return g;
+  let lo = maxW / g.length * .8, hi = maxW;
+  for (let i = 0; i < 16; i++) { const mid = (lo + hi) / 2; if (wrap(t, size, mid, w, fam).length > g.length) lo = mid; else hi = mid; }
+  return wrap(t, size, hi, w, fam);
+}
+/* pill: a rounded label with an optional status dot */
+function pill(label, x, y, o = {}) {
+  const size = o.size || 30 * U, padX = size * .75, h = size * 1.9;
+  X.save(); X.font = fnt(o.w || 600, size, F.body); X.letterSpacing = '0px';
+  const lab = bidi(label), dot = o.dot ? size * .5 : 0, gap = o.dot ? size * .45 : 0;
+  const w = X.measureText(lab).width + padX * 2 + dot + gap;
+  const align = o.align || 'center';
+  const x0 = align === 'center' ? x - w / 2 : (align === 'start') === RTL ? x - w : x;
+  X.globalAlpha *= o.alpha ?? 1;
+  if (o.sc != null) { X.translate(x0 + w / 2, y); X.scale(o.sc, o.sc); X.translate(-(x0 + w / 2), -y); }
+  if (o.shadow !== false) { X.shadowColor = 'rgba(0,0,0,.25)'; X.shadowBlur = size * .8; X.shadowOffsetY = size * .2; }
+  rr(x0, y - h / 2, w, h, h / 2); X.fillStyle = o.bg || '#fff'; X.fill(); X.shadowColor = 'transparent';
+  if (o.border) { X.lineWidth = o.border; X.strokeStyle = o.bc || C.line; X.stroke(); }
+  const dx = RTL ? x0 + w - padX - dot / 2 : x0 + padX + dot / 2;
+  if (o.dot) { X.beginPath(); X.arc(dx, y, dot / 2 + size * .16, 0, 7); X.fillStyle = hexA(o.dot, .3); X.fill(); X.beginPath(); X.arc(dx, y, dot / 2, 0, 7); X.fillStyle = o.dot; X.fill(); }
+  X.fillStyle = o.fg || C.ink; X.textBaseline = 'middle';
+  X.direction = RTL ? 'rtl' : 'ltr'; X.textAlign = RTL ? 'right' : 'left';
+  X.fillText(lab, RTL ? x0 + w - padX - dot - gap : x0 + padX + dot + gap, y + size * .06);
+  X.restore(); return w;
+}
+/* The honesty label every image carries: real / render / concept / demo */
+const labelOf = kind => Object.assign({ real: RTL ? 'מהשטח' : 'Real', render: RTL ? 'הדמיה' : 'Render', concept: RTL ? 'קונספט' : 'Concept', demo: RTL ? 'נתוני הדגמה' : 'Demo data', stock: RTL ? 'צילום אווירה' : 'Stock photo' }, CFG.labels || {})[kind] || kind;
+/* An image's honesty label, anchored at the start corner of rect r (default: the safe box) */
+function tagPill(kind, r = null, alpha = 1) {
+  if (!kind) return;
+  const x = r ? (RTL ? r.x + r.w - 22 * U : r.x + 22 * U) : (RTL ? BOX.x1 : BOX.x0), y = r ? r.y + 44 * U : BOX.y0 + 26 * U;
+  pill(labelOf(kind), x, y, { size: 24 * U, bg: 'rgba(8,10,16,.72)', fg: '#fff', dot: C[kind] || C.render, align: 'start', alpha, shadow: false });
+}
+function honesty(kind, alpha = 1) { tagPill(kind, null, alpha); }
+function star(cx, cy, r, fill) { X.beginPath(); for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, rad = i % 2 ? r * .45 : r; X.lineTo(cx + Math.cos(a) * rad, cy + Math.sin(a) * rad); } X.closePath(); X.fillStyle = fill; X.fill(); }
+function cover(im, x, y, w, h, zoom = 1, fx = .5, fy = .5) {
+  const s = Math.max(w / im.width, h / im.height) * zoom, sw = w / s, sh = h / s;
+  X.drawImage(im, (im.width - sw) * fx, (im.height - sh) * fy, sw, sh, x, y, w, h);
+}
+function grain(t, a = .05) {
+  X.save(); X.globalAlpha = a; X.globalCompositeOperation = 'overlay';
+  const pat = X.createPattern(GR, 'repeat'), r = rng(Math.floor(t * 30) + 11);
+  pat.setTransform(new DOMMatrix().translate(Math.floor(r() * 256), Math.floor(r() * 256)));
+  X.fillStyle = pat; X.fillRect(0, 0, W, H); X.restore();
+}
+function vignette(a = .35) {
+  const g = X.createRadialGradient(W / 2, H / 2, Math.min(W, H) * .35, W / 2, H / 2, Math.max(W, H) * .78);
+  g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, `rgba(0,0,0,${a})`); X.fillStyle = g; X.fillRect(0, 0, W, H);
+}
+/* Scene backgrounds: dark (brand ground), light (paper), accent, all with a soft accent glow. */
+function ground(theme, lt = 0) {
+  const base = theme === 'light' ? C.paper : theme === 'accent' ? C.accent : C.bg;
+  X.fillStyle = base; X.fillRect(0, 0, W, H);
+  const gx = RTL ? W * .9 : W * .1, g = X.createRadialGradient(gx, H * .04, 0, gx, H * .04, Math.max(W, H) * .8);
+  g.addColorStop(0, hexA(theme === 'accent' ? '#FFFFFF' : C.accent, theme === 'light' ? .16 : .2)); g.addColorStop(1, hexA(C.accent, 0));
+  X.fillStyle = g; X.fillRect(0, 0, W, H);
+  const g2 = X.createRadialGradient(W - gx, H * .98, 0, W - gx, H * .98, Math.max(W, H) * .7);
+  g2.addColorStop(0, hexA(C.accent2, theme === 'light' ? .08 : .16)); g2.addColorStop(1, hexA(C.accent2, 0));
+  X.fillStyle = g2; X.fillRect(0, 0, W, H);
+  if ((CFG.texture || 'dots') === 'dots') { // a quiet field of dots drifting: the brand's pixel of light
+    X.save(); X.globalAlpha = theme === 'light' ? .35 : .18; X.fillStyle = theme === 'light' ? C.inkMuted : C.muted;
+    const p = 36 * U, off = (lt * 6 * U) % p;
+    for (let y = -p + off; y < H + p; y += p) for (let x = (Math.round(y / p) % 2) * p / 2; x < W; x += p) X.fillRect(x, y, 2.4 * U, 2.4 * U);
+    X.restore();
+  }
+}
+const ink = th => th === 'light' ? C.ink : th === 'accent' ? C.accentInk : C.text;
+const mute = th => th === 'light' ? C.inkMuted : th === 'accent' ? hexA(C.accentInk, .7) : C.muted;
+
+/* ---------------- motifs: the brand's signature reveal ---------------- */
+const MK = document.createElement('canvas'); MK.width = W; MK.height = H; const MKc = MK.getContext('2d');
+const TMP = document.createElement('canvas'); TMP.width = W; TMP.height = H; const TMPc = TMP.getContext('2d');
+function scratch() { TMPc.setTransform(1, 0, 0, 1, 0, 0); TMPc.globalCompositeOperation = 'source-over'; TMPc.globalAlpha = 1; TMPc.clearRect(0, 0, W, H); return TMPc; }
+/* The pixel grid behind the pixels/particles motifs: one callback per cell with its local progress l. */
+function pixelCells(r, kind, k, seed, fn) {
+  const R = rng(seed), cs = Math.max(r.w, r.h) / (kind === 'pixels' ? 30 : 42), cols = Math.ceil(r.w / cs), rows = Math.ceil(r.h / cs), ox = RTL ? 1 : 0;
+  for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
+    const cx = (i + .5) / cols, cy = (j + .5) / rows;
+    // pixels light up from the centre out; particles stream in the reading direction
+    const v = (kind === 'pixels' ? Math.hypot(cx - .5, cy - .5) / .72 : Math.abs(cx - ox) * .85 + R() * .15) * .8 + R() * .2;
+    fn(r.x + i * cs, r.y + j * cs, cs, clamp((k * 1.4 - v) / .4), i, j, R());
+  }
+}
+/* Draw the revealed area (white) for progress k into g, over rect r. */
+function motifMask(g, kind, k, r = { x: 0, y: 0, w: W, h: H }, seed = 3) {
+  g.save(); g.clearRect(0, 0, W, H); g.fillStyle = '#fff';
+  if (k >= 1) { g.fillRect(r.x, r.y, r.w, r.h); g.restore(); return; }
+  if (k <= 0) { g.restore(); return; }
+  const R = rng(seed);
+  if (kind === 'pixels' || kind === 'particles') {
+    pixelCells(r, kind, k, seed, (x, y, cs, l) => { if (l <= 0) return; const s = cs * (l >= 1 ? 1.04 : E.out(l)); g.fillRect(x + (cs - s) / 2, y + (cs - s) / 2, s, s); });
+  } else if (kind === 'ink') {
+    const n = 6;
+    for (let b = 0; b < n; b++) {
+      const bx = r.x + r.w * (.15 + .7 * R()), by = r.y + r.h * (.15 + .7 * R()), d = R() * .35, rad = Math.hypot(r.w, r.h) * (.55 + .3 * R()) * E.inOut(clamp((k - d) / (1 - d * .6)));
+      if (rad <= 0) continue;
+      g.beginPath();
+      for (let a = 0; a <= 64; a++) { const th = a / 64 * Math.PI * 2, rr2 = rad * (1 + .1 * Math.sin(th * 5 + b) + .05 * Math.sin(th * 11 + b * 2)); g.lineTo(bx + Math.cos(th) * rr2, by + Math.sin(th) * rr2); }
+      g.fill();
+    }
+  } else if (kind === 'iris') {
+    g.beginPath(); g.arc(r.x + r.w / 2, r.y + r.h / 2, Math.hypot(r.w, r.h) * .55 * E.inOut(k), 0, 7); g.fill();
+  } else { // light / wipe: a soft diagonal edge travelling in reading direction
+    const ang = kind === 'wipe' ? 0 : -.35, dirx = RTL ? -1 : 1;
+    const len = Math.abs(r.w * Math.cos(ang)) + Math.abs(r.h * Math.sin(ang)), band = kind === 'wipe' ? 2 : len * .22;
+    const p = E.inOut(k) * (len + band) - band;
+    const cx = r.x + r.w / 2, cy = r.y + r.h / 2, ux = Math.cos(ang) * dirx, uy = Math.sin(ang);
+    const sx = cx - ux * len / 2, sy = cy - uy * len / 2;
+    const gr = g.createLinearGradient(sx, sy, sx + ux * len, sy + uy * len);
+    const a = clamp(p / len), b2 = clamp((p + band) / len);
+    gr.addColorStop(0, '#fff'); gr.addColorStop(a, '#fff'); gr.addColorStop(Math.max(a, b2), 'rgba(255,255,255,0)'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = gr; g.fillRect(r.x, r.y, r.w, r.h);
+  }
+  g.restore();
+}
+/* The living edge of a reveal: lit pixels for pixels/particles, a light band for light/wipe */
+function motifEdge(kind, k, r = { x: 0, y: 0, w: W, h: H }, seed = 3) {
+  if (k <= 0 || k >= 1) return;
+  if (kind === 'pixels' || kind === 'particles') {
+    const pal = CFG.motifColors || [C.accent, C.accent2, '#FFFFFF'];
+    X.save(); X.globalCompositeOperation = 'screen';
+    pixelCells(r, kind, k, seed, (x, y, cs, l, i, j, q) => {
+      if (l <= 0 || l >= 1) return;
+      X.fillStyle = pal[(i * 7 + j * 3) % pal.length];
+      if (kind === 'pixels') { X.globalAlpha = Math.sin(Math.PI * l) * .95; const d = cs * .58; rr(x + (cs - d) / 2, y + (cs - d) / 2, d, d, d * .3); X.fill(); }
+      else if (q < .3) { X.globalAlpha = Math.sin(Math.PI * l) * .85; X.beginPath(); X.arc(x + cs / 2 + (q - .15) * cs * 3, y + cs / 2 - l * cs * 1.2, cs * (.12 + q * .5), 0, 7); X.fill(); } // sparse sparks drifting up
+    });
+    X.restore(); return;
+  }
+  if (!['light', 'wipe'].includes(kind)) return;
+  const ang = kind === 'wipe' ? 0 : -.35, dirx = RTL ? -1 : 1, len = Math.abs(r.w * Math.cos(ang)) + Math.abs(r.h * Math.sin(ang)), band = len * .22;
+  const p = E.inOut(k) * (len + band) - band + band * .35, cx = r.x + r.w / 2, cy = r.y + r.h / 2, ux = Math.cos(ang) * dirx, uy = Math.sin(ang);
+  const px = cx - ux * len / 2 + ux * p, py = cy - uy * len / 2 + uy * p;
+  X.save(); X.globalCompositeOperation = 'screen'; X.translate(px, py); X.rotate(Math.atan2(uy, ux));
+  const g = X.createLinearGradient(-band * .5, 0, band * .5, 0); g.addColorStop(0, hexA(C.accent, 0)); g.addColorStop(.5, hexA(C.accent, .55)); g.addColorStop(1, hexA(C.accent, 0));
+  X.fillStyle = g; X.fillRect(-band * .5, -Math.max(W, H), band, Math.max(W, H) * 2); X.restore();
+}
+/* Pixel sample of an image over a rect (cached): the brand's 'made of light' look */
+const SAMPLE = {};
+function sampleImg(im, w, h, cols, key) {
+  const k = key + cols;
+  if (SAMPLE[k]) return SAMPLE[k];
+  const rows = Math.max(1, Math.round(cols * h / w)), c = document.createElement('canvas'); c.width = cols; c.height = rows;
+  const g = c.getContext('2d', { willReadFrequently: true }); const s = Math.max(cols / im.width, rows / im.height);
+  g.drawImage(im, (cols - im.width * s) / 2, (rows - im.height * s) / 2, im.width * s, im.height * s);
+  return SAMPLE[k] = { cols, rows, d: g.getImageData(0, 0, cols, rows).data };
+}
+/* Reveal an image (or a logo, contain=true) into rect r with the brand motif. k: 0..1 */
+function motifReveal(im, r, k, kind = CFG.motif || 'light', o = {}) {
+  if (k <= 0) return;
+  const draw = () => o.contain ? X.drawImage(im, r.x, r.y, r.w, r.h) : cover(im, r.x, r.y, r.w, r.h, o.zoom || 1);
+  if (kind === 'pixels' || kind === 'particles') {
+    const cols = o.contain ? 90 : 64, S = sampleImg(im, r.w, r.h, cols, (o.key || '') + (o.contain ? 'c' : 'v')), cs = r.w / S.cols, R = rng(9);
+    const sharp = seg(k, .72, 1);
+    X.save();
+    if (sharp < 1) for (let j = 0; j < S.rows; j++) for (let i = 0; i < S.cols; i++) {
+      const a = S.d[(j * S.cols + i) * 4 + 3]; if (a < 110) continue;
+      const cx = (i + .5) / S.cols, cy = (j + .5) / S.rows;
+      const v = kind === 'pixels' ? Math.hypot(cx - .5, cy - .5) / .72 * .8 + R() * .2 : R();
+      const l = clamp((k * 1.55 - v) / .35); if (l <= 0) continue;
+      const col = `rgb(${S.d[(j * S.cols + i) * 4]},${S.d[(j * S.cols + i) * 4 + 1]},${S.d[(j * S.cols + i) * 4 + 2]})`;
+      let x = r.x + i * cs, y = r.y + j * cs;
+      if (kind === 'particles') { const e = E.inOut(l), sx = r.x + r.w * R() * 1.6 - r.w * .3, sy = r.y - r.h * .4 + r.h * 1.8 * R(); x = lerp(sx, x, e); y = lerp(sy, y, e); }
+      X.globalAlpha = (1 - sharp) * (kind === 'particles' ? .35 + .65 * l : l);
+      X.fillStyle = col; const d = cs * (kind === 'pixels' ? .78 : .62);
+      if (kind === 'pixels') { rr(x + (cs - d) / 2, y + (cs - d) / 2, d, d, d * .3); X.fill(); } else { X.beginPath(); X.arc(x + cs / 2, y + cs / 2, d / 2, 0, 7); X.fill(); }
+    }
+    X.restore();
+    if (sharp > 0) { X.save(); X.globalAlpha = E.inOut(sharp); draw(); X.restore(); }
+    return;
+  }
+  motifMask(MKc, kind, k, r, o.seed || 5);
+  const tg = scratch(), prev = X; X = tg; draw(); X = prev;
+  tg.globalCompositeOperation = 'destination-in'; tg.drawImage(MK, 0, 0);
+  X.drawImage(TMP, 0, 0);
+  motifEdge(kind, k, r, o.seed || 5);
+}
+
+/* ---------------- mascot: a pixel character born from the logo ---------------- */
+function mascot(cx, feet, cell, mood, lt, o = {}) {
+  const M = CFG.mascot; if (!M) return null;
+  const rows = M.grid, h = rows.length, w = Math.max(...rows.map(r => r.length));
+  const pop = o.pop ?? 1, bob = Math.sin(lt * 3.2) * cell * .35;
+  const blink = mood === 'idle' && (lt % 2.8) > 2.66;
+  const face = M.faces?.[blink ? 'blink' : mood] || M.faces?.idle || [];
+  X.save(); X.translate(cx, feet); X.scale(pop, pop); X.translate(-w * cell / 2, -h * cell + bob);
+  X.imageSmoothingEnabled = false;
+  rows.forEach((row, y) => [...row].forEach((ch, x) => { const col = M.colors[ch]; if (!col) return; X.fillStyle = col; X.fillRect(x * cell, y * cell, cell + .5, cell + .5); }));
+  face.forEach(([x, y, fw = 1, fh = 1, ch]) => { X.fillStyle = M.colors[ch] || M.colors.face || C.accent; X.fillRect(x * cell, y * cell, fw * cell + .5, fh * cell + .5); });
+  X.restore();
+  return { top: feet - h * cell * pop + bob, w: w * cell * pop };
+}
+function bubble(txt, cx, bottom, maxW, k, th = 'dark') {
+  if (k <= 0) return;
+  const size = 40 * U, lines = wrap(txt, size, maxW - 70 * U, 700);
+  const n = Math.round(txt.length * clamp(k * 1.25)); let used = 0;
+  const shown = lines.map(l => { const s = l.slice(0, Math.max(0, n - used)); used += l.length + 1; return s; });
+  X.font = fnt(700, size, F.body);
+  const w = Math.min(maxW, Math.max(...lines.map(l => X.measureText(bidi(l)).width)) + 70 * U), h = lines.length * size * 1.3 + 50 * U;
+  const x0 = clamp(cx - w / 2, BOX.x0, BOX.x1 - w), y0 = bottom - h - 26 * U;
+  X.save(); X.globalAlpha = clamp(k * 4);
+  rr(x0, y0, w, h, 28 * U); X.fillStyle = '#fff'; X.fill(); X.lineWidth = 5 * U; X.strokeStyle = C.ink; X.stroke();
+  X.beginPath(); X.moveTo(cx - 18 * U, y0 + h - 2); X.lineTo(cx, y0 + h + 24 * U); X.lineTo(cx + 18 * U, y0 + h - 2); X.closePath(); X.fillStyle = '#fff'; X.fill(); X.stroke();
+  X.fillStyle = '#fff'; X.fillRect(cx - 15 * U, y0 + h - 6 * U, 30 * U, 8 * U);
+  shown.forEach((s, i) => text(s, x0 + w / 2, y0 + 25 * U + size * (i + .95) * 1.3 - size * .3, { size, w: 700, color: C.ink }));
+  X.restore();
+}
+function sceneMascot(s, lt) {
+  const m = s.mascot; if (!m || !CFG.mascot) return;
+  const at = m.at ?? .4, k = seg(lt, at, at + .5); if (k <= 0) return;
+  // outside 9:16 there is no free band under the content: shrink the character into the end corner
+  const cell = (m.cell || CFG.mascot.cell || 11) * U * (TALL ? 1 : .72);
+  const cx = m.x != null && TALL ? W * m.x : (RTL ? BOX.x0 + 110 * U : BOX.x1 - 110 * U), feet = m.y != null && TALL ? H * m.y : BOX.y1 - 10 * U;
+  const mood = lt - at < .9 ? 'happy' : m.finale && lt > s.dur - 1.1 ? m.finale : (m.mood || 'idle');
+  const r = mascot(cx, feet, cell, mood, lt, { pop: E.back(k) });
+  if (m.say && r) bubble(m.say, cx, r.top - 10 * U, Math.min(BOX.w, (TALL ? 820 : 460) * U), seg(lt, at + .35, at + .35 + m.say.length * .03 + .2));
+}
+
+/* ---------------- scenes ---------------- */
+const SC = {};
+/* hook: the visitor's situation, over a real image or the brand ground. A word can dissolve. */
+SC.hook = (s, lt) => {
+  const th = s.theme || (s.image ? 'image' : 'dark');
+  if (s.image) {
+    X.fillStyle = C.bg; X.fillRect(0, 0, W, H);
+    cover(IMG[s.image], 0, 0, W, H, 1.12 - .12 * E.out(clamp(lt / s.dur)), s.fx ?? .5, s.fy ?? .5);
+    if (s.wash) { X.fillStyle = hexA(s.washColor || '#FFFFFF', s.wash * E.inOut(seg(lt, .2, s.dur * .6))); X.fillRect(0, 0, W, H); }
+    const g = X.createLinearGradient(0, 0, 0, H); g.addColorStop(0, 'rgba(0,0,0,.55)'); g.addColorStop(.45, 'rgba(0,0,0,.08)'); g.addColorStop(1, 'rgba(0,0,0,.35)');
+    X.fillStyle = g; X.fillRect(0, 0, W, H);
+  } else ground(th, lt);
+  const strikeAt = s.dur * .56, col = th === 'image' ? '#fff' : ink(th);
+  const lines = (s.lines || []).map(parseLine);
+  let size = (s.size || pick(150, 120, 112, 120)) * U;
+  lines.forEach(ws => { const lw = lineWidth(ws, size); if (lw > BOX.w) size *= BOX.w / lw; });
+  const y0 = H * (s.y ?? pick(.2, .16, .16, .28));
+  lines.forEach((ws, li) => {
+    const y = y0 + size * .8 + li * size * 1.02;
+    ws.forEach(wd => { if (s.strike && wd.t === s.strike.replace(/\*/g, '')) wd.fx = () => { const q = seg(lt, strikeAt, strikeAt + .7); return { alpha: 1 - E.in(q), blur: q * 14 * U, dy: -q * 40 * U }; }; });
+    words(ws, { size, x: W / 2, y, color: col, shadow: th === 'image' ? 'rgba(0,0,0,.45)' : null, rev: i => seg(lt, .15 + li * .16 + i * .05, .7 + li * .16 + i * .05) });
+    if (s.strike) ws.forEach((wd, wi) => { if (wd.fx) dust(wd._x + wd._w / 2, y - size * .35, wd._w * .6, seg(lt, strikeAt, strikeAt + 1.1), 40 + wi); });
+  });
+  if (s.sub) text(s.sub, W / 2, y0 + size * (lines.length + .6) * 1.02 + 30 * U, { size: 44 * U, color: th === 'image' ? '#fff' : mute(th), alpha: seg(lt, .8, 1.3), shadow: th === 'image' ? 'rgba(0,0,0,.5)' : null });
+  honesty(s.image && s.tag, seg(lt, .2, .6));
+};
+function dust(cx, cy, size, k, seed) {
+  if (k <= 0 || k >= 1) return; const R = rng(seed);
+  X.save(); X.fillStyle = C.accent;
+  for (let i = 0; i < 60; i++) { const a = R() * Math.PI * 2, d = size * (.3 + 1.6 * R()) * E.out(k), s = (2 + 5 * R()) * U; X.globalAlpha = (1 - k) * .9; X.fillRect(cx + (R() - .5) * size * 2 + Math.cos(a) * d, cy + Math.sin(a) * d * .6 - k * size * .5, s, s); }
+  X.restore();
+}
+/* reveal: the turn. The brand motif lights up the product, then the promise lands. */
+SC.reveal = (s, lt) => {
+  const th = s.theme || 'dark'; ground(th, lt);
+  const k = seg(lt, .15, 1.55);
+  const fw = BOX.w, fh = s.logo ? fw / (CFG.logo?.aspect || 4) : Math.min(fw * pick(1.1, .72, .66, .5), BOX.h * .56);
+  const tf = hlFit(s.title || [], (s.size || pick(128, 104, 96, 96)) * U), gapT = pick(70, 40, 36, 30) * U;
+  const r = { x: BOX.x0, y: blockTop(fh + gapT + tf.h + (s.sub ? 90 * U : 0)), w: fw, h: fh };
+  const flash = Math.exp(-Math.pow((lt - .9) * 3.2, 2));
+  if (flash > .02) { X.save(); const g = X.createRadialGradient(W / 2, r.y + r.h / 2, 0, W / 2, r.y + r.h / 2, Math.max(W, H) * .6); g.addColorStop(0, hexA(C.accent, .35 * flash)); g.addColorStop(1, hexA(C.accent, 0)); X.fillStyle = g; X.fillRect(0, 0, W, H); X.restore(); }
+  if (s.logo) motifReveal(IMG[CFG.logo[th === 'light' ? 'dark' : 'light']], r, k, s.motif, { contain: true, key: 'logo' + th });
+  else {
+    X.save(); rr(r.x, r.y, r.w, r.h, 30 * U); X.clip();
+    X.fillStyle = C.surface; X.fillRect(r.x, r.y, r.w, r.h);
+    motifReveal(IMG[s.image], r, k, s.motif, { zoom: 1.06 - .06 * E.out(clamp(lt / s.dur)), key: s.image });
+    X.restore();
+    X.save(); rr(r.x, r.y, r.w, r.h, 30 * U); X.lineWidth = 3 * U; X.strokeStyle = hexA(th === 'light' ? C.ink : '#FFFFFF', .16); X.stroke(); X.restore();
+    if (s.tag) tagPill(s.tag, r, seg(lt, 1.2, 1.6));
+  }
+  const tb = headline(s.title || [], { y: r.y + r.h + gapT, size: tf.size, color: ink(th), lt, start: 1.0 });
+  if (s.sub) text(s.sub, W / 2, tb + 60 * U, { size: 40 * U, color: mute(th), alpha: seg(lt, 1.7, 2.2) });
+};
+/* stat: one number that proves the claim, with an honest comparison */
+SC.stat = (s, lt) => {
+  const th = s.theme || 'light'; ground(th, lt);
+  const hf = hlFit(s.headline || [], (s.size || pick(118, 96, 92, 96)) * U), gapA = pick(80, 40, 30, 20) * U;
+  let ns0 = (s.numSize || pick(300, 230, 210, 220)) * U;
+  { X.font = fnt(F.nw, ns0, F.num); const a = X.measureText(fmtNum(s.value, s.display || s.value) + (s.suffix || '')).width; X.font = fnt(F.nw, ns0 * .32, F.num); const b = s.unit ? X.measureText(s.unit).width + 20 * U : 0; if (a + b > BOX.w) ns0 *= BOX.w / (a + b); }
+  const top = blockTop(hf.h + gapA + ns0 * .82 + 70 * U + (s.compare ? 300 * U : 0));
+  const hb = headline(s.headline || [], { y: top, size: hf.size, color: ink(th), lt, start: .05 });
+  const k = E.expo(seg(lt, .3, 1.5));
+  const from = s.from ?? 0, v = lerp(from, s.value, k);
+  const numStr = fmtNum(v, s.display || s.value) + (s.suffix || '');
+  let ns = (s.numSize || pick(300, 230, 210, 220)) * U;
+  X.font = fnt(F.nw, ns, F.num); const nw0 = X.measureText(fmtNum(s.value, s.display || s.value) + (s.suffix || '')).width;
+  X.font = fnt(F.nw, ns * .32, F.num); const uw = s.unit ? X.measureText(s.unit).width + 20 * U : 0;
+  if (nw0 + uw > BOX.w) ns *= BOX.w / (nw0 + uw);
+  const ny = hb + gapA + ns * .82;
+  X.save(); X.font = fnt(F.nw, ns, F.num); X.fillStyle = ink(th); X.textBaseline = 'alphabetic'; X.direction = 'ltr';
+  const nw = X.measureText(fmtNum(s.value, s.display || s.value) + (s.suffix || '')).width, total = nw + uw, x0 = W / 2 - total / 2;
+  X.globalAlpha = seg(lt, .25, .45); X.textAlign = 'right'; X.fillText(numStr, x0 + nw, ny); X.textAlign = 'left'; // digits grow leftward, the unit stays put
+  if (s.unit) { X.font = fnt(F.nw, ns * .32, F.num); X.fillStyle = C.accent; X.fillText(s.unit, x0 + nw + 20 * U, ny); }
+  X.restore();
+  if (s.label) text(s.label, W / 2, ny + 70 * U, { size: 46 * U, w: 700, color: mute(th), alpha: seg(lt, .6, 1) });
+  if (s.compare) { // two bars: ours and theirs, sqrt-scaled so the small one stays visible; the text says the truth
+    const by = ny + pick(170, 120, 110, 100) * U, bw = BOX.w, bh = 34 * U, max = Math.max(s.value, s.compare.value);
+    const bar = (label, val, y, col, d) => {
+      const p = E.out(seg(lt, .9 + d, 1.9 + d)), w = bw * Math.sqrt(val / max) * p;
+      X.save(); rr(BOX.x0, y, bw, bh, bh / 2); X.fillStyle = hexA(th === 'light' ? C.ink : '#FFFFFF', .08); X.fill();
+      if (w > 1) { rr(RTL ? BOX.x1 - w : BOX.x0, y, w, bh, bh / 2); X.fillStyle = col; X.fill(); } X.restore();
+      text(label, RTL ? BOX.x1 : BOX.x0, y - 16 * U, { size: 34 * U, w: 700, color: ink(th), align: RTL ? 'right' : 'left', alpha: seg(lt, .9 + d, 1.3 + d) });
+    };
+    bar(`${s.compare.label} · ${s.compare.display || fmtNum(s.compare.value, s.compare.value)}${s.unit ? ' ' + s.unit : ''}`, s.compare.value, by + 50 * U, mute(th), 0);
+    bar(`${s.label2 || CFG.name || ''} · ${s.display || fmtNum(s.value, s.value)}${s.unit ? ' ' + s.unit : ''}`, s.value, by + 170 * U, C.accent, .25);
+  }
+};
+function galleryTimes(s) { const n = s.items.length, intro = .35, per = (s.dur - intro) / n; return s.items.map((_, j) => [s.t0 + intro + j * per, s.t0 + intro + (j + 1) * per]); }
+/* gallery: the range, one beat per item, each image honestly labeled */
+SC.gallery = (s, lt) => {
+  const th = s.theme || 'dark'; ground(th, lt);
+  const n = s.items.length, intro = .35, per = (s.dur - intro) / n, j = clamp(Math.floor((lt - intro) / per), 0, n - 1), jl = lt - intro - j * per;
+  const kf = s.headline ? hlFit([s.headline], (s.size || pick(84, 70, 66, 70)) * U) : { h: 0, size: 0 };
+  const fh = Math.min(BOX.w * pick(1.12, .7, .62, .5), BOX.h * .62), tf = hlFit(['אבג'], (s.titleSize || pick(120, 92, 86, 90)) * U);
+  const top = blockTop(kf.h + 34 * U + fh + pick(60, 34, 30, 26) * U + tf.h + 80 * U);
+  const kick = s.headline ? headline([s.headline], { y: top, size: kf.size, color: mute(th), lt, start: 0 }) : top;
+  const r = { x: BOX.x0, y: kick + 34 * U, w: BOX.w, h: fh };
+  const drawItem = (it, lk, zoomT) => { X.save(); rr(r.x, r.y, r.w, r.h, 30 * U); X.clip(); cover(IMG[it.image], r.x, r.y, r.w, r.h, 1.1 - .1 * E.out(clamp(zoomT / per)), it.fx ?? .5, it.fy ?? .5); X.restore(); };
+  const prev = j > 0 ? s.items[j - 1] : null, it = s.items[j], tk = seg(jl, 0, .38);
+  if (prev && tk < 1) drawItem(prev, 1, per + jl);
+  if (tk >= 1 || !prev) drawItem(it, 1, jl);
+  else { // motif transition inside the frame
+    const tg = scratch(), pv = X; X = tg; drawItem(it, 1, jl); X = pv;
+    motifMask(MKc, s.motif || CFG.motif || 'light', tk, r, 11 + j); tg.globalCompositeOperation = 'destination-in'; tg.drawImage(MK, 0, 0); X.drawImage(TMP, 0, 0); motifEdge(s.motif || CFG.motif || 'light', tk, r, 11 + j);
+  }
+  X.save(); rr(r.x, r.y, r.w, r.h, 30 * U); X.lineWidth = 3 * U; X.strokeStyle = hexA('#FFFFFF', .14); X.stroke(); X.restore();
+  if (it.tag) tagPill(it.tag, r);
+  const ty = r.y + r.h + pick(60, 34, 30, 26) * U;
+  const tb = headline([it.title], { y: ty, size: (s.titleSize || pick(120, 92, 86, 90)) * U, color: ink(th), lt: jl, start: .05, stagger: 0 });
+  if (it.sub) text(it.sub, W / 2, tb + 40 * U, { size: 38 * U, color: mute(th), alpha: seg(jl, .25, .6) });
+  X.save(); X.font = fnt(F.nw, 36 * U, F.num); X.fillStyle = mute(th); X.textAlign = 'center'; X.direction = 'ltr'; X.globalAlpha = .8;
+  X.fillText(`${String(j + 1).padStart(2, '0')} / ${String(n).padStart(2, '0')}`, W / 2, tb + (it.sub ? 110 : 60) * U); X.restore();
+};
+/* quote: a real customer's words, never invented */
+SC.quote = (s, lt) => {
+  const th = s.theme || 'light'; ground(th, lt);
+  const kf = s.kicker ? hlFit([s.kicker], pick(80, 64, 60, 64) * U) : { h: 0, size: 0 };
+  const size = (s.size || pick(104, 86, 80, 84)) * U, lines = wrapBalanced(s.text, size, BOX.w * .98, F.dw, F.disp);
+  const top = blockTop(kf.h + (kf.h ? 70 * U : 0) + 72 * U + 60 * U + lines.length * size * 1.08 + 150 * U + (s.where ? 58 * U : 0));
+  if (s.kicker) headline([s.kicker], { y: top, size: kf.size, color: mute(th), lt, start: 0 });
+  const sy = top + kf.h + (kf.h ? 70 * U : 0) + 36 * U, n = s.stars ?? 5;
+  for (let i = 0; i < n; i++) { const p = E.back(seg(lt, .35 + i * .09, .7 + i * .09)); if (p > 0) { X.save(); X.translate(W / 2 + (i - (n - 1) / 2) * 92 * U, sy); X.scale(p, p); star(0, 0, 36 * U, C.accent); X.restore(); } }
+  let y = sy + 96 * U;
+  X.save(); X.globalAlpha = seg(lt, .8, 1.4) * .16; X.font = fnt(F.dw, size * 3.4, F.disp); X.fillStyle = C.accent; X.textAlign = 'center'; X.fillText('”', W / 2, y + size * 2.3); X.restore();
+  lines.forEach((l, i) => { words(parseLine(l), { size, x: W / 2, y: y + size * .82, color: ink(th), rev: k => seg(lt, .8 + i * .14 + k * .04, 1.3 + i * .14 + k * .04) }); y += size * 1.08; });
+  text(s.who || '', W / 2, y + 80 * U, { size: 44 * U, w: 700, color: ink(th), alpha: seg(lt, 1.6, 2) });
+  if (s.where) text(s.where, W / 2, y + 138 * U, { size: 38 * U, color: mute(th), alpha: seg(lt, 1.7, 2.1) });
+};
+/* cards: the answers to every objection, one card each */
+SC.cards = (s, lt) => {
+  const th = s.theme || 'dark'; ground(th, lt);
+  const hf = hlFit(s.headline || [], (s.size || pick(112, 92, 86, 90)) * U), gapA = pick(70, 40, 36, 40) * U;
+  const n = s.cards.length, cols = pick(2, 2, 2, Math.min(4, n)), rows = Math.ceil(n / cols), gap = 26 * U;
+  const cw = (BOX.w - gap * (cols - 1)) / cols, ch = Math.min(pick(330, 250, 240, 300) * U, (BOX.h - hf.h - gapA - gap * (rows - 1)) / rows);
+  const hb = headline(s.headline || [], { y: blockTop(hf.h + gapA + rows * ch + (rows - 1) * gap), size: hf.size, color: ink(th), lt, start: .05 });
+  const top = hb + gapA;
+  s.cards.forEach((c, i) => {
+    const col = i % cols, row = Math.floor(i / cols), p = E.back(seg(lt, .55 + i * .16, .95 + i * .16)); if (p <= 0) return;
+    const x = RTL ? BOX.x1 - (col + 1) * cw - col * gap : BOX.x0 + col * (cw + gap), y = top + row * (ch + gap);
+    X.save(); X.translate(x + cw / 2, y + ch / 2); X.scale(p, p); X.translate(-(x + cw / 2), -(y + ch / 2));
+    rr(x, y, cw, ch, 28 * U); X.fillStyle = th === 'light' ? '#FFFFFF' : C.surface; X.fill(); X.lineWidth = 2 * U; X.strokeStyle = th === 'light' ? hexA(C.ink, .08) : C.line; X.stroke();
+    const ix = RTL ? x + cw - 36 * U - 56 * U : x + 36 * U;
+    if (c.icon && IMG[c.icon]) X.drawImage(IMG[c.icon], ix, y + 34 * U, 56 * U, 56 * U);
+    const cnt = typeof c.value === 'number' ? fmtNum(c.value * E.expo(seg(lt, .7 + i * .16, 1.6 + i * .16)), c.display || c.value) : (c.value || '');
+    const rtlV = RTL && !isLtrRun(String(cnt)), vtxt = rtlV ? bidi(String(cnt)) : String(cnt);
+    X.font = fnt(F.nw, 92 * U, F.num); X.fillStyle = ink(th); X.direction = rtlV ? 'rtl' : 'ltr'; X.textBaseline = 'alphabetic';
+    const vw = X.measureText(vtxt).width; X.font = fnt(F.nw, 38 * U, F.num); const uw = c.unit ? X.measureText(c.unit).width + 10 * U : 0;
+    const vx = RTL ? x + cw - 36 * U - vw - uw : x + 36 * U, vy = y + ch - 84 * U;
+    X.font = fnt(F.nw, 92 * U, F.num); X.textAlign = 'left'; X.fillText(vtxt, vx, vy);
+    if (c.unit) { X.font = fnt(F.nw, 38 * U, F.num); X.fillStyle = C.accent; X.fillText(c.unit, vx + vw + 10 * U, vy); }
+    text(c.label || '', RTL ? x + cw - 36 * U : x + 36 * U, y + ch - 34 * U, { size: 34 * U, w: 600, color: mute(th), align: RTL ? 'right' : 'left' });
+    X.restore();
+  });
+};
+/* cta: the logo lights up, one clear action */
+SC.cta = (s, lt) => {
+  const th = s.theme || 'dark'; ground(th, lt);
+  const L = CFG.logo || {}, im = IMG[L[th === 'light' ? 'dark' : 'light']];
+  const lw = BOX.w * (s.logoW || pick(.82, .64, .6, .5)), lh = im ? lw * im.height / im.width : 0;
+  const hf = hlFit(s.headline || [], (s.size || pick(104, 86, 82, 84)) * U), gapL = pick(90, 50, 44, 40) * U;
+  const blockH = lh + gapL + hf.h + (s.button ? pick(110, 80, 74, 70) * U + 60 * U + (s.sub || []).length * 62 * U + 90 * U : 0);
+  const ly = blockTop(blockH, BOX.h - (s.mascot && CFG.mascot && TALL ? 420 * U : 0));
+  if (im) motifReveal(im, { x: W / 2 - lw / 2, y: ly, w: lw, h: lh }, seg(lt, .1, 1.1), s.motif, { contain: true, key: 'cta' + th });
+  const hb = headline(s.headline || [], { y: ly + lh + gapL, size: hf.size, color: ink(th), lt, start: .7 });
+  if (s.button) {
+    const p = E.back(seg(lt, 1.35, 1.8)), by = hb + pick(110, 80, 74, 70) * U;
+    X.save(); X.globalAlpha = clamp(p * 3);
+    const bw = pill(s.button, W / 2, by, { size: 52 * U, bg: C.accent, fg: C.accentInk, w: 800, sc: p, shadow: true });
+    const sh = ((lt - 1.9) * .6) % 1.6; // a light sweep across the button, once it has landed
+    if (lt > 1.9 && sh < 1) { X.save(); rr(W / 2 - bw / 2, by - 52 * U * .95, bw, 52 * U * 1.9, 52 * U); X.clip(); const gx = W / 2 - bw / 2 + (bw + 200 * U) * sh - 100 * U; const g = X.createLinearGradient(gx - 60 * U, 0, gx + 60 * U, 0); g.addColorStop(0, 'rgba(255,255,255,0)'); g.addColorStop(.5, 'rgba(255,255,255,.55)'); g.addColorStop(1, 'rgba(255,255,255,0)'); X.fillStyle = g; X.fillRect(gx - 60 * U, by - 60 * U, 120 * U, 120 * U); X.restore(); }
+    X.restore();
+    (s.sub || []).forEach((l, i) => text(l, W / 2, by + 150 * U + i * 62 * U, { size: (i ? 40 : 46) * U, w: i ? 500 : 700, color: i ? mute(th) : ink(th), alpha: seg(lt, 1.7 + i * .15, 2.1 + i * .15) }));
+  }
+};
+
+/* ---------------- composition ---------------- */
+const OFF = document.createElement('canvas'); OFF.width = W; OFF.height = H; const OFFc = OFF.getContext('2d');
+function drawScene(sc, t) {
+  const lt = t - sc.t0; X.save(); (SC[sc.type] || (() => ground('dark', lt)))(sc, Math.max(0, lt)); X.restore();
+  X.save(); sceneMascot(sc, Math.max(0, lt)); X.restore();
+}
+function render(t) {
+  X = MAIN; X.setTransform(1, 0, 0, 1, 0, 0); X.globalAlpha = 1; X.globalCompositeOperation = 'source-over'; X.filter = 'none';
+  t = clamp(t, 0, DUR - 1e-3);
+  const TR = CFG.transition ?? .45;
+  const i = SCN.findIndex(s => t >= s.t0 && t < s.t1), cur = SCN[i];
+  const next = SCN[i + 1], prev = SCN[i - 1];
+  // the change of scene happens around each boundary, over TR seconds, with the brand motif
+  let a = cur, b = null, k = 0;
+  if (next && t > cur.t1 - TR / 2) { b = next; k = seg(t, cur.t1 - TR / 2, cur.t1 + TR / 2); }
+  else if (prev && t < cur.t0 + TR / 2) { a = prev; b = cur; k = seg(t, cur.t0 - TR / 2, cur.t0 + TR / 2); }
+  drawScene(a, t);
+  if (b) {
+    X = OFFc; X.setTransform(1, 0, 0, 1, 0, 0); X.clearRect(0, 0, W, H); drawScene(b, t);
+    motifMask(MKc, b.transition || CFG.motif || 'light', k, undefined, 21 + b.i);
+    OFFc.globalCompositeOperation = 'destination-in'; OFFc.drawImage(MK, 0, 0); OFFc.globalCompositeOperation = 'source-over';
+    X = MAIN; X.drawImage(OFF, 0, 0); motifEdge(b.transition || CFG.motif || 'light', k, { x: 0, y: 0, w: W, h: H }, 21 + b.i);
+  }
+  X = MAIN; vignette(.28); grain(t, CFG.grain ?? .045);
+}
+window.drawStill = name => { const s = (CFG.stills || []).find(x => x.name === name); render(s ? s.t : +(Q.get('t') || 0)); };
+window.render = render;
+window.READY = loadAll().then(() => {
+  window.META = { W, H, DUR, FPS: CFG.fps || 30, CUES, name: CFG.name };
+  window.CUES = CUES;
+  Q.get('still') ? window.drawStill(Q.get('still')) : render(+(Q.get('t') || 0));
+  return true;
+});
+</script>
+</body>
+</html>

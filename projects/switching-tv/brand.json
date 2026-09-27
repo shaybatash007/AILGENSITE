@@ -1,0 +1,183 @@
+{
+  "name": "סוויצ׳ינג TV",
+  "slug": "switching-tv",
+  "status": "real-client",
+  "source": {
+    "url": "https://switching.co.il/",
+    "mode": "url"
+  },
+  "business": {
+    "type": "supply and installation of LED screens",
+    "sector": "home-tech / B2B signage",
+    "audience": [
+      "villa and pool owners, 35-65",
+      "restaurants, cafes, retail, offices"
+    ],
+    "offer": [
+      "pool, garden and home-cinema LED screens",
+      "digital menus and signage",
+      "outdoor billboards",
+      "video walls",
+      "transparent LED"
+    ],
+    "proof": [
+      "up to 6,500 NIT (home TV 400-600)",
+      "IP65",
+      "one-day installation",
+      "3-year warranty",
+      "200+ projects",
+      "real phone footage from installations"
+    ],
+    "objections": [
+      "will it be visible in direct sun",
+      "will it survive water and chlorine",
+      "how big should it be",
+      "how much does it cost"
+    ]
+  },
+  "concept": {
+    "idea": "Clear as night, even in the August sun.",
+    "claim": "A normal TV disappears at noon. An LED screen from Switching stays sharp.",
+    "signature": "the TV box of the logo (double bezel + one amber pixel) and RGB LEDs",
+    "spirit": "bright-tech, trustworthy, sunny",
+    "twist": "the site itself 'turns on' like a screen: the loader bezel becomes the hero screen"
+  },
+  "voice": {
+    "tone": [
+      "direct",
+      "warm",
+      "expert without jargon"
+    ],
+    "slogan": "ברור כמו לילה. גם בשמש של אוגוסט.",
+    "do": [
+      "numbers with units",
+      "one question at a time"
+    ],
+    "dont": [
+      "superlatives without proof",
+      "showing renders as real"
+    ]
+  },
+  "palette": {
+    "ink": "#07131F",
+    "paper": "#F5F7FA",
+    "blue": "#1789C9",
+    "blueInk": "#0E6399",
+    "cyan": "#34CFE8",
+    "sun": "#F5A524",
+    "sunInk": "#8A5300",
+    "led": [
+      "#FF4D3D",
+      "#2BD46B",
+      "#2F7BFF"
+    ]
+  },
+  "type": {
+    "display": {
+      "family": "Karantina",
+      "weights": [
+        700
+      ],
+      "use": "Hebrew headlines"
+    },
+    "body": {
+      "family": "Heebo",
+      "weights": [
+        400,
+        500,
+        700,
+        800
+      ],
+      "use": "running text"
+    },
+    "num": {
+      "family": "Big Shoulders Stencil Display",
+      "weights": [
+        800
+      ],
+      "use": "numbers and specs, echoing the logo's stencil letters"
+    }
+  },
+  "logo": {
+    "files": {
+      "light": "/campaigns/switching-tv/source/img/logo-white.svg",
+      "dark": "/campaigns/switching-tv/source/img/logo-ink.svg"
+    },
+    "note": "client's existing logo, kept as is"
+  },
+  "icons": {
+    "grid": 24,
+    "stroke": 1.8,
+    "signature": "a 3x3 amber pixel inside every icon"
+  },
+  "mascot": {
+    "name": "טיבי",
+    "born_from": "the TV box of the logo",
+    "build": "22x14 pixel grid, faces drawn on its own LEDs",
+    "states": [
+      "idle",
+      "blink",
+      "look",
+      "happy",
+      "sun",
+      "think",
+      "sleep (standby red LED)",
+      "love"
+    ],
+    "rules": [
+      "born from the hero screen on first visit",
+      "at most 6 tips per visit, 11 s apart",
+      "mute for a week / hide, remembered",
+      "sends its light (a beam) to what it points at"
+    ],
+    "grid_in": "film.json → mascot"
+  },
+  "site": {
+    "entry": "bezel draws → one amber LED → scan line → the bezel stretches into the hero screen",
+    "proof_tool": [
+      "screen planner (3 questions → full spec with scale drawing)",
+      "sun test (drag the sun, see contrast collapse)"
+    ],
+    "sections": [
+      "hero with real reel",
+      "stats",
+      "film",
+      "solutions (8 full spec pages)",
+      "sun test",
+      "planner",
+      "real projects",
+      "why us",
+      "process",
+      "reviews",
+      "FAQ + AI advisor",
+      "guides (19 posts)",
+      "contact + WhatsApp"
+    ],
+    "agent": "screen advisor, answers only from the site's specs and prices, saves leads",
+    "admin": [
+      "leads with source (form/planner/advisor)",
+      "content",
+      "reviews",
+      "projects",
+      "FAQ",
+      "TIVI and advisor"
+    ]
+  },
+  "campaign": {
+    "film": "campaigns/switching-tv/ (hand-crafted) · projects/switching-tv/film.json (engine version)",
+    "hook": "the TV disappears in the sun",
+    "cta": "free consultation on WhatsApp"
+  },
+  "honesty": {
+    "labels": {
+      "real": "מהשטח",
+      "render": "הדמיה"
+    },
+    "notes": "pool/garden/cinema images are the client's own renders; restaurant videos are real"
+  },
+  "outputs": {
+    "site": "switching-tv/",
+    "live": "https://claude.ai/artifact/XWtrx6tuhpq6XUgKioNobo",
+    "campaign": "campaigns/switching-tv/"
+  }
+}

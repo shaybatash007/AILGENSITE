@@ -1,0 +1,463 @@
+{
+ "name": "סוויצ׳ינג TV",
+ "lang": "he",
+ "fps": 30,
+ "fonts": "/campaigns/switching-tv/source/fonts/fonts.css",
+ "type": {
+  "display": "Karantina",
+  "displayWeight": 700,
+  "body": "Heebo",
+  "bodyWeight": 500,
+  "num": "Big Shoulders Stencil Display",
+  "numWeight": 800
+ },
+ "colors": {
+  "bg": "#07131F",
+  "surface": "#0D1E2E",
+  "paper": "#F5F7FA",
+  "ink": "#07131F",
+  "inkMuted": "#55636F",
+  "text": "#FFFFFF",
+  "muted": "#A9B7C5",
+  "accent": "#F5A524",
+  "accent2": "#1789C9",
+  "accentInk": "#07131F",
+  "line": "rgba(255,255,255,.14)",
+  "real": "#2BD46B",
+  "render": "#34CFE8"
+ },
+ "logo": {
+  "light": "/campaigns/switching-tv/source/img/logo-white.svg",
+  "dark": "/campaigns/switching-tv/source/img/logo-ink.svg"
+ },
+ "motif": "pixels",
+ "highlight": "marker",
+ "transition": 0.45,
+ "mascot": {
+  "name": "טיבי",
+  "grid": [
+   ".KKKKKKKKKKKKKKKKKKKK.",
+   "K.gggggggggggggggggg.K",
+   "KgKKKKKKKKKKKKKKKKKKgK",
+   "KgKdsdsdsdsdsdsdsdsKgK",
+   "KgKsdsdsdsdsdsdsdsdKgK",
+   "KgKdsdsdsdsdsdsdsdsKgK",
+   "KgKsdsdsdsdsdsdsdsdKgK",
+   "KgKdsdsdsdsdsdsdsdsKgK",
+   "KgKsdsdsdsdsdsdsdsdKgK",
+   "KgKdsdsdsdsdsdsdsdsKgK",
+   "KgKsdsdsdsdsdsdsdsdKgK",
+   "KgKKKKKKKKKKKKKKKKKKgK",
+   "K.gggggggggggggggggg.K",
+   ".KKKKKKKKrGBKKKKKKKKK.",
+   ".....KK........KK.....",
+   ".....KK........KK.....",
+   ".....KK........KK.....",
+   "....bbbb......bbbb...."
+  ],
+  "colors": {
+   "K": "#07131F",
+   "g": "#F5F7FA",
+   "s": "#0B1A28",
+   "d": "#15293C",
+   "b": "#1789C9",
+   "r": "#FF4D3D",
+   "G": "#2BD46B",
+   "B": "#2F7BFF",
+   "a": "#F5A524"
+  },
+  "faces": {
+   "idle": [
+    [
+     6,
+     5,
+     2,
+     2,
+     "a"
+    ],
+    [
+     14,
+     5,
+     2,
+     2,
+     "a"
+    ],
+    [
+     9,
+     8,
+     4,
+     1,
+     "a"
+    ],
+    [
+     8,
+     7,
+     1,
+     1,
+     "a"
+    ],
+    [
+     13,
+     7,
+     1,
+     1,
+     "a"
+    ]
+   ],
+   "blink": [
+    [
+     6,
+     6,
+     2,
+     1,
+     "a"
+    ],
+    [
+     14,
+     6,
+     2,
+     1,
+     "a"
+    ],
+    [
+     9,
+     8,
+     4,
+     1,
+     "a"
+    ],
+    [
+     8,
+     7,
+     1,
+     1,
+     "a"
+    ],
+    [
+     13,
+     7,
+     1,
+     1,
+     "a"
+    ]
+   ],
+   "happy": [
+    [
+     5,
+     6,
+     1,
+     1,
+     "a"
+    ],
+    [
+     6,
+     5,
+     1,
+     1,
+     "a"
+    ],
+    [
+     7,
+     6,
+     1,
+     1,
+     "a"
+    ],
+    [
+     13,
+     6,
+     1,
+     1,
+     "a"
+    ],
+    [
+     14,
+     5,
+     1,
+     1,
+     "a"
+    ],
+    [
+     15,
+     6,
+     1,
+     1,
+     "a"
+    ],
+    [
+     8,
+     8,
+     6,
+     1,
+     "a"
+    ],
+    [
+     7,
+     7,
+     1,
+     1,
+     "a"
+    ],
+    [
+     14,
+     7,
+     1,
+     1,
+     "a"
+    ],
+    [
+     9,
+     9,
+     4,
+     1,
+     "a"
+    ]
+   ],
+   "look": [
+    [
+     5,
+     5,
+     2,
+     2,
+     "a"
+    ],
+    [
+     13,
+     5,
+     2,
+     2,
+     "a"
+    ],
+    [
+     8,
+     8,
+     4,
+     1,
+     "a"
+    ],
+    [
+     7,
+     7,
+     1,
+     1,
+     "a"
+    ],
+    [
+     12,
+     7,
+     1,
+     1,
+     "a"
+    ]
+   ],
+   "love": [
+    [
+     7,
+     5,
+     2,
+     1,
+     "r"
+    ],
+    [
+     12,
+     5,
+     2,
+     1,
+     "r"
+    ],
+    [
+     6,
+     6,
+     8,
+     2,
+     "r"
+    ],
+    [
+     7,
+     8,
+     6,
+     1,
+     "r"
+    ],
+    [
+     8,
+     9,
+     4,
+     1,
+     "r"
+    ]
+   ]
+  },
+  "cell": 11
+ },
+ "audio": {
+  "mood": "bright",
+  "bpm": 120
+ },
+ "scenes": [
+  {
+   "type": "hook",
+   "dur": 2.8,
+   "image": "/campaigns/switching-tv/source/img/s_pool.jpg",
+   "tag": "render",
+   "wash": 0.55,
+   "lines": [
+    "בשמש של אוגוסט,",
+    "הטלוויזיה *נעלמת.*"
+   ],
+   "strike": "נעלמת.",
+   "mascot": {
+    "at": 1.95,
+    "say": "רגע. יש לי רעיון.",
+    "mood": "look",
+    "cell": 9
+   }
+  },
+  {
+   "type": "reveal",
+   "dur": 3.2,
+   "image": "/campaigns/switching-tv/source/img/s_poolnight.jpg",
+   "tag": "render",
+   "title": [
+    "עד שעושים *סוויצ׳.*"
+   ]
+  },
+  {
+   "type": "stat",
+   "dur": 3.4,
+   "headline": [
+    "ברור כמו לילה."
+   ],
+   "value": 6500,
+   "display": "6,500",
+   "unit": "NIT",
+   "label": "בהירות מרבית",
+   "compare": {
+    "label": "טלוויזיה ביתית",
+    "value": 500,
+    "display": "400–600"
+   },
+   "label2": "מסך LED של סוויצ׳ינג"
+  },
+  {
+   "type": "gallery",
+   "dur": 5.4,
+   "headline": "מסך לכל מקום",
+   "items": [
+    {
+     "image": "/campaigns/switching-tv/source/img/s_pool.jpg",
+     "title": "לבריכה",
+     "tag": "render"
+    },
+    {
+     "image": "/campaigns/switching-tv/source/img/s_garden.jpg",
+     "title": "לחצר",
+     "tag": "render"
+    },
+    {
+     "image": "/campaigns/switching-tv/source/img/s_cinema.jpg",
+     "title": "לקולנוע הביתי",
+     "tag": "render"
+    },
+    {
+     "image": "/switching-tv/m/p_meira.jpg",
+     "title": "לתפריט במסעדה",
+     "tag": "real"
+    },
+    {
+     "image": "/campaigns/switching-tv/source/img/s_trans.jpg",
+     "title": "לחלון הראווה",
+     "tag": "render"
+    }
+   ]
+  },
+  {
+   "type": "quote",
+   "dur": 3.0,
+   "kicker": "זה לא סלוגן. זה לקוח.",
+   "text": "בשמש של אוגוסט, ברור כמו לילה.",
+   "who": "דרור כ.",
+   "where": "הרצליה פיתוח"
+  },
+  {
+   "type": "cards",
+   "dur": 3.2,
+   "headline": [
+    "לא מוכרים פנלים.",
+    "מספקים מסך *שעובד.*"
+   ],
+   "cards": [
+    {
+     "icon": "/campaigns/switching-tv/source/img/i-sun-white.svg",
+     "value": 6500,
+     "display": "6,500",
+     "unit": "NIT",
+     "label": "בהירות מרבית"
+    },
+    {
+     "icon": "/campaigns/switching-tv/source/img/i-drop-white.svg",
+     "value": "IP65",
+     "label": "עמיד למים ולכלור"
+    },
+    {
+     "icon": "/campaigns/switching-tv/source/img/i-clock-white.svg",
+     "value": 1,
+     "unit": "יום",
+     "label": "התקנה"
+    },
+    {
+     "icon": "/campaigns/switching-tv/source/img/i-shield-white.svg",
+     "value": 3,
+     "unit": "שנים",
+     "label": "אחריות מלאה"
+    }
+   ]
+  },
+  {
+   "type": "cta",
+   "dur": 4.2,
+   "headline": [
+    "איזה מסך",
+    "מתאים לכם?"
+   ],
+   "button": "לייעוץ חינם",
+   "sub": [
+    "switching.co.il",
+    "054-638-8090"
+   ],
+   "mascot": {
+    "at": 1.9,
+    "say": "3 שאלות, ואני יודע.",
+    "x": 0.5,
+    "cell": 10,
+    "finale": "love"
+   }
+  }
+ ],
+ "stills": [
+  {
+   "name": "feed-4x5",
+   "w": 1080,
+   "h": 1350,
+   "t": 8.2
+  },
+  {
+   "name": "square-1x1",
+   "w": 1080,
+   "h": 1080,
+   "t": 17.4
+  },
+  {
+   "name": "story-9x16",
+   "w": 1080,
+   "h": 1920,
+   "t": 24.2
+  }
+ ],
+ "motifColors": [
+  "#FF4D3D",
+  "#2BD46B",
+  "#2F7BFF",
+  "#F5A524"
+ ]
+}

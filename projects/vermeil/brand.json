@@ -1,0 +1,133 @@
+{
+  "name": "VERMEIL",
+  "slug": "vermeil",
+  "status": "concept",
+  "source": {
+    "mode": "concept",
+    "brief": "a boutique chain of wine and spirits that feels like the visit to the shop itself"
+  },
+  "business": {
+    "type": "wine & spirits boutique chain (fictional)",
+    "sector": "luxury retail / e-commerce",
+    "audience": [
+      "hosts buying for a dinner",
+      "gift buyers",
+      "collectors"
+    ],
+    "offer": [
+      "curated collection",
+      "sommelier recommendation",
+      "experiences and tastings",
+      "members club",
+      "branches"
+    ],
+    "proof": [
+      "none: it is a concept, labeled as such"
+    ],
+    "objections": [
+      "which bottle for this dish",
+      "is it worth the price"
+    ]
+  },
+  "concept": {
+    "idea": "The site is an exhibition: every bottle is shown like a work of art.",
+    "claim": "The taste of the moment.",
+    "signature": "a gold seal and gallery light",
+    "spirit": "luxury-calm, editorial, nocturnal",
+    "twist": "the legal age gate becomes the opening scene: a gold seal written in front of the eyes"
+  },
+  "voice": {
+    "tone": [
+      "quiet",
+      "sensory",
+      "human, not wine-jargon"
+    ],
+    "slogan": "הטעם של הרגע",
+    "do": [
+      "short sensory sentences"
+    ],
+    "dont": [
+      "pushy discounts",
+      "wine snobbery"
+    ]
+  },
+  "palette": {
+    "ink": "#120709",
+    "ink2": "#1B0B10",
+    "wine": "#4A1020",
+    "wine2": "#6B1A2E",
+    "gold": "#C9A46A",
+    "champagne": "#E6CD98",
+    "cream": "#F3EBDD",
+    "muted": "#BFAE9C"
+  },
+  "type": {
+    "display": {
+      "family": "Bellefair",
+      "weights": [
+        400
+      ],
+      "use": "Hebrew headlines"
+    },
+    "latin": {
+      "family": "Cormorant Garamond",
+      "weights": [
+        500,
+        600
+      ],
+      "use": "Latin labels, italics"
+    },
+    "body": {
+      "family": "Assistant",
+      "weights": [
+        300,
+        400,
+        600,
+        700
+      ],
+      "use": "running text"
+    }
+  },
+  "logo": {
+    "note": "wordmark VERMEIL in Cormorant Garamond with the gold seal"
+  },
+  "icons": {
+    "grid": 24,
+    "stroke": 1.4,
+    "signature": "thin gold line work"
+  },
+  "mascot": null,
+  "guide": "no mascot: the sommelier is the character (a voice, not a figure)",
+  "site": {
+    "entry": "age gate → gold seal draws → the door opens",
+    "proof_tool": [
+      "digital sommelier (dish + mood → one bottle and why)"
+    ],
+    "sections": [
+      "gallery-light shelf",
+      "collection that reacts to the cursor",
+      "sommelier",
+      "experiences",
+      "branches",
+      "members club (3D card)",
+      "contact"
+    ],
+    "agent": "sommelier (rule-based in the concept)",
+    "admin": []
+  },
+  "campaign": {
+    "motif": "light",
+    "hook": "a single bottle lit in the dark",
+    "cta": "find your bottle"
+  },
+  "honesty": {
+    "labels": {
+      "concept": "פרויקט קונספט"
+    },
+    "notes": "name, products, prices and branches are fictional; every page says so"
+  },
+  "outputs": {
+    "site": "vermeil/",
+    "live": "https://claude.ai/artifact/Jfu3ejh3zVcUS3xJKUydcZ"
+  }
+}
