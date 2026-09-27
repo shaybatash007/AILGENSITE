@@ -15,7 +15,7 @@
 
   Query:  ?p=/projects/<slug>/  &w=1080 &h=1920  [&t=4.2 | &still=feed-4x5]
   Scenes: hook · reveal · stat · gallery · quote · cards · cta   (see engine/README.md)
-  Motifs: pixels · light · ink · particles · iris · wipe   (the brand's signature transition)
+  Motifs: pixels · light · ink · particles · iris · wipe · spin   (the brand's signature transition)
 */
 const Q = new URLSearchParams(location.search);
 const W = +(Q.get('w') || 1080), H = +(Q.get('h') || 1920);
@@ -287,6 +287,9 @@ function motifMask(g, kind, k, r = { x: 0, y: 0, w: W, h: H }, seed = 3) {
     }
   } else if (kind === 'iris') {
     g.beginPath(); g.arc(r.x + r.w / 2, r.y + r.h / 2, Math.hypot(r.w, r.h) * .55 * E.inOut(k), 0, 7); g.fill();
+  } else if (kind === 'spin') { // four swirling blades sweep clockwise from the centre, like a pinwheel logo turning
+    const e = E.inOut(k);
+    for (let i = 0; i < 4; i++) { const [a0, a1] = spinArc(i, e); g.beginPath(); spinPath(g, r, a0, a1); g.fill(); }
   } else { // light / wipe: a soft diagonal edge travelling in reading direction
     const ang = kind === 'wipe' ? 0 : -.35, dirx = RTL ? -1 : 1;
     const len = Math.abs(r.w * Math.cos(ang)) + Math.abs(r.h * Math.sin(ang)), band = kind === 'wipe' ? 2 : len * .22;
@@ -300,9 +303,26 @@ function motifMask(g, kind, k, r = { x: 0, y: 0, w: W, h: H }, seed = 3) {
   }
   g.restore();
 }
-/* The living edge of a reveal: lit pixels for pixels/particles, a light band for light/wipe */
+/* spin motif geometry: blade i spans a0..a1, each edge a spiral (angle twists with the radius) */
+const SPIN_TWIST = .95;
+function spinArc(i, e) { const a0 = -Math.PI / 2 + i * Math.PI / 2; return [a0, a0 + Math.PI / 2 * e]; }
+function spinEdge(g, r, a, dir = 1) { const cx = r.x + r.w / 2, cy = r.y + r.h / 2, R = Math.hypot(r.w, r.h) * .58;
+  for (let s = 0; s <= 20; s++) { const q = dir > 0 ? s / 20 : 1 - s / 20, rr2 = R * q, aa = a + SPIN_TWIST * q; g.lineTo(cx + Math.cos(aa) * rr2, cy + Math.sin(aa) * rr2); } }
+function spinPath(g, r, a0, a1) { const cx = r.x + r.w / 2, cy = r.y + r.h / 2, R = Math.hypot(r.w, r.h) * .58;
+  g.moveTo(cx, cy); spinEdge(g, r, a0, 1);
+  for (let s = 0; s <= 14; s++) { const aa = a0 + SPIN_TWIST + (a1 - a0) * s / 14; g.lineTo(cx + Math.cos(aa) * R, cy + Math.sin(aa) * R); }
+  spinEdge(g, r, a1, -1); g.closePath(); }
+/* The living edge of a reveal: lit pixels for pixels/particles, a light band for light/wipe, glowing blade edges for spin */
 function motifEdge(kind, k, r = { x: 0, y: 0, w: W, h: H }, seed = 3) {
   if (k <= 0 || k >= 1) return;
+  if (kind === 'spin') {
+    const pal = CFG.motifColors || [C.accent, C.accent2], e = E.inOut(k);
+    X.save(); X.globalCompositeOperation = 'screen'; X.lineCap = 'round'; X.lineJoin = 'round';
+    for (let i = 0; i < 4; i++) { const [, a1] = spinArc(i, e); X.strokeStyle = pal[i % pal.length]; X.globalAlpha = Math.sin(Math.PI * k) * .95;
+      X.lineWidth = Math.min(W, H) * .016; X.shadowColor = pal[i % pal.length]; X.shadowBlur = Math.min(W, H) * .03;
+      X.beginPath(); spinEdge(X, r, a1, 1); X.stroke(); }
+    X.restore(); return;
+  }
   if (kind === 'pixels' || kind === 'particles') {
     const pal = CFG.motifColors || [C.accent, C.accent2, '#FFFFFF'];
     X.save(); X.globalCompositeOperation = 'screen';

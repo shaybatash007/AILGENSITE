@@ -1,4 +1,4 @@
-# The three reference builds
+# The reference builds
 
 Read the one closest to the new project before starting. Each shows the whole chain from input to output.
 
@@ -46,6 +46,21 @@ Read the one closest to the new project before starting. Each shows the whole ch
 | Craft | no photos at all: every bottle is drawn in code from layers (glass, cork, label, reflection) |
 | Honesty | "פרויקט קונספט" everywhere; names, products, prices, branches are fictional |
 | Files | `vermeil/`, live https://claude.ai/artifact/Jfu3ejh3zVcUS3xJKUydcZ, kit `projects/vermeil/brand.json` |
+
+## Talor Karadi · input: a URL (real client, B2B industry, measured run)
+
+| | |
+|---|---|
+| Input | `https://talorkaradi.co.il/`: WordPress/Elementor, 30 pages, 82 images (mostly real field photos), 5 YouTube videos, a guide with waste-quantity formulas |
+| Claim | over 90% of the waste that reaches the plants is recycled; the group holds the whole circle (container → recycling → washing → concrete and shelters) |
+| Concept | "המעגל נסגר. מה שיוצא מהאתר, חוזר לבנות." the company's own line: construction waste leaves the site as part of a shelter |
+| Signature | the four blades of the logo = the four stages of the circle; the symbol redrawn as a vector from a 1983px image |
+| Entry | four blades fly in and lock into the symbol, which flies to the header; the hero symbol is built from four field photos |
+| Proof tool | "מאזן פסולת": project type + built area (or demolition volume) → tonnes to declare for the permit, the ±15% band, what returns to building; styled as a weighbridge ticket |
+| Mascot | none: B2B trust comes from data and real footage; the voice is "the digital dispatcher" (*9084) |
+| Film | engine, new motif `spin`, Rubik + IBM Plex Mono, 26.9 s, no testimonial (none is real); the company's own sentence as the quote scene |
+| Measured | 33 min of agent work, $10.36, 84 model calls; renders 356 s (9:16) + 268 s (4:5) in the background (`projects/talorkaradi/meter-report.json`) |
+| Files | site `talorkaradi/` (src + `build.sh`), kit `projects/talorkaradi/`, campaign `campaigns/talorkaradi/`; not published as a live link until the client approves |
 
 ## What they share (the method)
 

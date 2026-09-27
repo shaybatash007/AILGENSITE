@@ -1,0 +1,267 @@
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+<linearGradient id="tg" gradientUnits="userSpaceOnUse" x1="150" y1="170" x2="470" y2="100"><stop offset="0" stop-color="#E2EFC8"/><stop offset=".55" stop-color="#9ACB63"/><stop offset="1" stop-color="#5DAA45"/></linearGradient>
+<linearGradient id="tgd" gradientUnits="userSpaceOnUse" x1="260" y1="60" x2="470" y2="120"><stop offset="0" stop-color="#7DBB45"/><stop offset=".5" stop-color="#2E8B3E"/><stop offset="1" stop-color="#1B6B34"/></linearGradient>
+<linearGradient id="tb" gradientUnits="userSpaceOnUse" x1="150" y1="170" x2="470" y2="100"><stop offset="0" stop-color="#D6ECF8"/><stop offset=".55" stop-color="#7FBEE6"/><stop offset="1" stop-color="#4E86C8"/></linearGradient>
+<linearGradient id="tbd" gradientUnits="userSpaceOnUse" x1="260" y1="60" x2="470" y2="120"><stop offset="0" stop-color="#2BA3DE"/><stop offset=".5" stop-color="#2560A8"/><stop offset="1" stop-color="#26357F"/></linearGradient>
+<path id="blade" d="M474 128C440 52 350 14 262 20C200 24 146 58 136 96C126 136 160 184 214 192C260 199 282 168 312 142C360 100 420 96 474 128Z"/>
+<clipPath id="bclip"><use href="#blade"/></clipPath>
+<path id="fold" d="M318 0C272 40 250 110 256 200L520 200L520 0Z"/>
+<g id="bG"><use href="#blade" fill="url(#tg)"/><use href="#fold" clip-path="url(#bclip)" fill="url(#tgd)"/></g>
+<g id="bB"><use href="#blade" fill="url(#tb)"/><use href="#fold" clip-path="url(#bclip)" fill="url(#tbd)"/></g>
+<symbol id="sym" viewBox="0 0 512 512"><use href="#bG"/><use href="#bB" transform="rotate(90 256 256)"/><use href="#bG" transform="rotate(180 256 256)"/><use href="#bB" transform="rotate(270 256 256)"/></symbol>
+</defs>
+</svg>
+<a class="skip" href="#main">דלג לתוכן</a>
+
+<header class="hdr" id="hdr">
+ <div class="wrap in">
+  <a class="logo" href="#top" aria-label="קבוצת טלאור כראדי, לראש העמוד"><svg viewBox="0 0 512 512" aria-hidden="true"><use href="#sym"/></svg><span class="wm"><small>קבוצת</small><b>טלאור כראדי</b></span></a>
+  <nav class="nav" aria-label="ניווט ראשי">
+   <a href="#circle">המעגל</a><a href="#services">שירותים</a><a href="#calc">מאזן פסולת</a><a href="#sites">מתקנים</a><a href="#projects">פרויקטים</a><a href="#about">הקבוצה</a><a href="#faq">שאלות</a><a href="#contact">צור קשר</a>
+  </nav>
+  <button class="mini" id="admBtn" type="button">מרכז בקרה <span class="cnt" id="newCount" hidden></span></button>
+  <a class="call" href="tel:*9084" aria-label="חייגו למוקד כוכבית 9084"><span>מוקד</span><span class="mono" dir="ltr">*9084</span></a>
+  <button class="burger" id="burger" type="button" aria-label="פתיחת תפריט" aria-expanded="false" aria-controls="drawer"><i></i><i></i><i></i></button>
+ </div>
+</header>
+<div class="drawer" id="drawer" aria-hidden="true">
+ <div class="in" role="dialog" aria-modal="true" aria-label="תפריט">
+  <button class="mini" id="drawerX" type="button" style="align-self:flex-start;background:transparent;color:inherit;border-color:rgba(255,255,255,.3)">סגירה ✕</button>
+  <a class="dl" href="#circle">המעגל</a><a class="dl" href="#services">שירותים</a><a class="dl" href="#calc">מאזן פסולת</a><a class="dl" href="#sites">מתקנים</a><a class="dl" href="#projects">פרויקטים</a><a class="dl" href="#about">הקבוצה</a><a class="dl" href="#faq">שאלות והמוקד</a><a class="dl" href="#jobs">דרושים</a><a class="dl" href="#contact">צור קשר</a>
+  <a class="btn hv" href="tel:*9084" style="margin-top:18px">חיוג למוקד <span class="mono" dir="ltr">*9084</span></a>
+  <button class="lk mini" id="mA11y" type="button" style="margin-top:10px;background:transparent;color:inherit;border-color:rgba(255,255,255,.3)">נגישות</button>
+ </div>
+</div>
+
+<main id="main">
+<section class="hero night grid-bg" id="top" aria-labelledby="h1">
+ <div class="wrap">
+  <div class="in">
+   <div>
+    <p class="kick" id="heroKick"></p>
+    <h1 id="h1"></h1>
+    <p class="sub" id="heroSub"></p>
+    <div class="ctas">
+     <a class="btn hv" href="#calc">חשבו מאזן פסולת <span class="ar" aria-hidden="true">←</span></a>
+     <a class="btn ghost" href="#contact">הסכם התקשרות להיתר</a>
+    </div>
+   </div>
+   <figure class="blades" id="blades" style="margin:0">
+    <svg viewBox="0 0 512 512" role="img" aria-label="הסמל של טלאור כראדי, בנוי מארבעה צילומי שטח: מכולה, מגרסה, חומר ממוחזר ובטון" id="bladesSvg"></svg>
+    <figcaption class="tag">צילומי שטח של הקבוצה</figcaption>
+   </figure>
+  </div>
+  <div class="tickets" id="tickets" aria-label="הקבוצה במספרים"></div>
+  <p class="note">המספרים מתוך האתר של הקבוצה. לחצו על להב בסמל כדי לראות את השלב שלו במעגל.</p>
+ </div>
+</section>
+
+<section class="sec night grid-bg circle" id="circle" aria-labelledby="circleH" style="border-top:1px solid rgba(255,255,255,.06)">
+ <div class="wrap">
+  <p class="eyebrow"><svg viewBox="0 0 512 512" aria-hidden="true"><use href="#sym"/></svg>ארבעה להבים, ארבעה שלבים</p>
+  <h2 id="circleH">המעגל נסגר אצלנו.</h2>
+  <p class="lead">הלוגו של הקבוצה הוא מפת העבודה שלה. פסולת יוצאת מהאתר שלכם במכולה, ממוחזרת במפעלים שלנו, נשטפת לחומר נקי, וחוזרת לבנייה כבטון, מצעים ומיגוניות.</p>
+  <div class="in">
+   <div class="ring" id="ring"></div>
+   <div>
+    <div class="stages" role="tablist" aria-label="שלבי המעגל" id="stageTabs"></div>
+    <div class="stage" id="stagePanel" role="tabpanel" aria-live="polite"></div>
+   </div>
+  </div>
+  <div class="closing rv">
+   <div class="ph"><img src="img/shelter.webp" alt="מיגונית של הקבוצה, מצוירת, בתחנת דלק" loading="lazy"><span class="tag">מהשטח</span></div>
+   <blockquote>״אותה פסולת בניין שנאספה מאתר הבנייה… יוצאת מהאתר בחלק ממיגונית, שתפקידה להציל חיים.״<cite>מתוך העמוד של פארק תעשיות דרום ירוק</cite></blockquote>
+  </div>
+ </div>
+</section>
+
+<section class="sec services" id="services" aria-labelledby="svcH">
+ <div class="wrap">
+  <p class="eyebrow">9 שירותים, קורת גג אחת</p>
+  <h2 id="svcH">כל מה שאתר בנייה צריך. בסדר של המעגל.</h2>
+  <p class="lead">בחרו שירות כדי לראות מה כולל, איך עובדים, וצילומים מהשטח.</p>
+  <div id="svcGroups"></div>
+ </div>
+</section>
+
+<section class="sec calc" id="calc" aria-labelledby="calcH" style="background:var(--surface)">
+ <div class="wrap">
+  <p class="eyebrow">כלי: מאזן פסולת להיתר ולטופס 4</p>
+  <h2 id="calcH">כמה פסולת הפרויקט שלכם ייצר?</h2>
+  <p class="lead">הוועדה בודקת שהכמות שהצהרתם בהיתר תואמת את מה שפונה בפועל. פער של יותר מ-15%–20% עלול לעכב את טופס 4. כך מעריכים מראש, לפי הנוסחאות מהמדריך של הקבוצה.</p>
+  <div class="panel">
+   <form id="calcF" onsubmit="return false">
+    <fieldset>
+     <legend>סוג הפרויקט</legend>
+     <div class="chips" id="calcType"></div>
+    </fieldset>
+    <div class="field" id="areaF">
+     <label class="l" for="areaN">שטח בנוי (מ"ר)</label>
+     <div class="area"><input type="range" id="areaR" min="100" max="30000" step="50" aria-label="שטח בנוי במ״ר"><input type="number" id="areaN" min="20" max="200000" step="10" inputmode="numeric"></div>
+    </div>
+    <div class="field" id="dimF" hidden>
+     <span class="l" style="font:600 12.5px var(--mono);letter-spacing:.1em;color:var(--steel);display:block;margin-bottom:10px">מידות המבנה להריסה (מטרים)</span>
+     <div class="dims"><label>אורך<input type="number" id="dL" min="1" max="500" value="30" inputmode="decimal"></label><label>רוחב<input type="number" id="dW" min="1" max="500" value="15" inputmode="decimal"></label><label>גובה<input type="number" id="dH" min="1" max="200" value="12" inputmode="decimal"></label></div>
+    </div>
+    <p class="fine">מקור הנוסחאות: המדריך "חישוב כמויות פסולת בניין" באתר הקבוצה. זה אומדן. הכמות המחייבת נקבעת בסיור באתר ובשקילה.</p>
+   </form>
+   <div>
+    <div class="ticket" id="ticket" aria-live="polite"></div>
+    <div class="ctas" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:18px">
+     <button class="btn" type="button" id="calcSend">שלחו לנו, נכין הסכם התקשרות <span class="ar" aria-hidden="true">←</span></button>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="sec sites" id="sites" aria-labelledby="sitesH">
+ <div class="wrap">
+  <p class="eyebrow">יורדים לשטח</p>
+  <h2 id="sitesH">5 מתקנים בדרום ובמרכז.</h2>
+  <p class="lead">מעד הלום ועד נאות חובב. בחרו מתקן כדי לראות מה עושים בו.</p>
+  <div class="in">
+   <div class="map" id="map"></div>
+   <ul class="site-list" id="siteList"></ul>
+  </div>
+  <div class="park rv">
+   <div class="ph"><img src="img/plant.webp" alt="מבנה מפעל לטיפול ומחזור פסולת בניין של הקבוצה, עם השלט *9084" loading="lazy"><span class="tag">מהשטח</span></div>
+   <div class="b">
+    <p class="eyebrow">אתר הדגל · אשל הנשיא</p>
+    <h3>פארק תעשיות דרום ירוק</h3>
+    <p>50 דונם בצפון הנגב, וכל המעגל במקום אחד: מיחזור פסולת בניין, שטיפה, גזם ויבשה, הפרדת מתכות, מיחזור פסולת אלקטרונית, ייצור בטון והנדסה אזרחית. לפי הקבוצה, האתר היחיד בישראל שמשלים מעגל מיחזור שלם תחת קורת גג אחת.</p>
+    <p>בפארק עובדים שופל ובובקט חשמליים ב-100%, ובקרוב ייפתח בו מרכז מבקרים.</p>
+    <div class="row"><span>50 דונם</span><span>כלים חשמליים</span><span>מרכז מבקרים: בקרוב</span></div>
+    <a class="btn hv" style="margin-top:22px" href="https://www.youtube.com/watch?v=SMqXuapoFTU" target="_blank" rel="noopener">צפו בשופל החשמלי ביוטיוב <span class="ar" aria-hidden="true">↗</span></a>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="sec night projects grid-bg" id="projects" aria-labelledby="prH">
+ <div class="wrap">
+  <p class="eyebrow">פרויקטים</p>
+  <h2 id="prH">עשרות הריסות מורכבות. הנה כמה מהן.</h2>
+  <p class="lead">הסרטונים מערוץ היוטיוב של הקבוצה, והצילומים מאתרי העבודה. כל תמונה כאן היא מהשטח.</p>
+  <div class="vids" id="vids"></div>
+  <div class="strip" id="strip"></div>
+ </div>
+</section>
+
+<section class="sec night film" id="film" aria-labelledby="filmH" hidden>
+ <div class="wrap">
+  <p class="eyebrow">סרטון ההשקה</p>
+  <h2 id="filmH">המעגל, ב-26 שניות.</h2>
+  <div class="in">
+   <video id="filmV" controls playsinline preload="none" muted></video>
+   <div><p class="lead" id="filmTxt"></p><div class="facts" id="filmFacts"></div></div>
+  </div>
+ </div>
+</section>
+
+<section class="sec about" id="about" aria-labelledby="abH">
+ <div class="wrap">
+  <p class="eyebrow">הקבוצה</p>
+  <h2 id="abH">מחברה לעבודות עפר לכלכלה מעגלית.</h2>
+  <div class="story">
+   <figure style="margin:0"><div class="ph"><img src="img/owner.webp" alt="ליאור כראדי, בעלי הקבוצה" loading="lazy"><span class="tag">מהאתר</span></div><figcaption>ליאור כראדי, בעלי הקבוצה</figcaption></figure>
+   <div>
+    <ol class="tl" id="timeline"></ol>
+    <div class="values" id="values" aria-label="הערכים של הקבוצה"></div>
+   </div>
+  </div>
+  <div class="cos" id="cos"></div>
+ </div>
+</section>
+
+<section class="sec" id="reviews" aria-labelledby="rvH" hidden style="padding-top:0">
+ <div class="wrap"><p class="eyebrow">לקוחות</p><h2 id="rvH">מה אומרים עלינו.</h2><div class="revs" id="revs"></div></div>
+</section>
+
+<section class="sec" id="faq" aria-labelledby="faqH" style="background:var(--surface)">
+ <div class="wrap">
+  <p class="eyebrow">שאלות נפוצות</p>
+  <h2 id="faqH">שאלות של קבלנים. תשובות ישירות.</h2>
+  <div class="faqw">
+   <div class="faq" id="faqList"></div>
+   <aside class="agent" aria-label="המוקד הדיגיטלי">
+    <header><svg viewBox="0 0 512 512" aria-hidden="true"><use href="#sym"/></svg><div><b>המוקד הדיגיטלי</b><span>עונה בעברית, על בסיס המידע באתר</span></div><i class="live" aria-hidden="true"></i></header>
+    <div id="advBody" aria-live="polite"></div>
+    <div id="advChips"><button type="button">מה צריך להיתר?</button><button type="button">איך עובד "אחת תמורת אחת"?</button><button type="button">אילו חומרים ממוחזרים יש?</button><button type="button">הריסה ליד בית ספר</button></div>
+    <form id="advF"><label for="advIn" class="skip" style="position:absolute;top:-9999px">שאלה למוקד</label><input id="advIn" placeholder="כתבו שאלה…" autocomplete="off"><button type="submit">שליחה</button></form>
+   </aside>
+  </div>
+ </div>
+</section>
+
+<section class="sec" id="jobs" aria-labelledby="jobsH">
+ <div class="wrap">
+  <p class="eyebrow">דרושים</p>
+  <h2 id="jobsH">רוצים להצטרף לעשייה?</h2>
+  <ul class="jobs" id="jobList"></ul>
+  <div class="jobmail"><span>קורות חיים, עם ציפיות שכר ותעודות:</span><b class="mono" dir="ltr" id="jobMail"></b><button class="mini" type="button" data-copy="jobs">העתקה</button></div>
+ </div>
+</section>
+
+<section class="sec night contact grid-bg" id="contact" aria-labelledby="ctH">
+ <div class="wrap">
+  <p class="eyebrow">צור קשר</p>
+  <h2 id="ctH">ספרו לנו על הפרויקט.</h2>
+  <p class="lead">מכולות, הריסה, בטון, הסכם להיתר או מיגון. נחזור אליכם.</p>
+  <div class="in">
+   <form class="form" id="leadForm" novalidate>
+    <div class="two"><div><label for="fName">שם מלא</label><input id="fName" autocomplete="name" required></div><div><label for="fPhone">טלפון</label><input id="fPhone" type="tel" autocomplete="tel" inputmode="tel" dir="ltr" required></div></div>
+    <div class="two"><div><label for="fCo">חברה (לא חובה)</label><input id="fCo" autocomplete="organization"></div><div><label for="fSvc">במה מדובר</label><select id="fSvc"></select></div></div>
+    <div><label for="fWhere">איפה האתר (עיר או אזור)</label><input id="fWhere"></div>
+    <div><label for="fMsg">פרטים</label><textarea id="fMsg" placeholder="היקף, לוחות זמנים, מה חשוב לכם…"></textarea></div>
+    <p class="spec" id="fSpec" hidden></p>
+    <label class="agree"><input type="checkbox" id="fAgree"> <span>קראתי ואני מאשר/ת את <button type="button" data-legal="privacy">מדיניות הפרטיות</button>, ומסכים/ה לשמירת הפרטים לצורך טיפול בפנייה.</span></label>
+    <button class="btn" type="submit">שליחה</button>
+    <p class="fnote" id="fNote" role="status"></p>
+   </form>
+   <div class="cards" id="ctCards"></div>
+  </div>
+ </div>
+</section>
+</main>
+
+<footer>
+ <div class="wrap in">
+  <a class="logo" href="#top"><svg viewBox="0 0 512 512" aria-hidden="true"><use href="#sym"/></svg><span class="wm"><small>קבוצת</small><b>טלאור כראדי</b></span></a>
+  <nav aria-label="ניווט בתחתית"><a href="#circle">המעגל</a><a href="#services">שירותים</a><a href="#calc">מאזן פסולת</a><a href="#sites">מתקנים</a><a href="#projects">פרויקטים</a><a href="#jobs">דרושים</a><a href="#contact">צור קשר</a></nav>
+  <div class="fine"><span>© <span id="yr"></span> קבוצת טלאור כראדי בע"מ</span><button class="lk" type="button" data-legal="privacy">מדיניות פרטיות</button><button class="lk" type="button" data-legal="a11y">הצהרת נגישות</button><span>עיצוב ופיתוח: AILGEN</span></div>
+ </div>
+</footer>
+
+<nav class="mbar" id="mbar" aria-label="פעולות מהירות"><a class="p" href="tel:*9084">חיוג <span class="mono" dir="ltr">*9084</span></a><a href="#calc">מאזן פסולת</a><a href="#contact">השארת פרטים</a></nav>
+
+<button class="a11y-btn" id="a11yBtn" type="button" aria-label="תפריט נגישות" aria-expanded="false" aria-controls="a11y"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="4" r="2"/><path d="M4 8.5l8 1.5 8-1.5.5 2-6 1.3v3.2l2 6.5-2 .5-2.5-6-2.5 6-2-.5 2-6.5v-3.2l-6-1.3z"/></svg></button>
+<div class="a11y" id="a11y" role="dialog" aria-label="נגישות">
+ <b>נגישות</b>
+ <button type="button" data-a="a-big" aria-pressed="false">הגדלת טקסט</button>
+ <button type="button" data-a="a-contrast" aria-pressed="false">ניגודיות גבוהה</button>
+ <button type="button" data-a="a-links" aria-pressed="false">הדגשת קישורים</button>
+ <button type="button" data-a="a-font" aria-pressed="false">גופן קריא</button>
+ <button type="button" data-a="a-still" aria-pressed="false">עצירת אנימציות</button>
+ <div class="row"><button type="button" data-legal="a11y">הצהרת נגישות</button><button type="button" id="a11yReset">איפוס</button></div>
+</div>
+
+<dialog id="svcD" aria-labelledby="svcDT"><div class="dlg"><button class="x" type="button" aria-label="סגירה" data-close>✕</button><div id="svcDB"></div></div></dialog>
+<dialog id="lb" class="lb" aria-label="תמונה"><figure><button class="x" type="button" aria-label="סגירה" data-close>✕</button><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure></dialog>
+<dialog id="lg" aria-labelledby="lgT"><div class="dlg"><button class="x" type="button" aria-label="סגירה" data-close>✕</button><h3 id="lgT"></h3><div id="lgTxt" style="white-space:pre-wrap;color:var(--steel)"></div></div></dialog>
+
+<div class="adm" id="adm" role="dialog" aria-modal="true" aria-label="מרכז הבקרה">
+ <nav><b>מרכז הבקרה</b>
+  <button class="tab on" type="button" data-t="ov">סקירה</button>
+  <button class="tab" type="button" data-t="leads">פניות <span class="cnt" id="newCount2" hidden></span></button>
+  <button class="tab" type="button" data-t="content">תוכן ופרטי קשר</button>
+  <button class="tab" type="button" data-t="faq">שאלות נפוצות</button>
+  <button class="tab" type="button" data-t="projects">פרויקטים</button>
+  <button class="tab" type="button" data-t="reviews">המלצות</button>
+  <button class="tab" type="button" data-t="agent">המוקד הדיגיטלי</button>
+  <button class="tab" type="button" data-t="close">סגירה ✕</button>
+ </nav>
+ <main id="admMain"></main>
+</div>

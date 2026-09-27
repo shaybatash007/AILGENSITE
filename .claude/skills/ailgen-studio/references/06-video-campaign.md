@@ -21,7 +21,7 @@ Order can change; the hook and the action cannot move. 6–8 scenes, 24–28 s t
 ## 2. Filling film.json from the brand kit
 
 - `colors`, `type`, `fonts`, `logo`: straight from `brand.json` (fonts via `scripts/fonts.mjs`).
-- `motif` by spirit: `pixels` (tech, screens, digital), `particles` (AI, energy, kids), `light` (luxury,
+- `motif` by spirit: `pixels` (tech, screens, digital), `particles` (AI, energy, kids), `spin` (round or pinwheel logos: recycling, energy, circular businesses), `light` (luxury,
   health, calm), `ink` (food, craft, handmade), `wipe` (law, finance, sport), `iris` (soft reveals).
 - `highlight`: `marker` (a bar under the key word, energetic) or `color` (the word in accent, calmer).
 - `mascot`: the grid from phase 3; use it in the hook (surprised) and in the cta (the last line + `finale`).

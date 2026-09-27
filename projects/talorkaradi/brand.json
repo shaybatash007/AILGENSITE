@@ -1,0 +1,256 @@
+{
+ "name": "קבוצת טלאור כראדי בע\"מ",
+ "slug": "talorkaradi",
+ "status": "real-client",
+ "source": {
+  "mode": "url",
+  "url": "https://talorkaradi.co.il/",
+  "brief": ""
+ },
+ "business": {
+  "type": "מיחזור ופינוי פסולת בניין, הריסות, בטון, הנדסה ומיגון, תשתיות",
+  "sector": "תעשייה וכלכלה מעגלית (B2B: קבלנים, יזמים, רשויות)",
+  "audience": [
+   "קבלנים ומנהלי עבודה",
+   "יזמים ומנהלי פרויקטים",
+   "רשויות ומוסדות",
+   "אדריכלים ומלווי בנייה ירוקה"
+  ],
+  "offer": [
+   "פינוי פסולת במכולות",
+   "מיחזור פסולת בניין, גזם ויבשה",
+   "שטיפת חומרים ממוחזרים",
+   "הריסת מבנים",
+   "בטון מובא",
+   "הסכמי התקשרות להיתר ולטופס 4",
+   "הנדסה אזרחית ומיגון",
+   "שיקום קרקעות",
+   "תשתיות"
+  ],
+  "proof": [
+   "מעל 90% מיחזור",
+   "מעל 1,000 מכולות, כ-40 משאיות",
+   "כ-50,000 מ\"ק בטון בחודש",
+   "5 מתקנים",
+   "מ-2008"
+  ],
+  "objections": [
+   "האם יעמדו בזמנים (מכולה מלאה באתר)",
+   "האם הפסולת מטופלת כחוק (טופס 4, קנסות)",
+   "כמה להצהיר בהיתר",
+   "מי אחראי מקצה לקצה"
+  ]
+ },
+ "concept": {
+  "idea": "המעגל נסגר: מה שיוצא מהאתר חוזר לבנות",
+  "claim": "מעל 90% מהפסולת שמגיעה למפעלים חוזרת לבנייה, והקבוצה מחזיקה את כל המעגל: מכולה, מיחזור, שטיפה, בטון, מיגונית",
+  "signature": "ארבעת הלהבים של הסמל = ארבעת שלבי המעגל (פינוי, מיחזור, השבחה, בנייה)",
+  "spirit": "engineered + green: בטון, שקילה, נתונים מדויקים; תעשייה שמחזירה",
+  "twist": "כל מספר מוצג כתעודת שקילה; הכניסה: ארבעת הלהבים ננעלים לסמל"
+ },
+ "voice": {
+  "tone": [
+   "ישיר",
+   "הנדסי",
+   "בטוח",
+   "בגובה העיניים של קבלן"
+  ],
+  "slogan": "מה שיוצא מהאתר, חוזר לבנות.",
+  "do": [
+   "מספרים עם מקור",
+   "שפת שטח: מכולה, טופס 4, מאזן פסולת",
+   "משפטים קצרים"
+  ],
+  "dont": [
+   "סופרלטיבים בלי הוכחה",
+   "המלצות מומצאות",
+   "מחירים"
+  ]
+ },
+ "palette": {
+  "night": "#0B1B2E",
+  "paper": "#F4F5F0",
+  "surface": "#FFFFFF",
+  "ink": "#0B1B2E",
+  "steel": "#5A6670",
+  "line": "#DCE0D8",
+  "green": "#1E7A38",
+  "leaf": "#9ACB63",
+  "blue": "#2560A8",
+  "sky": "#3FA3DC",
+  "hivis": "#C9F03A",
+  "roles": {
+   "bg": "paper",
+   "text": "ink",
+   "accent": "green",
+   "accent2": "blue",
+   "onDark": "hivis"
+  },
+  "contrast": {
+   "ink/paper": 15.83,
+   "green/paper": 4.92,
+   "blue/paper": 5.78,
+   "steel/paper": 5.37,
+   "hivis/night": 13.23,
+   "white/green": 5.39
+  },
+  "fromSite": {
+   "backgrounds": [
+    {
+     "hex": "#FFFFFF",
+     "weight": 367
+    },
+    {
+     "hex": "#000000",
+     "weight": 130
+    },
+    {
+     "hex": "#32323A",
+     "weight": 9
+    },
+    {
+     "hex": "#2B5C9B",
+     "weight": 8
+    },
+    {
+     "hex": "#68B5E5",
+     "weight": 8
+    },
+    {
+     "hex": "#274588",
+     "weight": 8
+    },
+    {
+     "hex": "#66AA44",
+     "weight": 4
+    },
+    {
+     "hex": "#1D7137",
+     "weight": 4
+    }
+   ],
+   "text": [
+    {
+     "hex": "#051520",
+     "weight": 3066
+    },
+    {
+     "hex": "#FFFFFF",
+     "weight": 994
+    },
+    {
+     "hex": "#000000",
+     "weight": 304
+    },
+    {
+     "hex": "#33A96E",
+     "weight": 48
+    },
+    {
+     "hex": "#2FA86C",
+     "weight": 37
+    },
+    {
+     "hex": "#30A971",
+     "weight": 30
+    }
+   ],
+   "buttons": [
+    {
+     "hex": "#FFFFFF",
+     "weight": 180
+    },
+    {
+     "hex": "#00A99D",
+     "weight": 20
+    },
+    {
+     "hex": "#051520",
+     "weight": 10
+    }
+   ]
+  }
+ },
+ "type": {
+  "display": "Rubik",
+  "displayWeight": 800,
+  "body": "Rubik",
+  "bodyWeight": 400,
+  "num": "IBM Plex Mono",
+  "numWeight": 600,
+  "fonts": "fonts/fonts.css"
+ },
+ "logo": {
+  "symbol": "brand/symbol.svg",
+  "note": "redrawn as vector from the site's 1983px symbol (media/031.webp); wordmark set in Rubik 800"
+ },
+ "icons": {
+  "grid": 24,
+  "stroke": 1.6,
+  "signature": ""
+ },
+ "mascot": {
+  "decision": "none",
+  "why": "B2B industry: trust comes from data and real footage; the voice is 'המוקד' (the *9084 dispatcher) as the AI agent"
+ },
+ "site": {
+  "entry": "",
+  "proof_tool": [],
+  "sections": [],
+  "agent": "",
+  "admin": [
+   "leads",
+   "content",
+   "reviews",
+   "projects",
+   "faq",
+   "agent"
+  ]
+ },
+ "campaign": {
+  "film": "film.json",
+  "motif": "light",
+  "hook": "",
+  "cta": ""
+ },
+ "honesty": {
+  "labels": {
+   "real": "מהשטח",
+   "render": "הדמיה",
+   "concept": "קונספט",
+   "demo": "נתוני הדגמה"
+  },
+  "notes": ""
+ },
+ "outputs": {
+  "site": "",
+  "live": "",
+  "campaign": ""
+ },
+ "contacts": {
+  "phones": [
+   "0723267235",
+   "0528077702",
+   "0507366632",
+   "9084",
+   "088640802"
+  ],
+  "emails": [
+   "talor@talorkaradi.co.il",
+   "nofarzo@talorkaradi.co.il"
+  ],
+  "whatsapp": [],
+  "socials": [
+   "https://www.facebook.com/talorkaradi/",
+   "https://www.instagram.com/talor_karadi/"
+  ],
+  "youtube": [
+   "iLzt4fLKefM",
+   "Kufo4QZ2mC0",
+   "1wlZyuBdzW0",
+   "SMqXuapoFTU",
+   "sbusaxC0-6M"
+  ]
+ },
+ "motif": "spin"
+}

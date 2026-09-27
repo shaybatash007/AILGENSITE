@@ -56,6 +56,7 @@ node .claude/skills/ailgen-studio/scripts/new-project.mjs --name "אור ים" -
 | `scripts/fonts.mjs` | מוריד פונטים של גוגל בעברית ובאנגלית לשימוש מקומי |
 | `scripts/capture.py`, `scripts/rec.py` | צילום כל אזור באתר, והקלטת וידאו אמיתית של האתר לתיק העבודות |
 | `engine/` | **מנוע הסרטונים**: סרטון השקה לכל מותג מתוך קובץ אחד, ב-4 יחסי מסך, עם פסקול שנבנה סביב התמונה |
+| `scripts/meter.mjs` | **מדידה**: זמן, קריאות למודל, טוקנים ועלות לכל שלב, מתוך הלוג של הסשן |
 
 ## ההתאמה לכל סוג עסק
 
@@ -68,10 +69,24 @@ node .claude/skills/ailgen-studio/scripts/new-project.mjs --name "אור ים" -
 - **עברית ומימין לשמאל, נכון.** מספרים ואותיות לטיניות מבודדים כדי שלא יתהפכו.
 - **נגישות וביצועים הם חלק מהעיצוב**, כולל תפריט נגישות, הצהרת נגישות ומדיניות פרטיות.
 
+## מדידה ומהירות
+
+כל ריצה נמדדת. פותחים וסוגרים כל שלב בסימון, ובסוף מפיקים טבלה:
+
+```bash
+node .claude/skills/ailgen-studio/scripts/meter.mjs --mark projects/<slug>/meter.jsonl --phase 3-site --ev start
+node .claude/skills/ailgen-studio/scripts/meter.mjs --marks projects/<slug>/meter.jsonl
+```
+
+הריצה על טלאור כראדי (קישור → אתר, מותג, סרטון ומודעות): **33 דקות עבודה של הסוכן, 10.36$**, ועוד 10.5 דקות רינדור ברקע.
+הכי הרבה כסף הולך על קונטקסט (69%), ולכן כל לקוח מקבל סשן נקי. הכי הרבה זמן הולך על כתיבת קוד האתר, ולכן מנוע האתרים הוא השלב הבא.
+הדוח המלא, כולל מחירים, סליקה, דומיינים ומפת דרכים: `studio/report.html`. עמוד המוצר עם ההדגמה: `studio/index.html`.
+
 ## הדוגמאות
 
 - סוויצ׳ינג TV: האתר ב-`switching-tv/`, הקמפיין ב-`campaigns/switching-tv/`, ערכת המותג ב-`projects/switching-tv/`, כולל גרסת המנוע של הסרטון.
 - AILGEN: האתר ב-`index.html`, המיתוג ב-`brand/`, ערכת המותג ב-`projects/ailgen/`.
 - VERMEIL: האתר ב-`vermeil/`, ערכת המותג ב-`projects/vermeil/`.
+- טלאור כראדי: האתר ב-`talorkaradi/`, הקמפיין ב-`campaigns/talorkaradi/`, ערכת המותג, דף העובדות והמדידה ב-`projects/talorkaradi/`.
 
 המתודולוגיה המלאה, שלב אחר שלב, נמצאת ב-`.claude/skills/ailgen-studio/SKILL.md` ובתיקיית `references/` שלידו.

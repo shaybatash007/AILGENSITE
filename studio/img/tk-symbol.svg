@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<defs>
+<linearGradient id="g" gradientUnits="userSpaceOnUse" x1="150" y1="170" x2="470" y2="100"><stop offset="0" stop-color="#E2EFC8"/><stop offset=".55" stop-color="#9ACB63"/><stop offset="1" stop-color="#5DAA45"/></linearGradient>
+<linearGradient id="gd" gradientUnits="userSpaceOnUse" x1="260" y1="60" x2="470" y2="120"><stop offset="0" stop-color="#7DBB45"/><stop offset=".5" stop-color="#2E8B3E"/><stop offset="1" stop-color="#1B6B34"/></linearGradient>
+<linearGradient id="b" gradientUnits="userSpaceOnUse" x1="150" y1="170" x2="470" y2="100"><stop offset="0" stop-color="#D6ECF8"/><stop offset=".55" stop-color="#7FBEE6"/><stop offset="1" stop-color="#4E86C8"/></linearGradient>
+<linearGradient id="bd" gradientUnits="userSpaceOnUse" x1="260" y1="60" x2="470" y2="120"><stop offset="0" stop-color="#2BA3DE"/><stop offset=".5" stop-color="#2560A8"/><stop offset="1" stop-color="#26357F"/></linearGradient>
+<path id="bl" d="M474 128C440 52 350 14 262 20C200 24 146 58 136 96C126 136 160 184 214 192C260 199 282 168 312 142C360 100 420 96 474 128Z"/>
+<clipPath id="c"><use href="#bl"/></clipPath>
+<g id="gb"><use href="#bl" fill="url(#g)"/><path clip-path="url(#c)" fill="url(#gd)" d="M318 0C272 40 250 110 256 200L520 200L520 0Z"/></g>
+<g id="bb"><use href="#bl" fill="url(#b)"/><path clip-path="url(#c)" fill="url(#bd)" d="M318 0C272 40 250 110 256 200L520 200L520 0Z"/></g>
+</defs>
+<use href="#gb"/>
+<use href="#bb" transform="rotate(90 256 256)"/>
+<use href="#gb" transform="rotate(180 256 256)"/>
+<use href="#bb" transform="rotate(270 256 256)"/>
+</svg>

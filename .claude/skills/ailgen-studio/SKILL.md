@@ -39,6 +39,27 @@ node $S/scripts/new-project.mjs --name "<business name>" --type "<what it does>"
 This creates `projects/<slug>/` with `brief.md`, `brand.json`, `film.json` and, for a URL, `intake/`
 (all texts, media, contacts, colours, fonts, screenshots). Then run the phases below, in order.
 
+## Measure every run (speed and cost are part of the job)
+
+Open and close each phase with a mark, and report the table at the end:
+
+```bash
+node $S/scripts/meter.mjs --mark projects/<slug>/meter.jsonl --phase 3-site --ev start   # and --ev end
+node $S/scripts/meter.mjs --marks projects/<slug>/meter.jsonl --json projects/<slug>/meter-report.json
+```
+
+It reads the session log (every model call records its usage) and prints wall, model and tool time, calls,
+context size, tokens and cost per phase. Baseline from the Talor Karadi run (URL → site, brand, film, ads):
+**33 min of agent work, $10.36**, plus 10.5 min of film rendering in the background. Keep runs fast without
+touching quality:
+- **One fresh session per client.** Context is 69% of the cost; do not carry other clients' history.
+- **Put machine work in the background:** crawl, render and screenshots run while the model works.
+- **Read the intake through the de-duplicated text** (repeated header/footer lines removed) and only the pages
+  that matter; keep blog articles to their titles unless a fact is needed.
+- **Budget per phase** (measured + 30%): brief 5 min, intake 9, brand 4, site 21, film 4, QA 10. Over budget:
+  stop at the gate and say why.
+- **Look once:** one desktop + one mobile screenshot pass per build, fix, then deliver.
+
 ## The operating law
 
 Run everything through the **skill-orchestrator** loop (`references/skills/skill-orchestrator.md`):
@@ -136,7 +157,8 @@ repo, commit and push, and report to the user in Hebrew: what was built, links, 
 | `scripts/rec.py` | levelup2 real-time screencast → MP4 for portfolio footage |
 | `scripts/contact_sheet.py` | Tile frames/screens for review |
 | `engine/film.html` + `render.mjs` + `audio.py` | The brand-film engine: any brand, 4 aspect ratios, original soundtrack. Spec in `engine/README.md` |
+| `scripts/meter.mjs` | Phase marks + measured time, tokens and cost per phase from the session log |
 
 Environment notes: Playwright + Chromium, ffmpeg, Python with numpy/scipy/Pillow. Behind a TLS-inspecting
 proxy the scripts route browser traffic through Node's fetch (the proxy CA is trusted there); TLS stays on.
-A 26 s 1080×1920 film renders in about 4–5 minutes with 3 jobs.
+A 26 s 1080×1920 film renders in about 5–6 minutes with 4 jobs (measured: 356 s with soundtrack; 4:5 268 s).

@@ -1,0 +1,15 @@
+{"t": "2026-09-27T11:45:30.000Z", "phase": "0-brief", "ev": "start", "note": "user request received (approx)"}
+{"t": "2026-09-27T11:50:05.060Z", "phase": "0-brief", "ev": "end", "note": "prompt upgrade + plan + meter tool"}
+{"t": "2026-09-27T11:50:05.115Z", "phase": "1-intake", "ev": "start", "note": "crawl talorkaradi.co.il"}
+{"t": "2026-09-27T11:57:19.780Z", "phase": "1-intake", "ev": "end"}
+{"t": "2026-09-27T11:57:19.844Z", "phase": "2-brand", "ev": "start", "note": "symbol vector, palette, fonts, icons"}
+{"t": "2026-09-27T11:59:57.252Z", "phase": "2-brand", "ev": "end"}
+{"t": "2026-09-27T11:59:57.302Z", "phase": "3-site", "ev": "start", "note": "site: live artifact + static"}
+{"t": "2026-09-27T12:16:18.044Z", "phase": "3-site", "ev": "end"}
+{"t": "2026-09-27T12:16:18.099Z", "phase": "4-film", "ev": "start", "note": "spin motif + film.json + renders"}
+{"t": "2026-09-27T12:18:40.000Z", "phase": "4-film", "ev": "end", "note": "film.json + spin motif + review frames done; full renders start in background (9:16 356 s, 4:5 268 s, stills 4 s machine time)"}
+{"t": "2026-09-27T12:18:40.000Z", "phase": "5-product", "ev": "start", "note": "AILGEN studio page (simulation, pricing, domain, orders) while renders run; also film packaging + campaign README"}
+{"t":"2026-09-27T12:32:18.935Z","phase":"5-product","ev":"end"}
+{"t":"2026-09-27T12:32:18.992Z","phase":"6-report","ev":"start","note":"research + measured report + business plan"}
+{"t":"2026-09-27T12:37:45.240Z","phase":"6-report","ev":"end"}
+{"t":"2026-09-27T12:37:45.287Z","phase":"7-deliver","ev":"start","note":"skill update, commit, push, report to user"}

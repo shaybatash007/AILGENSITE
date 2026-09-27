@@ -1,0 +1,172 @@
+{
+  "images": {
+    "/home/user/AILGENSITE/projects/talorkaradi/intake/media/001-logo.png": [
+      {
+        "hex": "#274E90",
+        "share": 0.291
+      },
+      {
+        "hex": "#3298D2",
+        "share": 0.217
+      },
+      {
+        "hex": "#FEFFFF",
+        "share": 0.194
+      },
+      {
+        "hex": "#A7C4C9",
+        "share": 0.128
+      },
+      {
+        "hex": "#8AB85C",
+        "share": 0.098
+      },
+      {
+        "hex": "#35813C",
+        "share": 0.071
+      }
+    ],
+    "/home/user/AILGENSITE/projects/talorkaradi/intake/media/002-logo.png": [
+      {
+        "hex": "#509F3B",
+        "share": 0.338
+      },
+      {
+        "hex": "#73B53D",
+        "share": 0.326
+      },
+      {
+        "hex": "#2D8839",
+        "share": 0.201
+      },
+      {
+        "hex": "#126C02",
+        "share": 0.064
+      },
+      {
+        "hex": "#73AA00",
+        "share": 0.044
+      },
+      {
+        "hex": "#ADD75B",
+        "share": 0.028
+      }
+    ],
+    "/home/user/AILGENSITE/projects/talorkaradi/intake/media/003-logo.png": [
+      {
+        "hex": "#009A4C",
+        "share": 0.477
+      },
+      {
+        "hex": "#231F20",
+        "share": 0.257
+      },
+      {
+        "hex": "#5DAC57",
+        "share": 0.095
+      },
+      {
+        "hex": "#3E8D48",
+        "share": 0.086
+      },
+      {
+        "hex": "#255C9B",
+        "share": 0.047
+      },
+      {
+        "hex": "#278AC5",
+        "share": 0.038
+      }
+    ],
+    "/home/user/AILGENSITE/projects/talorkaradi/intake/media/004-logo.png": [
+      {
+        "hex": "#111617",
+        "share": 0.654
+      },
+      {
+        "hex": "#269941",
+        "share": 0.113
+      },
+      {
+        "hex": "#152D75",
+        "share": 0.087
+      },
+      {
+        "hex": "#037DBE",
+        "share": 0.069
+      },
+      {
+        "hex": "#07589A",
+        "share": 0.065
+      },
+      {
+        "hex": "#E5F0EF",
+        "share": 0.012
+      }
+    ],
+    "/home/user/AILGENSITE/projects/talorkaradi/intake/media/005-logo.png": [
+      {
+        "hex": "#1E1D29",
+        "share": 0.426
+      },
+      {
+        "hex": "#034B8D",
+        "share": 0.3
+      },
+      {
+        "hex": "#09ABE5",
+        "share": 0.165
+      },
+      {
+        "hex": "#077637",
+        "share": 0.055
+      },
+      {
+        "hex": "#6BB540",
+        "share": 0.05
+      },
+      {
+        "hex": "#34B197",
+        "share": 0.004
+      }
+    ],
+    "/home/user/AILGENSITE/projects/talorkaradi/intake/shots/home-desktop.png": [
+      {
+        "hex": "#F3F4F3",
+        "share": 0.276
+      },
+      {
+        "hex": "#626C6F",
+        "share": 0.195
+      },
+      {
+        "hex": "#858A8A",
+        "share": 0.167
+      },
+      {
+        "hex": "#3E3E40",
+        "share": 0.157
+      },
+      {
+        "hex": "#162226",
+        "share": 0.121
+      },
+      {
+        "hex": "#ADB1B2",
+        "share": 0.084
+      }
+    ]
+  },
+  "suggested": {
+    "background": "#111617",
+    "ink": "#FEFFFF",
+    "accent": "#009A4C",
+    "contrast": {
+      "ink_on_background": 18.17,
+      "accent_on_background": 4.96,
+      "background_on_accent": 4.96,
+      "ink_on_accent": 3.66
+    },
+    "notes": "WCAG AA needs 4.5 for body text and 3 for large text and UI. Adjust lightness, not hue, to pass."
+  }
+}

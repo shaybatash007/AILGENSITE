@@ -26,8 +26,8 @@ Timing: ~12 frames/s total with 3 jobs; a 25 s 1080×1920 film with soundtrack �
 | `type` | `display`, `displayWeight`, `body`, `bodyWeight`, `num`, `numWeight` (font family names) |
 | `colors` | `bg surface paper ink inkMuted text muted accent accent2 accentInk line` + honesty `real render concept demo` |
 | `logo` | `light` (for dark grounds) and `dark` (for light grounds): SVG or PNG |
-| `motif` | `pixels` · `particles` · `light` · `ink` · `iris` · `wipe`: every transition and reveal |
-| `motifColors` | colours of the lit edge for pixels/particles (e.g. RGB LEDs) |
+| `motif` | `pixels` · `particles` · `light` · `ink` · `iris` · `wipe` · `spin` (4 swirling blades, for round/pinwheel logos): every transition and reveal |
+| `motifColors` | colours of the lit edge for pixels/particles/spin (e.g. RGB LEDs, the logo's blade colours) |
 | `highlight` | `marker` (bar under `*word*`) or `color` (word in accent) |
 | `transition` | seconds of each scene change (0.45) |
 | `texture` | `dots` (default) or `none` |

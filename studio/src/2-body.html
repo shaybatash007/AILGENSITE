@@ -1,0 +1,150 @@
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="mk" viewBox="0 0 96 100"><polygon points="0,100 38,0 58,0 96,100 75,100 48,29 21,100" fill="currentColor"/><rect x="40" y="67" width="16" height="16" fill="#FFB23E"/></symbol></defs></svg>
+<a class="skip" href="#main">דלג לתוכן</a>
+<header class="hdr" id="hdr">
+ <div class="wrap in">
+  <a class="logo" href="#top" aria-label="AILGEN, סטודיו"><svg aria-hidden="true"><use href="#mk"/></svg>AILGEN<small>סטודיו</small></a>
+  <nav class="nav" aria-label="ניווט ראשי"><a href="#demo">הדגמה</a><a href="#gets">מה מקבלים</a><a href="#how">איך זה עובד</a><a href="#plans">מחירים</a><a href="#domain">דומיין</a><a href="#proof">עבודות</a><a href="#faq">שאלות</a></nav>
+  <button class="mini" id="admBtn" type="button">מרכז בקרה</button>
+  <a class="btn cta" href="#order">להזמנה</a>
+ </div>
+</header>
+
+<main id="main">
+<section class="hero dark" id="top" aria-labelledby="h1">
+ <canvas id="pcv" aria-hidden="true"></canvas>
+ <div class="wrap">
+  <p class="eyebrow">סטודיו AILGEN · מנוע יצירה לעסקים</p>
+  <h1 id="h1" style="margin-top:16px">תנו לנו קישור, רעיון או שם. <em>קבלו עסק שלם.</em></h1>
+  <p class="sub">אתר מעוצב עם מרכז בקרה וסוכן AI, אייקון ושפה חזותית, סרטון השקה ומודעות, מחובר לדומיין שלכם. אותה שיטה שבנתה את סוויצ׳ינג TV, את AILGEN ואת האתר החדש של טלאור כראדי.</p>
+  <form class="launch" id="launch" aria-label="הפעלת הסטודיו">
+   <div class="seg" role="tablist" aria-label="מה יש לכם">
+    <button type="button" role="tab" data-m="url" aria-selected="true">יש לי אתר</button>
+    <button type="button" role="tab" data-m="idea" aria-selected="false">יש לי רעיון</button>
+    <button type="button" role="tab" data-m="name" aria-selected="false">יש לי רק שם</button>
+   </div>
+   <div class="row">
+    <label for="lIn" class="skip" style="position:absolute;top:-9999px">הקלט לסטודיו</label>
+    <input id="lIn" dir="ltr" value="https://talorkaradi.co.il/" autocomplete="off">
+    <textarea id="lIdea" hidden placeholder="למשל: בית קפה קטן בחיפה, קפה מיוחד וחם, קהל של סטודנטים וזוגות."></textarea>
+    <button class="btn" type="submit" id="lGo">הפעילו את הסטודיו</button>
+   </div>
+   <p class="hint" id="lHint">הדגמה על אתר אמיתי: טלאור כראדי, קבוצת מיחזור ובנייה. הריצה המלאה נמדדה, והתוצרים למטה אמיתיים.</p>
+   <div class="ex" id="lEx" hidden></div>
+  </form>
+ </div>
+ <div class="wrap" id="demo">
+  <div class="pipe">
+   <ol class="stages" id="stages" aria-label="שלבי היצירה"></ol>
+   <div class="board" aria-live="polite">
+    <div class="bar"><i></i><span id="bTitle">talorkaradi.co.il</span><span class="sp" id="bClock" dir="ltr"></span></div>
+    <div class="log" id="log"></div>
+    <div class="out" id="out"></div>
+    <div class="foot"><p id="bFoot"></p><a class="btn" href="#order" id="bOrder">רוצים את זה לעסק שלכם?</a></div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="sec" id="gets" aria-labelledby="getsH">
+ <div class="wrap">
+  <p class="eyebrow">מה מקבלים</p>
+  <h2 id="getsH">לא תבנית. עסק שנבנה מהעסק שלכם.</h2>
+  <p class="lead">הכול יוצא מהדבר האמיתי: הלוגו שלכם, המספרים שלכם, הלקוחות שלכם. כל מספר עם מקור, וכל תמונה מסומנת "מהשטח" או "הדמיה".</p>
+  <div class="gets" id="getsList"></div>
+ </div>
+</section>
+
+<section class="sec dark" id="how" aria-labelledby="howH" style="background:var(--night)">
+ <div class="wrap">
+  <p class="eyebrow">איך זה עובד</p>
+  <h2 id="howH">שמונה שלבים. בכל אחד, שער בדיקה.</h2>
+  <p class="lead">המכונה עושה את העבודה הכבדה: סריקה, מיתוג, קוד, רינדור. אדם בודק כל שער לפני שממשיכים. שלב שלא עבר את השער חוזר אחורה.</p>
+  <ol class="steps" id="steps" style="border-top-color:#EEF0FB"></ol>
+ </div>
+</section>
+
+<section class="sec dark" id="plans" aria-labelledby="plansH">
+ <div class="wrap">
+  <p class="eyebrow">מחירים</p>
+  <h2 id="plansH">משלמים פעם אחת על הבנייה, ומנוי קטן על האוויר.</h2>
+  <p class="lead">המנוי כולל אחסון, תעודת אבטחה, גיבויים, המוקד הדיגיטלי ותמיכה. בלי התחייבות: אפשר לקחת את הקבצים ולעבור.</p>
+  <div class="plans" id="planList"></div>
+  <p class="fineprint" id="planNote"></p>
+ </div>
+</section>
+
+<section class="sec" id="domain" aria-labelledby="domH">
+ <div class="wrap">
+  <p class="eyebrow">דומיין</p>
+  <h2 id="domH">דומיין חדש, או הדומיין שכבר יש לכם.</h2>
+  <p class="lead">בשני המקרים הדומיין רשום על שמכם ונשאר שלכם. אנחנו רק מחברים.</p>
+  <div class="doms">
+   <div class="dm"><h3>קונים דומיין חדש</h3><ol><li>בוחרים שם (נציע כמה, לפי השם והרעיון).</li><li>רושמים אותו על שמכם אצל רשם מוסמך. לסיומת ‎.co.il צריך רשם שמוסמך על ידי איגוד האינטרנט הישראלי.</li><li>אנחנו מחברים, ותעודת האבטחה (HTTPS) עולה לבד.</li></ol><p class="lead" style="font-size:15px">עלות הרישום משולמת לרשם ישירות, והיא לא חלק מהמחיר שלנו.</p></div>
+   <div class="dm"><h3>מחברים דומיין קיים</h3><ol><li>נכנסים לממשק של הרשם או של ספק ה-DNS.</li><li>מוסיפים שתי רשומות (נשלח את הערכים המדויקים):</li></ol>
+    <div class="dns"><table><thead><tr><th>Type</th><th>Name</th><th>Value</th></tr></thead><tbody><tr><td>CNAME</td><td>www</td><td id="dnsV">your-site.pages.dev</td></tr><tr><td>@</td><td>(הדומיין הראשי)</td><td>לפי ספק האחסון: רשומה, או העברת שרתי השמות</td></tr></tbody></table></div>
+    <p class="lead" style="font-size:15px">המייל שלכם לא נפגע: אם מעבירים שרתי שמות, מעתיקים קודם את רשומות המייל (MX) כמו שהן. האתר הישן ממשיך לעבוד עד רגע המעבר.</p></div>
+  </div>
+ </div>
+</section>
+
+<section class="sec dark" id="proof" aria-labelledby="proofH" style="background:var(--night)">
+ <div class="wrap">
+  <p class="eyebrow">עבודות ומספרים</p>
+  <h2 id="proofH">שלושה עסקים, שלושה סוגי קלט.</h2>
+  <div class="cases" id="cases"></div>
+  <h3 style="font-size:clamp(26px,3vw,36px);margin-top:64px">הריצה האחרונה, בשקיפות מלאה</h3>
+  <p class="lead" id="meterNote"></p>
+  <div class="meter" id="meter"></div>
+  <div class="phase" id="phase"></div>
+ </div>
+</section>
+
+<section class="sec" id="faq" aria-labelledby="faqH">
+ <div class="wrap">
+  <p class="eyebrow">שאלות</p>
+  <h2 id="faqH">מה שכולם שואלים לפני.</h2>
+  <div class="faq" id="faqList" style="margin-top:30px"></div>
+ </div>
+</section>
+
+<section class="sec dark" id="order" aria-labelledby="ordH">
+ <div class="wrap">
+  <p class="eyebrow">הזמנה</p>
+  <h2 id="ordH">מתחילים.</h2>
+  <p class="lead">ממלאים דקה, ומקבלים תוכנית עבודה וקישור לתשלום מאובטח.</p>
+  <div class="order">
+   <form class="form" id="ordForm" novalidate>
+    <div><span style="font-weight:600;font-size:15px;display:block;margin-bottom:6px">חבילה</span><div class="opts" id="oPlan"></div></div>
+    <div><label for="oIn">הקישור, הרעיון או השם</label><textarea id="oIn" style="min-height:70px"></textarea></div>
+    <div class="two"><div><label for="oName">שם מלא</label><input id="oName" autocomplete="name"></div><div><label for="oPhone">טלפון</label><input id="oPhone" type="tel" inputmode="tel" dir="ltr" autocomplete="tel"></div></div>
+    <div><label for="oMail">אימייל</label><input id="oMail" type="email" dir="ltr" autocomplete="email"></div>
+    <div><span style="font-weight:600;font-size:15px;display:block;margin-bottom:6px">דומיין</span><div class="opts" id="oDom"><button type="button" class="opt" data-v="new" aria-pressed="true">דומיין חדש</button><button type="button" class="opt" data-v="own" aria-pressed="false">יש לי דומיין</button><button type="button" class="opt" data-v="later" aria-pressed="false">אחליט אחר כך</button></div></div>
+    <div><label for="oDomain">שם הדומיין (לא חובה)</label><input id="oDomain" dir="ltr" placeholder="example.co.il"></div>
+    <label class="agree"><input type="checkbox" id="oAgree"> <span>אני מאשר/ת שמירת הפרטים לצורך טיפול בהזמנה, ושאת תוכנית העבודה והתשלום נקבל בנפרד.</span></label>
+    <button class="btn" type="submit">שליחת הזמנה</button>
+    <p class="fnote" id="oNote" role="status"></p>
+   </form>
+   <div class="after">
+    <div><b>1 · תוכנית ותשלום</b><p>תוך יום עסקים: תוכנית עבודה, לוח זמנים וקישור לתשלום מאובטח.</p></div>
+    <div><b>2 · הסטודיו רץ</b><p>סריקה או מחקר, מיתוג, אתר, סרטון. כל שער נבדק על ידי אדם.</p></div>
+    <div><b>3 · תצוגה ותיקונים</b><p>קישור פרטי לאתר החי ולסרטון. סבב תיקונים לפי החבילה.</p></div>
+    <div><b>4 · באוויר</b><p>חיבור לדומיין, תעודת אבטחה, מרכז בקרה, והדרכה של רבע שעה.</p></div>
+   </div>
+  </div>
+ </div>
+</section>
+</main>
+
+<footer><div class="wrap in"><a class="logo" href="#top" style="color:#EEF0FB"><svg aria-hidden="true"><use href="#mk"/></svg>AILGEN</a><span>© <span id="yr"></span> AILGEN · קדימה. או מאחור.</span><span><button class="mini" type="button" id="a11yS" style="background:transparent;color:inherit;border-color:rgba(174,180,216,.3)">הצהרת נגישות</button> <button class="mini" type="button" id="stillBtn" aria-pressed="false" style="background:transparent;color:inherit;border-color:rgba(174,180,216,.3)">עצירת אנימציות</button></span></div></footer>
+
+<dialog id="lg" style="border:0;border-radius:18px;max-width:min(720px,calc(100vw - 24px));padding:0"><div style="padding:28px;max-height:80vh;overflow:auto"><button class="mini" type="button" data-close style="float:left">סגירה</button><h3 id="lgT" style="font-size:28px;margin-bottom:12px"></h3><div id="lgTxt" style="white-space:pre-wrap;color:var(--mute)"></div></div></dialog>
+
+<div class="adm" id="adm" role="dialog" aria-modal="true" aria-label="מרכז הבקרה">
+ <nav><b>מרכז הבקרה</b>
+  <button class="tab on" type="button" data-t="orders">הזמנות</button>
+  <button class="tab" type="button" data-t="plans">חבילות ומחירים</button>
+  <button class="tab" type="button" data-t="close">סגירה ✕</button>
+ </nav>
+ <main id="admMain"></main>
+</div>

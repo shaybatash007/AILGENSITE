@@ -1,0 +1,217 @@
+{
+  "transcript": "2df1a166-85b4-5d31-ba5e-f32d5aacf9de.jsonl",
+  "prices": {
+    "claude-opus-5-5": {
+      "in": 4,
+      "out": 20,
+      "read": 0.2
+    },
+    "claude-opus-5": {
+      "in": 5,
+      "out": 25,
+      "read": 0.5
+    },
+    "claude-fable-5-1": {
+      "in": 10,
+      "out": 50,
+      "read": 0.25
+    },
+    "claude-sonnet-5": {
+      "in": 2,
+      "out": 10,
+      "read": 0.2
+    },
+    "claude-haiku-4-5": {
+      "in": 1,
+      "out": 5,
+      "read": 0.1
+    }
+  },
+  "rows": [
+    {
+      "phase": "0-brief",
+      "note": "user request received (approx)",
+      "from": 1790509530000,
+      "to": 1790509805060,
+      "calls": 8,
+      "input": 16,
+      "write5m": 0,
+      "write1h": 100907,
+      "read": 2863262,
+      "output": 13552,
+      "thinking": 7654,
+      "cost": 1.6510124000000002,
+      "modelMs": 135745,
+      "toolMs": 16267,
+      "waitMs": 121508,
+      "tools": {
+        "Bash": 6,
+        "Skill": 1,
+        "Write": 1
+      },
+      "maxContext": 782793,
+      "wallMs": 275060,
+      "avgContext": 370523
+    },
+    {
+      "phase": "1-intake",
+      "note": "crawl talorkaradi.co.il",
+      "from": 1790509805115,
+      "to": 1790510239780,
+      "calls": 28,
+      "input": 56,
+      "write5m": 0,
+      "write1h": 74297,
+      "read": 4642008,
+      "output": 20863,
+      "thinking": 9020,
+      "cost": 1.9402616000000001,
+      "modelMs": 218008,
+      "toolMs": 215254,
+      "waitMs": 218,
+      "tools": {
+        "Bash": 21,
+        "TaskCreate": 6,
+        "Read": 5,
+        "Write": 2
+      },
+      "maxContext": 204257,
+      "wallMs": 434665,
+      "avgContext": 168441
+    },
+    {
+      "phase": "2-brand",
+      "note": "symbol vector, palette, fonts, icons",
+      "from": 1790510239844,
+      "to": 1790510397252,
+      "calls": 12,
+      "input": 24,
+      "write5m": 0,
+      "write1h": 23158,
+      "read": 2566918,
+      "output": 13231,
+      "thinking": 5602,
+      "cost": 0.9633636,
+      "modelMs": 135580,
+      "toolMs": 19686,
+      "waitMs": 717,
+      "tools": {
+        "Bash": 8,
+        "Read": 4,
+        "TaskUpdate": 2,
+        "Artifact": 1
+      },
+      "maxContext": 227415,
+      "wallMs": 157408,
+      "avgContext": 215842
+    },
+    {
+      "phase": "3-site",
+      "note": "site: live artifact + static",
+      "from": 1790510397302,
+      "to": 1790511378044,
+      "calls": 27,
+      "input": 54,
+      "write5m": 0,
+      "write1h": 129943,
+      "read": 8519013,
+      "output": 99397,
+      "thinking": 28066,
+      "cost": 4.7315026,
+      "modelMs": 862519,
+      "toolMs": 112501,
+      "waitMs": 4025,
+      "tools": {
+        "TaskUpdate": 2,
+        "Skill": 1,
+        "Bash": 16,
+        "Write": 5,
+        "Read": 5
+      },
+      "maxContext": 357358,
+      "wallMs": 980742,
+      "avgContext": 320334
+    },
+    {
+      "phase": "4-film",
+      "note": "spin motif + film.json + renders",
+      "from": 1790511378099,
+      "to": 1790511520000,
+      "calls": 9,
+      "input": 18,
+      "write5m": 0,
+      "write1h": 22015,
+      "read": 3308152,
+      "output": 11970,
+      "thinking": 4995,
+      "cost": 1.0772224000000001,
+      "modelMs": 110944,
+      "toolMs": 21149,
+      "waitMs": 0,
+      "tools": {
+        "Bash": 8,
+        "Read": 1
+      },
+      "maxContext": 379373,
+      "wallMs": 141901,
+      "avgContext": 370021
+    },
+    {
+      "phase": "5-product",
+      "note": "AILGEN studio page (simulation, pricing, domain, orders) while renders run; also film packaging + campaign README",
+      "from": 1790511520000,
+      "to": 1790512280654,
+      "calls": 29,
+      "input": 58,
+      "write5m": 0,
+      "write1h": 89055,
+      "read": 12492980,
+      "output": 64385,
+      "thinking": 14426,
+      "cost": 4.4989680000000005,
+      "modelMs": 586909,
+      "toolMs": 171340,
+      "waitMs": 324,
+      "tools": {
+        "Bash": 18,
+        "Write": 6,
+        "TaskUpdate": 2,
+        "Read": 3,
+        "ToolSearch": 1,
+        "WebSearch": 5,
+        "WebFetch": 1
+      },
+      "maxContext": 468428,
+      "wallMs": 760654,
+      "avgContext": 433865
+    }
+  ],
+  "total": {
+    "phase": "TOTAL",
+    "calls": 113,
+    "input": 226,
+    "write5m": 0,
+    "write1h": 439375,
+    "read": 34392333,
+    "output": 223398,
+    "thinking": 69763,
+    "cost": 14.8623306,
+    "modelMs": 2049705,
+    "toolMs": 556197,
+    "waitMs": 126792,
+    "wallMs": 2750430,
+    "maxContext": 782793
+  },
+  "tools": {
+    "Bash": 77,
+    "Skill": 2,
+    "Write": 14,
+    "TaskCreate": 6,
+    "Read": 18,
+    "TaskUpdate": 6,
+    "Artifact": 1,
+    "ToolSearch": 1,
+    "WebSearch": 5,
+    "WebFetch": 1
+  }
+}

@@ -1,0 +1,202 @@
+{
+ "name": "קבוצת טלאור כראדי",
+ "lang": "he",
+ "fps": 30,
+ "fonts": "fonts/fonts.css",
+ "type": {
+  "display": "Rubik",
+  "displayWeight": 800,
+  "body": "Rubik",
+  "bodyWeight": 500,
+  "num": "IBM Plex Mono",
+  "numWeight": 600
+ },
+ "colors": {
+  "bg": "#0B1B2E",
+  "surface": "#112841",
+  "paper": "#F4F5F0",
+  "ink": "#0B1B2E",
+  "inkMuted": "#5A6670",
+  "text": "#FFFFFF",
+  "muted": "#AFC0D0",
+  "accent": "#C9F03A",
+  "accent2": "#3FA3DC",
+  "accentInk": "#0B1B2E",
+  "line": "rgba(255,255,255,.14)",
+  "real": "#9ACB63",
+  "render": "#3FA3DC"
+ },
+ "logo": {
+  "light": "img/logo-light.png",
+  "dark": "img/logo-dark.png"
+ },
+ "motif": "spin",
+ "motifColors": [
+  "#9ACB63",
+  "#3FA3DC",
+  "#C9F03A",
+  "#2560A8"
+ ],
+ "highlight": "marker",
+ "transition": 0.5,
+ "audio": {
+  "mood": "tech"
+ },
+ "labels": {
+  "real": "מהשטח"
+ },
+ "scenes": [
+  {
+   "type": "hook",
+   "dur": 3.0,
+   "image": "/talorkaradi/img/demo1.webp",
+   "tag": "real",
+   "wash": 0.35,
+   "lines": [
+    "כל פרויקט בנייה",
+    "משאיר אחריו *פסולת.*"
+   ],
+   "strike": "פסולת."
+  },
+  {
+   "type": "reveal",
+   "dur": 3.3,
+   "logo": true,
+   "title": [
+    "מה שיוצא מהאתר,",
+    "*חוזר לבנות.*"
+   ]
+  },
+  {
+   "type": "stat",
+   "dur": 3.4,
+   "theme": "light",
+   "headline": [
+    "*מעל 90%*",
+    "חוזר לבנייה."
+   ],
+   "value": 90,
+   "display": "90%+",
+   "unit": "",
+   "label": "מהפסולת שמגיעה למפעלים ממוחזרת",
+   "compare": {
+    "label": "להטמנה",
+    "value": 10,
+    "display": "עד 10%"
+   },
+   "label2": "למיחזור"
+  },
+  {
+   "type": "gallery",
+   "dur": 6.2,
+   "headline": "המעגל, בארבעה שלבים",
+   "items": [
+    {
+     "image": "/talorkaradi/img/container.webp",
+     "title": "פינוי",
+     "sub": "מעל 1,000 מכולות",
+     "tag": "real"
+    },
+    {
+     "image": "/talorkaradi/img/hero.webp",
+     "title": "מיחזור",
+     "sub": "3 מפעלים",
+     "tag": "real"
+    },
+    {
+     "image": "/talorkaradi/img/stack.webp",
+     "title": "השבחה",
+     "sub": "סומסום, עדש וחול שטוף",
+     "tag": "real"
+    },
+    {
+     "image": "/talorkaradi/img/concrete.webp",
+     "title": "בנייה",
+     "sub": "50,000 מ\"ק בטון בחודש",
+     "tag": "real"
+    }
+   ]
+  },
+  {
+   "type": "quote",
+   "dur": 3.4,
+   "theme": "light",
+   "kicker": "וכך המעגל נסגר",
+   "text": "אותה פסולת בניין יוצאת מהאתר בחלק ממיגונית, שתפקידה להציל חיים.",
+   "who": "קבוצת טלאור כראדי",
+   "where": "פארק דרום ירוק",
+   "stars": 0
+  },
+  {
+   "type": "cards",
+   "dur": 3.4,
+   "headline": [
+    "הכול תחת",
+    "*קורת גג אחת.*"
+   ],
+   "cards": [
+    {
+     "icon": "img/i-pin.svg",
+     "value": 5,
+     "display": "5",
+     "unit": "",
+     "label": "מתקנים בדרום ובמרכז"
+    },
+    {
+     "icon": "img/i-container.svg",
+     "value": 1000,
+     "display": "1,000+",
+     "unit": "",
+     "label": "מכולות"
+    },
+    {
+     "icon": "img/i-truck.svg",
+     "value": 40,
+     "display": "~40",
+     "unit": "",
+     "label": "משאיות"
+    },
+    {
+     "icon": "img/i-calendar.svg",
+     "value": "2008",
+     "display": "2008",
+     "unit": "",
+     "label": "מאז"
+    }
+   ]
+  },
+  {
+   "type": "cta",
+   "dur": 4.3,
+   "headline": [
+    "מאזן פסולת",
+    "להיתר ולטופס 4"
+   ],
+   "button": "חשבו באתר",
+   "sub": [
+    "מוקד ‎*9084",
+    "talorkaradi.co.il"
+   ]
+  }
+ ],
+ "stills": [
+  {
+   "name": "feed-4x5",
+   "w": 1080,
+   "h": 1350,
+   "t": 8.4
+  },
+  {
+   "name": "square-1x1",
+   "w": 1080,
+   "h": 1080,
+   "t": 12.4
+  },
+  {
+   "name": "story-9x16",
+   "w": 1080,
+   "h": 1920,
+   "t": 24.8
+  }
+ ]
+}

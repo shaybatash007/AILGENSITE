@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>מכונת העסקים של AILGEN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@700;900&family=IBM+Plex+Sans+Hebrew:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+ --bg:#F4F5FA;--surface:#FFFFFF;--ink:#0B1036;--text:#1A2050;--mute:#5A6090;--line:#DADDF0;--ultra:#3F52E0;--amber:#E08A00;--amberBg:#FFF1D9;--ok:#1C8A5A;--okBg:#E3F5EC;--warn:#A3261A;--warnBg:#FBE9E7;
+ --display:'Frank Ruhl Libre',Georgia,serif;--body:'IBM Plex Sans Hebrew',system-ui,Arial,sans-serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0B1036;--surface:#131A4A;--ink:#F1F2FB;--text:#DCE0F5;--mute:#A9AFD6;--line:#28306E;--ultra:#8C9BFF;--amber:#FFB23E;--amberBg:#3A2C12;--ok:#5FD3A0;--okBg:#12352A;--warn:#FF9C8F;--warnBg:#3A1A18;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0B1036;--surface:#131A4A;--ink:#F1F2FB;--text:#DCE0F5;--mute:#A9AFD6;--line:#28306E;--ultra:#8C9BFF;--amber:#FFB23E;--amberBg:#3A2C12;--ok:#5FD3A0;--okBg:#12352A;--warn:#FF9C8F;--warnBg:#3A1A18;color-scheme:dark}
+*,*::before,*::after{box-sizing:inherit}
+html{overflow-x:clip;scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:400 16.5px/1.75 var(--body);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin-inline:auto;padding-inline:clamp(16px,4vw,36px);padding-block:48px 90px}
+h1,h2,h3{font-family:var(--display);color:var(--ink);line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(38px,5.4vw,64px);font-weight:900}
+h2{font-size:clamp(28px,3.4vw,40px);font-weight:900;margin-top:64px;padding-top:24px;border-top:1.5px solid var(--ink)}
+h3{font-size:22px;font-weight:700;margin-top:32px}
+p{margin:12px 0 0;max-width:72ch}
+a{color:var(--ultra)}
+.k{font:600 12px var(--mono);letter-spacing:.14em;color:var(--ultra)}
+.lede{font-size:clamp(17px,1.6vw,20px);color:var(--mute);margin-top:16px}
+.meta{display:flex;flex-wrap:wrap;gap:8px 20px;font:500 13px var(--mono);color:var(--mute);margin-top:18px}
+nav.toc{margin-top:26px;display:flex;flex-wrap:wrap;gap:8px}
+nav.toc a{font-size:14px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);text-decoration:none;color:var(--text);background:var(--surface)}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:28px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+.tile b{display:block;font:600 clamp(24px,3vw,32px)/1.1 var(--mono);color:var(--ink);direction:ltr;text-align:right}
+.tile span{display:block;color:var(--mute);font-size:14px;margin-top:6px;line-height:1.4}
+.note{margin-top:18px;padding:14px 16px;border-radius:12px;background:var(--amberBg);border-inline-start:4px solid var(--amber);font-size:15.5px;max-width:none}
+.good{background:var(--okBg);border-inline-start-color:var(--ok)}
+.tw{overflow-x:auto;margin-top:18px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{width:100%;border-collapse:collapse;font-size:15px;min-width:640px}
+th,td{padding:10px 12px;text-align:right;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--mute);font-size:13.5px;background:color-mix(in srgb,var(--bg) 60%,var(--surface))}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;direction:ltr;text-align:left;white-space:nowrap}
+tr.tot td{font-weight:700;border-bottom:0}
+.chart{margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+.chart svg{width:100%;height:auto;display:block}
+.chart .lg{display:flex;flex-wrap:wrap;gap:14px;font-size:13.5px;color:var(--mute);margin-top:8px}
+.chart .lg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-inline-end:6px;vertical-align:-1px}
+ol.clean,ul.clean{padding-inline-start:20px;margin:12px 0 0;display:grid;gap:8px;max-width:78ch}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+.card h3{margin-top:0;font-size:20px}
+.card p{font-size:15.5px}
+.chk{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:8px}
+.chk li{display:grid;grid-template-columns:22px 1fr;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.chk li::before{content:"";width:16px;height:16px;border:2px solid var(--ultra);border-radius:4px;margin-top:5px}
+.chk b{color:var(--ink)}
+pre.mermaid{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto;direction:ltr;margin-top:18px}
+blockquote{margin:18px 0 0;padding:18px 20px;border-radius:14px;background:var(--surface);border:1px solid var(--line);font-size:15.5px}
+blockquote p{margin-top:8px}
+.src{font-size:13.5px;color:var(--mute)}
+.src li{margin-bottom:4px}
+code{font-family:var(--mono);font-size:.92em;background:color-mix(in srgb,var(--line) 45%,transparent);padding:1px 5px;border-radius:5px;direction:ltr;unicode-bidi:isolate}
+@media (max-width:760px){.tiles{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<p class="k">AILGEN · דוח ריצה ותוכנית מוצר · 27.9.2026</p>
+<h1>מכונת העסקים של AILGEN</h1>
+<p class="lede">בנינו עסק דיגיטלי שלם לקבוצת טלאור כראדי מתוך קישור אחד, ובאותה ריצה מדדנו כל דקה, כל טוקן וכל שקל. כאן: מה נבנה, כמה זה עלה באמת, איפה המכונה מאטה, איך מאיצים בלי לפגוע באיכות, ואיך הופכים את זה למוצר שכל עסק יכול לקנות, לשלם עליו ולחבר לדומיין.</p>
+<div class="meta"><span>הקלט: talorkaradi.co.il</span><span>המדידה: scripts/meter.mjs על הלוג של הסשן</span><span>המחירים: Claude API, ‏Opus 5.5</span></div>
+<nav class="toc" aria-label="תוכן"><a href="#sum">בקצרה</a><a href="#built">מה נבנה</a><a href="#meter">המדידה</a><a href="#speed">האצה</a><a href="#control">שליטה</a><a href="#product">המוצר</a><a href="#money">כסף</a><a href="#domain">דומיינים</a><a href="#legal">חוק</a><a href="#todo">מה עליך להקים</a><a href="#road">מפת דרכים</a><a href="#prompt">הפרומפט</a></nav>
+
+<h2 id="sum">בקצרה</h2>
+<div class="tiles" id="tiles"></div>
+<ol class="clean">
+ <li><b>המכונה עובדת מקצה לקצה.</b> מקישור לאתר עם מרכז בקרה וסוכן, סמל בווקטור, סרטון 26 שניות ב-2 יחסי מסך, 3 מודעות וטקסטים, ב-33 דקות עבודה של הסוכן ו-10.36$ עלות מחשוב.</li>
+ <li><b>הכסף הולך על קונטקסט, לא על כתיבה.</b> 69% מהעלות היא קריאה וכתיבה של מטמון: כל קריאה למודל קוראת מחדש את כל השיחה. סשן נקי לכל לקוח הוא החיסכון הגדול ביותר.</li>
+ <li><b>הזמן הולך על כתיבת קוד האתר.</b> האתר לקח 16 מתוך 33 הדקות ו-62% מטוקני הפלט. מנוע אתרים (כמו מנוע הסרטונים) יוריד את השלב לכ-6 דקות.</li>
+ <li><b>האיכות נשמרת בשערים, לא בזמן.</b> כל שלב נגמר בבדיקה אמיתית (צילומי מסך בנייד ובדסקטופ, אפס שגיאות, תוויות "מהשטח"). ההאצה נוגעת רק במה שהמכונה עושה בין השערים.</li>
+ <li><b>המוצר כבר חי כהדגמה.</b> עמוד הסטודיו מראה ללקוח את תהליך היצירה, מייצר טיוטת מותג מתיאור או משם בעזרת Claude, ומקבל הזמנות. חסרים סליקה, אחסון לאתרי הלקוחות ורשם דומיינים, ואלה ההחלטות שלך.</li>
+</ol>
+
+<h2 id="built">מה נבנה לטלאור כראדי</h2>
+<p>הקונספט: <b>"המעגל נסגר. מה שיוצא מהאתר, חוזר לבנות."</b> ארבעת הלהבים של הסמל הם ארבעת שלבי העבודה של הקבוצה: פינוי, מיחזור, השבחה, בנייה. המשפט שלהם עצמם, מהעמוד של פארק דרום ירוק, סוגר את הסיפור: פסולת בניין שיוצאת מהאתר חוזרת בחלק ממיגונית שמצילה חיים.</p>
+<div class="tw"><table>
+<thead><tr><th>תוצר</th><th>מה יש בו</th><th>איפה</th></tr></thead>
+<tbody>
+<tr><td>אתר חדש</td><td>כניסה שבה הלהבים ננעלים לסמל; הסמל בנוי מ-4 צילומי שטח; "המעגל" האינטראקטיבי; 9 שירותים עם דיאלוג פרטים; <b>מאזן פסולת</b> להיתר ולטופס 4 לפי הנוסחאות מהמדריך שלהם, כ"תעודת שקילה"; מפת 5 מתקנים; פרויקטים מהיוטיוב שלהם; ציר זמן; שאלות נפוצות; מוקד דיגיטלי (סוכן AI); טופס; נגישות ומדיניות; מרכז בקרה (פניות, תוכן, שאלות, פרויקטים, המלצות, סוכן)</td><td class="n">talorkaradi/</td></tr>
+<tr><td>מותג</td><td>הסמל שורטט מחדש בווקטור מתוך תמונה של 1983px; פלטה עם בדיקת ניגודיות (כל הזוגות AA ומעלה); Rubik ו-IBM Plex Mono; פאביקון ואייקון לאפליקציה; החלטה: בלי דמות (B2B, האמון מגיע מנתונים)</td><td class="n">projects/talorkaradi/</td></tr>
+<tr><td>סרטון וקמפיין</td><td>26.9 שניות, 9:16 ו-4:5, פסקול מקורי ‎-13.4 LUFS, מוטיב חדש <code>spin</code> מהסמל; 3 סטילס; 3 טקסטים ראשיים, 5 כותרות, קהל ו-UTM</td><td class="n">campaigns/talorkaradi/</td></tr>
+<tr><td>דף עובדות</td><td>כל מספר באתר ובסרטון עם העמוד שממנו הגיע. אין המלצות, מחירים או לקוחות מומצאים</td><td class="n">projects/talorkaradi/facts.md</td></tr>
+</tbody></table></div>
+<p class="note">האתר של טלאור כראדי נמצא בריפו ולא פורסם כקישור חי. הוא נושא את השם והמיתוג של חברה אמיתית ואוסף פניות בשמה, ולכן קישור חי יעלה רק אחרי שתאשר שיש לך הסכמה של הקבוצה. אחרי האישור, אותם קבצים עולים לתצוגה או ישר לדומיין שלהם.</p>
+
+<h2 id="meter">המדידה</h2>
+<p>כל קריאה למודל נרשמת בלוג של הסשן עם שעה ושימוש בטוקנים. הכלי <code>scripts/meter.mjs</code> מחלק את הלוג לפי סימוני השלבים ב-<code>meter.jsonl</code>, ומחשב זמן קיר, זמן מודל, זמן כלים, קריאות, גודל קונטקסט ועלות לפי המחירון של Claude API.</p>
+<div class="tw"><table id="phaseT"></table></div>
+<div class="chart"><svg id="chT" viewBox="0 0 900 250" role="img" aria-label="זמן לכל שלב: זמן מודל וזמן כלים"></svg><div class="lg"><span><i style="background:#3F52E0"></i>זמן מודל (חשיבה וכתיבה)</span><span><i style="background:#FFB23E"></i>זמן כלים (סריקה, בדיקות, רינדור קצר)</span></div></div>
+<div class="chart"><svg id="chC" viewBox="0 0 900 120" role="img" aria-label="פירוק עלות הבנייה: קריאת מטמון, כתיבת מטמון, פלט"></svg></div>
+<ul class="clean">
+ <li><b>הרינדור לא על הנתיב הקריטי.</b> 9:16 עם פסקול: 356 שניות. ‏4:5: ‏268 שניות. סטילס: 4 שניות. כל זה רץ ברקע בזמן שהסוכן בנה את עמוד המוצר.</li>
+ <li><b>הסריקה מנומסת בכוונה.</b> 30 עמודים ו-82 תמונות ב-3:01 דקות, עם השהיה של 1.2 שניות בין בקשות. אסור לעקוף הגבלות של אתר, ולכן גם לא מאיצים את זה. הסריקה יכולה לרוץ ברקע בזמן שהמודל מתחיל לעבוד.</li>
+ <li><b>שיפורים חד-פעמיים כלולים במספרים.</b> כלי המדידה, מוטיב <code>spin</code> במנוע הסרטונים ותיקוני המנוע נבנו בתוך הריצה הזו. בלקוח הבא הם כבר קיימים.</li>
+ <li><b>השוואה לסשן הקודם באותו יום:</b> לפני כיווץ השיחה, קריאה ממוצעת קראה 491K טוקנים של קונטקסט. אחרי הכיווץ: 308K. אותה עבודה, בערך 37% פחות קונטקסט לכל קריאה.</li>
+</ul>
+
+<h2 id="speed">איך מאיצים בלי לפגוע באיכות</h2>
+<p>הכלל: מאיצים את מה שהמכונה עושה <b>בין</b> השערים, ולא נוגעים בשערים עצמם. כל מנוף כאן מוריד זמן או כסף בלי להוריד בדיקה.</p>
+<div class="tw"><table>
+<thead><tr><th>#</th><th>מנוף</th><th>מה משתנה</th><th>חיסכון (הערכה)</th><th>השפעה על האיכות</th></tr></thead>
+<tbody>
+<tr><td class="n">1</td><td><b>סשן נקי לכל לקוח</b></td><td>הסשן מתחיל מהסקיל והתדריך בלבד, בלי היסטוריה של לקוחות קודמים. הקונטקסט הממוצע יורד מכ-260K לכ-120K</td><td>כ-40% מהעלות</td><td>אין. כל הידע נמצא בסקיל ובקבצים</td></tr>
+<tr><td class="n">2</td><td><b>מנוע אתרים</b></td><td>האתר נבנה מקובץ הגדרות (<code>site.json</code>) וספריית סקשנים, כמו <code>film.json</code>. הסוכן כותב תוכן והחלטות, לא 125KB קוד</td><td>שלב האתר מ-16 לכ-6 דקות, פלט מ-99K לכ-30K טוקנים</td><td>משפר עקביות. הייחודיות נשמרת בכלי ההוכחה ובכניסה, שנבנים ביד</td></tr>
+<tr><td class="n">3</td><td><b>עבודה במקביל</b></td><td>סריקה, רינדור ובדיקות מסך רצים ברקע בזמן שהמודל עובד (כבר נעשה כאן לרינדור)</td><td>10–13 דקות מהנתיב הקריטי</td><td>אין</td></tr>
+<tr><td class="n">4</td><td><b>מטמון של 5 דקות</b></td><td>בצנרת API משלנו: כתיבה למטמון ב-1.25× במקום 2× (כאן כל הכתיבה הייתה לשעה)</td><td>כ-37% מעלות הכתיבה (1$ ללקוח)</td><td>אין</td></tr>
+<tr><td class="n">5</td><td><b>מודל זול לקריאה</b></td><td>Haiku 4.5 מסכם את 185KB התוכן של האתר הישן לדף עובדות, ו-Opus בודק</td><td>קטן עד בינוני</td><td>נמוכה, כי Opus מאמת כל מספר מול המקור</td></tr>
+<tr><td class="n">6</td><td><b>Batch API</b></td><td>וריאציות קופי, כותרות ותיאורי תמונות בחצי מחיר, כשלא צריך תשובה מיידית</td><td>50% על החלק הזה</td><td>אין</td></tr>
+<tr><td class="n">7</td><td><b>Fast mode להזמנה דחופה</b></td><td>אותו מודל, עד פי 2.5 מהירות פלט, פי 2 מחיר</td><td>זמן, לא כסף</td><td>אין</td></tr>
+</tbody></table></div>
+<p class="note good"><b>ההערכה ללקוח הבא</b> (מנופים 1–4): כ-18–20 דקות עבודה של הסוכן, ועלות מחשוב של כ-5–6$ במקום 10.36$. זו הערכה ולא מדידה. הריצה הבאה תימדד באותו כלי, ונדע.</p>
+<h3>מה מעצים את האיכות (ולא עולה זמן)</h3>
+<ul class="clean">
+ <li>בדיקת מסך אוטומטית אחרי כל בנייה: דסקטופ ונייד, גלילה לצדדים, שגיאות בקונסול. כאן היא תפסה כותרת שלא נצמדה בנייד וטופס שחרג ברוחב, ושניהם תוקנו לפני המסירה.</li>
+ <li>דף עובדות לפני המילה הראשונה: כל מספר עם עמוד מקור. הסוכן באתר מקבל רק את העובדות האלה, ולכן לא ממציא.</li>
+ <li>ספריית מוטיבים שגדלה מכל לקוח: <code>spin</code> נולד מהסמל של טלאור כראדי, והוא זמין מעכשיו לכל מותג עם לוגו עגול.</li>
+</ul>
+
+<h2 id="control">שליטה בזמן ובכסף</h2>
+<p>לכל שלב יש תקציב זמן וכסף, לפי הריצה שנמדדה ועוד 30% מרווח. כשריצה חורגת, היא נעצרת בשער ומחכה לאישור, במקום להמשיך בשקט.</p>
+<div class="tw"><table>
+<thead><tr><th>שלב</th><th>נמדד</th><th>תקציב היום</th><th>תקציב אחרי מנוע האתרים</th><th>השער</th></tr></thead>
+<tbody id="budgetT"></tbody></table></div>
+<blockquote><b>הפקודות</b>
+<p><code>node .claude/skills/ailgen-studio/scripts/meter.mjs --mark projects/&lt;slug&gt;/meter.jsonl --phase 3-site --ev start</code> פותח שלב.</p>
+<p><code>node .claude/skills/ailgen-studio/scripts/meter.mjs --marks projects/&lt;slug&gt;/meter.jsonl --json out.json</code> מפיק את הטבלה.</p>
+<p>הצעד הבא: מסך "ריצות" במרכז הבקרה של הסטודיו, שמראה כל הזמנה, באיזה שלב היא, כמה זמן וכסף עלתה, ואיזה שער מחכה לאישור.</p></blockquote>
+
+<h2 id="product">המוצר: מהזמנה לאתר באוויר</h2>
+<p>ככה זה נראה ללקוח (וכך זה כתוב בעמוד הסטודיו): ממלאים קישור, רעיון או שם; רואים את הסטודיו עובד; בוחרים חבילה; משלמים בקישור מאובטח; מאשרים תצוגה; האתר עולה לדומיין. מאחורי הקלעים:</p>
+<pre class="mermaid">
+flowchart LR
+  A[Studio page: link / idea / name] --> B[Order saved]
+  B --> C[Payment link: Israeli PSP, one-time + monthly]
+  C -->|webhook: paid| D[Cloud Claude Code session runs the ailgen-studio skill]
+  D --> E{Gate: human approves}
+  E -->|fix| D
+  E -->|ok| F[Deploy: Cloudflare Pages project per client]
+  F --> G[Leads + admin + agent: Worker + D1 + Claude API]
+  F --> H[Domain: new .co.il via accredited registrar, or connect existing]
+  H --> I[Live + handover + monthly subscription]
+</pre>
+<div class="two">
+ <div class="card"><h3>מה כבר קיים</h3><p>השיטה והסקיל (<code>ailgen-studio</code>), הסורק, מחלץ הפלטה, מוריד הפונטים, מנוע הסרטונים עם 7 מוטיבים, כלי המדידה, ועמוד הסטודיו עם הדגמה, מחירון וקבלת הזמנות.</p></div>
+ <div class="card"><h3>מה חסר כדי למכור</h3><p>סליקה עם הוראות קבע ו-webhook; אחסון לאתרי הלקוחות מחוץ ל-claude.ai (הטפסים, מרכז הבקרה והסוכן צריכים שרת קטן משלהם); תהליך דומיין; מסמכים משפטיים; ומנוע האתרים שיוריד את זמן הבנייה.</p></div>
+</div>
+<p class="note">בארטיפקט, מרכז הבקרה, הפניות והסוכן רצים על היכולות של claude.ai. באתר אמיתי על דומיין של לקוח הם צריכים צד שרת: Cloudflare Worker עם מסד D1 לפניות ולתוכן, כניסה לבעלים בקישור למייל, ומפתח Claude API בצד השרת בלבד לסוכן. זה הרכיב הטכני הראשון שכדאי לבנות.</p>
+
+<h2 id="money">כסף: מחירים, עלויות, סליקה</h2>
+<div class="tw"><table>
+<thead><tr><th>חבילה</th><th>חד-פעמי</th><th>חודשי</th><th>מה כולל</th></tr></thead>
+<tbody>
+<tr><td><b>נוכחות</b></td><td class="n">₪2,900</td><td class="n">₪149</td><td>אתר, אייקון ופלטה, מרכז בקרה, מוקד דיגיטלי, דומיין ו-HTTPS</td></tr>
+<tr><td><b>השקה</b></td><td class="n">₪5,900</td><td class="n">₪249</td><td>+ ערכת מותג, כלי הוכחה מותאם, סרטון 9:16 ו-4:5, 3 מודעות וטקסטים</td></tr>
+<tr><td><b>מותג חתימה</b></td><td class="n">₪12,900</td><td class="n">₪390</td><td>+ דמות, סצנת חתימה בסרטון, עמוד פרויקט, 2 סבבי תיקונים, קמפיין ראשון</td></tr>
+</tbody></table></div>
+<p>אלה המחירים שהצבתי בעמוד הסטודיו כהצעה, לפני מע"מ. ההחלטה שלך, ומשנים אותם במרכז הבקרה של העמוד בלי קוד.</p>
+<h3>למה המחירים האלה</h3>
+<ul class="clean">
+ <li><b>המחשוב זול:</b> כ-10$ לבנייה שנמדדה, וכ-5–6$ אחרי ההאצה.</li>
+ <li><b>הזמן האנושי יקר:</b> שערי הבדיקה, תיקונים עם הלקוח ותמיכה, כ-2–4 שעות לפרויקט. המחיר מתמחר בעיקר את זה ואת הערך ללקוח. זה גם צוואר הבקבוק האמיתי של כמה פרויקטים אפשר לעשות בחודש.</li>
+ <li><b>החודשי מכסה את האוויר:</b> באחסון של Cloudflare, דפים סטטיים חינמיים ובלי הגבלה. תוכנית Workers בתשלום עולה 5$ בחודש לחשבון כולו (לא לכל לקוח) וכוללת 10 מיליון בקשות. שיחה עם הסוכן על Haiku 4.5 (‏1$/5$ למיליון טוקנים), כ-6 הודעות עם 4K טוקני קונטקסט, עולה כ-0.03$ לפי חישוב מהמחירון. 300 שיחות בחודש: כ-9$.</li>
+</ul>
+<h3>סליקה וחשבוניות</h3>
+<ul class="clean">
+ <li><b>ספק סליקה ישראלי עם הוראות קבע ו-webhook</b> לחודשי ולחד-פעמי. לפי השוואות עדכניות: Grow (משולם) עם הקמה פשוטה ועמוד תשלום מתארח; Cardcom עם API ו-webhooks לחיובים חוזרים; Tranzila עם חיובים חוזרים, ביט, Apple Pay ו-Google Pay; PayPlus. כדאי לבקש הצעות עמלה משניים לפחות.</li>
+ <li><b>מע"מ 18%</b> מינואר 2025, ונשאר גם בתקציב 2026.</li>
+ <li><b>חשבונית ישראל:</b> מיוני 2026 חשבונית מס בין עסקים מעל ₪5,000 לפני מע"מ צריכה מספר הקצאה, אחרת הלקוח לא יכול לקזז מע"מ. החבילות "השקה" ו"מותג חתימה" מעל הסף, ולכן שירות החשבוניות חייב להפיק מספרי הקצאה, ועדיף מחובר לספק הסליקה.</li>
+</ul>
+
+<h2 id="domain">דומיינים: חדש או קיים</h2>
+<div class="two">
+ <div class="card"><h3>דומיין חדש</h3><p>סיומות ‎.il נרשמות רק דרך רשמים שמוסמכים על ידי איגוד האינטרנט הישראלי. הלקוח הוא בעל הדומיין, ו-AILGEN היא איש הקשר הטכני. בדוק אם לרשם שתבחר יש תוכנית משווקים או API, כדי שהרישום יהיה שלב בתהליך ההזמנה ולא עבודה ידנית.</p></div>
+ <div class="card"><h3>דומיין קיים</h3><p>ב-Cloudflare Pages, תת-דומיין כמו <code>www</code> מתחבר ברשומת CNAME אל <code>&lt;project&gt;.pages.dev</code>. הדומיין הראשי (בלי www) דורש להעביר את שרתי השמות ל-Cloudflare. לפני המעבר מעתיקים את רשומות המייל (MX) ואת רשומות ה-TXT, כדי שהמייל לא ייפגע. חלופה: הפניה מהדומיין הראשי ל-www אצל ספק ה-DNS הנוכחי.</p></div>
+</div>
+
+<h2 id="legal">חוק ואחריות</h2>
+<ul class="clean">
+ <li><b>תיקון 13 לחוק הגנת הפרטיות</b> (בתוקף מ-14 באוגוסט 2025): הודעה ברורה בנקודת האיסוף, הסכמה מפורשת ונפרדת, קישור למדיניות ליד כפתור השליחה, ובלי "דפוסים אפלים". הטפסים שבנינו עומדים בזה: תיבת אישור שלא מסומנת מראש, וקישור למדיניות בתוך הטופס.</li>
+ <li><b>AILGEN מעבדת מידע בשם הלקוחות</b> (הפניות שלהם). צריך הסכם עיבוד מידע בכל חוזה.</li>
+ <li><b>נגישות:</b> האתרים נבנים לפי ת"י 5568 ו-WCAG AA, עם תפריט נגישות והצהרה. הלקוח צריך למלא את פרטי רכז הנגישות.</li>
+ <li><b>אמת:</b> תוויות "מהשטח" ו"הדמיה", בלי המלצות או מספרים מומצאים, וגילוי שהמוקד הדיגיטלי הוא AI. זה גם הגנה משפטית וגם יתרון מכירה.</li>
+ <li><b>בעלות:</b> האתר, התוכן והדומיין שייכים ללקוח. AILGEN שומרת את המנועים והשיטה.</li>
+</ul>
+
+<h2 id="todo">מה עליך להקים</h2>
+<ul class="chk">
+ <li><span><b>אישור מטלאור כראדי</b> להציג את האתר, לפרסם אותו ולהשתמש בו בתיק העבודות. אחרי זה: קישור תצוגה, חיבור לדומיין, הרצת הקמפיין.</span></li>
+ <li><span><b>עוסק מורשה או חברה, ורואה חשבון</b> (מע"מ, חשבוניות עם מספר הקצאה).</span></li>
+ <li><span><b>ספק סליקה</b> עם הוראות קבע, עמוד תשלום מתארח ו-webhook.</span></li>
+ <li><span><b>שירות חשבוניות</b> שמפיק מספרי הקצאה, מחובר לסליקה.</span></li>
+ <li><span><b>חשבון Cloudflare</b> (Pages ו-Workers בתשלום, 5$ בחודש) וארגון GitHub לאתרי הלקוחות.</span></li>
+ <li><span><b>מפתח Claude API</b> (Console) לסוכנים באתרי הלקוחות, עם מגבלת הוצאה חודשית.</span></li>
+ <li><span><b>חשבון אצל רשם ‎.co.il מוסמך</b>, אם אפשר עם תוכנית משווקים.</span></li>
+ <li><span><b>מסמכים:</b> תנאי שירות, מדיניות פרטיות ל-AILGEN, הסכם עיבוד מידע, ואישור שימוש בעבודה לתיק העבודות. כדאי שעורך דין יעבור עליהם.</span></li>
+ <li><span><b>ערוץ תמיכה</b> (וואטסאפ עסקי או מייל) ופרטי קשר לגיבוי במרכז הבקרה של עמוד הסטודיו.</span></li>
+</ul>
+
+<h2 id="road">מפת דרכים</h2>
+<div class="tw"><table>
+<thead><tr><th>מתי</th><th>מה</th><th>איך יודעים שזה עבד</th></tr></thead>
+<tbody>
+<tr><td>שבוע 1</td><td>אישור מטלאור כראדי; Worker ו-D1 לפניות, לתוכן ולסוכן; העלאה ל-Cloudflare Pages; חיבור הדומיין שלהם; הקמפיין</td><td>פנייה אמיתית מגיעה למרכז הבקרה מהדומיין שלהם</td></tr>
+<tr><td>שבועות 2–4</td><td>מנוע אתרים (<code>site.json</code> וספריית סקשנים); סליקה ו-webhook שמסמנים הזמנה "שולם"; מסך "ריצות" עם המדידה</td><td>לקוח שני נבנה ב-20 דקות ובפחות מ-6$, נמדד</td></tr>
+<tr><td>חודש 2</td><td>הזמנה משולמת מפעילה סשן ענן עם הסקיל; השערים מאושרים במסך; תבנית קליטה לדומיין</td><td>מהתשלום ועד תצוגה בלי עבודה ידנית חוץ מהשערים</td></tr>
+<tr><td>חודש 3</td><td>10 לקוחות ראשונים; מדידה לכל ריצה; עדכון המחירון לפי שעות אדם אמיתיות</td><td>רווח גולמי ושעות לפרויקט, מתוך הנתונים</td></tr>
+</tbody></table></div>
+
+<h2 id="prompt">הפרומפט המשודרג</h2>
+<blockquote>
+<p><b>תפקיד:</b> אתה הסטודיו של AILGEN. בונה עסק דיגיטלי שלם ללקוח אמיתי, ובאותה ריצה מודד ומשפר את המכונה שבונה אותו, כדי שתהפוך למוצר שכל אחד יכול לקנות.</p>
+<p><b>ללקוח:</b> אתר חדש ברמה של סוויצ׳ינג ו-AILGEN (קונספט מהלוגו, כלי הוכחה, מרכז בקרה, סוכן, נגישות), זהות (סמל בווקטור, פאביקון, פלטה, פונטים), סרטון השקה 9:16 ו-4:5 עם פסקול, 3 מודעות וקופי. אמת לפני וואו.</p>
+<p><b>למוצר:</b> מדידה של זמן, טוקנים וכסף לכל שלב מתוך הלוג; מה מאט ומה מאיצים בלי לפגוע באיכות; תקציבים ושערים; איך לקוח מזמין, רואה את היצירה, משלם, קונה או מחבר דומיין; עמוד מוצר חי באתר של AILGEN; דוח אחד שאפשר לשלוח לשותף.</p>
+<p><b>מוכן כש:</b> כל שער עובר, המספרים יוצאים מהמדידה, האתרים נפתחים בלי שגיאות בנייד ובדסקטופ, והסרטון נצפה עד הסוף עם סאונד.</p>
+</blockquote>
+
+<h2 id="links">קישורים וקבצים</h2>
+<ul class="clean">
+ <li>עמוד הסטודיו (חי): <a href="https://claude.ai/artifact/RgdAN2WDjEuDNhiZBMs7td" target="_blank" rel="noopener">סטודיו AILGEN</a></li>
+ <li>האתר של טלאור כראדי: <code>talorkaradi/</code> (מקור ב-<code>talorkaradi/src/</code>, בנייה ב-<code>build.sh</code>)</li>
+ <li>הקמפיין: <code>campaigns/talorkaradi/</code> · ערכת המותג, דף העובדות והמדידה: <code>projects/talorkaradi/</code></li>
+ <li>השיטה: <code>.claude/skills/ailgen-studio/</code> · המדידה: <code>scripts/meter.mjs</code></li>
+</ul>
+<h3>מקורות</h3>
+<ul class="src">
+ <li>מחירי Claude API ומכפילי המטמון: הסקיל claude-api (טבלת המודלים, prompt caching).</li>
+ <li><a href="https://www.autoflowr.co.il/compare/payment-gateways-israel-2026" target="_blank" rel="noopener">השוואת סליקה ישראלית 2026</a> · <a href="https://danielmashkov.com/insights/israeli-payment-gateways-comparison" target="_blank" rel="noopener">Tranzila vs Cardcom vs Meshulam</a></li>
+ <li><a href="https://en.isoc.org.il/il-cctld/how-to-choose-a-registrar" target="_blank" rel="noopener">איגוד האינטרנט הישראלי: בחירת רשם</a></li>
+ <li><a href="https://developers.cloudflare.com/pages/configuration/custom-domains/" target="_blank" rel="noopener">Cloudflare Pages: דומיין מותאם</a> · <a href="https://developers.cloudflare.com/workers/platform/pricing/" target="_blank" rel="noopener">Cloudflare Workers: מחירים</a></li>
+ <li><a href="https://www.vatupdate.com/2025/12/10/israel-approves-2026-budget-vat-stays-at-18-expands-exemptions-eases-bank-entry-rules/" target="_blank" rel="noopener">מע"מ 18% בתקציב 2026</a> · <a href="https://hacpa.net/en/allocation-numbers.html" target="_blank" rel="noopener">מספרי הקצאה והספים</a></li>
+ <li><a href="https://iapp.org/news/a/israel-marks-a-new-era-in-privacy-law-amendment-13-ushers-in-sweeping-reform" target="_blank" rel="noopener">IAPP: תיקון 13</a> · <a href="https://www.pearlcohen.com/israel-significant-amendment-to-the-privacy-law-takes-effect/" target="_blank" rel="noopener">Pearl Cohen: התיקון נכנס לתוקף</a></li>
+</ul>
+</div>
+<script>
+const PH=[
+ ['קריאת מצב ותוכנית',4.6,2.3,0.3,8,370523,13552,1.65,'5 דק׳ · 2$','5 דק׳ · 1$','תוכנית ודף שלבים'],
+ ['איסוף',7.2,3.6,3.6,28,168441,20863,1.94,'9 דק׳ · 2.5$','9 דק׳ · 1.5$','דף עובדות עם מקור לכל מספר'],
+ ['DNA של המותג',2.6,2.3,0.3,12,215842,13231,0.96,'4 דק׳ · 1.5$','4 דק׳ · 1$','ניגודיות AA, פאביקון קריא'],
+ ['אתר + מרכז בקרה + סוכן',16.3,14.4,1.9,27,320334,99397,4.73,'21 דק׳ · 6$','8 דק׳ · 2$','אפס שגיאות, 390px, מקלדת'],
+ ['סרטון (תסריט + בדיקה)',2.4,1.8,0.4,9,370021,11970,1.08,'4 דק׳ · 1.5$','4 דק׳ · 1$','גיליון מגע, ‎-14 LUFS']];
+const f=(n,d=1)=>n.toFixed(d), k=n=>Math.round(n/1000)+'K';
+const T=PH.reduce((a,p)=>{a.w+=p[1];a.m+=p[2];a.t+=p[3];a.c+=p[4];a.o+=p[6];a.$+=p[7];return a;},{w:0,m:0,t:0,c:0,o:0,$:0});
+document.getElementById('tiles').innerHTML=[[Math.round(T.w)+' min','עבודת הסוכן, מקישור לעסק שלם'],['$'+f(T.$,2),'עלות מחשוב (API) לבנייה'],[T.c,'קריאות למודל'],['10.5 min','רינדור סרטון, ברקע']].map(([v,l])=>`<div class="tile"><b>${v}</b><span>${l}</span></div>`).join('');
+document.getElementById('phaseT').innerHTML=`<thead><tr><th>שלב</th><th>זמן קיר (דק׳)</th><th>מודל</th><th>כלים</th><th>קריאות</th><th>קונטקסט ממוצע</th><th>פלט</th><th>עלות</th></tr></thead><tbody>${PH.map(p=>`<tr><td>${p[0]}</td><td class="n">${f(p[1])}</td><td class="n">${f(p[2])}</td><td class="n">${f(p[3])}</td><td class="n">${p[4]}</td><td class="n">${k(p[5])}</td><td class="n">${k(p[6])}</td><td class="n">$${f(p[7],2)}</td></tr>`).join('')}<tr class="tot"><td>סה״כ בנייה</td><td class="n">${f(T.w)}</td><td class="n">${f(T.m)}</td><td class="n">${f(T.t)}</td><td class="n">${T.c}</td><td class="n">261K</td><td class="n">${k(T.o)}</td><td class="n">$${f(T.$,2)}</td></tr></tbody>`;
+document.getElementById('budgetT').innerHTML=PH.map(p=>`<tr><td>${p[0]}</td><td class="n">${f(p[1])} min · $${f(p[7],2)}</td><td>${p[8]}</td><td>${p[9]}</td><td>${p[10]}</td></tr>`).join('');
+/* time chart: stacked model + tool minutes per phase, one scale */
+(function(){const svg=document.getElementById('chT'),W=900,H=250,L=190,R=20,top=14,bh=30,gap=14,max=18,sx=v=>(W-L-R)*v/max; const col=getComputedStyle(document.documentElement).getPropertyValue('--mute');
+ let s=''; for(let t=0;t<=max;t+=3){const x=W-L-sx(t); s+=`<line x1="${x}" y1="${top-4}" x2="${x}" y2="${top+PH.length*(bh+gap)-gap+4}" stroke="${col}" stroke-opacity=".25"/><text x="${x}" y="${H-6}" font-size="12" text-anchor="middle" fill="${col}" font-family="IBM Plex Mono">${t}</text>`;}
+ PH.forEach((p,i)=>{const y=top+i*(bh+gap), xm=W-L-sx(p[2]), xt=xm-sx(p[3]);
+  s+=`<text x="${W-L+12}" y="${y+bh/2+5}" font-size="14" fill="${col}" text-anchor="end" direction="rtl">${p[0]}</text><rect x="${xm}" y="${y}" width="${sx(p[2])}" height="${bh}" rx="4" fill="#3F52E0"/><rect x="${xt}" y="${y}" width="${sx(p[3])}" height="${bh}" rx="4" fill="#FFB23E"/><text x="${xt-6}" y="${y+bh/2+5}" font-size="12.5" text-anchor="end" direction="ltr" fill="${col}" font-family="IBM Plex Mono">${f(p[2]+p[3])} min</text>`;});
+ svg.innerHTML=s;})();
+/* cost split: cache reads $4.38, cache writes $2.80, output $3.18 (build phases) */
+(function(){const svg=document.getElementById('chC'),W=900,parts=[['קריאה ממטמון',4.38,'#3F52E0'],['כתיבה למטמון',2.80,'#8C9BFF'],['פלט (כולל חשיבה)',3.18,'#FFB23E']],tot=parts.reduce((a,p)=>a+p[1],0),col=getComputedStyle(document.documentElement).getPropertyValue('--mute');
+ let x=W,s=`<text x="${W}" y="16" font-size="14" text-anchor="start" fill="${col}" direction="rtl">פירוק עלות הבנייה ($${f(tot,2)})</text>`;
+ parts.forEach(([n,v,c])=>{const w=W*v/tot; x-=w; s+=`<rect x="${x+1}" y="28" width="${w-2}" height="36" rx="4" fill="${c}"/><text x="${x+w-8}" y="88" font-size="13" text-anchor="start" fill="${col}" direction="rtl">${n}</text><text x="${x+w-8}" y="108" font-size="13" text-anchor="end" direction="ltr" fill="${col}" font-family="IBM Plex Mono">$${f(v,2)} · ${Math.round(v/tot*100)}%</text>`;});
+ svg.innerHTML=s;})();
+</script>
+</body>
+</html>

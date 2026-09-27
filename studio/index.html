@@ -1,0 +1,709 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>סטודיו AILGEN</title>
+<meta name="description" content="נותנים לנו קישור, רעיון או שם, ומקבלים עסק דיגיטלי שלם: אתר עם מרכז בקרה וסוכן AI, אייקון, סרטון השקה ומודעות, מחובר לדומיין שלכם.">
+<meta name="theme-color" content="#070B2E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=IBM+Plex+Sans+Hebrew:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+ --ink:#070B2E;--night:#111A5A;--panel:#131C5E;--panel2:#1D2873;--paper:#F4F5FA;--surface:#FFFFFF;--text:#10163F;--mute:#59608A;--line:#DADDF0;
+ --mist:#AEB4D8;--soft:#C9CEEA;--amber:#FFB23E;--ultra:#3F52E0;--ok:#35C98A;
+ --display:'Frank Ruhl Libre',Georgia,'Times New Roman',serif;--body:'IBM Plex Sans Hebrew',system-ui,Arial,sans-serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+ --r:16px;--ease:cubic-bezier(.2,.7,.2,1);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#0B1036;--surface:#131A4A;--text:#E9ECFA;--mute:#AEB4D8;--line:#27306E;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#0B1036;--surface:#131A4A;--text:#E9ECFA;--mute:#AEB4D8;--line:#27306E;color-scheme:dark}
+*,*::before,*::after{box-sizing:inherit}
+html{overflow-x:clip;scroll-behavior:smooth;scroll-padding-top:80px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--text);font:400 17px/1.7 var(--body);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+[hidden]{display:none!important}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3,h4{font-family:var(--display);font-weight:900;line-height:1.05;margin:0;text-wrap:balance;letter-spacing:-.01em}
+p{margin:0}
+.wrap{max-width:1220px;margin-inline:auto;padding-inline:clamp(16px,4vw,40px)}
+.eyebrow{font:600 12.5px/1.2 var(--mono);letter-spacing:.14em;color:var(--ultra);display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:10px;height:10px;background:var(--amber);flex:none}
+.dark .eyebrow{color:var(--amber)}
+.sec{padding-block:clamp(72px,10vw,124px)}
+.sec h2{font-size:clamp(34px,4.6vw,60px);margin-top:14px}
+.lead{font-size:clamp(17px,1.5vw,20px);color:var(--mute);max-width:62ch;margin-top:14px}
+.dark{background:var(--ink);color:#EEF0FB;position:relative;isolation:isolate}
+.dark .lead{color:var(--mist)}
+:focus-visible{outline:3px solid var(--amber);outline-offset:3px;border-radius:6px}
+.skip{position:absolute;inset-inline-start:12px;top:-60px;z-index:200;background:var(--amber);color:var(--ink);padding:10px 16px;border-radius:10px;font-weight:700}
+.skip:focus{top:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 24px;border-radius:12px;border:0;background:var(--amber);color:var(--ink);font:700 16.5px/1 var(--body);text-decoration:none;cursor:pointer;transition:transform .2s var(--ease),box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px -14px rgba(255,178,62,.8)}
+.btn.ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 1.5px currentColor}
+.btn:disabled{opacity:.6;cursor:progress;transform:none}
+.mini{min-height:36px;padding:0 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);color:var(--text);font-weight:600;font-size:14px;cursor:pointer}
+.mini.warn{border-color:#E3A7A0;color:#A3261A}
+.lbl{display:inline-flex;align-items:center;gap:6px;font:600 11px/1 var(--mono);letter-spacing:.06em;padding:6px 9px;border-radius:999px;background:rgba(7,11,46,.78);color:#fff}
+.lbl::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok)}
+.lbl.demo::before{background:var(--amber)}
+
+/* header */
+.hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:60;color:#EEF0FB;transition:background .3s,color .3s,box-shadow .3s}
+.hdr.scrolled{background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(12px);color:var(--text);box-shadow:0 1px 0 var(--line)}
+.hdr .in{display:flex;align-items:center;gap:20px;height:70px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font:700 21px var(--body);letter-spacing:.04em}
+.logo svg{width:30px;height:32px}
+.logo small{font:500 13px var(--body);letter-spacing:0;opacity:.75;margin-inline-start:4px}
+.nav{display:flex;gap:4px;margin-inline-start:auto}
+.nav a{text-decoration:none;font-weight:500;font-size:15px;padding:8px 10px;border-radius:8px;opacity:.86}
+.nav a:hover{opacity:1;background:rgba(127,136,180,.16)}
+.hdr .cta{min-height:42px;padding:0 16px;font-size:15px}
+#admBtn{display:none}
+@media (max-width:980px){.nav{display:none}.hdr .cta{margin-inline-start:auto}}
+
+/* hero + launcher */
+.hero{margin-top:-70px;padding-top:120px;padding-bottom:40px;overflow:hidden;background:radial-gradient(1000px 600px at 20% 10%,#1D2873 0%,transparent 60%),var(--ink)}
+#pcv{position:absolute;inset:0;z-index:-1;width:100%;height:100%;opacity:.55}
+.hero h1{font-size:clamp(42px,6.4vw,92px);max-width:15ch}
+.hero h1 em{font-style:normal;color:var(--amber)}
+.hero .sub{font-size:clamp(17px,1.6vw,21px);color:var(--mist);max-width:56ch;margin-top:20px}
+.launch{margin-top:34px;background:rgba(19,28,94,.72);border:1px solid rgba(174,180,216,.22);border-radius:22px;padding:18px;max-width:880px;backdrop-filter:blur(8px)}
+.seg{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.seg button{min-height:42px;padding:0 16px;border-radius:10px;border:1px solid rgba(174,180,216,.3);background:transparent;color:#EEF0FB;font-weight:600;cursor:pointer}
+.seg button[aria-selected="true"]{background:#EEF0FB;color:var(--ink);border-color:#EEF0FB}
+.launch .row{display:flex;gap:10px;flex-wrap:wrap}
+.launch input,.launch textarea{flex:1 1 320px;min-height:56px;border-radius:12px;border:1.5px solid rgba(174,180,216,.35);background:rgba(7,11,46,.6);color:#fff;padding:0 16px;font-size:17px}
+.launch textarea{padding:14px 16px;min-height:96px;resize:vertical}
+.launch .hint{font-size:13.5px;color:var(--mist);margin-top:10px}
+.launch .ex{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.launch .ex button{min-height:34px;padding:0 12px;border-radius:999px;border:1px dashed rgba(174,180,216,.4);background:transparent;color:var(--mist);font-size:13.5px;cursor:pointer}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:340px 1fr;gap:22px;margin-top:40px}
+.stages{list-style:none;padding:0;margin:0;display:grid;gap:6px;align-content:start}
+.stages li{display:grid;grid-template-columns:30px 1fr auto;gap:10px;align-items:center;padding:12px 14px;border-radius:12px;background:rgba(19,28,94,.55);border:1px solid rgba(174,180,216,.14);transition:background .3s,border-color .3s}
+.stages li .st{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;font:600 12px var(--mono);background:rgba(174,180,216,.14);color:var(--mist)}
+.stages li b{font-size:15.5px;font-weight:600;display:block;line-height:1.3}
+.stages li small{display:block;color:var(--mist);font-size:12.5px;line-height:1.35}
+.stages li .tm{font:600 12px var(--mono);color:var(--mist);direction:ltr}
+.stages li.run{border-color:var(--amber);background:rgba(255,178,62,.1)}
+.stages li.run .st{background:var(--amber);color:var(--ink);animation:pulse 1s infinite}
+.stages li.done .st{background:var(--ok);color:var(--ink)}
+@keyframes pulse{50%{box-shadow:0 0 0 6px rgba(255,178,62,.18)}}
+.board{background:#0B1142;border:1px solid rgba(174,180,216,.18);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;min-height:560px}
+.board .bar{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid rgba(174,180,216,.14);font:500 13px var(--mono);color:var(--mist)}
+.board .bar i{width:10px;height:10px;border-radius:50%;background:var(--ok)}
+.board .bar .sp{margin-inline-start:auto}
+.log{font:500 12.5px/1.7 var(--mono);color:#C9CEEA;padding:12px 16px;max-height:132px;overflow:auto;border-bottom:1px solid rgba(174,180,216,.1);direction:rtl}
+.log p{margin:0}
+.log .k{color:var(--amber)}
+.out{padding:18px;display:grid;grid-template-columns:repeat(6,1fr);gap:14px;align-content:start}
+.card{background:rgba(19,28,94,.6);border:1px solid rgba(174,180,216,.16);border-radius:14px;padding:14px;animation:pop .5s var(--ease) both}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.98)}}
+.card h4{font:600 12px var(--mono);letter-spacing:.1em;color:var(--mist);margin-bottom:10px}
+.c2{grid-column:span 2}.c3{grid-column:span 3}.c4{grid-column:span 4}.c6{grid-column:span 6}
+.brief b{font:700 22px var(--display);display:block;color:#fff}
+.brief p{color:var(--mist);font-size:14.5px;margin-top:6px;line-height:1.5}
+.sw{display:flex;gap:6px}
+.sw span{flex:1;height:54px;border-radius:10px;position:relative}
+.sw span em{position:absolute;bottom:-18px;inset-inline:0;text-align:center;font:500 10.5px var(--mono);font-style:normal;color:var(--mist);direction:ltr}
+.spec b{display:block;font-size:34px;line-height:1.1;color:#fff}
+.spec small{color:var(--mist);font:500 12px var(--mono)}
+.icon{display:grid;place-items:center;gap:8px}
+.icon .ic{width:88px;height:88px;border-radius:22px;display:grid;place-items:center;overflow:hidden}
+.shot{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:16/10;background:#000}
+.shot img{width:100%;height:100%;object-fit:cover;object-position:top}
+.shot .lbl{position:absolute;bottom:8px;inset-inline-start:8px}
+.mock{border-radius:10px;overflow:hidden;aspect-ratio:16/10;display:flex;flex-direction:column;font-size:11px}
+.mock .mn{display:flex;align-items:center;gap:8px;padding:8px 12px;font-weight:700}
+.mock .mn i{width:14px;height:14px;border-radius:4px}
+.mock .mn span{margin-inline-start:auto;display:flex;gap:10px;font-weight:500;opacity:.7}
+.mock .mh{flex:1;display:grid;grid-template-columns:1.2fr .8fr;gap:10px;padding:10px 14px 14px;align-items:center}
+.mock .mh b{display:block;font-size:clamp(15px,1.8vw,22px);line-height:1.1}
+.mock .mh p{margin-top:6px;opacity:.8;font-size:11px;line-height:1.4}
+.mock .mh u{display:inline-block;margin-top:8px;padding:6px 10px;border-radius:8px;text-decoration:none;font-weight:700}
+.mock .tool{border-radius:10px;padding:10px;font-size:10.5px;line-height:1.35}
+.story{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.story div{aspect-ratio:9/16;border-radius:8px;padding:6px;font-size:10px;line-height:1.3;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden}
+.story div small{font:600 9px var(--mono);opacity:.7}
+.dom{display:grid;gap:8px}
+.dom div{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:10px;background:rgba(7,11,46,.6);font:500 14px var(--mono);direction:ltr}
+.dom div span{font:500 12px var(--body);color:var(--mist);direction:rtl}
+.board .foot{margin-top:auto;padding:14px 18px;border-top:1px solid rgba(174,180,216,.14);display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.board .foot p{font-size:13.5px;color:var(--mist);max-width:60ch}
+@media (max-width:980px){.pipe{grid-template-columns:1fr}.stages{grid-template-columns:1fr 1fr}.out{grid-template-columns:repeat(2,1fr)}.c2,.c3,.c4,.c6{grid-column:span 2}.story{grid-template-columns:repeat(4,1fr)}}
+@media (max-width:560px){.stages{grid-template-columns:1fr}}
+
+/* deliverables */
+.gets{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:44px}
+.get{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.get svg{width:34px;height:34px;color:var(--ultra)}
+.get h3{font:700 19px/1.3 var(--body);margin-top:12px}
+.get p{color:var(--mute);font-size:15px;margin-top:6px;line-height:1.55}
+@media (max-width:980px){.gets{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.gets{grid-template-columns:1fr}}
+
+/* how */
+.steps{list-style:none;padding:0;margin:44px 0 0;display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1.5px solid var(--text)}
+.steps li{padding:20px 18px 24px 0;border-inline-start:1px solid var(--line);padding-inline-start:18px}
+.steps li:first-child{border-inline-start:0;padding-inline-start:0}
+.steps .n{font:600 13px var(--mono);color:var(--ultra)}
+.steps b{display:block;font:700 19px var(--body);margin-top:6px}
+.steps p{color:var(--mute);font-size:15px;margin-top:6px;line-height:1.55}
+.steps .who{display:inline-block;margin-top:10px;font:600 11.5px var(--mono);padding:4px 8px;border-radius:6px;background:transparent;border:1px solid rgba(174,180,216,.35);color:var(--amber)}
+.dark .steps p{color:var(--mist)}
+.dark .steps li{border-color:rgba(174,180,216,.2)}
+@media (max-width:900px){.steps{grid-template-columns:1fr 1fr}.steps li:nth-child(odd){border-inline-start:0;padding-inline-start:0}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}.steps li{border-inline-start:0;padding-inline-start:0;border-bottom:1px solid var(--line)}}
+
+/* pricing */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px;align-items:stretch}
+.plan{background:var(--panel);border:1px solid rgba(174,180,216,.2);border-radius:20px;padding:26px;display:flex;flex-direction:column;gap:14px}
+.plan.hot{background:#EEF0FB;color:var(--ink);border-color:#EEF0FB;position:relative}
+.plan.hot::before{content:"הכי נבחר";position:absolute;top:-12px;inset-inline-start:22px;background:var(--amber);color:var(--ink);font:700 12px var(--body);padding:4px 10px;border-radius:999px}
+.plan h3{font-size:30px}
+.plan .pr{font:700 44px/1 var(--display)}
+.plan .pr small{font:500 15px var(--body);opacity:.75}
+.plan .mo{font:500 14px var(--mono);opacity:.8}
+.plan ul{list-style:none;padding:0;margin:0;display:grid;gap:8px;font-size:15.5px}
+.plan li{display:flex;gap:10px}
+.plan li::before{content:"";width:9px;height:9px;background:var(--amber);flex:none;margin-top:9px}
+.plan .btn{margin-top:auto}
+.plan:not(.hot) .btn{background:transparent;color:#EEF0FB;box-shadow:inset 0 0 0 1.5px rgba(238,240,251,.6)}
+.fineprint{font-size:13.5px;color:var(--mist);margin-top:20px;max-width:80ch}
+@media (max-width:980px){.plans{grid-template-columns:1fr}}
+
+/* domain */
+.doms{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:40px}
+.doms>*,.pipe>*,.plans>*,.cases>*,.gets>*{min-width:0}
+.dm{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px}
+.dm h3{font-size:26px}
+.dm ol{margin:14px 0 0;padding-inline-start:20px;display:grid;gap:8px;color:var(--mute)}
+.dns{margin-top:16px;border-radius:12px;overflow:auto;border:1px solid var(--line)}
+.dns table{width:100%;border-collapse:collapse;font:500 13.5px var(--mono);direction:ltr;min-width:420px}
+.dns th,.dns td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line)}
+.dns th{font-weight:600;color:var(--mute);background:var(--paper)}
+@media (max-width:860px){.doms{grid-template-columns:1fr}}
+
+/* proof */
+.cases{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px}
+.case{background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+.case .shot{border-radius:0}
+.case .b{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.case h3{font:700 20px var(--body)}
+.case p{color:var(--mute);font-size:15px;line-height:1.55}
+.case .tags{display:flex;flex-wrap:wrap;gap:6px}
+.case .tags span{font:600 11.5px var(--mono);padding:4px 8px;border-radius:6px;background:var(--paper)}
+.case a.go{margin-top:auto;font-weight:700;color:var(--ultra);text-decoration:none}
+@media (max-width:980px){.cases{grid-template-columns:1fr}}
+.meter{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:40px;border:1px solid rgba(174,180,216,.25);border-radius:18px;overflow:hidden}
+.meter div{padding:20px;border-inline-start:1px solid rgba(174,180,216,.18)}
+.meter div:first-child{border-inline-start:0}
+.meter b{display:block;font:600 clamp(26px,3vw,38px)/1 var(--mono);color:#fff;direction:ltr;text-align:right}
+.meter span{display:block;color:var(--mist);font-size:14px;margin-top:8px}
+.phase{margin-top:18px;overflow:auto;border-radius:14px;border:1px solid rgba(174,180,216,.2)}
+.phase table{width:100%;border-collapse:collapse;font:500 13.5px var(--mono);min-width:640px}
+.phase th,.phase td{padding:10px 14px;border-bottom:1px solid rgba(174,180,216,.12);text-align:right}
+.phase th{color:var(--mist);font-weight:600}
+.phase td.n{direction:ltr;text-align:left}
+@media (max-width:760px){.meter{grid-template-columns:1fr 1fr}.meter div:nth-child(3){border-inline-start:0}.meter div:nth-child(n+3){border-top:1px solid rgba(174,180,216,.18)}}
+
+/* faq, order */
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;padding:18px 0;font-weight:700;font-size:18px;display:flex;justify-content:space-between;gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font:500 24px/1 var(--mono);color:var(--ultra)}
+.faq details[open] summary::after{content:"–"}
+.faq details p{padding-bottom:18px;color:var(--mute);max-width:80ch}
+.order{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(24px,4vw,60px);margin-top:40px;align-items:start}
+.order>*{min-width:0}
+.form{background:var(--surface);color:var(--text);border-radius:22px;padding:clamp(20px,3vw,32px);display:grid;gap:14px}
+.form .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form label{font-weight:600;font-size:15px;display:block;margin-bottom:6px}
+.form input,.form select,.form textarea{width:100%;max-width:100%;min-width:0;min-height:50px;border-radius:12px;border:1.5px solid var(--line);background:var(--paper);padding:0 14px}
+.form textarea{min-height:90px;padding:12px 14px;resize:vertical}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{min-height:42px;padding:0 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--paper);cursor:pointer;font-weight:600}
+.opt[aria-pressed="true"]{border-color:var(--ultra);background:#E7EAFD;color:var(--ink)}
+.agree{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--mute)}
+.agree input{width:22px!important;min-height:22px!important;height:22px;flex:none;margin-top:2px;accent-color:var(--ultra)}
+.fnote{font-size:14.5px;min-height:1.4em}
+.fnote.err{color:#B3261E;font-weight:600}
+.sent{text-align:center;padding:14px 0;display:grid;justify-items:center;gap:10px}
+.sent h3{font-size:30px}
+.sent p{color:var(--mute)}
+.after{display:grid;gap:12px}
+.after div{padding:16px 18px;border-radius:14px;border:1px solid rgba(174,180,216,.22)}
+.after b{display:block;font-size:17px}
+.after p{color:var(--mist);font-size:15px;margin-top:4px}
+@media (max-width:900px){.order{grid-template-columns:1fr}}
+@media (max-width:520px){.form .two{grid-template-columns:1fr}}
+footer{background:var(--ink);color:var(--mist);padding-block:40px 60px;border-top:1px solid rgba(174,180,216,.12)}
+footer .in{display:flex;flex-wrap:wrap;gap:16px 30px;justify-content:space-between;align-items:center;font-size:14.5px}
+footer a{color:var(--mist)}
+
+/* admin */
+.adm{position:fixed;inset:0;z-index:120;background:var(--paper);color:var(--text);display:none;grid-template-columns:230px 1fr}
+.adm.open{display:grid}
+.adm nav{background:var(--ink);color:#EEF0FB;padding:22px 14px;display:flex;flex-direction:column;gap:6px}
+.adm nav b{font-size:20px;padding:0 10px 14px}
+.adm .tab{min-height:44px;border-radius:10px;border:0;background:transparent;color:inherit;text-align:start;padding:0 12px;cursor:pointer;font-weight:600}
+.adm .tab.on{background:rgba(255,178,62,.16);color:var(--amber)}
+.adm main{overflow:auto;padding:clamp(18px,3vw,40px)}
+.adm h2{font-size:34px}
+.adm .sub{color:var(--mute);margin:6px 0 20px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px}
+.orow{display:grid;grid-template-columns:1.3fr 1fr auto auto;gap:12px;align-items:start}
+.orow .msg{grid-column:1/-1;background:var(--paper);border-radius:10px;padding:10px 12px;font-size:15px}
+.badge{display:inline-block;font:600 11.5px var(--mono);padding:3px 8px;border-radius:999px;background:var(--paper);margin:6px 6px 0 0}
+.cform{display:grid;gap:12px}
+.cform label{font-weight:600;font-size:14px;display:block;margin-bottom:4px}
+.cform input,.cform textarea,.orow select,.orow textarea{width:100%;min-height:44px;border-radius:10px;border:1.5px solid var(--line);background:var(--paper);padding:8px 12px}
+.cform textarea{min-height:90px}
+.savebar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;position:sticky;bottom:0;background:var(--paper);padding:12px 0}
+.empty{color:var(--mute);padding:20px;border:1.5px dashed var(--line);border-radius:14px}
+.confirm{display:flex;gap:6px;align-items:center;font-size:14px}
+@media (max-width:800px){.adm{grid-template-columns:1fr;grid-template-rows:auto 1fr}.adm nav{flex-direction:row;overflow:auto;padding:10px}.adm nav b{display:none}.adm .tab{white-space:nowrap}.orow{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="mk" viewBox="0 0 96 100"><polygon points="0,100 38,0 58,0 96,100 75,100 48,29 21,100" fill="currentColor"/><rect x="40" y="67" width="16" height="16" fill="#FFB23E"/></symbol></defs></svg>
+<a class="skip" href="#main">דלג לתוכן</a>
+<header class="hdr" id="hdr">
+ <div class="wrap in">
+  <a class="logo" href="#top" aria-label="AILGEN, סטודיו"><svg aria-hidden="true"><use href="#mk"/></svg>AILGEN<small>סטודיו</small></a>
+  <nav class="nav" aria-label="ניווט ראשי"><a href="#demo">הדגמה</a><a href="#gets">מה מקבלים</a><a href="#how">איך זה עובד</a><a href="#plans">מחירים</a><a href="#domain">דומיין</a><a href="#proof">עבודות</a><a href="#faq">שאלות</a></nav>
+  <button class="mini" id="admBtn" type="button">מרכז בקרה</button>
+  <a class="btn cta" href="#order">להזמנה</a>
+ </div>
+</header>
+
+<main id="main">
+<section class="hero dark" id="top" aria-labelledby="h1">
+ <canvas id="pcv" aria-hidden="true"></canvas>
+ <div class="wrap">
+  <p class="eyebrow">סטודיו AILGEN · מנוע יצירה לעסקים</p>
+  <h1 id="h1" style="margin-top:16px">תנו לנו קישור, רעיון או שם. <em>קבלו עסק שלם.</em></h1>
+  <p class="sub">אתר מעוצב עם מרכז בקרה וסוכן AI, אייקון ושפה חזותית, סרטון השקה ומודעות, מחובר לדומיין שלכם. אותה שיטה שבנתה את סוויצ׳ינג TV, את AILGEN ואת האתר החדש של טלאור כראדי.</p>
+  <form class="launch" id="launch" aria-label="הפעלת הסטודיו">
+   <div class="seg" role="tablist" aria-label="מה יש לכם">
+    <button type="button" role="tab" data-m="url" aria-selected="true">יש לי אתר</button>
+    <button type="button" role="tab" data-m="idea" aria-selected="false">יש לי רעיון</button>
+    <button type="button" role="tab" data-m="name" aria-selected="false">יש לי רק שם</button>
+   </div>
+   <div class="row">
+    <label for="lIn" class="skip" style="position:absolute;top:-9999px">הקלט לסטודיו</label>
+    <input id="lIn" dir="ltr" value="https://talorkaradi.co.il/" autocomplete="off">
+    <textarea id="lIdea" hidden placeholder="למשל: בית קפה קטן בחיפה, קפה מיוחד וחם, קהל של סטודנטים וזוגות."></textarea>
+    <button class="btn" type="submit" id="lGo">הפעילו את הסטודיו</button>
+   </div>
+   <p class="hint" id="lHint">הדגמה על אתר אמיתי: טלאור כראדי, קבוצת מיחזור ובנייה. הריצה המלאה נמדדה, והתוצרים למטה אמיתיים.</p>
+   <div class="ex" id="lEx" hidden></div>
+  </form>
+ </div>
+ <div class="wrap" id="demo">
+  <div class="pipe">
+   <ol class="stages" id="stages" aria-label="שלבי היצירה"></ol>
+   <div class="board" aria-live="polite">
+    <div class="bar"><i></i><span id="bTitle">talorkaradi.co.il</span><span class="sp" id="bClock" dir="ltr"></span></div>
+    <div class="log" id="log"></div>
+    <div class="out" id="out"></div>
+    <div class="foot"><p id="bFoot"></p><a class="btn" href="#order" id="bOrder">רוצים את זה לעסק שלכם?</a></div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="sec" id="gets" aria-labelledby="getsH">
+ <div class="wrap">
+  <p class="eyebrow">מה מקבלים</p>
+  <h2 id="getsH">לא תבנית. עסק שנבנה מהעסק שלכם.</h2>
+  <p class="lead">הכול יוצא מהדבר האמיתי: הלוגו שלכם, המספרים שלכם, הלקוחות שלכם. כל מספר עם מקור, וכל תמונה מסומנת "מהשטח" או "הדמיה".</p>
+  <div class="gets" id="getsList"></div>
+ </div>
+</section>
+
+<section class="sec dark" id="how" aria-labelledby="howH" style="background:var(--night)">
+ <div class="wrap">
+  <p class="eyebrow">איך זה עובד</p>
+  <h2 id="howH">שמונה שלבים. בכל אחד, שער בדיקה.</h2>
+  <p class="lead">המכונה עושה את העבודה הכבדה: סריקה, מיתוג, קוד, רינדור. אדם בודק כל שער לפני שממשיכים. שלב שלא עבר את השער חוזר אחורה.</p>
+  <ol class="steps" id="steps" style="border-top-color:#EEF0FB"></ol>
+ </div>
+</section>
+
+<section class="sec dark" id="plans" aria-labelledby="plansH">
+ <div class="wrap">
+  <p class="eyebrow">מחירים</p>
+  <h2 id="plansH">משלמים פעם אחת על הבנייה, ומנוי קטן על האוויר.</h2>
+  <p class="lead">המנוי כולל אחסון, תעודת אבטחה, גיבויים, המוקד הדיגיטלי ותמיכה. בלי התחייבות: אפשר לקחת את הקבצים ולעבור.</p>
+  <div class="plans" id="planList"></div>
+  <p class="fineprint" id="planNote"></p>
+ </div>
+</section>
+
+<section class="sec" id="domain" aria-labelledby="domH">
+ <div class="wrap">
+  <p class="eyebrow">דומיין</p>
+  <h2 id="domH">דומיין חדש, או הדומיין שכבר יש לכם.</h2>
+  <p class="lead">בשני המקרים הדומיין רשום על שמכם ונשאר שלכם. אנחנו רק מחברים.</p>
+  <div class="doms">
+   <div class="dm"><h3>קונים דומיין חדש</h3><ol><li>בוחרים שם (נציע כמה, לפי השם והרעיון).</li><li>רושמים אותו על שמכם אצל רשם מוסמך. לסיומת ‎.co.il צריך רשם שמוסמך על ידי איגוד האינטרנט הישראלי.</li><li>אנחנו מחברים, ותעודת האבטחה (HTTPS) עולה לבד.</li></ol><p class="lead" style="font-size:15px">עלות הרישום משולמת לרשם ישירות, והיא לא חלק מהמחיר שלנו.</p></div>
+   <div class="dm"><h3>מחברים דומיין קיים</h3><ol><li>נכנסים לממשק של הרשם או של ספק ה-DNS.</li><li>מוסיפים שתי רשומות (נשלח את הערכים המדויקים):</li></ol>
+    <div class="dns"><table><thead><tr><th>Type</th><th>Name</th><th>Value</th></tr></thead><tbody><tr><td>CNAME</td><td>www</td><td id="dnsV">your-site.pages.dev</td></tr><tr><td>@</td><td>(הדומיין הראשי)</td><td>לפי ספק האחסון: רשומה, או העברת שרתי השמות</td></tr></tbody></table></div>
+    <p class="lead" style="font-size:15px">המייל שלכם לא נפגע: אם מעבירים שרתי שמות, מעתיקים קודם את רשומות המייל (MX) כמו שהן. האתר הישן ממשיך לעבוד עד רגע המעבר.</p></div>
+  </div>
+ </div>
+</section>
+
+<section class="sec dark" id="proof" aria-labelledby="proofH" style="background:var(--night)">
+ <div class="wrap">
+  <p class="eyebrow">עבודות ומספרים</p>
+  <h2 id="proofH">שלושה עסקים, שלושה סוגי קלט.</h2>
+  <div class="cases" id="cases"></div>
+  <h3 style="font-size:clamp(26px,3vw,36px);margin-top:64px">הריצה האחרונה, בשקיפות מלאה</h3>
+  <p class="lead" id="meterNote"></p>
+  <div class="meter" id="meter"></div>
+  <div class="phase" id="phase"></div>
+ </div>
+</section>
+
+<section class="sec" id="faq" aria-labelledby="faqH">
+ <div class="wrap">
+  <p class="eyebrow">שאלות</p>
+  <h2 id="faqH">מה שכולם שואלים לפני.</h2>
+  <div class="faq" id="faqList" style="margin-top:30px"></div>
+ </div>
+</section>
+
+<section class="sec dark" id="order" aria-labelledby="ordH">
+ <div class="wrap">
+  <p class="eyebrow">הזמנה</p>
+  <h2 id="ordH">מתחילים.</h2>
+  <p class="lead">ממלאים דקה, ומקבלים תוכנית עבודה וקישור לתשלום מאובטח.</p>
+  <div class="order">
+   <form class="form" id="ordForm" novalidate>
+    <div><span style="font-weight:600;font-size:15px;display:block;margin-bottom:6px">חבילה</span><div class="opts" id="oPlan"></div></div>
+    <div><label for="oIn">הקישור, הרעיון או השם</label><textarea id="oIn" style="min-height:70px"></textarea></div>
+    <div class="two"><div><label for="oName">שם מלא</label><input id="oName" autocomplete="name"></div><div><label for="oPhone">טלפון</label><input id="oPhone" type="tel" inputmode="tel" dir="ltr" autocomplete="tel"></div></div>
+    <div><label for="oMail">אימייל</label><input id="oMail" type="email" dir="ltr" autocomplete="email"></div>
+    <div><span style="font-weight:600;font-size:15px;display:block;margin-bottom:6px">דומיין</span><div class="opts" id="oDom"><button type="button" class="opt" data-v="new" aria-pressed="true">דומיין חדש</button><button type="button" class="opt" data-v="own" aria-pressed="false">יש לי דומיין</button><button type="button" class="opt" data-v="later" aria-pressed="false">אחליט אחר כך</button></div></div>
+    <div><label for="oDomain">שם הדומיין (לא חובה)</label><input id="oDomain" dir="ltr" placeholder="example.co.il"></div>
+    <label class="agree"><input type="checkbox" id="oAgree"> <span>אני מאשר/ת שמירת הפרטים לצורך טיפול בהזמנה, ושאת תוכנית העבודה והתשלום נקבל בנפרד.</span></label>
+    <button class="btn" type="submit">שליחת הזמנה</button>
+    <p class="fnote" id="oNote" role="status"></p>
+   </form>
+   <div class="after">
+    <div><b>1 · תוכנית ותשלום</b><p>תוך יום עסקים: תוכנית עבודה, לוח זמנים וקישור לתשלום מאובטח.</p></div>
+    <div><b>2 · הסטודיו רץ</b><p>סריקה או מחקר, מיתוג, אתר, סרטון. כל שער נבדק על ידי אדם.</p></div>
+    <div><b>3 · תצוגה ותיקונים</b><p>קישור פרטי לאתר החי ולסרטון. סבב תיקונים לפי החבילה.</p></div>
+    <div><b>4 · באוויר</b><p>חיבור לדומיין, תעודת אבטחה, מרכז בקרה, והדרכה של רבע שעה.</p></div>
+   </div>
+  </div>
+ </div>
+</section>
+</main>
+
+<footer><div class="wrap in"><a class="logo" href="#top" style="color:#EEF0FB"><svg aria-hidden="true"><use href="#mk"/></svg>AILGEN</a><span>© <span id="yr"></span> AILGEN · קדימה. או מאחור.</span><span><button class="mini" type="button" id="a11yS" style="background:transparent;color:inherit;border-color:rgba(174,180,216,.3)">הצהרת נגישות</button> <button class="mini" type="button" id="stillBtn" aria-pressed="false" style="background:transparent;color:inherit;border-color:rgba(174,180,216,.3)">עצירת אנימציות</button></span></div></footer>
+
+<dialog id="lg" style="border:0;border-radius:18px;max-width:min(720px,calc(100vw - 24px));padding:0"><div style="padding:28px;max-height:80vh;overflow:auto"><button class="mini" type="button" data-close style="float:left">סגירה</button><h3 id="lgT" style="font-size:28px;margin-bottom:12px"></h3><div id="lgTxt" style="white-space:pre-wrap;color:var(--mute)"></div></div></dialog>
+
+<div class="adm" id="adm" role="dialog" aria-modal="true" aria-label="מרכז הבקרה">
+ <nav><b>מרכז הבקרה</b>
+  <button class="tab on" type="button" data-t="orders">הזמנות</button>
+  <button class="tab" type="button" data-t="plans">חבילות ומחירים</button>
+  <button class="tab" type="button" data-t="close">סגירה ✕</button>
+ </nav>
+ <main id="admMain"></main>
+</div>
+<script>
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const still=()=>matchMedia('(prefers-reduced-motion: reduce)').matches||document.documentElement.classList.contains('a-still');
+const rid=()=>Math.random().toString(36).slice(2,10)+Date.now().toString(36).slice(-4);
+const sleep=ms=>new Promise(r=>setTimeout(r,still()?0:ms));
+
+/* ---------- content (owner-editable via the control center) ---------- */
+const DEF={
+ plans:[
+  {k:'presence',n:'נוכחות',price:'2,900',mo:'149',items:['אתר מעוצב מקישור או מתיאור, עברית ונגישות','אייקון, פאביקון ופלטה','מרכז בקרה: פניות, תוכן, שאלות','מוקד דיגיטלי (סוכן AI) שעונה ושומר פניות','חיבור לדומיין ותעודת אבטחה'],hot:false},
+  {k:'launch',n:'השקה',price:'5,900',mo:'249',items:['כל מה שב"נוכחות"','ערכת מותג מלאה: סמל בווקטור, פונטים, אייקונים','כלי הוכחה אחד מותאם (מחשבון, מתכנן, בודק)','סרטון השקה 9:16 ו-4:5 עם פסקול מקורי','3 מודעות סטטיות וטקסטים ל-A/B'],hot:true},
+  {k:'signature',n:'מותג חתימה',price:'12,900',mo:'390',items:['כל מה שב"השקה"','דמות של המותג, באתר ובסרטון','סצנת חתימה בעבודת יד בסרטון','עמוד פרויקט בתיק העבודות עם מספרים שנמדדו','2 סבבי תיקונים והקמת קמפיין ראשון'],hot:false}],
+ planNote:'המחירים לפני מע"מ. רישום דומיין חדש משולם לרשם ישירות. המנוי החודשי מתחיל אחרי שהאתר באוויר.',
+ email:'', phone:''
+};
+let C=structuredClone(DEF);
+
+const STAGES=[
+ ['קריאת מצב','סוג הקלט, סוג העסק והרוח','מכונה'],
+ ['איסוף','סריקת האתר או מחקר קטגוריה','מכונה'],
+ ['DNA של המותג','רעיון, טענה, סמל, צבע, פונט','מכונה + אדם'],
+ ['אתר','אתר חי, כלי הוכחה, כניסה מהלוגו','מכונה'],
+ ['מרכז בקרה וסוכן','פניות, תוכן, מוקד דיגיטלי','מכונה'],
+ ['סרטון השקה','9:16 ו-4:5, פסקול, סטילס','מכונה'],
+ ['דומיין','חדש או קיים, HTTPS','אדם'],
+ ['בקרה ומסירה','שערי איכות, פרסום, הדרכה','אדם']];
+
+/* The measured Talor Karadi run (projects/talorkaradi/meter.jsonl → scripts/meter.mjs) */
+const RUN={name:'קבוצת טלאור כראדי',host:'talorkaradi.co.il',times:["4:35", "7:14", "2:37", "16:20", "בתוך האתר", "2:21 + 10:28 רינדור", "—", "לאורך הדרך"],
+ metrics:{"note": "בניית העסק של טלאור כראדי, מהקישור ועד אתר וסרטון, נמדדה מתוך הלוג של הסוכן: זמן, קריאות למודל, טוקנים ועלות לפי המחירון של Claude API. הרינדור של הסרטון (10.5 דקות) רץ ברקע, במקביל לעבודה.", "tiles": [["33 דק׳", "עבודת הסוכן, מקישור לעסק"], ["$10.36", "עלות מחשוב (API)"], ["84", "קריאות למודל"], ["10.5 דק׳", "רינדור סרטון, ברקע"]], "head": ["שלב", "זמן", "קריאות", "פלט (טוקנים)", "עלות"], "rows": [["קריאת מצב ותוכנית", "4:35", "8", "14K", "$1.65"], ["איסוף (סריקה + קריאה)", "7:14", "28", "21K", "$1.94"], ["DNA של המותג", "2:37", "12", "13K", "$0.96"], ["אתר + מרכז בקרה + סוכן", "16:20", "27", "99K", "$4.73"], ["סרטון (תסריט + בדיקה)", "2:21", "9", "12K", "$1.08"]]}};
+
+const GETS=[
+ ['אתר חי ומעוצב','עברית ומימין לשמאל, נייד ודסקטופ, כניסה שנולדת מהלוגו, נגישות ומדיניות פרטיות.','<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8M12 18v3"/>'],
+ ['כלי הוכחה','הכלי שעונה על השאלה הראשונה של הלקוח: מחשבון, מתכנן, בודק. כל תוצאה מגיעה כפנייה.','<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>'],
+ ['מרכז בקרה','פניות עם סטטוס, עריכת טקסטים, שאלות, פרויקטים והמלצות, בלי מתכנת.','<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/>'],
+ ['מוקד דיגיטלי','סוכן AI שעונה בעברית על בסיס המידע שלכם בלבד, ושומר פנייה כשמבקשים שיחזרו.','<path d="M4 5h16v11H9l-5 4z"/><path d="M8 10h8M8 13h5"/>'],
+ ['אייקון ושפה חזותית','סמל בווקטור, פאביקון, אייקון לאפליקציה, פלטה עם בדיקת ניגודיות, פונטים בעברית.','<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><circle cx="12" cy="12" r="3"/>'],
+ ['סרטון השקה','20–30 שניות לריילס ולפיד, 9:16 ו-4:5, עם פסקול מקורי שנבנה סביב התמונה.','<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/>'],
+ ['מודעות וקופי','3 סטילס, 3 טקסטים ראשיים, 5 כותרות, קהלים ו-UTM, מוכן להעלאה למטא.','<path d="M3 11l14-6v14L3 13z"/><path d="M7 13v5h3v-4"/>'],
+ ['דומיין ואחסון','דומיין חדש על שמכם או חיבור לקיים, HTTPS, גיבויים, ומעקב שהכול עובד.','<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>']];
+
+const FAQ=[
+ ['כמה זמן זה לוקח?','הריצה של המכונה לוקחת שעות, לא שבועות: באתר של טלאור כראדי הסריקה לקחה 3 דקות והסרטון נרנדר בכמה דקות. את רוב הזמן תופסים שערי הבדיקה והתיקונים איתכם. בדרך כלל האתר באוויר תוך כמה ימי עבודה.'],
+ ['אין לי תמונות טובות. מה עושים?','משתמשים במה שיש, ומסמנים כל תמונה בכנות: "מהשטח" לצילום אמיתי, "הדמיה" להדמיה. אפשר להוסיף צילומים אמיתיים מאוחר יותר ממרכז הבקרה.'],
+ ['של מי האתר והדומיין?','שלכם. הדומיין רשום על שמכם, והקבצים שלכם. אם תרצו לעזוב, מקבלים את הכול.'],
+ ['אפשר לשנות טקסטים ומחירים לבד?','כן. מרכז הבקרה מאפשר לערוך טקסטים, מספרים, שאלות נפוצות, פרויקטים והמלצות, והשינוי עולה לאתר מיד.'],
+ ['מה המוקד הדיגיטלי יודע?','רק את מה שבאתר ואת מה שתוסיפו לו במרכז הבקרה. הוא לא ממציא מחירים או הבטחות, וכשחסר לו מידע הוא מפנה אליכם.'],
+ ['מה כולל המנוי החודשי?','אחסון, תעודת אבטחה, גיבויים, עלויות המוקד הדיגיטלי, תיקוני תקלות ועדכונים קטנים.'],
+ ['יש לי כבר אתר. מה קורה איתו?','הסטודיו סורק אותו, לוקח את התוכן, התמונות והמספרים, ובונה חדש. הישן ממשיך לעבוד עד רגע המעבר בדומיין.'],
+ ['איך משלמים?','אחרי ההזמנה מקבלים תוכנית עבודה וקישור לתשלום מאובטח. המנוי החודשי מתחיל רק כשהאתר באוויר.']];
+
+const CASES=[
+ ['סוויצ׳ינג TV','קלט: קישור','אתר קיים עם 15 עמודים חופפים הפך לאתר אחד עם מתכנן מסכים, מבחן שמש, דמות (טיבי) וסרטון השקה.',['מתכנן מסכים','דמות','סרטון'],'https://claude.ai/artifact/XWtrx6tuhpq6XUgKioNobo','#F5A524','#07131F'],
+ ['AILGEN','קלט: שם','מהשם בלבד: בית קטן עם חלון דולק בלילה, סוכן חי באתר, מרכז בקרה ותיק עבודות עם צילומים אמיתיים.',['סוכן חי','מרכז בקרה','תיק עבודות'],'https://claude.ai/artifact/KEyTNCaGtF4GhgHZDLPwNk','#FFB23E','#111A5A'],
+ ['VERMEIL','קלט: קונספט','רשת יין ומשקאות (פרויקט קונספט): חנות שמרגישה כמו גלריה, סומלייה דיגיטלי, בקבוקים מצוירים בקוד.',['סומלייה','קונספט','גלריה'],'https://claude.ai/artifact/Jfu3ejh3zVcUS3xJKUydcZ','#C9A45C','#161214']];
+
+/* spirit matrix (references/01-brand-dna.md): the offline fallback when Claude is not available in this view */
+const SPIRITS=[
+ {re:/קפה|מסעד|מאפ|אוכל|שף|פיצ|בר |ביסטרו/,type:'מסעדה / בית קפה',spirit:'חם וחושי',pal:['#F6EFE4','#2B1D14','#B5452B','#E3A33B'],fonts:['Suez One','Assistant'],motif:'ink',mascot:'אולי: אדים מהכוס',tool:'תפריט אינטראקטיבי + הזמנת מקום',sections:['תפריט','האווירה','שעות ומיקום','הזמנת מקום','המלצות','אירועים']},
+ {re:/קליני|רופא|טיפול|יופי|קוסמט|פיזיו|שיניים|בריאות/,type:'קליניקה / בריאות',spirit:'רגוע ומרגיע',pal:['#F3F6F5','#15302B','#3E9C8A','#C9E4DC'],fonts:['Assistant','Assistant'],motif:'light',mascot:'לא',tool:'קביעת תור + "מה קורה בביקור"',sections:['טיפולים','הצוות','מה קורה בביקור','מחירון','שאלות','קביעת תור']},
+ {re:/עורך|משפט|רואה חשבון|ייעוץ|פיננס|ביטוח|משכנת/,type:'משפט / פיננסים',spirit:'סמכותי ומדויק',pal:['#F5F4F0','#121826','#8A6D3B','#2E4A7D'],fonts:['Frank Ruhl Libre','Heebo'],motif:'wipe',mascot:'לא',tool:'מחשבון זכאות',sections:['תחומי התמחות','בדיקת זכאות','צוות','תיקים','שאלות','פגישת ייעוץ']},
+ {re:/ילד|גן |חוג|לימוד|חינוך|משחק/,type:'ילדים / חינוך',spirit:'שובב',pal:['#FFF8EC','#1E2A5A','#FF6B4A','#3CC7B4'],fonts:['Varela Round','Rubik'],motif:'particles',mascot:'כן',tool:'שאלון התאמה לגיל',sections:['חוגים','לפי גיל','המדריכים','מערכת שעות','הורים מספרים','הרשמה']},
+ {re:/נדל|דירה|אדריכל|עיצוב פנים|בנייה/,type:'נדל״ן / אדריכלות',spirit:'מרווח ועורכי',pal:['#F2F0EB','#1C1C1A','#9A8466','#556B5D'],fonts:['Frank Ruhl Libre','Assistant'],motif:'wipe',mascot:'לא',tool:'מפת פרויקטים עם סינון',sections:['פרויקטים','מפה','גישה','תהליך','צוות','פגישה']},
+ {re:/כושר|ספורט|אימון|סטודיו|יוגה|פילאטיס/,type:'כושר וספורט',spirit:'נועז ואנרגטי',pal:['#0E0E10','#F4F4F2','#D7FF3A','#FF4D2E'],fonts:['Karantina','Heebo'],motif:'wipe',mascot:'אולי',tool:'בונה תוכנית אימון',sections:['אימונים','מערכת שעות','מאמנים','תוצאות','מחירים','שיעור ניסיון']},
+ {re:/יין|תכשיט|אופנה|יוקרה|בוטיק|בושם/,type:'יוקרה וקמעונאות',spirit:'יוקרתי ושקט',pal:['#121012','#F2EEE6','#7A1F2B','#C9A45C'],fonts:['Bellefair','Assistant'],motif:'light',mascot:'לא: קול (סטייליסט, סומלייה)',tool:'ממליץ אישי',sections:['הקולקציה','הממליץ','הסיפור','סניפים','מתנות','הזמנה']},
+ {re:/פרח|נגר|קרמיק|יד|מלאכ|חנות/,type:'יוצרים וחנויות',spirit:'עבודת יד וחום',pal:['#F7F3EA','#2A2A22','#6E8B3D','#D98E5F'],fonts:['Amatic SC','Assistant'],motif:'ink',mascot:'אולי',tool:'בונה מוצר (זר, מתנה)',sections:['המוצרים','בונים לבד','הסדנה','הסיפור','משלוחים','הזמנה']},
+ {re:/מפעל|תעשי|לוגיסט|מיחזור|הובל|ייצור/,type:'תעשייה ולוגיסטיקה',spirit:'הנדסי',pal:['#F4F5F0','#0B1B2E','#1E7A38','#C9F03A'],fonts:['Rubik','Rubik'],motif:'wipe',mascot:'לא',tool:'מחשבון כמויות / בונה הצעה',sections:['שירותים','המחשבון','מתקנים','פרויקטים','הקבוצה','צור קשר']},
+ {re:/טכנולוג|מסך|חשמל|מזגן|סולאר|התקנ|בית חכם/,type:'טכנולוגיה לבית',spirit:'טכנולוגי ובהיר',pal:['#F5F7FA','#07131F','#F5A524','#1789C9'],fonts:['Karantina','Heebo'],motif:'pixels',mascot:'כן: חפץ מהלוגו',tool:'מתכנן / מבחן פיזיקלי',sections:['פתרונות','המתכנן','פרויקטים','למה אנחנו','שאלות','ייעוץ']}];
+const DEFAULT_SPIRIT={type:'עסק שירות',spirit:'בטוח ואנושי',pal:['#F4F5FA','#10163F','#3F52E0','#FFB23E'],fonts:['Heebo','Heebo'],motif:'particles',mascot:'אולי',tool:'מחשבון הצעת מחיר',sections:['שירותים','כלי הבדיקה','עבודות','תהליך','שאלות','צור קשר']};
+const FONTS_OK=['Frank Ruhl Libre','Heebo','Rubik','Assistant','Secular One','Suez One','Karantina','Varela Round','Amatic SC','Bellefair','David Libre','Noto Serif Hebrew','IBM Plex Sans Hebrew','Alef','Miriam Libre','Fredoka','Noto Sans Hebrew','Bona Nova'];
+</script>
+<script>
+/* ---------- static sections ---------- */
+function renderStatic(){
+ $('#getsList').innerHTML=GETS.map(([t,p,ic])=>`<div class="get"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ic}</svg><h3>${esc(t)}</h3><p>${esc(p)}</p></div>`).join('');
+ $('#steps').innerHTML=STAGES.map(([t,s,w],i)=>`<li><span class="n">0${i+1}</span><b>${esc(t)}</b><p>${esc(s)}</p><span class="who">${esc(w)}</span></li>`).join('');
+ $('#faqList').innerHTML=FAQ.map(([q,a],i)=>`<details${i===0?' open':''}><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('');
+ const MARK={'סוויצ׳ינג TV':a=>`<rect x="30" y="14" width="60" height="40" rx="6" fill="none" stroke="${a}" stroke-width="3"/><rect x="35" y="19" width="50" height="30" rx="3" fill="none" stroke="${a}" stroke-width="1.2" opacity=".6"/><rect x="72" y="42" width="5" height="5" fill="${a}"/>`,'AILGEN':a=>`<g transform="translate(46 12) scale(.29)"><polygon points="0,100 38,0 58,0 96,100 75,100 48,29 21,100" fill="#EEF0FB"/><rect x="40" y="67" width="16" height="16" fill="${a}"/></g>`,'VERMEIL':a=>`<circle cx="60" cy="34" r="20" fill="none" stroke="${a}" stroke-width="2.5"/><circle cx="60" cy="34" r="14" fill="none" stroke="${a}" stroke-width="1" opacity=".7"/><text x="60" y="39" text-anchor="middle" font-family="Frank Ruhl Libre,serif" font-size="14" font-weight="700" fill="${a}">V</text>`};
+ $('#cases').innerHTML=CASES.map(([n,inp,p,tags,url,acc,bg])=>`<article class="case"><div class="shot" style="background:${bg};display:grid;place-items:center"><svg viewBox="0 0 120 80" width="60%" aria-hidden="true">${MARK[n](acc)}<text x="60" y="72" text-anchor="middle" font-family="IBM Plex Mono" font-size="7.5" fill="${acc}">${esc(inp)}</text></svg></div><div class="b"><h3>${esc(n)}</h3><p>${esc(p)}</p><div class="tags">${tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div><a class="go" href="${url}" target="_blank" rel="noopener">לאתר החי ↗</a></div></article>`).join('');
+ renderMeter();
+}
+function renderPlans(){
+ $('#planList').innerHTML=C.plans.map(p=>`<div class="plan${p.hot?' hot':''}"><h3>${esc(p.n)}</h3><div class="pr"><bdi dir="ltr">₪${esc(p.price)}</bdi> <small>חד פעמי</small></div><div class="mo">+ <bdi dir="ltr">₪${esc(p.mo)}</bdi> לחודש</div><ul>${p.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul><a class="btn" href="#order" data-plan="${esc(p.k)}">בוחרים ב"${esc(p.n)}"</a></div>`).join('');
+ $('#planNote').textContent=C.planNote;
+ $('#oPlan').innerHTML=C.plans.map((p,i)=>`<button type="button" class="opt" data-v="${esc(p.k)}" aria-pressed="${p.hot}">${esc(p.n)} · <bdi dir="ltr">₪${esc(p.price)}</bdi></button>`).join('');
+ $$('#oPlan .opt').forEach(b=>b.onclick=()=>$$('#oPlan .opt').forEach(x=>x.setAttribute('aria-pressed',String(x===b))));
+ $$('[data-plan]').forEach(a=>a.addEventListener('click',()=>$$('#oPlan .opt').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.v===a.dataset.plan)))));
+}
+function renderMeter(){
+ const m=RUN.metrics; if(!m){$('#proof h3').hidden=true;$('#meterNote').hidden=true;return;}
+ $('#meterNote').textContent=m.note;
+ $('#meter').innerHTML=m.tiles.map(([v,l])=>`<div><b>${esc(v)}</b><span>${esc(l)}</span></div>`).join('');
+ $('#phase').innerHTML=`<table><thead><tr>${m.head.map(h=>`<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${m.rows.map(r=>`<tr>${r.map((c,i)=>`<td${i?' class="n"':''}>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+}
+
+/* ---------- the pipeline board ---------- */
+const out=()=>$('#out'), log=()=>$('#log');
+function stageList(state){ $('#stages').innerHTML=STAGES.map(([t,s],i)=>`<li class="${state[i]||''}"><span class="st">${state[i]==='done'?'✓':i+1}</span><span><b>${esc(t)}</b><small>${esc(s)}</small></span><span class="tm" id="tm${i}">${state[i]==='done'&&RUNMODE==='example'?esc(RUN.times[i]):''}</span></li>`).join(''); }
+let RUNMODE='example', running=false;
+function logLine(k,t){ const p=document.createElement('p'); p.innerHTML=`<span class="k">${esc(k)}</span> ${esc(t)}`; log().appendChild(p); log().scrollTop=log().scrollHeight; }
+function card(cls,title,html,label){ const d=document.createElement('div'); d.className='card '+cls; d.innerHTML=`<h4>${esc(title)}${label?` <span class="lbl ${label==='הדמיה'?'demo':''}" style="float:left">${esc(label)}</span>`:''}</h4>${html}`; out().appendChild(d); return d; }
+const swatches=(pal,names)=>`<div class="sw">${pal.map((c,i)=>`<span style="background:${c}"><em>${esc(names?names[i]:c)}</em></span>`).join('')}</div><div style="height:18px"></div>`;
+
+/* the real run: Talor Karadi (every card is a real output of the studio) */
+const EXAMPLE=[
+ [['brief','קלט: קישור · עסק: מיחזור, בנייה, בטון (B2B) · רוח: הנדסי וירוק'],()=>card('c3 brief','קריאת מצב',`<b>קבוצת טלאור כראדי</b><p>מיחזור פסולת בניין, הריסות, בטון, הנדסה ומיגון. קהל: קבלנים ויזמים. הרעיון: <strong style="color:#fff">המעגל נסגר</strong>.</p>`,'מהשטח')],
+ [['intake','30 עמודים · 82 תמונות · 5 סרטוני יוטיוב · טלפונים, כתובות, נוסחאות'],()=>card('c3','איסוף',`<div class="spec"><b dir="ltr" style="text-align:right">30 · 82 · 5</b><small>עמודים · תמונות · סרטונים, ב-3:01 דקות, בנימוס (השהיה בין בקשות)</small></div><p style="color:var(--mist);font-size:13.5px;margin-top:8px">כל מספר נכנס לדף עובדות עם העמוד שממנו הגיע.</p>`,'מהשטח')],
+ [['brand','סמל שורטט מחדש בווקטור · פלטה עם בדיקת ניגודיות · Rubik + IBM Plex Mono'],()=>{card('c2 icon','סמל ואייקון',`<div class="ic" style="background:#0B1B2E;padding:12px"><img src="img/tk-symbol.svg" alt="הסמל של טלאור כראדי בווקטור"></div><small style="color:var(--mist);font:500 12px var(--mono)">ארבעה להבים = ארבעה שלבים</small>`,'מהשטח'); card('c4','פלטה ופונטים',swatches(['#0B1B2E','#F4F5F0','#1E7A38','#9ACB63','#2560A8','#C9F03A'],['night','paper','green','leaf','blue','hi-vis'])+`<div class="spec" style="margin-top:8px"><b style="font-family:Rubik,var(--body);font-weight:800">מה שיוצא מהאתר, חוזר לבנות.</b><small>Rubik 800 · IBM Plex Mono לנתונים (כמו תעודת שקילה)</small></div>`,'מהשטח');}],
+ [['site','אתר: כניסה מהלוגו · המעגל · 9 שירותים · מאזן פסולת · מפת מתקנים · פרויקטים'],()=>{card('c4','אתר',`<div class="shot"><img src="img/tk-site.webp" alt="מסך הפתיחה של האתר החדש של טלאור כראדי"><span class="lbl">צילום מסך אמיתי</span></div>`); card('c2','כלי הוכחה',`<div class="shot" style="aspect-ratio:auto;height:100%;min-height:140px"><img src="img/tk-calc.webp" alt="מחשבון מאזן הפסולת"><span class="lbl">מאזן פסולת</span></div>`);}],
+ [['admin','מרכז בקרה: פניות · תוכן · שאלות · פרויקטים · המלצות · מוקד דיגיטלי'],()=>card('c6','מרכז בקרה וסוכן',`<div style="display:flex;flex-wrap:wrap;gap:8px">${['פניות עם סטטוס','מקור הפנייה (טופס / מאזן / מוקד)','עריכת טקסטים ומספרים','שאלות נפוצות','פרויקטים מיוטיוב ומהשטח','המלצות אמיתיות בלבד','מוקד דיגיטלי עם ידע נוסף'].map(t=>`<span class="lbl" style="background:rgba(63,82,224,.3)">${t}</span>`).join('')}</div>`)],
+ [['film','סרטון 26 שניות · מוטיב "spin" מהסמל · 9:16 ו-4:5 · פסקול מקורי'],()=>card('c6','סרטון השקה',`<div class="story" id="exStory">${FILMSTRIP.map(([src,t])=>`<div style="background:#0B1B2E url(${src}) center/cover"><small style="background:rgba(7,11,46,.7);padding:2px 4px;border-radius:4px">${esc(t)}</small></div>`).join('')}</div>`,'מהשטח')],
+ [['domain','דומיין קיים: talorkaradi.co.il · CNAME www + A @ · HTTPS אוטומטי'],()=>card('c3 dom','דומיין',`<div>talorkaradi.co.il<span>קיים, מחברים</span></div><div>www → CNAME<span>לספק האחסון</span></div><div>HTTPS<span>אוטומטי</span></div>`)],
+ [['qa','אפס שגיאות · 390px בלי גלילה לצד · מקלדת · הפחתת תנועה · תוויות "מהשטח"'],()=>card('c3','בקרה',`<div style="display:grid;gap:6px;font-size:14px">${['אפס שגיאות בקונסול','נייד 390px בלי גלילה לצדדים','ניווט מקלדת ודיאלוגים','הפחתת תנועה','כל תמונה מסומנת','כל מספר עם מקור'].map(t=>`<span>✓ ${t}</span>`).join('')}</div>`)]];
+const FILMSTRIP=[['img/tk-f1.webp','פתיחה'],['img/tk-f2.webp','הגילוי'],['img/tk-f3.webp','90%+'],['img/tk-f4.webp','המעגל'],['img/tk-f5.webp','המיגונית'],['img/tk-f6.webp','במספרים'],['img/tk-f7.webp','מוקד']];
+
+function showExample(){ RUNMODE='example'; stageList(STAGES.map(()=> 'done')); out().innerHTML=''; log().innerHTML='';
+ EXAMPLE.forEach(([[k,t],f])=>{logLine(k,t); f();});
+ $('#bTitle').textContent=RUN.host; $('#bClock').textContent='ריצה מלאה · נמדדה';
+ $('#bFoot').textContent='כל כרטיס כאן הוא תוצר אמיתי של הסטודיו מהריצה על talorkaradi.co.il. הזמנים בצד: זמן אמיתי לכל שלב.'; }
+async function replayExample(){
+ if(running)return; running=true; RUNMODE='example'; const st=STAGES.map(()=>''); out().innerHTML=''; log().innerHTML=''; const t0=performance.now();
+ const clock=setInterval(()=>$('#bClock').textContent=((performance.now()-t0)/1000).toFixed(1)+'s · הדמיה מואצת',100);
+ for(let i=0;i<EXAMPLE.length;i++){ st[i]='run'; stageList(st); const [[k,t],f]=EXAMPLE[i]; logLine(k,'…'); await sleep(650); log().lastChild.remove(); logLine(k,t); f(); await sleep(520); st[i]='done'; stageList(st); }
+ clearInterval(clock); $('#bClock').textContent='ריצה מלאה · נמדדה'; running=false;
+}
+
+/* a new business, from an idea or a name: Claude drafts the brand live (sample), or the spirit matrix offline */
+let sample=null;
+async function brandSpec(mode,input){
+ const prompt=`אתה מנוע המיתוג של סטודיו AILGEN. לקוח ${mode==='name'?'נתן רק שם של עסק':'תיאר רעיון לעסק'}: "${input.slice(0,600)}".
+החזר JSON בלבד, בעברית, במבנה הזה בדיוק:
+{"name":"שם העסק","type":"סוג העסק במילים ספורות","spirit":"הרוח ב-2–3 מילים","idea":"הרעיון של המותג כתמונה, משפט אחד","claim":"כותרת ראשית לאתר, עד 8 מילים","sub":"משפט משנה לאתר, עד 22 מילים","palette":{"bg":"#hex","ink":"#hex","accent":"#hex","accent2":"#hex"},"display":"פונט כותרות","body":"פונט טקסט","motif":"אחד מ: pixels, particles, light, ink, iris, wipe, spin","mascot":"כן / לא, ומשפט למה","tool":"כלי ההוכחה באתר: שם ומה הוא עושה, משפט אחד","toolCta":"כפתור של הכלי, 2–3 מילים","sections":["6 שמות סקשנים קצרים"],"film":["7 סצנות לסרטון של 26 שניות, כל אחת עד 7 מילים"],"domains":["3 הצעות דומיין לטיניות, בלי www"]}
+כללים: הפונטים רק מתוך: ${FONTS_OK.join(', ')}. ניגודיות ink על bg לפחות 7:1. בלי המלצות, מספרים או לקוחות מומצאים. בלי קלישאות כמו "מהפכה" או "העתיד כבר כאן".`;
+ if(sample){ try{ const j=await sample.json(prompt,{modelTier:'quick'}); if(j&&j.palette&&j.claim)return {...j,source:'claude'}; }catch(_){} }
+ const sp=SPIRITS.find(s=>s.re.test(input))||DEFAULT_SPIRIT, nm=mode==='name'?input.trim():(input.split(/[,.]/)[0].slice(0,28));
+ return {name:nm,type:sp.type,spirit:sp.spirit,idea:'הדבר הכי אמיתי בעסק, כתמונה אחת שחוזרת בכל מקום',claim:`${nm}. בדיוק מה שחיפשתם.`,sub:'כאן תופיע הטענה החזקה ביותר שאפשר להוכיח, מתוך המספרים והלקוחות האמיתיים של העסק.',palette:{bg:sp.pal[0],ink:sp.pal[1],accent:sp.pal[2],accent2:sp.pal[3]},display:sp.fonts[0],body:sp.fonts[1],motif:sp.motif,mascot:sp.mascot,tool:sp.tool,toolCta:'נסו עכשיו',sections:sp.sections,film:['הרגע של הלקוח','הגילוי: הלוגו','ההוכחה במספר','מה מקבלים','מילים של לקוח','למה אנחנו','קריאה לפעולה'],domains:[],source:'matrix'};
+}
+function loadFont(f){ if(!FONTS_OK.includes(f))return; const id='gf-'+f.replace(/\s/g,''); if(document.getElementById(id))return; const l=document.createElement('link'); l.id=id; l.rel='stylesheet'; l.href=`https://fonts.googleapis.com/css2?family=${f.replace(/\s/g,'+')}:wght@400;700&display=swap`; document.head.appendChild(l); }
+const hexOk=h=>/^#[0-9a-f]{6}$/i.test(h||'');
+async function runNew(mode,input){
+ if(running)return; running=true; RUNMODE='new'; const st=STAGES.map(()=>''); out().innerHTML=''; log().innerHTML=''; const t0=performance.now();
+ $('#bTitle').textContent=input.slice(0,60); $('#bFoot').textContent='';
+ const clock=setInterval(()=>$('#bClock').textContent=((performance.now()-t0)/1000).toFixed(1)+'s',100);
+ const step=async(i,k,t,ms=500)=>{st[i]='run'; stageList(st); logLine(k,t); await sleep(ms);};
+ const done=i=>{st[i]='done'; stageList(st);};
+ await step(0,'brief',mode==='name'?'קלט: שם בלבד. מחקר קטגוריה ותחרות':'קלט: רעיון בכתיבה. מזהים סוג עסק ורוח');
+ const specP=brandSpec(mode,input);
+ await step(1,'research',sample?'Claude מנסח את התדריך…':'בלי Claude בתצוגה הזו: טבלת הרוח של הסטודיו',400);
+ const s=await specP; done(0); done(1);
+ const P=s.palette||{}; ['bg','ink','accent','accent2'].forEach((k,i)=>{if(!hexOk(P[k]))P[k]=DEFAULT_SPIRIT.pal[i];});
+ const disp=FONTS_OK.includes(s.display)?s.display:'Heebo', bod=FONTS_OK.includes(s.body)?s.body:'Heebo'; loadFont(disp); loadFont(bod);
+ const lab=s.source==='claude'?'הדמיה':'הדמיה';
+ card('c3 brief','תדריך',`<b>${esc(s.name)}</b><p>${esc(s.type)} · ${esc(s.spirit)}</p><p>${esc(s.idea)}</p>`,lab);
+ await step(2,'brand',`פלטה, פונטים (${disp} + ${bod}), סמל ראשוני`);
+ const ini=(s.name||'?').trim()[0]||'?';
+ card('c2 icon','אייקון ראשוני',`<div class="ic" style="background:${P.ink}"><svg viewBox="0 0 88 88" width="88" height="88" aria-hidden="true"><rect x="14" y="14" width="60" height="60" rx="${s.motif==='pixels'?6:30}" fill="${P.accent}"/><rect x="50" y="50" width="16" height="16" fill="${P.accent2}"/><text x="40" y="54" text-anchor="middle" font-family="${esc(disp)}" font-size="34" font-weight="700" fill="${P.bg}">${esc(ini)}</text></svg></div><small style="color:var(--mist);font:500 12px var(--mono)">הסמל הסופי נולד מהלוגו שלכם</small>`,lab);
+ card('c4','פלטה ופונטים',swatches([P.bg,P.ink,P.accent,P.accent2],['bg','ink','accent','accent2'])+`<div class="spec" style="margin-top:8px"><b style="font-family:'${esc(disp)}',var(--body)">${esc(s.claim)}</b><small>${esc(disp)} · ${esc(bod)} · מוטיב: ${esc(s.motif)}</small></div>`,lab);
+ done(2);
+ await step(3,'site',`אתר: ${(s.sections||[]).slice(0,6).join(' · ')}`,600);
+ card('c4','אתר',`<div class="mock" style="background:${P.bg};color:${P.ink};font-family:'${esc(bod)}',var(--body)"><div class="mn"><i style="background:${P.accent}"></i>${esc(s.name)}<span>${(s.sections||[]).slice(0,4).map(x=>`<em style="font-style:normal">${esc(x)}</em>`).join('')}</span></div><div class="mh"><div><b style="font-family:'${esc(disp)}',var(--display)">${esc(s.claim)}</b><p>${esc(s.sub)}</p><u style="background:${P.accent};color:${P.bg}">${esc(s.toolCta||'דברו איתנו')}</u></div><div class="tool" style="background:${P.ink};color:${P.bg}"><b style="font-size:12px">${esc((s.tool||'').split(':')[0])}</b><p style="opacity:.85">${esc(s.tool)}</p></div></div></div>`,lab);
+ card('c2','כלי הוכחה',`<p style="font-size:14.5px;line-height:1.5">${esc(s.tool)}</p><p style="color:var(--mist);font-size:13px;margin-top:8px">כל תוצאה של הכלי מגיעה כפנייה למרכז הבקרה.</p>`,lab);
+ done(3); await step(4,'admin','מרכז בקרה ומוקד דיגיטלי מחוברים',350); done(4);
+ await step(5,'film',`סרטון: ${(s.film||[]).length} סצנות · מוטיב ${s.motif}`,500);
+ card('c6','סטוריבורד לסרטון',`<div class="story">${(s.film||[]).slice(0,7).map((t,i)=>`<div style="background:${i%2?P.ink:P.accent};color:${i%2?P.bg:P.ink}"><small>0${i+1}</small>${esc(t)}</div>`).join('')}</div>`,lab);
+ done(5); await step(6,'domain','הצעות לדומיין',300);
+ const doms=(s.domains||[]).filter(d=>/^[a-z0-9.-]+\.[a-z.]+$/i.test(d)).slice(0,3);
+ card('c3 dom','דומיין',(doms.length?doms:['(יוצע בשלב ההזמנה)']).map(d=>`<div>${esc(d)}<span>זמינות תיבדק בהזמנה</span></div>`).join(''),lab);
+ done(6); await step(7,'qa','שערי איכות: אדם בודק לפני פרסום',300);
+ card('c3','מה קורה עכשיו',`<p style="font-size:14.5px;line-height:1.55">בהזמנה אמיתית, הסטודיו מריץ את כל השלבים עד הסוף: לוגו אמיתי, אתר חי, סרטון מרונדר. זו טיוטה ראשונה שנוצרה עכשיו.</p>`);
+ done(7); clearInterval(clock);
+ $('#bClock').textContent=((performance.now()-t0)/1000).toFixed(1)+'s · '+(s.source==='claude'?'נוצר עכשיו עם Claude':'טבלת הרוח (בלי Claude)');
+ $('#bFoot').textContent=s.source==='claude'?'התדריך, הפלטה, הפונטים והסטוריבורד נוצרו עכשיו על ידי Claude, מהקלט שלכם. בהזמנה אמיתית הכול נבנה עד הסוף.':'Claude לא זמין בתצוגה הזו, אז הסטודיו השתמש בטבלת הרוח שלו לפי סוג העסק. בהזמנה אמיתית הכול נבנה מהעסק שלכם.';
+ $('#oIn').value=input; running=false;
+}
+
+/* launcher */
+let mode='url';
+$$('.seg button').forEach(b=>b.addEventListener('click',()=>{ mode=b.dataset.m; $$('.seg button').forEach(x=>x.setAttribute('aria-selected',String(x===b)));
+ const url=mode==='url'; $('#lIn').hidden=!url&&mode==='idea'; $('#lIdea').hidden=mode!=='idea'; $('#lIn').dir=url?'ltr':'rtl';
+ $('#lIn').value=url?'https://talorkaradi.co.il/':''; $('#lIn').placeholder=mode==='name'?'למשל: "אור ים"':'';
+ $('#lHint').textContent=url?'הדגמה על אתר אמיתי: טלאור כראדי. הריצה המלאה נמדדה, והתוצרים למטה אמיתיים.':mode==='idea'?'Claude ינסח תדריך, פלטה, פונטים, אתר וסטוריבורד, כאן ועכשיו.':'רק שם. הסטודיו יחקור את הקטגוריה ויציע רוח, צבעים ורעיון.';
+ const ex=$('#lEx'); ex.hidden=url; ex.innerHTML=(mode==='idea'?['בית קפה קטן בחיפה, קפה מיוחד וחם, סטודנטים וזוגות','קליניקה לפיזיותרפיה ספורטיבית בתל אביב','חנות פרחים שמרכיבה זרים לפי מצב רוח']:['אור ים','נגריית העמק','סטודיו פילאטיס ליה']).map(t=>`<button type="button">${esc(t)}</button>`).join('');
+ $$('button',ex).forEach(x=>x.onclick=()=>{ if(mode==='idea')$('#lIdea').value=x.textContent; else $('#lIn').value=x.textContent; });
+}));
+$('#launch').addEventListener('submit',async e=>{ e.preventDefault();
+ const v=(mode==='idea'?$('#lIdea').value:$('#lIn').value).trim();
+ $('#demo').scrollIntoView({behavior:still()?'auto':'smooth',block:'start'});
+ if(mode==='url'){ if(!v||/talorkaradi/i.test(v))return replayExample();
+  $('#oIn').value=v; await replayExample(); logLine('note','סריקה של אתר אמיתי רצה במנוע של הסטודיו, מחוץ לדפדפן. הקישור שלכם הועבר לטופס ההזמנה.'); return; }
+ if(!v){ const f=mode==='idea'?$('#lIdea'):$('#lIn'); f.focus(); return; }
+ $('#lGo').disabled=true; try{ await runNew(mode,v); } finally{ $('#lGo').disabled=false; } });
+</script>
+<script>
+/* ---------- orders ---------- */
+let db=null,uid=null,isOwner=false;
+const cl=window.claude&&window.claude.use?window.claude:null;
+async function saveOrder(o){ if(!db||!uid)throw new Error('offline'); const ref=db.doc('orders/'+uid); const s=await ref.get(); const items=(s.exists&&s.data().items)||[]; items.push({id:rid(),at:Date.now(),status:'new',note:'',...o}); await ref.set({items,updatedAt:Date.now()}); }
+$$('#oDom .opt').forEach(b=>b.onclick=()=>$$('#oDom .opt').forEach(x=>x.setAttribute('aria-pressed',String(x===b))));
+$('#ordForm').addEventListener('submit',async e=>{
+ e.preventDefault(); const note=$('#oNote'); note.classList.remove('err');
+ const bad=(m,el)=>{note.textContent=m; note.classList.add('err'); el.focus();};
+ const name=$('#oName').value.trim(), phone=$('#oPhone').value.trim(), mail=$('#oMail').value.trim(), inp=$('#oIn').value.trim();
+ if(!inp)return bad('כתבו קישור, רעיון או שם, כדי שנדע ממה מתחילים.',$('#oIn'));
+ if(!name)return bad('איך לפנות אליכם? מלאו שם.',$('#oName'));
+ if(phone.replace(/\D/g,'').length<9)return bad('מספר הטלפון קצר מדי. בדקו אותו ונסו שוב.',$('#oPhone'));
+ if(mail&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(mail))return bad('כתובת האימייל לא נראית תקינה.',$('#oMail'));
+ if(!$('#oAgree').checked)return bad('כדי שנוכל לשמור את ההזמנה, סמנו את האישור.',$('#oAgree'));
+ const plan=($$('#oPlan .opt').find(b=>b.getAttribute('aria-pressed')==='true')||{}).dataset?.v||'';
+ const dom=($$('#oDom .opt').find(b=>b.getAttribute('aria-pressed')==='true')||{}).dataset?.v||'';
+ const o={name,phone,mail,input:inp.slice(0,1200),plan,domMode:dom,domain:$('#oDomain').value.trim().slice(0,120)};
+ const btn=e.target.querySelector('[type=submit]'); btn.disabled=true; note.textContent='שולח…';
+ try{ await saveOrder(o); const f=e.target; [...f.children].forEach(c=>c.hidden=true);
+  const d=document.createElement('div'); d.className='sent'; d.setAttribute('role','status'); d.tabIndex=-1;
+  d.innerHTML=`<svg viewBox="0 0 96 100" width="70" height="72" style="color:var(--ink)" aria-hidden="true"><use href="#mk"/></svg><h3>ההזמנה התקבלה.</h3><p>תוך יום עסקים תקבלו תוכנית עבודה וקישור לתשלום.</p>`;
+  f.appendChild(d); d.focus();
+ }catch(_){ const t=`הזמנה ל-AILGEN: ${name}, ${phone}${mail?', '+mail:''}. חבילה: ${plan}. קלט: ${inp}. דומיין: ${dom} ${o.domain}`;
+  note.innerHTML=`לא הצלחנו לשמור את ההזמנה בתצוגה הזו.${C.email||C.phone?` שלחו לנו את הפרטים${C.email?` ל-<bdi dir="ltr">${esc(C.email)}</bdi>`:''}${C.phone?` או בטלפון <bdi dir="ltr">${esc(C.phone)}</bdi>`:''}:`:' העתיקו את הפרטים ונסו שוב מאוחר יותר:'}<span style="display:block;margin-top:8px;padding:10px;border-radius:10px;background:var(--paper);user-select:all">${esc(t)}</span>`; }
+ btn.disabled=false;
+});
+
+/* ---------- control center ---------- */
+let ORD=[],tab='orders',subs=[],pendingDel=null;
+const OST={new:'חדשה',plan:'תוכנית נשלחה',paid:'שולם',prod:'בייצור',review:'בתיקונים',live:'באוויר',lost:'לא רלוונטי'};
+const fmt=ts=>new Date(ts).toLocaleString('he-IL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+function openAdmin(){$('#adm').classList.add('open'); document.body.style.overflow='hidden';
+ if(!subs.length&&db){subs.push(db.collection('orders').onSnapshot(s=>{ORD=s.docs.flatMap(d=>((d.data()||{}).items||[]).map(it=>({...it,_d:d.id}))).sort((a,b)=>b.at-a.at); if(tab==='orders')renderAdmin();},()=>{}));}
+ renderAdmin(); setTimeout(()=>$('#adm .tab.on').focus(),30);}
+function closeAdmin(){$('#adm').classList.remove('open'); document.body.style.overflow=''; $('#admBtn').focus({preventScroll:true});}
+$$('#adm .tab').forEach(t=>t.addEventListener('click',()=>{if(t.dataset.t==='close')return closeAdmin(); tab=t.dataset.t; $$('#adm .tab').forEach(x=>x.classList.toggle('on',x===t)); renderAdmin();}));
+$('#adm').addEventListener('keydown',e=>{if(e.key==='Escape')closeAdmin();});
+async function updOrd(d,id,patch,remove){const ref=db.doc('orders/'+d); const s=await ref.get(); const dt=s.data()||{}; let items=dt.items||[]; items=remove?items.filter(i=>i.id!==id):items.map(i=>i.id===id?{...i,...patch}:i); await ref.set({...dt,items,updatedAt:Date.now()});}
+async function saveSite(el){ el.textContent='שומר…'; try{await db.doc('data/site').set(JSON.parse(JSON.stringify(C))); renderPlans(); el.textContent='נשמר ופורסם.';}catch(_){el.textContent='השמירה נכשלה. ודאו שיש לכם הרשאת עריכה.';} }
+function renderAdmin(){
+ const m=$('#admMain'); if(!db){m.innerHTML='<h2>מרכז הבקרה</h2><p class="empty">מסד הנתונים אינו זמין בתצוגה הזו.</p>';return;}
+ if(tab==='orders'){
+  const c=k=>ORD.filter(o=>o.status===k).length, planName=k=>(C.plans.find(p=>p.k===k)||{}).n||k, priceOf=k=>+(String((C.plans.find(p=>p.k===k)||{}).price||'0').replace(/\D/g,''));
+  const pipe=ORD.filter(o=>['paid','prod','review','live'].includes(o.status)).reduce((a,o)=>a+priceOf(o.plan),0);
+  m.innerHTML=`<h2>הזמנות</h2><p class="sub">כל הזמנה מהעמוד, עם הקלט, החבילה והדומיין.</p>
+   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">${[['new','חדשות'],['paid','שולמו'],['prod','בייצור'],['live','באוויר']].map(([k,l])=>`<div class="box" style="margin:0"><b style="font:600 30px var(--mono)">${c(k)}</b><br><span>${l}</span></div>`).join('')}</div>
+   <p class="sub">הכנסות מהזמנות ששולמו: <b dir="ltr">₪${pipe.toLocaleString('he-IL')}</b> (לפני מע"מ, לפי המחירון הנוכחי)</p>
+   ${ORD.map(o=>{const k=o._d+'|'+o.id; return `<div class="box"><div class="orow"><div><b>${esc(o.name)}</b> <span style="color:var(--mute);font-size:13px">${fmt(o.at)}</span><br><span class="badge">${esc(planName(o.plan))}</span><span class="badge">${esc({new:'דומיין חדש',own:'דומיין קיים',later:'דומיין: אחר כך'}[o.domMode]||'')} ${esc(o.domain)}</span></div>
+    <div><span dir="ltr" style="font-family:var(--mono)">${esc(o.phone)}</span><br><span dir="ltr" style="font-size:14px">${esc(o.mail)}</span></div>
+    <div><select data-st="${k}" aria-label="סטטוס">${Object.entries(OST).map(([v,t])=>`<option value="${v}" ${o.status===v?'selected':''}>${t}</option>`).join('')}</select></div>
+    <div>${pendingDel===k?`<span class="confirm">למחוק? <button class="mini warn" data-delok="${k}" type="button">כן</button><button class="mini" data-delno type="button">לא</button></span>`:`<button class="mini warn" data-del="${k}" type="button">מחיקה</button>`}</div>
+    <p class="msg"><b>קלט:</b> ${esc(o.input)}</p><textarea data-note="${k}" placeholder="הערות פנימיות…" style="grid-column:1/-1;min-height:56px" aria-label="הערות">${esc(o.note)}</textarea></div></div>`;}).join('')||'<p class="empty">עדיין אין הזמנות.</p>'}`;
+  $$('[data-st]',m).forEach(s=>s.onchange=()=>{const [d,id]=s.dataset.st.split('|');updOrd(d,id,{status:s.value});});
+  $$('[data-note]',m).forEach(t=>t.onchange=()=>{const [d,id]=t.dataset.note.split('|');updOrd(d,id,{note:t.value});});
+  $$('[data-del]',m).forEach(b=>b.onclick=()=>{pendingDel=b.dataset.del;renderAdmin();});
+  $$('[data-delno]',m).forEach(b=>b.onclick=()=>{pendingDel=null;renderAdmin();});
+  $$('[data-delok]',m).forEach(b=>b.onclick=()=>{const [d,id]=b.dataset.delok.split('|');pendingDel=null;updOrd(d,id,null,true);});
+ }
+ if(tab==='plans'){
+  m.innerHTML=`<h2>חבילות ומחירים</h2><p class="sub">מה שנשמר כאן מתעדכן בעמוד מיד.</p><div class="cform">${C.plans.map((p,i)=>`<div class="box cform"><div style="display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:8px;align-items:end"><div><label for="pn${i}">שם</label><input id="pn${i}" data-p="${i}.n" value="${esc(p.n)}"></div><div><label for="pp${i}">מחיר (₪)</label><input id="pp${i}" data-p="${i}.price" value="${esc(p.price)}" dir="ltr"></div><div><label for="pm${i}">חודשי (₪)</label><input id="pm${i}" data-p="${i}.mo" value="${esc(p.mo)}" dir="ltr"></div><label style="display:flex;gap:6px;align-items:center;font-weight:600"><input type="radio" name="hot" data-hot="${i}" ${p.hot?'checked':''} style="width:20px;min-height:20px"> מודגש</label></div><label for="pi${i}">מה כלול (שורה לכל פריט)</label><textarea id="pi${i}" data-items="${i}">${esc(p.items.join('\n'))}</textarea></div>`).join('')}
+   <div class="box cform"><label for="pNote">הערה מתחת למחירים</label><input id="pNote" value="${esc(C.planNote)}"><label for="pMail">אימייל לגיבוי כשהשמירה לא זמינה</label><input id="pMail" value="${esc(C.email)}" dir="ltr"><label for="pPhone">טלפון לגיבוי</label><input id="pPhone" value="${esc(C.phone)}" dir="ltr"></div>
+   <div class="savebar"><button class="btn" id="pSave" type="button">שמירה ופרסום</button><span id="pMsg" class="fnote" role="status"></span></div></div>`;
+  $('#pSave').onclick=()=>{ $$('[data-p]',m).forEach(el=>{const [i,k]=el.dataset.p.split('.'); C.plans[+i][k]=el.value.trim();}); $$('[data-items]',m).forEach(el=>C.plans[+el.dataset.items].items=el.value.split('\n').map(s=>s.trim()).filter(Boolean)); $$('[data-hot]',m).forEach(el=>C.plans[+el.dataset.hot].hot=el.checked); C.planNote=$('#pNote').value; C.email=$('#pMail').value.trim(); C.phone=$('#pPhone').value.trim(); saveSite($('#pMsg')); };
+ }
+}
+$('#admBtn').addEventListener('click',openAdmin);
+
+/* ---------- chrome ---------- */
+addEventListener('scroll',()=>$('#hdr').classList.toggle('scrolled',scrollY>40),{passive:true});
+$('#yr').textContent=new Date().getFullYear();
+$('#stillBtn').onclick=()=>{const on=document.documentElement.classList.toggle('a-still'); $('#stillBtn').setAttribute('aria-pressed',String(on));};
+const A11Y=`הצהרת נגישות · AILGEN
+
+העמוד נבנה לפי התקן הישראלי ת"י 5568 והנחיות WCAG 2.1 ברמה AA: ניווט מלא במקלדת עם קישור "דלג לתוכן", סימון פוקוס ברור, מבנה כותרות תקין, תוויות לכל שדה, ניגודיות שנבדקה, כיבוד הגדרת "הפחתת תנועה", וכפתור לעצירת אנימציות בתחתית העמוד.
+
+נתקלתם בבעיה? נשמח לתקן. כתבו לנו דרך טופס ההזמנה בעמוד.`;
+$('#a11yS').onclick=()=>{$('#lgT').textContent='הצהרת נגישות'; $('#lgTxt').textContent=A11Y; $('#lg').showModal();};
+$('#lg').addEventListener('click',e=>{if(e.target.id==='lg'||e.target.closest('[data-close]'))$('#lg').close();});
+
+/* hero particles: the AILGEN motif, quiet */
+(function(){ const c=$('#pcv'), g=c.getContext('2d'); let w,h,P=[];
+ const size=()=>{w=c.width=c.offsetWidth*devicePixelRatio; h=c.height=c.offsetHeight*devicePixelRatio; P=Array.from({length:Math.round(w*h/26000)},()=>({x:Math.random()*w,y:Math.random()*h,v:.15+Math.random()*.5,r:(Math.random()*1.6+.4)*devicePixelRatio,a:Math.random()<.08}));};
+ size(); addEventListener('resize',size);
+ const draw=()=>{ g.clearRect(0,0,w,h); for(const p of P){ if(!still()){p.y-=p.v*devicePixelRatio; if(p.y<-5){p.y=h+5;p.x=Math.random()*w;}} g.fillStyle=p.a?'rgba(255,178,62,.9)':'rgba(174,180,216,.45)'; g.fillRect(p.x,p.y,p.a?p.r*2.2:p.r,p.a?p.r*2.2:p.r);} requestAnimationFrame(draw); };
+ draw(); })();
+
+/* ---------- init ---------- */
+renderStatic(); renderPlans(); showExample();
+if(cl){
+ cl.use('db').then(d=>{db=d; if(!db)return; db.doc('data/site').onSnapshot(s=>{ if(s.exists){ const d=s.data()||{}; C={...structuredClone(DEF),...d}; if(!Array.isArray(C.plans)||!C.plans.length)C.plans=structuredClone(DEF.plans); renderPlans(); } },()=>{}); });
+ cl.use('user').then(async u=>{ if(!u)return; try{uid=await u.id(); isOwner=await u.isOwner();}catch(_){} if(isOwner)$('#admBtn').style.display='inline-flex'; });
+ cl.use('sample').then(s=>{sample=s;});
+}
+</script>
+</body>
+</html>

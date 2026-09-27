@@ -33,7 +33,7 @@ if (mode === 'concept') brand.status = 'concept';
 
 if (mode === 'url') {
   const intake = path.join(DIR, 'intake');
-  const r = spawnSync(process.execPath, [path.join(HERE, 'intake.mjs'), args.url, '--out', intake, '--max', String(args.max || 30)], { stdio: 'inherit' });
+  const r = spawnSync(process.execPath, [path.join(HERE, 'intake.mjs'), args.url, '--out', intake, '--max', String(args.max || 30), '--delay', String(args.delay || 1200), '--media', String(args.media || 80)], { stdio: 'inherit' });
   if (r.status !== 0) { console.error('intake failed: see the log above. The folder is kept so you can retry.'); process.exit(1); }
   const site = JSON.parse(fs.readFileSync(path.join(intake, 'site.json'), 'utf8'));
   brand.name = brand.name || site.name;
