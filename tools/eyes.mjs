@@ -100,6 +100,7 @@ function parseArgs(argv) {
     clip: null,
     segments: 0,
     maxFullPage: 4000,
+    still: false,
     json: false,
     quiet: false,
   };
@@ -118,6 +119,7 @@ function parseArgs(argv) {
     else if (k === "--selector") a.selector = next();
     else if (k === "--segments") a.segments = Number(next());
     else if (k === "--max-fullpage") a.maxFullPage = Number(next());
+    else if (k === "--still") a.still = true;
     else if (k === "--json") a.json = true;
     else if (k === "--quiet") a.quiet = true;
     else if (k === "--help" || k === "-h") a.help = true;
@@ -516,6 +518,23 @@ function pageAudit() {
   };
 }
 
+/* Freeze motion so two captures of an unchanged page are pixel-identical.
+   Without this a visual diff is dominated by whatever is animating: on this
+   site's homepage a 1px CSS change measured 1.28% different pixels, essentially
+   all of it the animated dot-matrix hero, which buries the real regression. */
+function stillStyles() {
+  return `
+    *, *::before, *::after {
+      animation-play-state: paused !important;
+      animation-duration: 0s !important;
+      animation-delay: 0s !important;
+      transition-duration: 0s !important;
+      transition-delay: 0s !important;
+    }
+    html { scroll-behavior: auto !important; }
+  `;
+}
+
 /* CLS must be observed from before first paint. */
 function initScript() {
   window.__cls = 0;
@@ -568,6 +587,13 @@ async function run() {
       // @media (pointer:coarse) rule goes unexercised at the tablet width and
       // the audit reports defects that a real tablet would not have.
       hasTouch: name === "mobile" || name === "tablet",
+      // Emulate reduced motion for a still frame. This is the standards-based
+      // mechanism and it asks the page to stop animating, which also stops a
+      // requestAnimationFrame canvas loop - injecting animation:none cannot,
+      // because canvas is painted by script, not by CSS. A page that honours
+      // prefers-reduced-motion then produces identical pixels twice, which is
+      // what makes a visual diff meaningful instead of mostly noise.
+      reducedMotion: a.still ? "reduce" : "no-preference",
       locale: "he-IL",
     });
     await ctx.addInitScript(initScript);
@@ -596,6 +622,12 @@ async function run() {
       try { await page.evaluate(() => document.fonts?.ready); } catch { /* ignore */ }
       if (a.selector) await page.waitForSelector(a.selector, { timeout: 10000 });
       await page.waitForTimeout(250);
+      if (a.still) {
+        // Applied after the settle so the intro has actually played, then the
+        // page is given a moment to repaint at its final resting state.
+        await page.addStyleTag({ content: stillStyles() });
+        await page.waitForTimeout(600);
+      }
       audit = await page.evaluate(pageAudit);
     } catch (e) {
       navError = String(e.message).slice(0, 400);

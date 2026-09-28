@@ -19,6 +19,9 @@
     "eyes:all": "node tools/eyes.mjs --responsive",
     "env": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts\\launch-env.ps1",
     "env:stop": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts\\launch-env.ps1 -Stop",
+    "snap": "node tools/snap.mjs",
+    "know": "node tools/knowledge.mjs",
+    "super": "node tools/supervisor.mjs",
     "test": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts\\doctor.ps1"
   },
   "devDependencies": {

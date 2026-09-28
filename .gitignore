@@ -11,3 +11,6 @@ projects/*/intake/shots/
 projects/_eyes/scratch/
 # launch-env runtime state (pid tracking + service logs)
 .launch/
+# named snapshots (tools/snap.mjs) and the local knowledge index
+.snapshots/
+.knowledge/
