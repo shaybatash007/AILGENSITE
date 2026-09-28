@@ -1,0 +1,41 @@
+#!/bin/sh
+# AILGEN commit guard.
+#
+# Two deterministic rules that no model can forget under pressure:
+#   1. every commit subject carries [Model: <name>]
+#   2. the memory layer stays inside its digest budget and free of encoding corruption
+#
+# Bypass for a genuine emergency only: git commit --no-verify
+#
+# Windows note: git for Windows runs hooks through sh, so this file must stay POSIX sh.
+
+subject=$(git log -1 --format=%s 2>/dev/null)
+case "$subject" in
+  "[Model: "*"] "*)
+    ;;
+  *)
+    echo ""
+    echo "COMMIT BLOCKED — missing model attribution."
+    echo "  subject: $subject"
+    echo "  required: [Model: <ModelName>] <action>"
+    echo "  example:  [Model: Space Bunny Free] feat: add the RTL-aware composer"
+    echo "  Read the model name from the environment. Never guess it, never reuse a stale stamp."
+    echo "  Emergency bypass: git commit --no-verify"
+    echo ""
+    exit 1
+    ;;
+esac
+
+root=$(git rev-parse --show-toplevel)
+if command -v powershell >/dev/null 2>&1; then
+  failures=$(powershell -NoProfile -ExecutionPolicy Bypass -File "$root/scripts/doctor.ps1" 2>/dev/null | grep "^FAIL")
+  if [ -n "$failures" ]; then
+    echo ""
+    echo "COMMIT BLOCKED — the environment has FAIL-level problems:"
+    echo "$failures"
+    echo "  Fix them, or use --no-verify if the failure is pre-existing and unrelated."
+    exit 1
+  fi
+fi
+
+exit 0

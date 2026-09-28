@@ -1,3 +1,7 @@
+# node dev server (npm install)
+node_modules/
+# local version snapshots created by scripts/version-save.ps1
+versions/
 # studio render output (keep deliverables in projects/<slug>/demo/)
 projects/*/out/
 # raw crawl media and screenshots stay local (the site keeps only the images it uses)
