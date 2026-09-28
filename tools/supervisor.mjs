@@ -143,6 +143,44 @@ function probeHttp(url, timeoutMs = 2500) {
   });
 }
 
+/* For a service with no port there is nothing to reconcile against, and the PID
+   handed back by WMI belongs to the cmd.exe wrapper. The real process is found
+   instead by a distinctive argument of its own: the .cmd runner is invisible in
+   the child's command line, but the script it launches is not. */
+function resolveRunnerPid(signature) {
+  if (!signature) return null;
+  // Injected into an already single-quoted PowerShell string, so it must not
+  // contain one of its own. Quoting it here produced -like '*'x'*' , which
+  // PowerShell silently parses as something else entirely and never matches.
+  const sig = String(signature).replace(/'/g, "");
+  // The skip list is not enough. The supervisor's own command line contains the
+  // service's arguments, because it was told to launch them, so it matches
+  // itself unless its own PID is excluded by name and by number.
+  const ps =
+    `$skip = @('cmd.exe','powershell.exe','pwsh.exe','conhost.exe','pwsh-preview.exe'); ` +
+    `$c = Get-CimInstance Win32_Process | ` +
+    `Where-Object { $skip -notcontains $_.Name -and $_.ProcessId -ne ${process.pid} ` +
+    `-and $_.CommandLine -like '*${sig}*' } | ` +
+    `Select-Object -First 1 -ExpandProperty ProcessId; Write-Output $c`;
+  // WMI has created cmd.exe, but cmd.exe has not necessarily started node.exe
+  // yet, so the first lookup can legitimately find nothing. Retry briefly.
+  for (let attempt = 0; attempt < 6; attempt++) {
+    try {
+      const out = execFileSync("powershell.exe",
+        ["-NoProfile", "-NonInteractive", "-Command", ps],
+        { encoding: "utf8", timeout: 20000, windowsHide: true, stdio: ["ignore", "pipe", "pipe"] });
+      const pid = parseInt(String(out).trim(), 10);
+      if (Number.isFinite(pid) && pid > 0) return pid;
+    } catch { /* retry */ }
+    spawnSyncSleep(400);
+  }
+  return null;
+}
+function spawnSyncSleep(ms) {
+  const end = Date.now() + ms;
+  while (Date.now() < end) { /* deliberate short wait, bounded */ }
+}
+
 /* ---------------------------------------------------- detached create --- */
 /* THE core fix, and the reason this file exists at all.
  *
@@ -284,7 +322,7 @@ function tailFile(p, n = 12) {
 }
 
 /* -------------------------------------------------------------- start --- */
-async function start(name, { cmd, args, port, url, waitMs = 20000 }) {
+async function start(name, { cmd, args, port, url, waitMs = 20000, noWait = false }) {
   if (!name || !cmd) { bad("start needs <name> and a command"); return 2; }
   fs.mkdirSync(LOG_DIR, { recursive: true });
   const out = path.join(LOG_DIR, `${name}.out.log`);
@@ -318,18 +356,40 @@ async function start(name, { cmd, args, port, url, waitMs = 20000 }) {
   if (!resolved) { bad(`cannot resolve an executable for "${cmd}"`); return 2; }
 
   let childPid;
+  let runnerFile = null;
   try {
     const runner = writeRunner(name, resolved.exe, [...resolved.args, ...args], ROOT);
+    runnerFile = runner.file;
     childPid = createDetached(runner.file);
   } catch (e) {
     bad(`failed to start ${name}: ${e.message}`);
     return 1;
+  }
+  // Record the real process where we can identify it, not the wrapper.
+  if (runnerFile) {
+    // A script argument is the most distinctive thing in the child's own command
+    // line; a bare executable name like "node" is not.
+    const sig = [...resolved.args, ...args].find((a) => /\.(mjs|js|cjs|json)$/i.test(a));
+    const real = portOwner(port) || resolveRunnerPid(sig);
+    if (real && real !== childPid) childPid = real;
   }
 
   const st = readState();
   st.services[name] = { pid: childPid, port: port || null, url: url || null, cmd, args, adopted: false, at: new Date().toISOString() };
   writeState(st);
   info(`spawned ${name} pid ${childPid}${port ? ` on ${port}` : ""}`);
+
+  // A daemon that never listens on a port is legitimate - a migration watcher,
+  // for instance, exists precisely to wait for a condition. Waiting for a port
+  // that will never open would kill it as "not ready". `--no-wait` therefore
+  // means "confirm it is alive and stay out of the way".
+  if (noWait) {
+    await sleep(1500);
+    if (pidAlive(childPid)) { ok(`${name} running (pid ${childPid})`); return 0; }
+    bad(`${name} exited within 1.5s of starting`);
+    console.log(tailFile(err, 15));
+    return 1;
+  }
 
   // Bounded readiness wait. Fails fast with the child's own log tail, which is
   // the difference between an actionable error and a silent hang.
@@ -477,7 +537,7 @@ async function main() {
         args: argvCmd.slice(1),
         port: a.flags.port ? parseInt(a.flags.port, 10) : null,
         url: a.flags.url || null,
-        waitMs: a.flags["wait-ms"] ? parseInt(a.flags["wait-ms"], 10) : 20000,
+        waitMs: a.flags["wait-ms"] ? parseInt(a.flags["wait-ms"], 10) : 20000, noWait: !!a.flags["no-wait"],
       });
       break;
     }

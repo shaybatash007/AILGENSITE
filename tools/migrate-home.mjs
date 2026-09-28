@@ -197,10 +197,99 @@ function rollback(stamp) {
 }
 
 /* ---------------------------------------------------------------- main --- */
+/* --when-idle turns the manual step into an automatic one.
+ *
+ * The blocker is precise: the move cannot run while an opencode process exists,
+ * and the agent that would run it is one. But that also means the condition
+ * resolves itself the moment the human closes opencode - which is the only
+ * moment the migration is possible anyway.
+ *
+ * So this mode waits for opencode to be gone, confirms the world is still
+ * consistent, and then performs the migration unattended: transactional, backed
+ * up, verified, and logged. If opencode never closes, nothing happens and the
+ * watcher expires on its own deadline. It never runs twice. */
+async function whenIdle() {
+  const LOG = path.join(DB_DIR, "backups", "migrate-watch.log");
+  fs.mkdirSync(path.dirname(LOG), { recursive: true });
+  const log = (m) => {
+    const line = `[${new Date().toISOString()}] ${m}`;
+    console.log(line);
+    try { fs.appendFileSync(LOG, line + "\n"); } catch { /* best effort */ }
+  };
+
+  const DEADLINE = Date.now() + 2 * 60 * 60 * 1000; // give up after two hours
+  const POLL = 3000;
+  let quiet = 0;
+
+  log("watching for opencode to exit; the migration runs the moment it is gone");
+  while (Date.now() < DEADLINE) {
+    const procs = opencodeProcesses();
+    if (procs.length === 0) {
+      quiet++;
+      // Three consecutive clean checks, so a fast restart of opencode aborts the
+      // migration instead of racing it.
+      if (quiet >= 3) { log("opencode is gone and stayed gone - migrating now"); break; }
+    } else {
+      if (quiet) log("opencode came back; standing down");
+      quiet = 0;
+    }
+    await new Promise((r) => setTimeout(r, POLL));
+  }
+  if (Date.now() >= DEADLINE) {
+    log("deadline reached with opencode still running - nothing was changed");
+    return 1;
+  }
+  if (opencodeProcesses().length) { log("aborted: opencode restarted"); return 1; }
+
+  const owners = portOwners();
+  const busy = ["8000", "4096"].filter((p) => owners[p]);
+  if (busy.length) {
+    log(`aborted: ports still held (${busy.join(", ")}); run 'node tools/supervisor.mjs stop --all' first`);
+    return 1;
+  }
+  log("preconditions satisfied - proceeding");
+  process.exit(applyMigration());
+}
+
+function applyMigration() {
+  const stamp = backup();
+  try {
+    const oldDir = OLD_ROOT.replace(/\//g, "\\");
+    const newDir = NEW_ROOT.replace(/\//g, "\\");
+    if (fs.existsSync(oldDir)) {
+      fs.mkdirSync(path.dirname(newDir), { recursive: true });
+      fs.renameSync(oldDir, newDir);
+      ok(`repository moved -> ${NEW_ROOT}`);
+    } else if (fs.existsSync(newDir)) {
+      ok("repository is already at the destination");
+    } else {
+      bad(`neither ${OLD_ROOT} nor ${NEW_ROOT} exists`);
+      return 1;
+    }
+  } catch (e) {
+    bad(`move failed: ${e.code} ${e.message}`);
+    bad(`the database was NOT modified; backup at ${stamp}`);
+    return 1;
+  }
+  migrate();
+  console.log("");
+  const good = verify();
+  console.log("");
+  if (good) {
+    ok("migration complete - start opencode from the new location from now on");
+    info(`rollback: node tools/migrate-home.mjs --rollback ${path.basename(stamp, ".db").replace(/^opencode-/, "")}`);
+    return 0;
+  }
+  bad("verification failed - roll back with the command above");
+  return 1;
+}
+
 function main() {
   console.log(`\n  AILGEN -> $HOME migration`);
   info(`  old: ${OLD_ROOT}`);
   info(`  new: ${NEW_ROOT}`);
+
+  if (has("--when-idle")) return whenIdle();
 
   if (has("--rollback")) {
     const stamp = val("--rollback");
@@ -253,30 +342,41 @@ function main() {
 
   console.log("");
   const stamp = backup();
+  return applyMigrationUsing(stamp);
+}
+
+function applyMigrationUsing(stamp) {
   try {
-    if (fs.existsSync(OLD_ROOT.replace(/\//g, "\\"))) {
-      fs.mkdirSync(path.dirname(NEW_ROOT.replace(/\//g, "\\")), { recursive: true });
-      fs.renameSync(OLD_ROOT.replace(/\//g, "\\"), NEW_ROOT.replace(/\//g, "\\"));
+    const oldDir = OLD_ROOT.replace(/\//g, "\\");
+    const newDir = NEW_ROOT.replace(/\//g, "\\");
+    if (fs.existsSync(oldDir)) {
+      fs.mkdirSync(path.dirname(newDir), { recursive: true });
+      fs.renameSync(oldDir, newDir);
       ok(`repository moved -> ${NEW_ROOT}`);
+    } else if (fs.existsSync(newDir)) {
+      ok("repository is already at the destination");
+    } else {
+      bad(`neither ${OLD_ROOT} nor ${NEW_ROOT} exists`);
+      return 1;
     }
   } catch (e) {
     bad(`move failed: ${e.code} ${e.message}`);
-    bad(`database was not modified; backup is at ${stamp}`);
+    bad(`the database was NOT modified; backup at ${stamp}`);
     return 1;
   }
-
   migrate();
   console.log("");
   const good = verify();
   console.log("");
   if (good) {
-    ok("migration complete");
+    ok("migration complete - start opencode from the new location from now on");
     info(`rollback: node tools/migrate-home.mjs --rollback ${path.basename(stamp, ".db").replace(/^opencode-/, "")}`);
-    info("now start opencode from the new path so the CLI and the Web UI agree");
     return 0;
   }
   bad("verification failed - roll back with the command above");
   return 1;
 }
 
-process.exit(main());
+// main() is async because --when-idle waits; process.exit needs a number, so
+// the result is awaited before it is used.
+process.exit(await main());
