@@ -126,7 +126,21 @@ try {
 } finally { Pop-Location }
 
 if ($stateBlock -and $head -and $stateBlock -match "@ ([0-9a-f]{7,})") {
-  if ($Matches[1] -ne $head) { [void]$warns.Add("SESSION.md auto-state records HEAD $($Matches[1]) but git is at $head - a commit landed without a handoff refresh") }
+  $blockSha = $Matches[1]
+  if ($blockSha -ne $head) {
+    Push-Location $root
+    try {
+      & git merge-base --is-ancestor $blockSha HEAD 2>$null | Out-Null
+      $isAncestor = ($LASTEXITCODE -eq 0)
+    } finally { Pop-Location }
+    if ($isAncestor) {
+      # Normal: the handoff was written, then a commit landed. The plugin refreshes the block on the
+      # next tool call, so this self-heals. It is information, not a problem.
+      [void]$notes.Add("auto-state records $blockSha and git is at ${head} - a commit landed after the last handoff refresh (self-heals on the next tool call)")
+    } else {
+      [void]$warns.Add("auto-state records HEAD $blockSha, which is not an ancestor of ${head} - history was rewritten, the branch changed, or the handoff is from another worktree")
+    }
+  }
 }
 
 $recentUnstamped = @($unstamped | Select-Object -First 5)

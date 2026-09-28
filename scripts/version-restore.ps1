@@ -51,11 +51,17 @@ foreach ($item in $restoreList) {
 
 Write-Output "restored $($restoreList.Count) file(s) from versions/$Name"
 if ($skippedList.Count) { Write-Output "skipped (protected): $($skippedList.Count) file(s) under $($protected -join ', ')" }
-$extra = Get-ChildItem -LiteralPath $root -Recurse -File -ErrorAction SilentlyContinue |
-  Where-Object { $_.FullName -notlike "$base*" -and $_.FullName -notlike "*\.git\*" -and $_.FullName -notlike "*\node_modules\*" -and
-    $rel2 = $_.FullName.Substring($root.Length + 1) -and -not (Test-Path -LiteralPath (Join-Path $src $rel2)) -and
-    $protected -notcontains ($rel2 -split "[\\/]")[0] } | Select-Object -First 10
-if ($extra) {
-  Write-Output "note: $($extra.Count) file(s) exist in the working tree but not in this snapshot and were left untouched:"
-  $extra | ForEach-Object { Write-Output "  $($_.FullName.Substring($root.Length + 1))" }
+$extra = New-Object System.Collections.ArrayList
+Get-ChildItem -LiteralPath $root -Recurse -File -ErrorAction SilentlyContinue | ForEach-Object {
+  $rel2 = $_.FullName.Substring($root.Length + 1)
+  if ($rel2 -match "^(versions|node_modules|\.git)\\" -or $rel2 -like ".opencode\node_modules\*") { return }
+  $top2 = ($rel2 -split "[\\/]")[0]
+  if ($protected -contains $top2) { return }
+  if (-not (Test-Path -LiteralPath (Join-Path $src $rel2))) {
+    if ($extra.Count -lt 10) { [void]$extra.Add($rel2) }
+  }
+}
+if ($extra.Count) {
+  Write-Output "note: these files exist in the working tree but not in this snapshot and were left untouched:"
+  $extra | ForEach-Object { Write-Output "  $_" }
 }

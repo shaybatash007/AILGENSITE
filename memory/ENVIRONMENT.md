@@ -39,6 +39,10 @@ Add with `/remember`. Keep it factual: what is true of the machine, not what sho
   ANSI by PowerShell 5.1 and an em dash becomes a parse error. A backtick fence (```` ``` ````)
   inside a double-quoted PowerShell string is an escape sequence and breaks the parser — use single
   quotes for markdown fences.
+- Two more PowerShell 5.1 string traps, both hit and fixed on 2026-09-28: in `-replace`, a
+  replacement of `'$1' + "2026-..."` is read by .NET as *group 12026*, which silently vanishes — use
+  a capture-free pattern or `${1}`. And `"... of $head: history"` is parsed as the drive-qualified
+  variable `$head:` — write `${head}:`.
 
 ## File-editing rules
 
