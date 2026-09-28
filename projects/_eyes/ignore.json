@@ -1,4 +1,4 @@
-﻿{
+{
   "_comment": "Intentional design, not defects. Each entry must state why. A tool that cannot be told 'this is on purpose' gets muted and then ignored entirely, so keep this list short and justified. Remove an entry the moment the design changes.",
   "ignore": [
     {
