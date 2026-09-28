@@ -15,9 +15,17 @@
     "handoff": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts\\handoff.ps1",
     "he": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts\\he.ps1",
     "web": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts\\he.ps1 -Web",
+    "eyes": "node tools/eyes.mjs",
+    "eyes:all": "node tools/eyes.mjs --responsive",
+    "env": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts\\launch-env.ps1",
+    "env:stop": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts\\launch-env.ps1 -Stop",
     "test": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts\\doctor.ps1"
   },
   "devDependencies": {
+    "@playwright/mcp": "^0.0.82",
+    "pixelmatch": "^7.2.0",
+    "playwright": "^1.64.0-alpha-1789764292000",
+    "pngjs": "^7.0.0",
     "serve": "^14.2.6"
   }
 }
