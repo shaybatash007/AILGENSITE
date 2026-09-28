@@ -21,6 +21,13 @@ Anything a script can measure, a script measures. Do not guess state; read it.
 | `npm run dev` / `npm run down` | Serve the site on port 8000 / stop it | previewing a change |
 | `npm run eyes -- --url <u>` | Screenshots a page at 3 viewports + audits layout, RTL, a11y, contrast, console and network. Exits non-zero on FAIL | any visual or CSS work; before claiming a page "looks right" |
 | `npm run eyes:all` | Same, forced responsive (mobile + tablet + desktop) | before shipping a page |
+| `npm run env` / `npm run env:stop` | One-click environment: dev server :8000, opencode web :4096, UTF-8 terminal, browser. Idempotent, adopts what is already healthy | starting work; `env:stop` leaves no orphans |
+| `npm run super -- status` | What is running, tracked PID vs real port owner, and any drift | before and after starting services |
+| `npm run super -- gc` | Kill any listener on the managed ports that nothing is tracking | after a crash or a force-kill |
+| `npm run snap -- take v1` | Named snapshot: file tree + rendered screenshot + manifest. Never overwrites | before risky visual work |
+| `npm run snap -- diff v1` | Visual diff against a snapshot; separates motion noise from a real change | after a change, to see what moved |
+| `npm run snap -- roll v1` | Restore a snapshot and diff the result. Refuses over a dirty tree | when a change needs undoing |
+| `npm run know -- query "<text>"` | Ranked retrieval over the code, the memory layer and the agent rules | instead of grepping across five files |
 
 `scripts/doctor.ps1` exits non-zero only on FAIL; WARN is informational. Read the tool output — do
 not paraphrase a clean result you did not see.
@@ -228,6 +235,13 @@ Rules:
 
 Never let a daemon outlive the session unmanaged: `.launch/state.json` records every service, and
 `node tools/supervisor.mjs gc` kills any listener on the managed ports that is not tracked.
+
+## Deterministic tools
+
+`npm run eyes` (pixels + rules), `npm run super` (process supervisor), `npm run snap` (snapshot and
+visual diff), `npm run know` (FTS5 index). Anything a script can measure, a script measures. A
+screenshot shows what is present; the defects worth finding are the ones that are absent, and
+these tools exist so "is this right" rests on measurements rather than on confidence.
 
 ## Repo conventions
 
