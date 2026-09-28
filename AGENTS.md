@@ -28,6 +28,7 @@ Anything a script can measure, a script measures. Do not guess state; read it.
 | `npm run snap -- diff v1` | Visual diff against a snapshot; separates motion noise from a real change | after a change, to see what moved |
 | `npm run snap -- roll v1` | Restore a snapshot and diff the result. Refuses over a dirty tree | when a change needs undoing |
 | `npm run know -- query "<text>"` | Ranked retrieval over the code, the memory layer and the agent rules | instead of grepping across five files |
+| `node tools/inspect.mjs --url <u> --component "<sel>"` | Enumerate the page's components, then capture and audit one in isolation | when a whole-page audit says something is wrong but not where |
 
 `scripts/doctor.ps1` exits non-zero only on FAIL; WARN is informational. Read the tool output — do
 not paraphrase a clean result you did not see.
