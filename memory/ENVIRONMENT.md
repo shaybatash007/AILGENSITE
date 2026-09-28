@@ -1,72 +1,60 @@
-# ENVIRONMENT — machine, ports, commands, traps
+# ENVIRONMENT — machine facts, traps, ports
 
-Add with `/remember`. Keep it factual: what is true of the machine, not what should happen.
+`AGENTS.md` holds the rules; superseded narrative: `memory/DECISIONS-ARCHIVE.md`.
 
-## Machine
+## Terminal and Hebrew
 
-- Windows 11, PowerShell 5.1 as the default shell for the bash tool.
-- opencode CLI 1.18.33 (npm global at `%APPDATA%\npm\node_modules\opencode-ai`, single 180 MB
-  binary). `opencode web` / `serve` are the browser-based interfaces; `opencode models` lists 185
-  models including the free Zen tier (`opencode/space-bunny-free`, `opencode/mimo-v2.6-flash-free`,
-  `opencode/ling-3.0-flash-fin-free`).
-- opencode data lives in `%USERPROFILE%\.local\share\opencode\` (sessions in `opencode.db`).
-- opencode global config: `%USERPROFILE%\.config\opencode\opencode.jsonc` (currently schema-only).
-- Node 24.13.1 runs the plugin's TypeScript directly (type stripping), so the plugin can be
-  exercised outside opencode: `node -e "import('./.opencode/plugin/memory.ts')"`.
+- Bash tool = legacy conhost: `Host=ConsoleHost`, `WT_SESSION` empty, code page **862**
+  (Hebrew DOS codepage, not UTF-8); `wt.exe` is installed. The TUI implements no Unicode bidi and no
+  setting changes that, so read Hebrew via `npm run web` (127.0.0.1:4096) or write it to files.
 
-## Terminal and Hebrew (diagnosed 2026-09-28)
+## Shell traps (all hit on this machine)
 
-- The bash tool runs in **legacy conhost**: `Host=ConsoleHost`, `WT_SESSION` empty, code page
-  **862** (Hebrew DOS codepage, not UTF-8).
-- conhost has no Unicode bidi, so Hebrew renders left-to-right and reversed. Windows Terminal
-  (`wt.exe`, installed) fixes encoding and font coverage for plain-text programs, but **not** the
-  opencode TUI, which paints per cell and implements no bidi. There is no opencode setting for
-  this; the config schema has no `tui` section at all.
-- `npm run he` launches opencode inside Windows Terminal with `chcp 65001`;
-  `npm run he -PatchTerminal` also sets the terminal font to Consolas (writes
-  `%LOCALAPPDATA%\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json`,
-  backs it up first).
-- `npm run web` starts the browser interface on 127.0.0.1:4096 — the only place Hebrew renders
-  correctly today, because browsers implement the bidi algorithm.
+- A backtick fence (```` ``` ````) inside a double-quoted PowerShell string is an escape sequence
+  and breaks the parser — use single quotes for markdown fences.
+- In `-replace`, `'$1' + "2026-..."` is read by .NET as *group 12026* and silently vanishes — use a
+  capture-free pattern or `${1}`. `"... of $head: history"` parses as drive-qualified `$head:`.
+- Native-command stderr renders as error records under `2>&1`, so a successful `opencode --help` can
+  print red. Verify by content, not by colour.
 
-## Shell traps
+## Ports, scratch, git
 
-- `&&` is not supported in PowerShell 5.1. Use `cmd1; if ($?) { cmd2 }`.
-- Do not `cd` inside commands; use the tool's `workdir` parameter.
-- PowerShell writes native-command stderr as error records under `2>&1`; opencode's TUI may show
-  red text for a successful `opencode --help`. Verify by content, not by colour.
-- Scripts in `scripts/` are ASCII-only, saved as UTF-8 **with BOM**. A BOM-less file is parsed as
-  ANSI by PowerShell 5.1 and an em dash becomes a parse error. A backtick fence (```` ``` ````)
-  inside a double-quoted PowerShell string is an escape sequence and breaks the parser — use single
-  quotes for markdown fences.
-- Two more PowerShell 5.1 string traps, both hit and fixed on 2026-09-28: in `-replace`, a
-  replacement of `'$1' + "2026-..."` is read by .NET as *group 12026*, which silently vanishes — use
-  a capture-free pattern or `${1}`. And `"... of $head: history"` is parsed as the drive-qualified
-  variable `$head:` — write `${head}:`.
+- 8000 dev server; 4096 opencode web UI. Scratch:
+  `C:\Users\shayb\AppData\Local\Temp\opencode`; never leave temp files in the repo.
+- Commit guard `.githooks/`, per-clone `core.hooksPath = .githooks`; revert with
+  `git config --unset core.hooksPath`. Ignored dirs: `.gitignore`.
 
-## File-editing rules
+## Browser automation (added 2026-09-28)
 
-- Use read/write/edit/glob/grep tools, not `Get-Content`/`Set-Content`/`Select-String`.
+- `playwright@1.64.0-alpha` + `@playwright/mcp@0.0.82` are devDependencies at the repo root;
+  `node_modules/.bin/playwright-mcp` is the MCP binary wired into `opencode.json`.
+  `npx playwright install chromium` puts Chromium in `%LOCALAPPDATA%\ms-playwright`.
+- `npm run eyes -- --url <u>` runs `tools/eyes.mjs`. Output: `projects/_eyes/out/*.png` plus a
+  `--report.json`. Intentional-design exemptions live in `projects/_eyes/ignore.json`; throwaway
+  probe scripts go in `projects/_eyes/scratch/` (gitignored).
+- **Never use `waitUntil: "networkidle"` against a live app.** Any SSE/websocket client (including
+  opencode's own web UI) never goes idle, so navigation hangs until timeout. Use
+  `domcontentloaded`/`load` plus an explicit settle. This cost a debugging cycle already.
+- opencode web UI specifics, measured on 1.18.33: `GET /path` returns `home` (the picker root),
+  `config`, `state`, `worktree`, `directory`. The client sends **no** directory header or query
+  param; it calls `/api/session`, `/project`, `/path`. It never calls `/project/current`.
 
-## Repo commands
+## Non-blocking execution (hard-won, 2026-09-29)
 
-The full command table lives in `AGENTS.md`. Not repeated here on purpose: this file has a bounded
-injection budget and duplicated tables are where budgets go to die.
-
-## Ports
-
-- 8000 — local dev server for the AILGEN site.
-- 4096 — opencode browser interface (`npm run web`).
-
-## Scratch space
-
-- Use `C:\Users\shayb\AppData\Local\Temp\opencode` for anything temporary. Never leave temp files
-  in the repo.
-
-## Git state notes
-
-- `projects/*/out/`, `versions/`, `node_modules/`, `projects/*/intake/media/`,
-  `projects/*/intake/shots/`, `.opencode/node_modules/` are gitignored.
-- The commit guard lives in `.githooks/` (committed) and is activated per clone with
-  `core.hooksPath = .githooks`; revert with `git config --unset core.hooksPath`.
-- Do not commit, amend, push or open a PR unless explicitly asked.
+- The agent shell runner waits for the whole **process tree**, not just the foreground command, and
+  freezes while any descendant lives. `detached: true` + file-descriptor stdio + `unref()` is NOT
+  enough - measured, it still froze for the full timeout.
+- **Only WMI works.** `Invoke-CimMethod -ClassName Win32_Process -MethodName Create` makes the
+  process a child of the WMI host, outside the runner's tree. Verified: returns in 0.19s while the
+  created process keeps running. `tools/supervisor.mjs` does exactly this.
+- `Start-Process npx.cmd -PassThru` returns the **cmd.exe wrapper**, not the server. The real
+  listener must be resolved from `netstat -ano`; otherwise `-Stop` kills a wrapper and orphans the
+  service while appearing to succeed.
+- PowerShell 5.1: `where` is an alias for `Where-Object` and returns nothing useful. Scan
+  `$env:PATH` manually. `Invoke-WebRequest -TimeoutSec` does not reliably abort a read already in
+  flight, so never put it in a retry loop - use `net.connect` / `http.get` with `req.destroy()`.
+- Inline `node -e` is unusable on this machine (6 failures): double-quoted strings get mangled by
+  `>`/`$_`/`$var`, and single-quoted strings lose their inner quotes during native-argument
+  passing. Always write a script file.
+- npm shims use `SET dp0=%~dp0` then `"%dp0%\..."`, so a resolver must substitute `%dp0%` and not
+  only `%~dp0`.

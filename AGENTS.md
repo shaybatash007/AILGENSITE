@@ -19,6 +19,8 @@ Anything a script can measure, a script measures. Do not guess state; read it.
 | `npm run he` | Relaunches opencode in Windows Terminal with UTF-8 | legacy conhost console |
 | `npm run web` | Starts the browser interface — the only place Hebrew renders correctly today | any Hebrew-heavy session |
 | `npm run dev` / `npm run down` | Serve the site on port 8000 / stop it | previewing a change |
+| `npm run eyes -- --url <u>` | Screenshots a page at 3 viewports + audits layout, RTL, a11y, contrast, console and network. Exits non-zero on FAIL | any visual or CSS work; before claiming a page "looks right" |
+| `npm run eyes:all` | Same, forced responsive (mobile + tablet + desktop) | before shipping a page |
 
 `scripts/doctor.ps1` exits non-zero only on FAIL; WARN is informational. Read the tool output — do
 not paraphrase a clean result you did not see.
@@ -164,6 +166,68 @@ If opencode ever refuses to start because of a broken config, the escape hatches
 - If a fact must survive compaction, it must exist in a file. The plugin re-injects memory and
   hardens the compaction prompt, but a fact that only ever lived in chat is gone.
 - When context gets heavy, run `npm run handoff` before compaction.
+
+## Browser eyes (the agent can see)
+
+Two layers, and they are not interchangeable. Use both.
+
+1. **Playwright MCP** (`playwright` in `opencode.json`, already connected) — the *hands*. Click,
+   type, navigate, drive a real flow, read the a11y tree. Available to every agent in this repo in
+   every session with no extra setup.
+2. **`tools/eyes.mjs`** (`npm run eyes`) — the *diagnostic layer*. One pass returns a screenshot
+   plus computed state plus rule findings, and exits non-zero on FAIL so it can guard a commit.
+
+A screenshot alone is not review. Pixels show what is **present**; the expensive defects are what is
+**absent** — a clipped element, an overflowing column, an image that never loaded, a Hebrew run laid
+out LTR, a contrast failure. `eyes.mjs` checks for those deterministically, so the judgement about
+"does this look right" rests on measurements, not on optimism.
+
+Rules learned the hard way, from real runs against this site:
+
+- **Never judge a page before its intro finishes.** AILGEN's hero is a timed animation; at a 900ms
+  settle the entire first screen is an empty dark field and the site looks catastrophically broken.
+  Use `--settle 7000`. `eyes` detects this and raises `capture/possible-intro` instead of letting
+  you report a false defect.
+- **Never judge a page from a full-page PNG of a long page.** The homepage is 16,683px tall on
+  desktop; a single capture of that is downscaled into an illegible smear. Above `--max-fullpage`
+  (4000px) the tool captures the fold, and `--segments N` walks the page in viewport-sized slices.
+- **Actually look.** Read the PNG back into the conversation. A vision model that never opens the
+  screenshot is guessing, and guessing is exactly what this layer exists to eliminate.
+- Intentional design goes in `projects/_eyes/ignore.json` **with a written reason**. Ghost headline
+  watermarks fail WCAG on purpose. Suppress the case, never the whole rule.
+
+## Non-blocking execution (non-negotiable)
+
+This machine's shell runner does not return when the foreground command finishes. It waits for the
+whole **process tree** and will not unblock while any descendant is alive. Measured directly: a
+child spawned with `detached: true`, `windowsHide: true` and explicit file-descriptor stdio — so
+it inherited no pipe whatsoever — still froze the runner until its timeout. **Stream redirection,
+`unref()` and `detached` are necessary but NOT sufficient.** Three separate freezes cost real
+time before this was found.
+
+Rules:
+
+1. **Never launch a daemon from a foreground tool call.** Not with `Start-Process`, not with
+   `spawn`, not with `npx`. Use `node tools/supervisor.mjs`, which creates the process through the
+   WMI provider so it is a child of the WMI host instead of the agent's shell.
+2. **Every foreground command gets an explicit `timeout`** (milliseconds) and must be written to
+   finish in seconds. A health-check loop is bounded by a hard deadline and prints the failing
+   child's log tail, so a stall is an error message rather than a hang.
+3. **Never use `Invoke-WebRequest` in a retry loop.** It can block past `-TimeoutSec` once a
+   request has begun. Probe with `net.connect` / `http.get` plus an abort, as the supervisor does.
+4. **Kill process trees with `taskkill /PID <pid> /T /F`.** `Stop-Process` on a parent leaves
+   grandchildren alive and still holding the port.
+5. **Launch real executables, never shims.** `npx`/`npm`/package `.cmd` shims create a
+   four-process chain (`npx` -> `npm` -> `cmd` -> `node`). The supervisor resolves a shim to its
+   real `.exe` so exactly one process is tracked.
+6. **Node/JavaScript work goes in a script file, never inline `node -e`.** On PowerShell 5.1 both
+   quoting styles break: double quotes get mangled by `>`, `$_` and `$var`; single quotes have
+   their inner quotes stripped during native-argument passing. This failed six times.
+7. `where` is an alias for `Where-Object` in PowerShell. To locate a real executable, scan `$env:PATH`
+   yourself or call `where.exe`.
+
+Never let a daemon outlive the session unmanaged: `.launch/state.json` records every service, and
+`node tools/supervisor.mjs gc` kills any listener on the managed ports that is not tracked.
 
 ## Repo conventions
 
