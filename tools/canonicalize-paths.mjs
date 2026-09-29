@@ -37,6 +37,15 @@
  *      rows, and the deleted rows are printed by primary key. Anything else is
  *      a hard abort.
  *
+ *   What this does NOT claim, stated plainly because an earlier version of this
+ *   file claimed it and was wrong: the rehearsal cannot predict a fault that only
+ *   affects the live run. Its guarantee covers the transformation as written. A
+ *   live-only corruption - a wipe that touches the real file and not the copy -
+ *   is invisible to the in-place row-count assertion, because the counts do not
+ *   move. That class is caught by `npm run test:canon`, which asserts on content
+ *   as well as counts after a real --apply, and by `npm run test:mutate`, which
+ *   includes a mutation of exactly that shape.
+ *
  * USAGE
  *   node tools/canonicalize-paths.mjs --check
  *   node tools/canonicalize-paths.mjs --apply

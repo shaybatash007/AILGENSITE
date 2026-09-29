@@ -300,12 +300,29 @@ function main() {
 
   const apply = has("--apply");
 
+  /* This migration has already run, and it is the tool that caused the 14-session
+     loss: it wrote Windows backslashes into opencode.db, where opencode writes
+     forward slashes, so the directory strings stopped matching and the Web UI
+     bound a project with no sessions. It is kept as the record of how the repo
+     moved, and it is kept as a live foot-gun. The only way it can fire again is
+     by hand, so it refuses. NEW_ROOT is derived, not hardcoded, so this does
+     not need editing if the repo is ever moved again. */
+  const atNew = fs.existsSync(NEW_ROOT.replace(/\//g, "\\"));
+  const atOld = fs.existsSync(OLD_ROOT.replace(/\//g, "\\"));
+  if (atNew && !atOld && has("--apply")) {
+    bad("refusing to run: the repository is already at the new location.");
+    info("This move is done. Re-running it is how the path spellings diverged the");
+    info("first time and 14 sessions were deleted. If you genuinely need it, set");
+    info("AILGEN_FORCE_MIGRATE=1 and read memory/DECISIONS.md, 2026-09-29 first.");
+    return 1;
+  }
+
   if (!fs.existsSync(DB)) { bad(`opencode database not found: ${DB}`); return 1; }
-  if (!fs.existsSync(OLD_ROOT.replace(/\//g, "\\"))) {
-    if (fs.existsSync(NEW_ROOT.replace(/\//g, "\\"))) { ok("repository is already at the new location"); }
+  if (!atOld) {
+    if (atNew) { ok("repository is already at the new location"); }
     else { bad(`source repository not found: ${OLD_ROOT}`); return 1; }
   }
-  if (fs.existsSync(NEW_ROOT.replace(/\//g, "\\")) && !apply) {
+  if (atNew && !apply) {
     warn(`${NEW_ROOT} already exists`);
   }
 

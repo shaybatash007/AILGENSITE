@@ -30,6 +30,7 @@
     "test:canon": "node tools/test-canonicalize.mjs",
     "test:mutate": "node tools/test-mutation.mjs",
     "test:plugin": "node tools/test-memory-plugin.mjs",
+    "test:safe": "node tools/test-safe-exec.mjs",
     "inspect": "node tools/inspect.mjs"
   },
   "devDependencies": {

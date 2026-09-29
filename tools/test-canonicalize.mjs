@@ -93,6 +93,16 @@ check("the global '/' sentinel was left alone", one("SELECT worktree FROM projec
 check("messages intact", one("SELECT COUNT(*) c FROM message"), before.get("message"));
 check("parts intact", one("SELECT COUNT(*) c FROM part"), before.get("part"));
 check("no orphan parts", one("SELECT COUNT(*) c FROM part p LEFT JOIN message m ON m.id=p.message_id WHERE m.id IS NULL"), 0);
+// CONTENT, not just row counts. A mutation that blanks every message.data and
+// part.data leaves both counts identical and passed the whole fixture while the
+// tool printed "rehearsal passed" and "done" - a silent, total data wipe that
+// every count-based assertion above is structurally blind to.
+check("message CONTENT survived, not just the row count",
+  one("SELECT COUNT(*) c FROM message WHERE data LIKE '%marker%'"), before.get("message"));
+check("part CONTENT survived, not just the row count",
+  one("SELECT COUNT(*) c FROM part WHERE data LIKE '%marker%'"), before.get("part"));
+check("no message body was blanked",
+  one("SELECT COUNT(*) c FROM message WHERE data IS NULL OR data = '' OR data = '{}'"), 0);
 check("the assertNonDestructive report named the declared delete",
   /project_directory: \d+ -> \d+ \(-1, all declared duplicates\)/.test(r.out), true);
 

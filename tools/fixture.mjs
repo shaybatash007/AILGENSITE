@@ -67,11 +67,15 @@ export function build(dir) {
   session('ses_videos', 'v', OTHER, now + 22, 'pA');
 
   // A real subtree under real FKs, so a cascade is possible and testable.
-  const message = db.prepare(`INSERT INTO message (id, session_id, time_created, time_updated, data) VALUES (?, ?, ?, ?, '{}')`);
-  const part = db.prepare(`INSERT INTO part (id, message_id, session_id, time_created, time_updated, data) VALUES (?, ?, ?, ?, ?, '{}')`);
+  // The data column carries a MARKER, not "{}". A count-only assertion cannot
+  // see a row whose contents were wiped: the row count is identical. The
+  // verifier proved that a mutation blanking every message.data and part.data
+  // passed the whole fixture while the tool printed success.
+  const message = db.prepare(`INSERT INTO message (id, session_id, time_created, time_updated, data) VALUES (?, ?, ?, ?, ?)`);
+  const part = db.prepare(`INSERT INTO part (id, message_id, session_id, time_created, time_updated, data) VALUES (?, ?, ?, ?, ?, ?)`);
   for (let i = 0; i < 13; i++) {
-    message.run(`msg_${i}`, `ses_migrated_${i}`, now + i, now + i);
-    for (let j = 0; j < 3; j++) part.run(`part_${i}_${j}`, `msg_${i}`, `ses_migrated_${i}`, now + i, now + i);
+    message.run(`msg_${i}`, `ses_migrated_${i}`, now + i, now + i, `{"marker":"message-${i}"}`);
+    for (let j = 0; j < 3; j++) part.run(`part_${i}_${j}`, `msg_${i}`, `ses_migrated_${i}`, now + i, now + i, `{"marker":"part-${i}-${j}"}`);
   }
 
   db.exec("PRAGMA foreign_keys = ON");

@@ -51,4 +51,5 @@ live database's exact shape, including the duplicate `project_directory` row and
 collision that must be refused. The general rule: a tool that writes to a store holding irreplaceable
 history gets a copy, an assertion, and a fixture, in that order. Recovery, when it is needed, is
 additive - `INSERT OR IGNORE` from a pre-deletion snapshot, which is how the 14 sessions were
-restored from `backups/opencode-2026-09-29T06-47-55-166Z.db`.
+restored from `~/.local/share/opencode/backups/opencode-2026-09-29T06-47-55-166Z.db` — the opencode
+data directory, NOT the repo, which has no `backups/`.

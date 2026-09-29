@@ -17,8 +17,8 @@ Anything a script can measure, a script measures. Do not guess state; read it.
 | `npm run setup` | Installs the `[Model: ...]` commit guard (`core.hooksPath = .githooks`), then doctor | once per clone, and after a fresh machine |
 | `npm run save` / `npm run restore` | Local snapshot of the site into gitignored `versions/` | before handing over a folder of assets |
 | `npm run he` | Relaunches opencode in Windows Terminal with UTF-8 | legacy conhost console |
-| `npm run web` | Starts the browser interface — the only place Hebrew renders correctly today | any Hebrew-heavy session |
-| `npm run dev` / `npm run down` | Serve the site on port 8000 / stop it | previewing a change |
+| `npm run web` | Starts the browser interface — the only place Hebrew renders correctly today. **Blocks until opencode exits**, so it is for a human terminal; from an agent use `npm run env`, which supervises it | any Hebrew-heavy session |
+| `npm run dev` / `npm run down` | Serve the site on port 8000 / stop it. Also blocks; from an agent prefer `npm run env` | previewing a change |
 | `npm run eyes -- --url <u>` | Screenshots a page at 3 viewports + audits layout, RTL, a11y, contrast, console and network. Exits non-zero on FAIL | any visual or CSS work; before claiming a page "looks right" |
 | `npm run eyes:all` | Same, forced responsive (mobile + tablet + desktop) | before shipping a page |
 | `npm run env` / `npm run env:stop` | One-click environment: dev server :8000, opencode web :4096, UTF-8 terminal, browser. Idempotent, adopts what is already healthy | starting work; `env:stop` leaves no orphans |
@@ -271,5 +271,11 @@ these tools exist so "is this right" rests on measurements rather than on confid
   glob/grep tools instead.
 - Scripts in `scripts/` are ASCII-only and saved as UTF-8 **with BOM**. PowerShell 5.1 parses a BOM-less
   UTF-8 file as ANSI, which turns an em dash into a parse error. Never put non-ASCII characters in a
-  `.ps1` file.
+  `.ps1` file. (`scripts/make-shortcut.ps1` is the one BOM-less script; it is pure ASCII with no
+  non-ASCII characters at all, so the rule does not bite. Verified, not assumed.)
 - Long-running commands need an explicit `timeout` in milliseconds.
+- The playwright **MCP** is configured `--browser msedge --headless` and not `chromium`. A WDAC policy
+  on this machine blocks the Playwright-bundled `chrome.exe`, which Node reports as the very
+  unhelpful `spawn UNKNOWN`; Edge and the bundled headless shell both work. The MCP is only reloaded
+  on an opencode restart, so a fix here is not verifiable in the session that makes it. The
+  `playwright` **library** is unaffected and is the reliable path from an agent.

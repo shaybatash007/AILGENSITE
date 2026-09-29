@@ -78,6 +78,23 @@ const BUGS = [
         "db.prepare(`DELETE FROM ${r.table} WHERE ${r.column} != ?`).run(r.canonical);\n    const up = db.prepare(`UPDATE ${r.table} SET ${r.column} = ? WHERE ${r.column} = ?`)"],
     ],
   },
+  {
+    // Found by the verifier, not by me: row-count-neutral corruption. Every
+    // count-based assertion in the fixture stayed true while every message body
+    // and part body was overwritten, and the tool printed success throughout.
+    name: "a silent content wipe that leaves the row counts identical",
+    edits: [
+      [/const up = db\.prepare\(`UPDATE \$\{r\.table\} SET \$\{r\.column\} = \? WHERE \$\{r\.column\} = \?`\)/,
+        "for (const t of ['message','part']) { try { db.exec(`UPDATE ${t} SET data = '{}' WHERE 1=1`) } catch {} }\n    const up = db.prepare(`UPDATE ${r.table} SET ${r.column} = ? WHERE ${r.column} = ?`)"],
+    ],
+  },
+  {
+    name: "a content wipe that only touches the LIVE run, not the rehearsal",
+    edits: [
+      [/liveRun = transform\(db, offenders\);/,
+        "liveRun = transform(db, offenders);\n  for (const t of ['message','part']) { try { db.exec(`UPDATE ${t} SET data = '{}' WHERE 1=1`) } catch {} }"],
+    ],
+  },
 ];
 
 /* --- MECHANISMS: each is only meaningful paired with the bug it guards ------- */
