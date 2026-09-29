@@ -24,13 +24,13 @@ const cards = [...(C.home ? [{ path: '/', h1: C.home.h1, kicker: C.home.kicker |
 const html = p => {
   const h = String(p.h1 || '').replace(/\*/g, ''), len = h.length, size = len <= 34 ? 74 : len <= 60 ? 62 : len <= 90 ? 52 : 44, photo = file(p.image?.src || B.ogImage);
   return `<!doctype html><html lang="he" dir="rtl"><meta charset="utf-8"><style>${fonts}
-*{box-sizing:border-box;margin:0}body{width:1200px;height:630px;background:${O.bg};color:${O.fg};font-family:'Rubik',system-ui,sans-serif;position:relative;overflow:hidden}
-.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(201,240,58,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(201,240,58,.07) 1px,transparent 1px);background-size:48px 48px}
+*{box-sizing:border-box;margin:0}body{width:1200px;height:630px;background:${O.bg};color:${O.fg};font-family:'${O.font || 'Rubik'}',system-ui,sans-serif;position:relative;overflow:hidden}
+.grid{position:absolute;inset:0;background-image:linear-gradient(${O.grid || 'rgba(201,240,58,.07)'} 1px,transparent 1px),linear-gradient(90deg,${O.grid || 'rgba(201,240,58,.07)'} 1px,transparent 1px);background-size:48px 48px}
 .ph{position:absolute;inset-block:0;left:0;width:470px;background:url(${photo}) center/cover}.ph::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 0,${O.bg} 100%)}
 .tx{position:absolute;inset-block:0;right:0;width:740px;padding:56px 64px 48px 24px;display:flex;flex-direction:column;justify-content:space-between}
-.k{font:600 22px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;color:${O.accent}}
+.k{font:600 22px/1 '${O.mono || 'IBM Plex Mono'}',monospace;letter-spacing:.14em;color:${O.accent}}
 h1{font-weight:800;font-size:${size}px;line-height:1.08;letter-spacing:-.015em;text-wrap:balance}
-.f{display:flex;align-items:center;gap:16px;font-weight:700;font-size:28px}.f img{width:54px;height:54px}.f small{display:block;font:500 20px/1.2 'IBM Plex Mono',monospace;color:${O.accent};letter-spacing:.06em;direction:ltr}
+.f{display:flex;align-items:center;gap:16px;font-weight:700;font-size:28px}.f img{width:54px;height:54px}.f small{display:block;font:500 20px/1.2 '${O.mono || 'IBM Plex Mono'}',monospace;color:${O.accent};letter-spacing:.06em;direction:ltr}
 </style><body><div class="grid"></div>${photo ? '<div class="ph"></div>' : ''}<div class="tx"><div class="k">${esc(p.kicker || B.short || '')}</div><h1>${esc(h)}</h1><div class="f"><img src="${file(B.logo || '/icon.svg')}" alt=""><div>${esc(B.name)}<small>${esc(host)}</small></div></div></div></body></html>`;
 };
 

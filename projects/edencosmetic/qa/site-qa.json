@@ -1,0 +1,364 @@
+{
+ "url": "http://127.0.0.1:8123/",
+ "at": "2026-09-29T23:15:13.669Z",
+ "ok": true,
+ "passed": 71,
+ "failed": 0,
+ "checks": [
+  {
+   "name": "desktop: no console errors",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "desktop: no failed requests or 4xx/5xx",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "desktop: exactly one h1",
+   "ok": true,
+   "note": "1"
+  },
+  {
+   "name": "desktop: every img has alt",
+   "ok": true,
+   "note": "0"
+  },
+  {
+   "name": "desktop: lang/dir he/rtl",
+   "ok": true,
+   "note": "he/rtl"
+  },
+  {
+   "name": "keyboard: first Tab is the skip link",
+   "ok": true,
+   "note": "skip|#main"
+  },
+  {
+   "name": "keyboard: focus ring visible on 70 stops",
+   "ok": true,
+   "note": "0 stops without a ring"
+  },
+  {
+   "name": "mobile: no console errors",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "mobile: no horizontal overflow at 390 px",
+   "ok": true,
+   "note": "{\"sw\":390,\"w\":390,\"over\":[]}"
+  },
+  {
+   "name": "mobile: touch targets ≥ 40 px (buttons, fields)",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "mobile: the menu button opens the drawer (aria-expanded) and focus moves inside",
+   "ok": true,
+   "note": "{\"exp\":\"true\",\"inside\":true}"
+  },
+  {
+   "name": "mobile: Escape closes the menu drawer",
+   "ok": true,
+   "note": "false"
+  },
+  {
+   "name": "reduced motion: no console errors",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "reduced motion: no infinite animations running",
+   "ok": true,
+   "note": "0"
+  },
+  {
+   "name": "kit: lash/start lists ≥ 4 real categories",
+   "ok": true,
+   "note": "5"
+  },
+  {
+   "name": "kit: total is a real sum > 0",
+   "ok": true,
+   "note": "307"
+  },
+  {
+   "name": "kit: shipping line mentions the ₪499 threshold or free shipping",
+   "ok": true,
+   "note": "עוד ₪192 למשלוח חינם."
+  },
+  {
+   "name": "kit: progress bar matches total / 499",
+   "ok": true,
+   "note": "61.523 vs 307"
+  },
+  {
+   "name": "kit: unticking a row lowers the total",
+   "ok": true,
+   "note": "307 -> 208"
+  },
+  {
+   "name": "kit: choosing another product changes the total",
+   "ok": true,
+   "note": "307 -> 628"
+  },
+  {
+   "name": "kit: brow lists rows",
+   "ok": true,
+   "note": "4"
+  },
+  {
+   "name": "kit: tint lists a tint and an oxidant (חמצן)",
+   "ok": true,
+   "note": "צבעצבע לגבות -NIKK MOLE חום · ₪45צבע לריסים -NIKK MOLE כחול שחור · ₪45My lamination צבע לגבות/ ריסים בתוספת קרטין- שחור "
+  },
+  {
+   "name": "kit: the default oxidant is in stock and of the tint's brand",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "kit: restock has single steps and no kit",
+   "ok": true,
+   "note": "שלב 1,שלב 2,שלב 3,סיליקונים,דבק / בלאם,ניקוי,כלים"
+  },
+  {
+   "name": "kit: every ticked default is in stock",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "kit: WhatsApp link carries the list",
+   "ok": true,
+   "note": "https://wa.me/972525453602?text=%D7%A9%D7%9C%D7%95%D7%9D%20%D7%A2%D7%93%D7%9F%2C"
+  },
+  {
+   "name": "cart: the drawer opens after adding the kit",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "cart: badge counts the kit items",
+   "ok": true,
+   "note": "5"
+  },
+  {
+   "name": "cart: hand-off goes to the store cart permalink",
+   "ok": true,
+   "note": "https://edencosmetic.co.il/cart/46446781431979:1,45450150117547:1,45441985249451:1,46467167584427:1,45449398190251:1"
+  },
+  {
+   "name": "cart: focus is inside the drawer",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "cart: Escape closes it",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "cart: survives a reload",
+   "ok": true,
+   "note": "5"
+  },
+  {
+   "name": "shop: first page shows 24 cards",
+   "ok": true,
+   "note": "24"
+  },
+  {
+   "name": "shop: search narrows the list",
+   "ok": true,
+   "note": "5"
+  },
+  {
+   "name": "shop: brand filter (ZOLA = 4)",
+   "ok": true,
+   "note": "4"
+  },
+  {
+   "name": "shop: in-stock filter hides sold-out",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "shop: sort by price ascending",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "shop: kind chip filters silicones (12)",
+   "ok": true,
+   "note": "12"
+  },
+  {
+   "name": "shop: \"more\" adds 24",
+   "ok": true,
+   "note": "48"
+  },
+  {
+   "name": "quick view: opens with title, price and description",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "quick view: Escape closes it",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "shop: add from a card raises the cart count",
+   "ok": true,
+   "note": "5 -> 6"
+  },
+  {
+   "name": "shop: a sold-out product offers \"עדכנו אותי\", not \"הוספה\"",
+   "ok": true,
+   "note": "{\"add\":false,\"notify\":true}"
+  },
+  {
+   "name": "notify: opens the contact form with the product prefilled",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "form: invalid input shows an error and keeps the form",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "form: consent is required",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "form: with no database the note offers a WhatsApp link with the message",
+   "ok": true,
+   "note": "לא הצלחנו לשמור את הפנייה בתצוגה הזו. אפשר לשלוח אותה לעדן בוואטסאפ: <a href=\"https://wa.me/972525453602?text=%D7%A9%D7%"
+  },
+  {
+   "name": "courses: the waiting-list form has the same fallback",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "agent: opens from Lotti's menu",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "agent: answers the free-shipping question from the policy (₪499)",
+   "ok": true,
+   "note": "האספקה באמצעות חברת שליחויות: 4‎–‎5 ימי עסקים לבית או לעסק, וליישובים מרוחקים עד 2 ימי עסקים נוספים "
+  },
+  {
+   "name": "agent: says the truth about courses (the collection is empty)",
+   "ok": true,
+   "note": "עדן מעבירה קורסים והשתלמויות, אבל הקולקציה בחנות ריקה כרגע, ולכן אין תאריכים או מחירים. אפשר להצטרף "
+  },
+  {
+   "name": "agent: never invents a course price",
+   "ok": true,
+   "note": "עדן מעבירה קורסים והשתלמויות, אבל הקולקציה בחנות ריקה כרגע, ולכן אין תאריכים או מחירים. אפשר להצטרף "
+  },
+  {
+   "name": "agent: Escape closes it",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "a11y: high contrast toggles a class",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "a11y: choices persist after a reload",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "a11y: reset clears them",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "legal: the privacy draft opens with the owner's contact",
+   "ok": true,
+   "note": "מדיניות פרטיות · עדן קוסמטיקס (טיוטה שהוכנה עם האתר החדש. יש"
+  },
+  {
+   "name": "legal: the accessibility statement opens and names the coordinator",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "admin: the owner console button is hidden from visitors",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "Lotti: at most 6 tips in the visit",
+   "ok": true,
+   "note": "3"
+  },
+  {
+   "name": "Lotti: \"quiet for a week\" is remembered",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "Lotti: \"hide\" removes her",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "Lotti: the footer link brings her back",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "film: a video with a poster, controls and no autoplay",
+   "ok": true,
+   "note": "{\"video\":true,\"poster\":true,\"src\":\"m/film-web.mp4\",\"transcript\":593,\"label\":true,\"heroLink\":\"#film\",\"ld\":true}"
+  },
+  {
+   "name": "film: a text transcript and the honesty label are next to it",
+   "ok": true,
+   "note": "593"
+  },
+  {
+   "name": "film: the hero links to it and the page declares a VideoObject",
+   "ok": true,
+   "note": "#film true"
+  },
+  {
+   "name": "film: the file is served as video/mp4",
+   "ok": true,
+   "note": "200 video/mp4"
+  },
+  {
+   "name": "seo: title 30–65 chars, description 70–160",
+   "ok": true,
+   "note": "44/133"
+  },
+  {
+   "name": "seo: canonical and JSON-LD present",
+   "ok": true,
+   "note": "{\"title\":\"עדן קוסמטיקס | ציוד מקצועי להרמת ריסים וגבות\",\"desc\":\"ציוד מקצועי להרמת ריסים וגבות: ערכות, סיליקונים, דבקים וצבעים במחירי החנות ובמלאי שלה. משלוח חינם מעל ₪499. עדן נחמני, מטפלת ומדריכה.\",\"canon\":\"https://edencosmetic.co.il/\",\"ld\":1,\"links\":93}"
+  },
+  {
+   "name": "seo: the footer carries static links to collections, guides, brands and policies",
+   "ok": true,
+   "note": "93"
+  },
+  {
+   "name": "scenario: no console errors during interactions",
+   "ok": true,
+   "note": ""
+  }
+ ]
+}

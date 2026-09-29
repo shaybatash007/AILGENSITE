@@ -179,13 +179,24 @@ async function main() {
   await routeThroughNode(ctx);
   const page = await ctx.newPage();
   const queue = [pageUrl(START, START) || START], seen = new Set(queue.map(key)), pages = [];
-  let design = null, blocked = 0;
+  let design = null, blocked = 0; const docs = [];
 
   const sm = await sitemapUrls();
   console.log(`sitemap: ${sm.length} urls`);
 
   for (let i = 0; i < queue.length && pages.length < MAX_PAGES; i++) {
     const url = queue[i];
+    // text documents listed in the sitemap (agents.md, llms.txt): fetched as text and kept in docs/, never counted as pages
+    if (/\.(md|txt)$/i.test(new URL(url).pathname)) {
+      try {
+        const r = await fetch(url, { headers: { 'user-agent': UA } });
+        if (r.ok && /text\/(markdown|plain)/.test(r.headers.get('content-type') || '')) {
+          const f = 'docs/' + new URL(url).pathname.split('/').pop(); fs.mkdirSync(path.join(OUT, 'docs'), { recursive: true }); fs.writeFileSync(path.join(OUT, f), await r.text());
+          docs.push({ url, file: f }); console.log('doc', f);
+        } else console.log('skip', r.status, url);
+      } catch (e) { console.log('fail', url, e.message.split('\n')[0]); }
+      await page.waitForTimeout(DELAY); continue;
+    }
     try {
       const res = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
       if (res && [403, 429, 503].includes(res.status())) {
@@ -255,7 +266,8 @@ async function main() {
   const site = {
     source: START, crawledAt: new Date().toISOString(), name, lang: home.lang, dir: home.dir,
     counts: { pages: pages.length, sitemapUrls: sm.length, media: media.filter(m => m.file).length, youtube: youtube.length },
-    notCrawled: sm.filter(u => !pages.some(p => key(p.url) === key(u))),
+    notCrawled: sm.filter(u => !pages.some(p => key(p.url) === key(u)) && !docs.some(d => key(d.url) === key(u))),
+    docs,
     contacts: { phones, emails, whatsapp, socials, youtube },
     design: design ? { ...design, logos: design.logos.map(l => ({ ...l, svg: l.svg ? '(saved to media/)' : undefined })) } : null,
     pages: pages.map(({ text, links, ...p }) => {

@@ -6,6 +6,7 @@
 //   node render.mjs --project projects/acme --stills                  every still in film.json -> out/stills/<name>.png
 //   node render.mjs --project projects/acme --frames 1.2,4,9.5        review frames -> out/review/
 //   options: --jobs 3  --crf 18  --scale .5 (quick preview)  --out file.mp4
+import { loudnormFilter } from './loudness.mjs';
 import { spawn, spawnSync } from 'child_process';
 import http from 'http';
 import fs from 'fs';
@@ -100,7 +101,7 @@ try {
     const enc = ['-hide_banner', '-loglevel', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', `${tmp}/list.txt`];
     if (audio) enc.push('-i', path.resolve(audio));
     enc.push('-map', '0:v:0');
-    if (audio) enc.push('-map', '1:a:0', '-af', 'loudnorm=I=-14:TP=-1.5:LRA=11', '-c:a', 'aac', '-b:a', '256k', '-ar', '48000');
+    if (audio) enc.push('-map', '1:a:0', '-af', await loudnormFilter(path.resolve(audio)), '-c:a', 'aac', '-b:a', '256k', '-ar', '48000');
     enc.push('-c:v', 'libx264', '-preset', 'slow', '-crf', String(args.crf || 18), '-profile:v', 'high', '-pix_fmt', 'yuv420p',
       '-color_primaries', 'bt709', '-color_trc', 'bt709', '-colorspace', 'bt709', '-r', String(FPS), '-g', String(FPS * 2), '-movflags', '+faststart', '-shortest', out);
     await new Promise((res, rej) => spawn('ffmpeg', enc, { stdio: 'inherit' }).on('close', c => c ? rej(new Error('ffmpeg exited ' + c)) : res()));

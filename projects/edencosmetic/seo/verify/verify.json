@@ -1,0 +1,1779 @@
+{
+  "base": "http://127.0.0.1:37109",
+  "ok": true,
+  "site": {
+    "/robots.txt": 200,
+    "/sitemap.xml": 200,
+    "notFound": 404
+  },
+  "results": [
+    {
+      "row": {
+        "old": "/",
+        "oldTitle": "eden cosmetics – עדן קוסמטיקס",
+        "inbound": 87,
+        "status": 200,
+        "words": 295,
+        "action": "keep",
+        "new": "/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/pages/contact",
+        "oldTitle": ". – עדן קוסמטיקס",
+        "inbound": 87,
+        "status": 200,
+        "words": 177,
+        "action": "keep",
+        "new": "/pages/contact/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/pages/contact",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/pages/הצהרת-נגישות",
+        "oldTitle": "הצהרת נגישות – עדן קוסמטיקס",
+        "inbound": 87,
+        "status": 200,
+        "words": 398,
+        "action": "keep",
+        "new": "/pages/הצהרת-נגישות/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/pages/הצהרת-נגישות",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/collections/מוצרים-נלווים",
+        "oldTitle": "מוצרים נלווים – עדן קוסמטיקס",
+        "inbound": 87,
+        "status": 200,
+        "words": 380,
+        "action": "keep",
+        "new": "/collections/מוצרים-נלווים/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/collections/מוצרים-נלווים",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/collections/הרמת-ריסים-וגבות",
+        "oldTitle": "הרמת ריסים וגבות – עדן קוסמטיקס",
+        "inbound": 87,
+        "status": 200,
+        "words": 398,
+        "action": "keep",
+        "new": "/collections/הרמת-ריסים-וגבות/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/collections/הרמת-ריסים-וגבות",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/collections/קורסים-והשתלמויות",
+        "oldTitle": "קורסים והשתלמויות – עדן קוסמטיקס",
+        "inbound": 87,
+        "status": 200,
+        "words": 159,
+        "action": "keep",
+        "new": "/collections/קורסים-והשתלמויות/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/collections/קורסים-והשתלמויות",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/collections/דבקים-סיליקונים",
+        "oldTitle": "דבקים | סיליקונים – עדן קוסמטיקס",
+        "inbound": 87,
+        "status": 200,
+        "words": 405,
+        "action": "keep",
+        "new": "/collections/דבקים-סיליקונים/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/collections/דבקים-סיליקונים",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/collections/all",
+        "oldTitle": "מוצרים – עדן קוסמטיקס",
+        "inbound": 87,
+        "status": 200,
+        "words": 420,
+        "action": "301",
+        "new": "/collections/כל-המוצרים/",
+        "confidence": 1,
+        "why": "הוחלט בתהליך (כפילות, דף זמני או עמוד יורש)"
+      },
+      "chain": [
+        {
+          "url": "/collections/all",
+          "status": 301
+        },
+        {
+          "url": "/collections/כל-המוצרים/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/policies/contact-information",
+        "oldTitle": "פרטי קשר – עדן קוסמטיקס",
+        "inbound": 87,
+        "status": 200,
+        "words": 167,
+        "action": "keep",
+        "new": "/policies/contact-information/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/policies/contact-information",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/policies/refund-policy",
+        "oldTitle": "מדיניות החזרים – עדן קוסמטיקס",
+        "inbound": 87,
+        "status": 200,
+        "words": 293,
+        "action": "keep",
+        "new": "/policies/refund-policy/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/policies/refund-policy",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/policies/privacy-policy",
+        "oldTitle": "מדיניות הפרטיות – עדן קוסמטיקס",
+        "inbound": 87,
+        "status": 200,
+        "words": 522,
+        "action": "keep",
+        "new": "/policies/privacy-policy/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/policies/privacy-policy",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/policies/shipping-policy",
+        "oldTitle": "מדיניות משלוחים – עדן קוסמטיקס",
+        "inbound": 87,
+        "status": 200,
+        "words": 399,
+        "action": "keep",
+        "new": "/policies/shipping-policy/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/policies/shipping-policy",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/policies/terms-of-service",
+        "oldTitle": "תנאי השירות – עדן קוסמטיקס",
+        "inbound": 87,
+        "status": 200,
+        "words": 1257,
+        "action": "keep",
+        "new": "/policies/terms-of-service/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/policies/terms-of-service",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/דבק-בלאם-פורמולה-חדשה-להרמת-ריסים-של-חברת-zola",
+        "oldTitle": "דבק בלאם פורמולה חדשה להרמת ריסים של חברת ZOLA – עדן קוסמטיקס",
+        "inbound": 21,
+        "status": 200,
+        "words": 276,
+        "action": "keep",
+        "new": "/products/דבק-בלאם-פורמולה-חדשה-להרמת-ריסים-של-חברת-zola/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/דבק-בלאם-פורמולה-חדשה-להרמת-ריסים-של-חברת-zola",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/ערכה-להרמת-ריסים-וגבות-2",
+        "oldTitle": "ערכת THUYA להרמת ריסים וגבות- שלושה שלבים – עדן קוסמטיקס",
+        "inbound": 17,
+        "status": 200,
+        "words": 244,
+        "action": "keep",
+        "new": "/products/ערכה-להרמת-ריסים-וגבות-2/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/ערכה-להרמת-ריסים-וגבות-2",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/פאצים-רב-פעמיים-לריסים-שקוף-נצנצים",
+        "oldTitle": "פאצים רב פעמיים לריסים- שקוף נצנצים – עדן קוסמטיקס",
+        "inbound": 17,
+        "status": 200,
+        "words": 229,
+        "action": "keep",
+        "new": "/products/פאצים-רב-פעמיים-לריסים-שקוף-נצנצים/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/פאצים-רב-פעמיים-לריסים-שקוף-נצנצים",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/סיליקונים-כנפיים-מעוגל-רחב-10-מידות-נדבקים-ללא-דבק",
+        "oldTitle": "סיליקונים כנפיים -מעוגל רחב 10 מידות נדבקים ללא דבק – עדן קוסמטיקס",
+        "inbound": 16,
+        "status": 200,
+        "words": 257,
+        "action": "keep",
+        "new": "/products/סיליקונים-כנפיים-מעוגל-רחב-10-מידות-נדבקים-ללא-דבק/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/סיליקונים-כנפיים-מעוגל-רחב-10-מידות-נדבקים-ללא-דבק",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/סרט-דבק-רפואי-דק",
+        "oldTitle": "סרט דבק רפואי -דק – עדן קוסמטיקס",
+        "inbound": 16,
+        "status": 200,
+        "words": 225,
+        "action": "keep",
+        "new": "/products/סרט-דבק-רפואי-דק/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/סרט-דבק-רפואי-דק",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/קרם-חמצן-3-חברת-thuya",
+        "oldTitle": "קרם חמצן 3% חברת THUYA – עדן קוסמטיקס",
+        "inbound": 12,
+        "status": 200,
+        "words": 231,
+        "action": "keep",
+        "new": "/products/קרם-חמצן-3-חברת-thuya/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/קרם-חמצן-3-חברת-thuya",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/zola-פינצטה-מקצועית-זוויתית",
+        "oldTitle": "zola פינצטה מקצועית זוויתית – עדן קוסמטיקס",
+        "inbound": 11,
+        "status": 200,
+        "words": 237,
+        "action": "keep",
+        "new": "/products/zola-פינצטה-מקצועית-זוויתית/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/zola-פינצטה-מקצועית-זוויתית",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/צבע-thuya-ריסים-וגבות-bluish-black",
+        "oldTitle": "צבע THUYA ריסים וגבות -bluish black – עדן קוסמטיקס",
+        "inbound": 11,
+        "status": 200,
+        "words": 254,
+        "action": "keep",
+        "new": "/products/צבע-thuya-ריסים-וגבות-bluish-black/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/צבע-thuya-ריסים-וגבות-bluish-black",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/מסרק-להפרדת-הריסים-רב-פעמי-ורוד",
+        "oldTitle": "מסרק להפרדת הריסים רב פעמי -ורוד 3 יחידות – עדן קוסמטיקס",
+        "inbound": 9,
+        "status": 200,
+        "words": 241,
+        "action": "keep",
+        "new": "/products/מסרק-להפרדת-הריסים-רב-פעמי-ורוד/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/מסרק-להפרדת-הריסים-רב-פעמי-ורוד",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/סיליקונים-שועל-סגול-מעוגל-חד-5-מידות-נדבקים-ללא-דבק",
+        "oldTitle": "סיליקונים שועל סגול - מעוגל חד 5 מידות נדבקים ללא דבק – עדן קוסמטיקס",
+        "inbound": 8,
+        "status": 200,
+        "words": 258,
+        "action": "keep",
+        "new": "/products/סיליקונים-שועל-סגול-מעוגל-חד-5-מידות-נדבקים-ללא-דבק/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/סיליקונים-שועל-סגול-מעוגל-חד-5-מידות-נדבקים-ללא-דבק",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/זוג-תופסנים-פפיון-שקוף-מנצנץ",
+        "oldTitle": "זוג תופסנים פפיון - שקוף מנצנץ – עדן קוסמטיקס",
+        "inbound": 8,
+        "status": 200,
+        "words": 234,
+        "action": "keep",
+        "new": "/products/זוג-תופסנים-פפיון-שקוף-מנצנץ/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/זוג-תופסנים-פפיון-שקוף-מנצנץ",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/my-lamination-שלב-3-להרמת-ריסים-וגבות-שפורפרת-10-מ-ל",
+        "oldTitle": "My lamination שלב 3 להרמת ריסים וגבות- שפורפרת 10 מ״ל – עדן קוסמטיקס",
+        "inbound": 8,
+        "status": 200,
+        "words": 251,
+        "action": "keep",
+        "new": "/products/my-lamination-שלב-3-להרמת-ריסים-וגבות-שפורפרת-10-מ-ל/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/my-lamination-שלב-3-להרמת-ריסים-וגבות-שפורפרת-10-מ-ל",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/my-lamination-סט-3-שקיות-מכל-שלב-להרמת-ריסים-וגבות",
+        "oldTitle": "My lamination סט 3 שקיות מכל שלב להרמת ריסים וגבות – עדן קוסמטיקס",
+        "inbound": 8,
+        "status": 200,
+        "words": 391,
+        "action": "keep",
+        "new": "/products/my-lamination-סט-3-שקיות-מכל-שלב-להרמת-ריסים-וגבות/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/my-lamination-סט-3-שקיות-מכל-שלב-להרמת-ריסים-וגבות",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/סיליקונים-כריש-מעוגל-רחב",
+        "oldTitle": "סיליקונים כריש - מעוגל רחב – עדן קוסמטיקס",
+        "inbound": 7,
+        "status": 200,
+        "words": 248,
+        "action": "keep",
+        "new": "/products/סיליקונים-כריש-מעוגל-רחב/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/סיליקונים-כריש-מעוגל-רחב",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/סיליקון-לכיסוי-הרמת-גבות-רב-פעמי",
+        "oldTitle": "סיליקון לכיסוי הרמת גבות - רב פעמי – עדן קוסמטיקס",
+        "inbound": 7,
+        "status": 200,
+        "words": 234,
+        "action": "keep",
+        "new": "/products/סיליקון-לכיסוי-הרמת-גבות-רב-פעמי/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/סיליקון-לכיסוי-הרמת-גבות-רב-פעמי",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/my-lamination-שלב-1-להרמת-ריסים-וגבות-שפורפרת-10-מ-ל",
+        "oldTitle": "My lamination שלב 1 להרמת ריסים וגבות- שפורפרת 10 מ״ל – עדן קוסמטיקס",
+        "inbound": 7,
+        "status": 200,
+        "words": 273,
+        "action": "keep",
+        "new": "/products/my-lamination-שלב-1-להרמת-ריסים-וגבות-שפורפרת-10-מ-ל/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/my-lamination-שלב-1-להרמת-ריסים-וגבות-שפורפרת-10-מ-ל",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/my-lamination-צבע-לגבות-ריסים-בתוספת-קרטין-חום",
+        "oldTitle": "My lamination צבע לגבות/ ריסים בתוספת קרטין- חום – עדן קוסמטיקס",
+        "inbound": 7,
+        "status": 200,
+        "words": 274,
+        "action": "keep",
+        "new": "/products/my-lamination-צבע-לגבות-ריסים-בתוספת-קרטין-חום/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/my-lamination-צבע-לגבות-ריסים-בתוספת-קרטין-חום",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/סיליקונים-ליפט-צבעוניים-להרמת-ריסים-6-מידות",
+        "oldTitle": "סיליקונים ליפט צבעוניים להרמת ריסים -6 מידות – עדן קוסמטיקס",
+        "inbound": 6,
+        "status": 200,
+        "words": 251,
+        "action": "keep",
+        "new": "/products/סיליקונים-ליפט-צבעוניים-להרמת-ריסים-6-מידות/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/סיליקונים-ליפט-צבעוניים-להרמת-ריסים-6-מידות",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/סיליקונים-קשת-בענן-מעוגל-חד-10-מידות-נדבקים-ללא-דבק",
+        "oldTitle": "סיליקונים קשת בענן - מעוגל חד 10 מידות נדבקים ללא דבק – עדן קוסמטיקס",
+        "inbound": 6,
+        "status": 200,
+        "words": 270,
+        "action": "keep",
+        "new": "/products/סיליקונים-קשת-בענן-מעוגל-חד-10-מידות-נדבקים-ללא-דבק/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/סיליקונים-קשת-בענן-מעוגל-חד-10-מידות-נדבקים-ללא-דבק",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/מארז-50-מסרקים-לגבות-וריסים-חד-פעמי-בצבע-שחור",
+        "oldTitle": "מארז 50 מסרקים לגבות וריסים - חד פעמי בצבע שחור – עדן קוסמטיקס",
+        "inbound": 6,
+        "status": 200,
+        "words": 246,
+        "action": "keep",
+        "new": "/products/מארז-50-מסרקים-לגבות-וריסים-חד-פעמי-בצבע-שחור/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/מארז-50-מסרקים-לגבות-וריסים-חד-פעמי-בצבע-שחור",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/מוט-הרמה-הרמת-ריסים",
+        "oldTitle": "מוט הרמה - להרמת ריסים – עדן קוסמטיקס",
+        "inbound": 6,
+        "status": 200,
+        "words": 221,
+        "action": "keep",
+        "new": "/products/מוט-הרמה-הרמת-ריסים/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/מוט-הרמה-הרמת-ריסים",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/my-lamination-שלב-2-להרמת-ריסים-וגבות-שפורפרת-10-מ-ל",
+        "oldTitle": "My lamination שלב 2 להרמת ריסים וגבות- שפורפרת 10 מ״ל – עדן קוסמטיקס",
+        "inbound": 6,
+        "status": 200,
+        "words": 312,
+        "action": "keep",
+        "new": "/products/my-lamination-שלב-2-להרמת-ריסים-וגבות-שפורפרת-10-מ-ל/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/my-lamination-שלב-2-להרמת-ריסים-וגבות-שפורפרת-10-מ-ל",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/פינצטה-סטאלקס-11-3",
+        "oldTitle": "פינצטה סטאלקס 11/3 – עדן קוסמטיקס",
+        "inbound": 6,
+        "status": 200,
+        "words": 216,
+        "action": "keep",
+        "new": "/products/פינצטה-סטאלקס-11-3/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/פינצטה-סטאלקס-11-3",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/סיליקונים-שועל-כתום-מעוגל-חד-5-מידות-נדבקים-ללא-דבק",
+        "oldTitle": "סיליקונים שועל כתום- מעוגל חד 5 מידות נדבקים ללא דבק – עדן קוסמטיקס",
+        "inbound": 5,
+        "status": 200,
+        "words": 199,
+        "action": "keep",
+        "new": "/products/סיליקונים-שועל-כתום-מעוגל-חד-5-מידות-נדבקים-ללא-דבק/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/סיליקונים-שועל-כתום-מעוגל-חד-5-מידות-נדבקים-ללא-דבק",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/עדשת-מאקרו-לצילום-איכותי-וורוד",
+        "oldTitle": "עדשת מאקרו לצילום איכותי - וורוד – עדן קוסמטיקס",
+        "inbound": 5,
+        "status": 200,
+        "words": 237,
+        "action": "keep",
+        "new": "/products/עדשת-מאקרו-לצילום-איכותי-וורוד/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/עדשת-מאקרו-לצילום-איכותי-וורוד",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/מברשת-זוויתית-לצבע-שחור",
+        "oldTitle": "מברשת זוויתית לצבע – עדן קוסמטיקס",
+        "inbound": 5,
+        "status": 200,
+        "words": 215,
+        "action": "keep",
+        "new": "/products/מברשת-זוויתית-לצבע-שחור/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/מברשת-זוויתית-לצבע-שחור",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/זוג-סיליקונים-לתיקונים-הסרות",
+        "oldTitle": "זוג סיליקונים לתיקונים / הסרות / צביעת ריסים – עדן קוסמטיקס",
+        "inbound": 5,
+        "status": 200,
+        "words": 239,
+        "action": "keep",
+        "new": "/products/זוג-סיליקונים-לתיקונים-הסרות/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/זוג-סיליקונים-לתיקונים-הסרות",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/סיליקונים-צדפה-מעוגל-חד-5-מידות-נדבקים-ללא-דבק-1",
+        "oldTitle": "סיליקונים צדפה - מעוגל חד 5 מידות נדבקים ללא דבק – עדן קוסמטיקס",
+        "inbound": 5,
+        "status": 200,
+        "words": 261,
+        "action": "keep",
+        "new": "/products/סיליקונים-צדפה-מעוגל-חד-5-מידות-נדבקים-ללא-דבק-1/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/סיליקונים-צדפה-מעוגל-חד-5-מידות-נדבקים-ללא-דבק-1",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/צבע-לגבות-וריסים-nikk-mole-כחול-שחור",
+        "oldTitle": "צבע לריסים -NIKK MOLE כחול שחור – עדן קוסמטיקס",
+        "inbound": 5,
+        "status": 200,
+        "words": 232,
+        "action": "keep",
+        "new": "/products/צבע-לגבות-וריסים-nikk-mole-כחול-שחור/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/צבע-לגבות-וריסים-nikk-mole-כחול-שחור",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/my-lamination-שלב-1-להרמת-ריסים-וגבות-מארז-5-שקיות-1-5-מ-ל",
+        "oldTitle": "My lamination שלב 1 להרמת ריסים וגבות- מארז 5 שקיות 1.5 מ״ל – עדן קוסמטיקס",
+        "inbound": 5,
+        "status": 200,
+        "words": 279,
+        "action": "keep",
+        "new": "/products/my-lamination-שלב-1-להרמת-ריסים-וגבות-מארז-5-שקיות-1-5-מ-ל/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/my-lamination-שלב-1-להרמת-ריסים-וגבות-מארז-5-שקיות-1-5-מ-ל",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/my-lamination-סט-5-שקיות-מכל-שלב-להרמת-ריסים-וגבות",
+        "oldTitle": "My lamination סט 5 שקיות מכל שלב להרמת ריסים וגבות – עדן קוסמטיקס",
+        "inbound": 5,
+        "status": 200,
+        "words": 391,
+        "action": "keep",
+        "new": "/products/my-lamination-סט-5-שקיות-מכל-שלב-להרמת-ריסים-וגבות/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/my-lamination-סט-5-שקיות-מכל-שלב-להרמת-ריסים-וגבות",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/סיליקונים-חתולים-פפיון-מעוגל-חד-8-מידות",
+        "oldTitle": "סיליקונים חתול פפיון - מעוגל חד 8 מידות נדבקים ללא דבק – עדן קוסמטיקס",
+        "inbound": 4,
+        "status": 200,
+        "words": 274,
+        "action": "keep",
+        "new": "/products/סיליקונים-חתולים-פפיון-מעוגל-חד-8-מידות/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/סיליקונים-חתולים-פפיון-מעוגל-חד-8-מידות",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/זוג-תופסנים-פפיון-צהוב-מנצנץ",
+        "oldTitle": "זוג תופסנים פפיון - צהוב מנצנץ – עדן קוסמטיקס",
+        "inbound": 4,
+        "status": 200,
+        "words": 234,
+        "action": "keep",
+        "new": "/products/זוג-תופסנים-פפיון-צהוב-מנצנץ/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/זוג-תופסנים-פפיון-צהוב-מנצנץ",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/מספריים-קפיץ-לגבות",
+        "oldTitle": "מספריים קפיץ לגבות – עדן קוסמטיקס",
+        "inbound": 4,
+        "status": 200,
+        "words": 211,
+        "action": "keep",
+        "new": "/products/מספריים-קפיץ-לגבות/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/מספריים-קפיץ-לגבות",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/מארז-10-מסרקונים-להרמת-גבות-בצבע-ורוד",
+        "oldTitle": "מארז 10 מסרקונים להרמת גבות - בצבע ורוד – עדן קוסמטיקס",
+        "inbound": 4,
+        "status": 200,
+        "words": 249,
+        "action": "keep",
+        "new": "/products/מארז-10-מסרקונים-להרמת-גבות-בצבע-ורוד/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/מארז-10-מסרקונים-להרמת-גבות-בצבע-ורוד",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/צבע-לגבות-nikk-mole-חום",
+        "oldTitle": "צבע לגבות -NIKK MOLE חום – עדן קוסמטיקס",
+        "inbound": 4,
+        "status": 200,
+        "words": 218,
+        "action": "keep",
+        "new": "/products/צבע-לגבות-nikk-mole-חום/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/צבע-לגבות-nikk-mole-חום",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/my-lamination-שלב-2-להרמת-ריסים-וגבות-מארז-5-שקיות-של-1-5-מ-ל",
+        "oldTitle": "My lamination שלב 2 להרמת ריסים וגבות- מארז 5 שקיות של 1.5 מ״ל – עדן קוסמטיקס",
+        "inbound": 4,
+        "status": 200,
+        "words": 324,
+        "action": "keep",
+        "new": "/products/my-lamination-שלב-2-להרמת-ריסים-וגבות-מארז-5-שקיות-של-1-5-מ-ל/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/my-lamination-שלב-2-להרמת-ריסים-וגבות-מארז-5-שקיות-של-1-5-מ-ל",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/my-lamination-שלב-3-להרמת-גבות-5-שקיות",
+        "oldTitle": "My lamination שלב 3 להרמת גבות- 5 שקיות – עדן קוסמטיקס",
+        "inbound": 4,
+        "status": 200,
+        "words": 265,
+        "action": "keep",
+        "new": "/products/my-lamination-שלב-3-להרמת-גבות-5-שקיות/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/my-lamination-שלב-3-להרמת-גבות-5-שקיות",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/my-lamination-חמצן-לגבות",
+        "oldTitle": "My lamination חמצן לגבות – עדן קוסמטיקס",
+        "inbound": 4,
+        "status": 200,
+        "words": 299,
+        "action": "keep",
+        "new": "/products/my-lamination-חמצן-לגבות/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/my-lamination-חמצן-לגבות",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/zola-פינצטה-מקצועית-זוויתית-1",
+        "oldTitle": "zola פינצטה מקצועית זוויתית – עדן קוסמטיקס",
+        "inbound": 4,
+        "status": 200,
+        "words": 228,
+        "action": "keep",
+        "new": "/products/zola-פינצטה-מקצועית-זוויתית-1/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/zola-פינצטה-מקצועית-זוויתית-1",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/מארז-50-מסרקים-לגבות-וריסים-חד-פעמי-בצבע-ורוד-מנצנץ",
+        "oldTitle": "מארז 50 מסרקים לגבות וריסים - חד פעמי בצבע ורוד מנצנץ – עדן קוסמטיקס",
+        "inbound": 3,
+        "status": 200,
+        "words": 259,
+        "action": "keep",
+        "new": "/products/מארז-50-מסרקים-לגבות-וריסים-חד-פעמי-בצבע-ורוד-מנצנץ/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/מארז-50-מסרקים-לגבות-וריסים-חד-פעמי-בצבע-ורוד-מנצנץ",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/מארז-10-מסרקונים-להרמת-גבות-בצבע-שחור",
+        "oldTitle": "מארז 10 מסרקונים להרמת גבות - בצבע שחור – עדן קוסמטיקס",
+        "inbound": 3,
+        "status": 200,
+        "words": 249,
+        "action": "keep",
+        "new": "/products/מארז-10-מסרקונים-להרמת-גבות-בצבע-שחור/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/מארז-10-מסרקונים-להרמת-גבות-בצבע-שחור",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/פינצטה-מקצועית-משופעת-לגבות-וורוד-כהה-nikk-mole",
+        "oldTitle": "פינצטה מקצועית משופעת לגבות - וורוד כהה NIKK MOLE – עדן קוסמטיקס",
+        "inbound": 3,
+        "status": 200,
+        "words": 230,
+        "action": "keep",
+        "new": "/products/פינצטה-מקצועית-משופעת-לגבות-וורוד-כהה-nikk-mole/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/פינצטה-מקצועית-משופעת-לגבות-וורוד-כהה-nikk-mole",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/my-lamination-סט-בקבוקים-10-מ-ל-להרמת-ריסים-וגבות",
+        "oldTitle": "My lamination סט בקבוקים 10 מ״ל להרמת ריסים וגבות – עדן קוסמטיקס",
+        "inbound": 3,
+        "status": 200,
+        "words": 389,
+        "action": "keep",
+        "new": "/products/my-lamination-סט-בקבוקים-10-מ-ל-להרמת-ריסים-וגבות/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/my-lamination-סט-בקבוקים-10-מ-ל-להרמת-ריסים-וגבות",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/my-lamination-מיני-ערכת-ניסיון-להרמת-ריסים-וגבות-שקית-אחת-מכל-שלב",
+        "oldTitle": "My lamination מיני ערכת ניסיון להרמת ריסים וגבות- שקית אחת מכל שלב – עדן קוסמטיקס",
+        "inbound": 3,
+        "status": 200,
+        "words": 397,
+        "action": "keep",
+        "new": "/products/my-lamination-מיני-ערכת-ניסיון-להרמת-ריסים-וגבות-שקית-אחת-מכל-שלב/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/my-lamination-מיני-ערכת-ניסיון-להרמת-ריסים-וגבות-שקית-אחת-מכל-שלב",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/my-lamination-מארז-2-זוגות-פאצים-דביקים-לריסים-פרפרים",
+        "oldTitle": "My lamination מארז 2 זוגות פאצים דביקים לריסים פרפרים – עדן קוסמטיקס",
+        "inbound": 3,
+        "status": 200,
+        "words": 230,
+        "action": "keep",
+        "new": "/products/my-lamination-מארז-2-זוגות-פאצים-דביקים-לריסים-פרפרים/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/my-lamination-מארז-2-זוגות-פאצים-דביקים-לריסים-פרפרים",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/my-lamination-קצף-ניקוי-לפנים-ריסים-גבות-4-ב1-50-מ-ל",
+        "oldTitle": "My lamination קצף ניקוי לפנים/ ריסים/ גבות 4 ב1 50 מ״ל – עדן קוסמטיקס",
+        "inbound": 3,
+        "status": 200,
+        "words": 336,
+        "action": "keep",
+        "new": "/products/my-lamination-קצף-ניקוי-לפנים-ריסים-גבות-4-ב1-50-מ-ל/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/my-lamination-קצף-ניקוי-לפנים-ריסים-גבות-4-ב1-50-מ-ל",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/צבע-לגבות-ריסים-refectocil-מס-2",
+        "oldTitle": "צבע לגבות / ריסים refectocil מס' 2 – עדן קוסמטיקס",
+        "inbound": 2,
+        "status": 200,
+        "words": 242,
+        "action": "keep",
+        "new": "/products/צבע-לגבות-ריסים-refectocil-מס-2/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/צבע-לגבות-ריסים-refectocil-מס-2",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/חמצן-3-nikk-mola",
+        "oldTitle": "חמצן 3% NIKK MOLA – עדן קוסמטיקס",
+        "inbound": 2,
+        "status": 200,
+        "words": 224,
+        "action": "keep",
+        "new": "/products/חמצן-3-nikk-mola/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/חמצן-3-nikk-mola",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/דבק-בלאם-פורמולה-חדשה-להרמת-ריסים-של-חברת-zola-1",
+        "oldTitle": "דבק בלאם פורמולה חדשה להרמת ריסים של חברת ZOLA – עדן קוסמטיקס",
+        "inbound": 2,
+        "status": 200,
+        "words": 290,
+        "action": "keep",
+        "new": "/products/דבק-בלאם-פורמולה-חדשה-להרמת-ריסים-של-חברת-zola-1/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/דבק-בלאם-פורמולה-חדשה-להרמת-ריסים-של-חברת-zola-1",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/דבק-קודי",
+        "oldTitle": "דבק קודי להרמת ריסים – עדן קוסמטיקס",
+        "inbound": 2,
+        "status": 200,
+        "words": 233,
+        "action": "keep",
+        "new": "/products/דבק-קודי/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/דבק-קודי",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/צבע-thuya-ריסים-וגבות-deep-black",
+        "oldTitle": "צבע THUYA ריסים וגבות - Deep black – עדן קוסמטיקס",
+        "inbound": 2,
+        "status": 200,
+        "words": 257,
+        "action": "keep",
+        "new": "/products/צבע-thuya-ריסים-וגבות-deep-black/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/צבע-thuya-ריסים-וגבות-deep-black",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/גליל-ניילון-נצמד",
+        "oldTitle": "גליל ניילון נצמד – עדן קוסמטיקס",
+        "inbound": 2,
+        "status": 200,
+        "words": 216,
+        "action": "keep",
+        "new": "/products/גליל-ניילון-נצמד/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/גליל-ניילון-נצמד",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/בייביבראש-50-יחידות-ורוד",
+        "oldTitle": "בייביבראש 50 יחידות - ורוד – עדן קוסמטיקס",
+        "inbound": 2,
+        "status": 200,
+        "words": 238,
+        "action": "keep",
+        "new": "/products/בייביבראש-50-יחידות-ורוד/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/בייביבראש-50-יחידות-ורוד",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/שמפו-מוס-לגבות-ריסים-ופנים-nikk-mole",
+        "oldTitle": "שמפו מוס לגבות, ריסים ופנים NIKK MOLE – עדן קוסמטיקס",
+        "inbound": 2,
+        "status": 200,
+        "words": 224,
+        "action": "keep",
+        "new": "/products/שמפו-מוס-לגבות-ריסים-ופנים-nikk-mole/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/שמפו-מוס-לגבות-ריסים-ופנים-nikk-mole",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/my-lamination-מסקרת-ביוטין",
+        "oldTitle": "My lamination מסקרת ביוטין – עדן קוסמטיקס",
+        "inbound": 2,
+        "status": 200,
+        "words": 268,
+        "action": "keep",
+        "new": "/products/my-lamination-מסקרת-ביוטין/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/my-lamination-מסקרת-ביוטין",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/my-lamination-צבע-לגבות-ריסים-בתוספת-קרטין-שחור-כחול",
+        "oldTitle": "My lamination צבע לגבות/ ריסים בתוספת קרטין- שחור כחול – עדן קוסמטיקס",
+        "inbound": 2,
+        "status": 200,
+        "words": 283,
+        "action": "keep",
+        "new": "/products/my-lamination-צבע-לגבות-ריסים-בתוספת-קרטין-שחור-כחול/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/my-lamination-צבע-לגבות-ריסים-בתוספת-קרטין-שחור-כחול",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/my-lamination-חמצן",
+        "oldTitle": "My lamination חמצן – עדן קוסמטיקס",
+        "inbound": 2,
+        "status": 200,
+        "words": 224,
+        "action": "keep",
+        "new": "/products/my-lamination-חמצן/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/my-lamination-חמצן",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/צבע-לגבות-ריסים-refectocil-מס-3",
+        "oldTitle": "צבע לגבות / ריסים refectocil מס' 3 – עדן קוסמטיקס",
+        "inbound": 1,
+        "status": 200,
+        "words": 241,
+        "action": "keep",
+        "new": "/products/צבע-לגבות-ריסים-refectocil-מס-3/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/צבע-לגבות-ריסים-refectocil-מס-3",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/כוסית-קטנה-לערבוב-צבע-ורוד",
+        "oldTitle": "כוסית קטנה לערבוב צבע - ורוד – עדן קוסמטיקס",
+        "inbound": 1,
+        "status": 200,
+        "words": 231,
+        "action": "keep",
+        "new": "/products/כוסית-קטנה-לערבוב-צבע-ורוד/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/כוסית-קטנה-לערבוב-צבע-ורוד",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/סיליקונים-צדפה-מעוגל-חד-5-מידות-נדבקים-ללא-דבק",
+        "oldTitle": "סיליקונים צדפה - מעוגל חד 5 מידות נדבקים ללא דבק – עדן קוסמטיקס",
+        "inbound": 1,
+        "status": 200,
+        "words": 263,
+        "action": "keep",
+        "new": "/products/סיליקונים-צדפה-מעוגל-חד-5-מידות-נדבקים-ללא-דבק/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/סיליקונים-צדפה-מעוגל-חד-5-מידות-נדבקים-ללא-דבק",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/סיליקונים-l-כחול-נצנצים-נדבקים-ללא-דבק",
+        "oldTitle": "סיליקונים L כחול נצנצים - נדבקים ללא דבק – עדן קוסמטיקס",
+        "inbound": 1,
+        "status": 200,
+        "words": 248,
+        "action": "keep",
+        "new": "/products/סיליקונים-l-כחול-נצנצים-נדבקים-ללא-דבק/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/סיליקונים-l-כחול-נצנצים-נדבקים-ללא-דבק",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/my-lamination-סט-5-שקיות-שלב-1-2-בקבוק-שלב-3-להרמת-ריסים-וגבות",
+        "oldTitle": "My lamination סט 5 שקיות שלב 1.2+ בקבוק שלב 3 להרמת ריסים וגבות – עדן קוסמטיקס",
+        "inbound": 1,
+        "status": 200,
+        "words": 392,
+        "action": "keep",
+        "new": "/products/my-lamination-סט-5-שקיות-שלב-1-2-בקבוק-שלב-3-להרמת-ריסים-וגבות/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/my-lamination-סט-5-שקיות-שלב-1-2-בקבוק-שלב-3-להרמת-ריסים-וגבות",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/שמפו-קצף-ניקוי-לריסים-גבות-פנים-חברת-nikk-mola",
+        "oldTitle": "שמפו קצף ניקוי לריסים / גבות / פנים חברת nikk mola – עדן קוסמטיקס",
+        "inbound": 0,
+        "status": 200,
+        "words": 308,
+        "action": "keep",
+        "new": "/products/שמפו-קצף-ניקוי-לריסים-גבות-פנים-חברת-nikk-mola/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/שמפו-קצף-ניקוי-לריסים-גבות-פנים-חברת-nikk-mola",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/צבע-thuya-ריסים-וגבות-brown",
+        "oldTitle": "צבע THUYA ריסים וגבות - brown – עדן קוסמטיקס",
+        "inbound": 0,
+        "status": 200,
+        "words": 270,
+        "action": "keep",
+        "new": "/products/צבע-thuya-ריסים-וגבות-brown/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/צבע-thuya-ריסים-וגבות-brown",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/חמצן-3-nikk-mole",
+        "oldTitle": "חמצן 3% NIKK MOLE – עדן קוסמטיקס",
+        "inbound": 0,
+        "status": 200,
+        "words": 215,
+        "action": "keep",
+        "new": "/products/חמצן-3-nikk-mole/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/חמצן-3-nikk-mole",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/פינצטה-מקצועית-לגבות-ישרה-שחור-nikk-mole",
+        "oldTitle": "פינצטה מקצועית קלאסית לגבות - שחור NIKK MOLE – עדן קוסמטיקס",
+        "inbound": 0,
+        "status": 200,
+        "words": 227,
+        "action": "keep",
+        "new": "/products/פינצטה-מקצועית-לגבות-ישרה-שחור-nikk-mole/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/פינצטה-מקצועית-לגבות-ישרה-שחור-nikk-mole",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/פינצטה-מקצועית-לגבות-ישרה-וורודnikk-mole",
+        "oldTitle": "פינצטה מקצועית קלאסית לגבות -וורוד NIKK MOLE – עדן קוסמטיקס",
+        "inbound": 0,
+        "status": 200,
+        "words": 224,
+        "action": "keep",
+        "new": "/products/פינצטה-מקצועית-לגבות-ישרה-וורודnikk-mole/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/פינצטה-מקצועית-לגבות-ישרה-וורודnikk-mole",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/פינצטה-מקצועית-משופעת-לגבות-שחור-nikk-mole",
+        "oldTitle": "פינצטה מקצועית משופעת לגבות - שחור NIKK MOLE – עדן קוסמטיקס",
+        "inbound": 0,
+        "status": 200,
+        "words": 227,
+        "action": "keep",
+        "new": "/products/פינצטה-מקצועית-משופעת-לגבות-שחור-nikk-mole/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/פינצטה-מקצועית-משופעת-לגבות-שחור-nikk-mole",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/פינצטה-מקצועית-משופעת-לגבות-וורוד-בהירnikk-mole",
+        "oldTitle": "פינצטה מקצועית משופעת לגבות - וורוד בהירNIKK MOLE – עדן קוסמטיקס",
+        "inbound": 0,
+        "status": 200,
+        "words": 227,
+        "action": "keep",
+        "new": "/products/פינצטה-מקצועית-משופעת-לגבות-וורוד-בהירnikk-mole/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/פינצטה-מקצועית-משופעת-לגבות-וורוד-בהירnikk-mole",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/products/פינצטה-מקצועית-קלאסית-לגבות-וורוד-כההnikk-mole",
+        "oldTitle": "פינצטה מקצועית קלאסית לגבות -וורוד כההNIKK MOLE – עדן קוסמטיקס",
+        "inbound": 0,
+        "status": 200,
+        "words": 224,
+        "action": "keep",
+        "new": "/products/פינצטה-מקצועית-קלאסית-לגבות-וורוד-כההnikk-mole/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/products/פינצטה-מקצועית-קלאסית-לגבות-וורוד-כההnikk-mole",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/collections/frontpage",
+        "oldTitle": "Home page – עדן קוסמטיקס",
+        "inbound": 0,
+        "status": 200,
+        "words": 188,
+        "action": "301",
+        "new": "/collections/הנבחרת-שלנו/",
+        "confidence": 1,
+        "why": "הוחלט בתהליך (כפילות, דף זמני או עמוד יורש)"
+      },
+      "chain": [
+        {
+          "url": "/collections/frontpage",
+          "status": 301
+        },
+        {
+          "url": "/collections/הנבחרת-שלנו/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/collections/כל-המוצרים",
+        "oldTitle": "כל המוצרים – עדן קוסמטיקס",
+        "inbound": 0,
+        "status": 200,
+        "words": 399,
+        "action": "keep",
+        "new": "/collections/כל-המוצרים/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/collections/כל-המוצרים",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/collections/הנבחרת-שלנו",
+        "oldTitle": "הנבחרת שלנו – עדן קוסמטיקס",
+        "inbound": 0,
+        "status": 200,
+        "words": 212,
+        "action": "keep",
+        "new": "/collections/הנבחרת-שלנו/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/collections/הנבחרת-שלנו",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/blogs/news",
+        "oldTitle": "News – עדן קוסמטיקס",
+        "inbound": 0,
+        "status": 200,
+        "words": 127,
+        "action": "keep",
+        "new": "/blogs/news/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/blogs/news",
+          "status": 200
+        }
+      ],
+      "fails": []
+    }
+  ]
+}

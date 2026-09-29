@@ -11,13 +11,13 @@
     { "id": "seo-old", "phase": "1-intake", "label": "SEO inventory of the old site (seo/old/seo-report.md)", "when": ["seoOld"], "check": { "file": "projects/{slug}/seo/old/seo-report.md", "min": 800 } },
     { "id": "media-labels", "phase": "1-intake", "label": "Every image labelled real / render (media-labels.json)", "check": { "file": "projects/{slug}/media-labels.json", "min": 20 } },
 
-    { "id": "brand-json", "phase": "2-brand", "label": "brand.json complete: concept, claim, signature, palette, type", "check": { "json": "projects/{slug}/brand.json", "paths": ["concept", "claim", "signature", "palette", "type", "contrast"] } },
+    { "id": "brand-json", "phase": "2-brand", "label": "brand.json complete: concept, claim, signature, palette, type", "check": { "json": "projects/{slug}/brand.json", "paths": ["concept.idea", "concept.claim", "concept.signature", "palette", "type", "logo"] } },
     { "id": "logo-vector", "phase": "2-brand", "label": "Logo as vector (symbol.svg) and light/dark PNG", "check": { "files": ["projects/{slug}/brand/symbol.svg", "projects/{slug}/img/logo-light.png", "projects/{slug}/img/logo-dark.png"] } },
     { "id": "icon-family", "phase": "2-brand", "label": "Icon family (≥ 12 SVGs, the signature in each)", "check": { "glob": "projects/{slug}/img/i-*.svg", "min": 12 } },
     { "id": "favicon", "phase": "2-brand", "label": "Favicon set: icon.svg, 32 px, apple-touch, 512 px", "check": { "files": ["{site}/icon.svg", "{site}/img/favicon-32.png", "{site}/img/apple-touch-icon.png", "{site}/img/icon-512.png"] } },
     { "id": "fonts", "phase": "2-brand", "label": "Fonts self-hosted (Hebrew + Latin) with fonts.css", "check": { "files": ["{site}/fonts/fonts.css"], "glob": "{site}/fonts/*.woff2", "min": 4 } },
     { "id": "brand-board", "phase": "2-brand", "label": "Brand board image", "check": { "glob": "projects/{slug}/brand/board*.png", "min": 1 } },
-    { "id": "palette-contrast", "phase": "2-brand", "label": "Contrast checked: text pairs ≥ 4.5", "check": { "json": "projects/{slug}/brand.json", "path": "contrast", "minKeys": 3 } },
+    { "id": "palette-contrast", "phase": "2-brand", "label": "Contrast checked: text pairs ≥ 4.5", "check": { "json": "projects/{slug}/brand.json", "path": "palette.contrast", "minKeys": 3 } },
 
     { "id": "mascot-def", "phase": "3-mascot", "label": "Mascot: name, pixel grid, ≥ 6 faces", "when": ["mascot"], "check": { "json": "projects/{slug}/mascot/mascot.json", "paths": ["name", "grid", "faces"], "minKeys": { "faces": 6 } } },
     { "id": "mascot-preview", "phase": "3-mascot", "label": "Mascot sheet: every state visible", "when": ["mascot"], "check": { "glob": "projects/{slug}/mascot/preview*.png", "min": 1 } },
@@ -46,7 +46,7 @@
     { "id": "levelup", "phase": "5-site", "label": "levelup VERIFY: every region and element ≥ 9 (qa/levelup.md)", "check": { "file": "projects/{slug}/qa/levelup.md", "min": 1500 } },
 
     { "id": "film-json", "phase": "6-film", "label": "film.json filled from the brand and real content", "when": ["film"], "check": { "json": "projects/{slug}/film.json", "path": "scenes", "minLength": 6 } },
-    { "id": "film-signature", "phase": "6-film", "label": "Signature scene (morph or hand-crafted)", "when": ["film"], "check": { "contains": ["projects/{slug}/film.json", { "re": "\"type\": ?\"(morph|signature)\"" }] } },
+    { "id": "film-signature", "phase": "6-film", "label": "Signature scene (morph or hand-crafted)", "when": ["film"], "check": { "contains": ["projects/{slug}/film.json", { "re": "\"type\": ?\"(morph|signature|lift)\"" }] } },
     { "id": "film-916", "phase": "6-film", "label": "Film 9:16 with soundtrack", "when": ["film"], "check": { "file": "{camp}/{slug}-film-9x16.mp4", "min": 500000 } },
     { "id": "film-45", "phase": "6-film", "label": "Film 4:5 for the feed", "when": ["film"], "check": { "file": "{camp}/{slug}-film-4x5.mp4", "min": 500000 } },
     { "id": "film-stills", "phase": "6-film", "label": "Three ad stills + poster", "when": ["film"], "check": { "files": ["{camp}/ad-feed-4x5.jpg", "{camp}/ad-square-1x1.jpg", "{camp}/ad-story-9x16.jpg", "{camp}/poster.jpg"] } },

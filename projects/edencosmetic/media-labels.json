@@ -1,0 +1,527 @@
+{
+ "labels": {
+  "real": "מהשטח",
+  "render": "הדמיה",
+  "concept": "קונספט",
+  "demo": "נתוני הדגמה"
+ },
+ "rule": "Every image the site, the SEO pages or the film use is listed here with a label. Store product photos are real product images from the client store (label real, shown as \"תמונת מוצר מהחנות\"). Renders and drawings made by the studio are labelled render/concept.",
+ "images": {
+  "catalog/img/8778860462251-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "פינצטה-סטאלקס-11-3",
+   "source": "store CDN via /products.json (ce0108844a1c3ca9ddc87579cf9dd616.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8778855645355-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "zola-פינצטה-מקצועית-זוויתית-1",
+   "source": "store CDN via /products.json (79e19ade789ff354752b1b49145d5a40.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8735762579627-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "my-lamination-קצף-ניקוי-לפנים-ריסים-גבות-4-ב1-50-מ-ל",
+   "source": "store CDN via /products.json (9265a6862468c105aa0df5938fc033a6.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8735746785451-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "my-lamination-חמצן",
+   "source": "store CDN via /products.json (338c2aebc7fef0e3f506e23fbedffffc.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8735741411499-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "my-lamination-צבע-לגבות-ריסים-בתוספת-קרטין-שחור-כחול",
+   "source": "store CDN via /products.json (cd59b0682493ca75609d72f989b550fd.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8735729483947-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "my-lamination-חמצן-לגבות",
+   "source": "store CDN via /products.json (558dd02fff83ec46636fdcf22b9c717f.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8735715557547-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "my-lamination-צבע-לגבות-ריסים-בתוספת-קרטין-חום",
+   "source": "store CDN via /products.json (04ecb99d1959394805c0f7ac4ad7b81c.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8735419302059-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "my-lamination-מסקרת-ביוטין",
+   "source": "store CDN via /products.json (f9abd672764c303c46cb1a74a26cdfb4.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8734650466475-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "my-lamination-סט-5-שקיות-מכל-שלב-להרמת-ריסים-וגבות",
+   "source": "store CDN via /products.json (5_ecf8cad6-f980-4c74-9d42-24e69b7f0d54.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8730724597931-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "my-lamination-מארז-2-זוגות-פאצים-דביקים-לריסים-פרפרים",
+   "source": "store CDN via /products.json (Mylamination_2.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8730722173099-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "my-lamination-סט-3-שקיות-מכל-שלב-להרמת-ריסים-וגבות",
+   "source": "store CDN via /products.json (d6a9761b57f3cd1f0af92c9b30825790.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8730721714347-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "my-lamination-סט-5-שקיות-שלב-1-2-בקבוק-שלב-3-להרמת-ריסים-וגבות",
+   "source": "store CDN via /products.json (1.2_3.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8730721452203-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "my-lamination-מיני-ערכת-ניסיון-להרמת-ריסים-וגבות-שקית-אחת-מכל-שלב",
+   "source": "store CDN via /products.json (eaccd197e764aa987311a93a3a8da27b.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8730719617195-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "my-lamination-שלב-3-להרמת-ריסים-וגבות-שפורפרת-10-מ-ל",
+   "source": "store CDN via /products.json (3_66fb9cfb-bda0-425f-9f4c-acd1def8e444.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8730719387819-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "my-lamination-שלב-2-להרמת-ריסים-וגבות-שפורפרת-10-מ-ל",
+   "source": "store CDN via /products.json (2_54f30ca0-a76e-4398-80f3-57cc4853bd12.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8730719125675-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "my-lamination-שלב-1-להרמת-ריסים-וגבות-שפורפרת-10-מ-ל",
+   "source": "store CDN via /products.json (1_f50dea97-a4c7-4736-853c-722bf972d8dd.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8730718568619-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "my-lamination-שלב-3-להרמת-גבות-5-שקיות",
+   "source": "store CDN via /products.json (3.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8730714013867-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "my-lamination-שלב-2-להרמת-ריסים-וגבות-מארז-5-שקיות-של-1-5-מ-ל",
+   "source": "store CDN via /products.json (2.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8730707493035-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "my-lamination-שלב-1-להרמת-ריסים-וגבות-מארז-5-שקיות-1-5-מ-ל",
+   "source": "store CDN via /products.json (1.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8730706215083-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "my-lamination-סט-בקבוקים-10-מ-ל-להרמת-ריסים-וגבות",
+   "source": "store CDN via /products.json (88eef8383db96f2a832c7644fa2ce223.webp)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8640558301355-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "פינצטה-מקצועית-קלאסית-לגבות-וורוד-כההnikk-mole",
+   "source": "store CDN via /products.json (59d57a234d3819651e5ac1919ab2a77e.webp)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8640544604331-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "פינצטה-מקצועית-משופעת-לגבות-וורוד-כהה-nikk-mole",
+   "source": "store CDN via /products.json (4e756384e8fb27f3a01ef27762b4e871.webp)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8640535134379-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "פינצטה-מקצועית-משופעת-לגבות-וורוד-בהירnikk-mole",
+   "source": "store CDN via /products.json (b2e0a449c870a53f37519d63cc55f03f.webp)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8640530022571-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "פינצטה-מקצועית-משופעת-לגבות-שחור-nikk-mole",
+   "source": "store CDN via /products.json (cec6df4f058c12e45851af19b3377334.webp)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8640522027179-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "פינצטה-מקצועית-לגבות-ישרה-וורודnikk-mole",
+   "source": "store CDN via /products.json (7997c5f5bb6fa5491f28645d2c65fc35.webp)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8640515801259-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "פינצטה-מקצועית-לגבות-ישרה-שחור-nikk-mole",
+   "source": "store CDN via /products.json (e4b1615529ffb450c8246bcb7b4f5bb4.webp)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8640508592299-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "צבע-לגבות-nikk-mole-חום",
+   "source": "store CDN via /products.json (981EFC16-4F8B-4ECB-BF6F-97A762AECAC8.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8640484802731-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "צבע-לגבות-וריסים-nikk-mole-כחול-שחור",
+   "source": "store CDN via /products.json (2bcae75a4825c4eaa4bc1207761cfe4b.webp)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8640474644651-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "חמצן-3-nikk-mole",
+   "source": "store CDN via /products.json (Nikk-Mole-3.webp)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8636048736427-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "שמפו-מוס-לגבות-ריסים-ופנים-nikk-mole",
+   "source": "store CDN via /products.json (0360db9a962af3afd0cd7eac2e185be6.webp)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8493833224363-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "מוט-הרמה-הרמת-ריסים",
+   "source": "store CDN via /products.json (IMG_0668.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8491091656875-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "סיליקון-לכיסוי-הרמת-גבות-רב-פעמי",
+   "source": "store CDN via /products.json (0CBC4B08-7408-4926-895F-6CE5E0752D78.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8481622032555-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "מארז-10-מסרקונים-להרמת-גבות-בצבע-שחור",
+   "source": "store CDN via /products.json (389CA9EC-1619-469A-8F8A-57025800DEB5.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8490977067179-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "פאצים-רב-פעמיים-לריסים-שקוף-נצנצים",
+   "source": "store CDN via /products.json (IMG_9998.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8481668726955-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "סיליקונים-צדפה-מעוגל-חד-5-מידות-נדבקים-ללא-דבק-1",
+   "source": "store CDN via /products.json (IMG_9914_1.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8481668006059-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "בייביבראש-50-יחידות-ורוד",
+   "source": "store CDN via /products.json (IMG_9927.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8481667154091-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "זוג-סיליקונים-לתיקונים-הסרות",
+   "source": "store CDN via /products.json (FE968ED2-F869-4001-B0D6-76C8E3CACCA7.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8481633173675-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "סיליקונים-l-כחול-נצנצים-נדבקים-ללא-דבק",
+   "source": "store CDN via /products.json (IMG_9910.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8481630585003-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "סיליקונים-צדפה-מעוגל-חד-5-מידות-נדבקים-ללא-דבק",
+   "source": "store CDN via /products.json (IMG_6652_1.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8481624719531-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "כוסית-קטנה-לערבוב-צבע-ורוד",
+   "source": "store CDN via /products.json (C3942418-6F7B-486A-B88E-56B753DFBA66.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8481622687915-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "גליל-ניילון-נצמד",
+   "source": "store CDN via /products.json (IMG_9962.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8481621541035-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "מארז-10-מסרקונים-להרמת-גבות-בצבע-ורוד",
+   "source": "store CDN via /products.json (3432A2F2-5366-4B27-BE40-B75915AEE5D5.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8481620099243-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "מארז-50-מסרקים-לגבות-וריסים-חד-פעמי-בצבע-שחור",
+   "source": "store CDN via /products.json (D72EFC12-484B-4BA9-9945-FF1FA2C9D3E9.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8481619968171-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "מארז-50-מסרקים-לגבות-וריסים-חד-פעמי-בצבע-ורוד-מנצנץ",
+   "source": "store CDN via /products.json (FD759480-A3AB-4E65-8DBD-F5A628DCCAF8.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8481575501995-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "מברשת-זוויתית-לצבע-שחור",
+   "source": "store CDN via /products.json (A8E36C0A-66A9-4C7B-889A-1F87C3AB2443_f9ca1c05-1839-4e15-971a-5c2b5d9d0c86.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8481559969963-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "מספריים-קפיץ-לגבות",
+   "source": "store CDN via /products.json (IMG_9940.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8481534476459-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "סרט-דבק-רפואי-דק",
+   "source": "store CDN via /products.json (FB0C662E-72DF-49D6-96FB-AC3FABFA9C75.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8481525301419-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "מסרק-להפרדת-הריסים-רב-פעמי-ורוד",
+   "source": "store CDN via /products.json (2EB645A2-6282-4BF1-934A-BA666BFC8676.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8481514848427-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "זוג-תופסנים-פפיון-שקוף-מנצנץ",
+   "source": "store CDN via /products.json (653D3854-FB5D-4F41-B83C-1A46D8C82821.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8481503412395-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "זוג-תופסנים-פפיון-צהוב-מנצנץ",
+   "source": "store CDN via /products.json (7DCB05AF-001C-494B-8D15-9D6DD90417CC.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8481486831787-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "עדשת-מאקרו-לצילום-איכותי-וורוד",
+   "source": "store CDN via /products.json (8D8D3B0E-7C99-4619-A4B8-8E650F5EAC8D_62951096-e93e-415c-a75d-b6113ca0647c.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8480706953387-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "סיליקונים-כריש-מעוגל-רחב",
+   "source": "store CDN via /products.json (IMG_9355.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8480702070955-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "סיליקונים-כנפיים-מעוגל-רחב-10-מידות-נדבקים-ללא-דבק",
+   "source": "store CDN via /products.json (IMG_9723.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8480686047403-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "סיליקונים-קשת-בענן-מעוגל-חד-10-מידות-נדבקים-ללא-דבק",
+   "source": "store CDN via /products.json (IMG_9721.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8480550781099-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "סיליקונים-חתולים-פפיון-מעוגל-חד-8-מידות",
+   "source": "store CDN via /products.json (IMG_9750.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8480548651179-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "סיליקונים-ליפט-צבעוניים-להרמת-ריסים-6-מידות",
+   "source": "store CDN via /products.json (BE885D62-1B7F-469A-920C-B6A4FFD36B16.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8480547143851-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "סיליקונים-שועל-כתום-מעוגל-חד-5-מידות-נדבקים-ללא-דבק",
+   "source": "store CDN via /products.json (IMG_9908.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8480545898667-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "סיליקונים-שועל-סגול-מעוגל-חד-5-מידות-נדבקים-ללא-דבק",
+   "source": "store CDN via /products.json (IMG_9917.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8480524828843-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "קרם-חמצן-3-חברת-thuya",
+   "source": "store CDN via /products.json (IMG_9901_e87918ce-4005-4e9e-8a90-a5b64442d672.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8480518897835-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "צבע-thuya-ריסים-וגבות-deep-black",
+   "source": "store CDN via /products.json (IMG_9897.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8480518439083-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "צבע-thuya-ריסים-וגבות-bluish-black",
+   "source": "store CDN via /products.json (IMG_9898.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8480517718187-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "צבע-thuya-ריסים-וגבות-brown",
+   "source": "store CDN via /products.json (IMG_9900.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8479577800875-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "zola-פינצטה-מקצועית-זוויתית",
+   "source": "store CDN via /products.json (AD9983EE-330B-4F18-B753-AF7F9EC77299_1.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8479575113899-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "שמפו-קצף-ניקוי-לריסים-גבות-פנים-חברת-nikk-mola",
+   "source": "store CDN via /products.json (1F79871A-5DBB-4934-9A5F-BF453F8938A9.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8479568789675-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "דבק-קודי",
+   "source": "store CDN via /products.json (3CD208CC-FA75-4D6D-9680-6BCAB60D1881.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8479560695979-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "דבק-בלאם-פורמולה-חדשה-להרמת-ריסים-של-חברת-zola-1",
+   "source": "store CDN via /products.json (IMG_9879.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8479559844011-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "דבק-בלאם-פורמולה-חדשה-להרמת-ריסים-של-חברת-zola",
+   "source": "store CDN via /products.json (IMG_9876.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8479556894891-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "חמצן-3-nikk-mola",
+   "source": "store CDN via /products.json (IMG_9882.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8479555780779-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "צבע-לגבות-ריסים-refectocil-מס-2",
+   "source": "store CDN via /products.json (IMG_9884.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8479554338987-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "צבע-לגבות-ריסים-refectocil-מס-3",
+   "source": "store CDN via /products.json (IMG_9888.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "catalog/img/8479070290091-1.jpg": {
+   "label": "real",
+   "kind": "product photo",
+   "product": "ערכה-להרמת-ריסים-וגבות-2",
+   "source": "store CDN via /products.json (IMG_9204_6b290b85-4a47-4176-b1c3-89d1291e03ed.jpg)",
+   "note": "תמונת מוצר כפי שמופיעה בחנות (חלקן תמונות יצרן/ספק)"
+  },
+  "site-src/home/owner.jpg": {
+   "label": "real",
+   "kind": "photo of a person using a lash wand and a hand mirror",
+   "source": "existing site, home page \"אודות\" section (WhatsApp_Image_2025-07-15_at_14.15.26.jpg)",
+   "note": "מוצג ליד סיפור עדן כפי שבאתר הקיים; הכיתוב באתר החדש: \"צילום מהאתר הקיים\". לא מוצג כתמונת לקוחה או כתוצאה של טיפול."
+  },
+  "site-src/home/hero.jpg": {
+   "label": "real",
+   "kind": "existing home banner with baked-in text",
+   "source": "existing site, home hero (a2ee3831-….jpg)",
+   "note": "לא בשימוש: הכיתוב באנגלית בתמונה הוא \"Edem cosmetics\" (טעות), והטקסט \"יופי. איכות. דיוק\" אפוי בתמונה. נשמר כראיה בלבד.",
+   "used": false
+  },
+  "intake/media/078-logo.png": {
+   "label": "real",
+   "kind": "logo",
+   "source": "existing site (Black_and_Pink_Modern_Initials_Logo_Design…png)",
+   "note": "הלוגו של הלקוחה. סימן וקטורי נגזר ממנו במעקב (brand/trace-logo.py), לא צויר מחדש."
+  }
+ }
+}

@@ -16,7 +16,7 @@
  <div class="wrap">
   <p class="eyebrow">סטודיו AILGEN · מנוע יצירה לעסקים</p>
   <h1 id="h1" style="margin-top:16px">תנו לנו קישור, רעיון או שם. <em>קבלו עסק שלם.</em></h1>
-  <p class="sub">אתר מעוצב עם מרכז בקרה וסוכן AI, אייקון ושפה חזותית, סרטון השקה ומודעות, מחובר לדומיין שלכם ובנוי כך שיימצא בחיפוש, בלי לאבד את מה שגוגל כבר מכיר. אותה שיטה שבנתה את סוויצ׳ינג TV, את AILGEN ואת האתר החדש של טלאור כראדי.</p>
+  <p class="sub">אתר מעוצב עם מרכז בקרה וסוכן AI, אייקון ושפה חזותית, סרטון השקה ומודעות, מחובר לדומיין שלכם ובנוי כך שיימצא בחיפוש, בלי לאבד את מה שגוגל כבר מכיר. אותה שיטה שבנתה את סוויצ׳ינג TV, את AILGEN, את האתר החדש של טלאור כראדי ואת חזית החנות של עדן קוסמטיקס.</p>
   <form class="launch" id="launch" aria-label="הפעלת הסטודיו">
    <div class="seg" role="tablist" aria-label="מה יש לכם">
     <button type="button" role="tab" data-m="url" aria-selected="true">יש לי אתר</button>
@@ -48,10 +48,11 @@
 
 <section class="sec flow" id="flow" aria-labelledby="flowH">
  <div class="wrap">
-  <p class="eyebrow">יצירה אמיתית וסגורה · טלאור כראדי</p>
+  <div class="ctabs" role="tablist" aria-label="בחירת פרויקט"><button role="tab" id="ct-talor" data-case="talor" aria-selected="true" type="button">קבוצת טלאור כראדי</button><button role="tab" id="ct-eden" data-case="eden" aria-selected="false" tabindex="-1" type="button">עדן קוסמטיקס</button></div>
+  <p class="eyebrow" id="flowEy">יצירה אמיתית וסגורה · טלאור כראדי</p>
   <h2 id="flowH">תהליך יצירה מלא, מקישור לעסק שלם.</h2>
-  <p class="lead">זו לא הדמיה. זו הריצה המלאה של הסטודיו על קבוצת טלאור כראדי, מהאתר הקיים שלהם ועד אתר חדש, דמות, סרטון וקמפיין. כל שלב עם התוצר האמיתי שלו והזמן שנמדד.</p>
-  <div class="ba" id="ba"><img src="img/tk-old.webp" alt="האתר הקיים של טלאור כראדי"><img class="new" src="img/tk-site.webp" alt="האתר החדש של טלאור כראדי"><span class="lb1">לפני · האתר הקיים</span><span class="lb2">אחרי · הסטודיו</span><input type="range" min="0" max="100" value="50" id="baR" aria-label="השוואה בין האתר הקיים לאתר החדש"><span class="line" aria-hidden="true"></span></div>
+  <p class="lead" id="flowLead"></p>
+  <div class="ba" id="ba"><img id="baOld" src="img/tk-old.webp" alt="האתר הקיים של טלאור כראדי"><img id="baNew" class="new" src="img/tk-site.webp" alt="האתר החדש של טלאור כראדי"><span class="lb1">לפני · האתר הקיים</span><span class="lb2">אחרי · הסטודיו</span><input type="range" min="0" max="100" value="50" id="baR" aria-label="השוואה בין האתר הקיים לאתר החדש"><span class="line" aria-hidden="true"></span></div>
   <ol class="fsteps" id="fsteps"></ol>
   <div class="closed" id="closed"></div>
  </div>
@@ -102,7 +103,7 @@
 <section class="sec dark" id="proof" aria-labelledby="proofH" style="background:var(--night)">
  <div class="wrap">
   <p class="eyebrow">עבודות ומספרים</p>
-  <h2 id="proofH">ארבעה עסקים, שלושה סוגי קלט.</h2>
+  <h2 id="proofH">חמישה עסקים, שלושה סוגי קלט.</h2>
   <div class="cases" id="cases"></div>
   <h3 style="font-size:clamp(26px,3vw,36px);margin-top:64px">הריצה האחרונה, בשקיפות מלאה</h3>
   <p class="lead" id="meterNote"></p>

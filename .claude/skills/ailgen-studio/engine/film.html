@@ -14,8 +14,8 @@
   pipe frames to ffmpeg. The same scenes lay themselves out for 9:16, 4:5, 1:1 and 16:9.
 
   Query:  ?p=/projects/<slug>/  &w=1080 &h=1920  [&t=4.2 | &still=feed-4x5]
-  Scenes: hook · reveal · stat · gallery · quote · cards · cta   (see engine/README.md)
-  Motifs: pixels · light · ink · particles · iris · wipe · spin   (the brand's signature transition)
+  Scenes: hook · reveal · lift · stat · gallery · quote · cards · cta   (see engine/README.md)
+  Motifs: pixels · light · ink · particles · iris · wipe · spin · curl   (the brand's signature transition)
 */
 const Q = new URLSearchParams(location.search);
 const W = +(Q.get('w') || 1080), H = +(Q.get('h') || 1920);
@@ -88,6 +88,7 @@ function layout() {
     if (s.type === 'hook') { cue(o.t0, 'intro', { until: o.t1 }); if (s.strike) cue(o.t0 + s.dur * .56, 'glitch'); }
     if (s.type === 'reveal') { cue(o.t0 + .15, 'hit'); cue(o.t0 + .15, 'drop'); }
     if (s.type === 'morph') { const D = s.dur; cue(o.t0 + D * .11, 'glitch'); [.3, .38, .46].forEach(f => cue(o.t0 + D * f, 'swish')); cue(o.t0 + D * .5, 'riser', { until: o.t0 + D * .68 }); cue(o.t0 + D * .68, 'hit'); if (s.final) cue(o.t0 + D * .93, 'chime', { n: 2 }); }
+    if (s.type === 'lift') { const w0 = s.wave ?? 1.9, sp = s.waveSpan ?? 1.7; [0, .33, .66].forEach(f => cue(o.t0 + w0 + f * sp, 'swish')); cue(o.t0 + w0 - .1, 'riser', { until: o.t0 + w0 + sp }); cue(o.t0 + w0 + sp + .55, 'hit'); cue(o.t0 + w0 + sp + .6, 'pop'); }
     if (s.type === 'stat') { cue(o.t0 + .3, 'ticks', { until: o.t0 + 1.5 }); cue(o.t0 + 1.5, 'pop'); }
     if (s.type === 'gallery') galleryTimes(o).forEach(([a]) => cue(a, 'swish'));
     if (s.type === 'quote') { cue(o.t0, 'break', { until: o.t1 }); for (let k = 0; k < (s.stars ?? 5); k++) cue(o.t0 + .35 + k * .09, 'chime', { n: k }); }
@@ -109,7 +110,12 @@ function bidi(s) {
   return s.replace(/[A-Za-z0-9₪$€%+][A-Za-z0-9 ,.×–\-″:/·%+₪$€]*/g, m => { const core = m.replace(/[\s·.,:–-]+$/, ''); return '⁦' + core + '⁩' + m.slice(core.length); });
 }
 /* "*word*" marks a highlighted word, as in the sites' heroLine field */
-function parseLine(line) { return String(line).split(/\s+/).filter(Boolean).map(w => { const hl = /^\*.*\*[.,!?:]?$/.test(w) || /^\*/.test(w) && /\*/.test(w.slice(1)); return { t: w.replace(/\*/g, ''), hl }; }); }
+function parseLine(line) {
+  const raw = String(line).split(/\s+/).filter(Boolean).map(w => { const hl = /^\*.*\*[.,!?:]?$/.test(w) || /^\*/.test(w) && /\*/.test(w.slice(1)); return { t: w.replace(/\*/g, ''), hl }; });
+  // consecutive Latin/number words stay one token ("ZOLA Lami Balm"), so the bidi isolate keeps their order inside Hebrew lines
+  const out = []; for (const w of raw) { const l = out[out.length - 1]; if (l && RTL && isLtrRun(l.t) && isLtrRun(w.t) && /[A-Za-z0-9]/.test(l.t) && /[A-Za-z0-9]/.test(w.t) && l.hl === w.hl) l.t += ' ' + w.t; else out.push(w); }
+  return out;
+}
 
 /* A line of words in reading order, each with its own reveal and exit. Returns the line width. */
 function words(items, o) {
@@ -286,6 +292,14 @@ function motifMask(g, kind, k, r = { x: 0, y: 0, w: W, h: H }, seed = 3) {
       for (let a = 0; a <= 64; a++) { const th = a / 64 * Math.PI * 2, rr2 = rad * (1 + .1 * Math.sin(th * 5 + b) + .05 * Math.sin(th * 11 + b * 2)); g.lineTo(bx + Math.cos(th) * rr2, by + Math.sin(th) * rr2); }
       g.fill();
     }
+  } else if (kind === 'curl') { // lashes grow up from the base of the frame and curl at the tips; the picture shows through them, then the gaps close
+    const n = 24, wb = r.w / n * 1.7;
+    g.lineCap = 'round'; g.strokeStyle = '#fff'; g.lineWidth = wb;
+    for (let i = 0; i < n; i++) {
+      const u = i / (n - 1), p = clamp((k - (RTL ? 1 - u : u) * .42) / .58); if (p <= 0) continue;
+      const x0 = r.x + r.w * (i + .5) / n, y0 = r.y + r.h + wb, hgt = (r.h + wb * 2) * E.out(p), side = u < .5 ? -1 : 1, curl = (1 - E.in(seg(k, .6, 1))) * r.w * .07 * side;
+      g.beginPath(); g.moveTo(x0, y0); g.bezierCurveTo(x0, y0 - hgt * .35, x0 + curl * .4, y0 - hgt * .78, x0 + curl, y0 - hgt); g.stroke();
+    }
   } else if (kind === 'iris') {
     g.beginPath(); g.arc(r.x + r.w / 2, r.y + r.h / 2, Math.hypot(r.w, r.h) * .55 * E.inOut(k), 0, 7); g.fill();
   } else if (kind === 'spin') { // four swirling blades sweep clockwise from the centre, like a pinwheel logo turning
@@ -333,6 +347,17 @@ function motifEdge(kind, k, r = { x: 0, y: 0, w: W, h: H }, seed = 3) {
       if (kind === 'pixels') { X.globalAlpha = Math.sin(Math.PI * l) * .95; const d = cs * .58; rr(x + (cs - d) / 2, y + (cs - d) / 2, d, d, d * .3); X.fill(); }
       else if (q < .3) { X.globalAlpha = Math.sin(Math.PI * l) * .85; X.beginPath(); X.arc(x + cs / 2 + (q - .15) * cs * 3, y + cs / 2 - l * cs * 1.2, cs * (.12 + q * .5), 0, 7); X.fill(); } // sparse sparks drifting up
     });
+    X.restore(); return;
+  }
+  if (kind === 'curl') { // the lit tips of the lashes as they rise
+    const pal = CFG.motifColors || [C.accent, C.accent2], nn = 24;
+    X.save(); X.globalCompositeOperation = 'screen'; X.lineCap = 'round'; X.lineWidth = Math.min(W, H) * .008;
+    for (let i = 0; i < nn; i++) {
+      const u = i / (nn - 1), p = clamp((k - (RTL ? 1 - u : u) * .42) / .58); if (p <= 0 || p >= 1) continue;
+      const wb = r.w / nn * 1.7, x0 = r.x + r.w * (i + .5) / nn, y0 = r.y + r.h + wb, hgt = (r.h + wb * 2) * E.out(p), side = u < .5 ? -1 : 1, curl = (1 - E.in(seg(k, .6, 1))) * r.w * .07 * side;
+      X.strokeStyle = pal[i % pal.length]; X.globalAlpha = Math.sin(Math.PI * p) * .95; X.shadowColor = pal[i % pal.length]; X.shadowBlur = Math.min(W, H) * .02;
+      X.beginPath(); X.moveTo(x0 + curl * .55, y0 - hgt * .86); X.bezierCurveTo(x0 + curl * .7, y0 - hgt * .92, x0 + curl * .85, y0 - hgt * .97, x0 + curl, y0 - hgt); X.stroke();
+    }
     X.restore(); return;
   }
   if (!['light', 'wipe'].includes(kind)) return;
@@ -421,7 +446,7 @@ function sceneMascot(s, lt) {
   const cx = m.x != null && TALL ? W * m.x : (RTL ? BOX.x0 + 110 * U : BOX.x1 - 110 * U), feet = m.y != null && TALL ? H * m.y : BOX.y1 - 10 * U;
   const mood = lt - at < .9 ? 'happy' : m.finale && lt > s.dur - 1.1 ? m.finale : (m.mood || 'idle');
   const r = mascot(cx, feet, cell, mood, lt, { pop: E.back(k) });
-  if (m.say && r) bubble(m.say, cx, r.top - 10 * U, Math.min(BOX.w, (TALL ? 820 : 460) * U), seg(lt, at + .35, at + .35 + m.say.length * .03 + .2));
+  if (m.say && r && (TALL || m.sayWide !== false)) bubble(m.say, cx, r.top - 10 * U, Math.min(BOX.w, (TALL ? 820 : 460) * U), seg(lt, at + .35, at + .35 + m.say.length * .03 + .2));
 }
 
 /* ---------------- scenes ---------------- */
@@ -623,6 +648,36 @@ SC.gallery = (s, lt) => {
   X.save(); X.font = fnt(F.nw, 36 * U, F.num); X.fillStyle = mute(th); X.textAlign = 'center'; X.direction = 'ltr'; X.globalAlpha = .8;
   X.fillText(`${String(j + 1).padStart(2, '0')} / ${String(n).padStart(2, '0')}`, W / 2, tb + (it.sub ? 110 : 60) * U); X.restore();
 };
+/* lift: the signature scene of a lash brand. A row of lashes grows straight, then a wave of colour lifts them into a curl, one after another. */
+const mixHex = (a, b, t) => { const p = h => { h = h.replace('#', ''); const n = parseInt(h.length === 3 ? h.split('').map(x => x + x).join('') : h, 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }; const A = p(a), B2 = p(b); return `rgb(${A.map((v, i) => Math.round(v + (B2[i] - v) * t)).join(',')})`; };
+SC.lift = (s, lt) => {
+  const th = s.theme || 'light'; ground(th, lt);
+  const n = s.n || 21, aw = BOX.w * .94, ah = aw * .2, w0 = s.wave ?? 1.9, span = s.waveSpan ?? 1.7;
+  const hf = hlFit(s.title || [], (s.size || pick(124, 100, 92, 92)) * U), gapT = pick(90, 50, 40, 30) * U;
+  const top = blockTop(hf.h + gapT + ah * 2.5 + (s.sub ? 110 * U : 0));
+  const cx = W / 2, baseY = top + hf.h + gapT + ah * 1.95, x0 = cx - aw / 2, x1 = cx + aw / 2, up = baseY - ah * 1.1;
+  const B = u => { const a = 1 - u; return [a * a * x0 + 2 * a * u * cx + u * u * x1, a * a * baseY + 2 * a * u * up + u * u * baseY]; };
+  const lidK = E.inOut(seg(lt, .1, .9));
+  X.save(); X.strokeStyle = ink(th); X.globalAlpha = .8; X.lineWidth = 3.4 * U; X.lineCap = 'round'; X.beginPath();
+  for (let i = 0; i <= 60 * lidK; i++) { const [px, py] = B(RTL ? 1 - i / 60 : i / 60); i ? X.lineTo(px, py) : X.moveTo(px, py); } X.stroke(); X.restore();
+  const straight = th === 'dark' ? C.muted : C.inkMuted;
+  for (let i = 0; i < n; i++) {
+    const u = (i + .5) / n, k = (RTL ? n - 1 - i : i) / (n - 1), [bx, by] = B(u);
+    const tx = 2 * (1 - u) * (cx - x0) + 2 * u * (x1 - cx), ty = 2 * (1 - u) * (up - baseY) + 2 * u * (baseY - up), tl = Math.hypot(tx, ty), nx = ty / tl, ny = -tx / tl;
+    const side = u < .5 ? -1 : 1, fan = (u - .5) * .95, dx = nx * Math.cos(fan) - ny * Math.sin(fan), dy = nx * Math.sin(fan) + ny * Math.cos(fan);
+    const L = aw * (.075 + .09 * Math.pow(Math.sin(Math.PI * u), .7)) * E.out(seg(lt, .5 + k * .5, 1.3 + k * .5));
+    if (L <= 1) continue;
+    const cw = seg(lt, w0 + k * span, w0 + k * span + .75), t = E.inOut(cw), cxk = (tx / tl) * side, cyk = (ty / tl) * side;
+    const pt = (a, b2, q) => [bx + dx * L * a + cxk * L * b2 * q, by + dy * L * a + cyk * L * b2 * q];
+    const p1 = pt(.38, 0, t), p2 = pt(.78, .10, t), p3 = pt(1 - .12 * t, .42, t);
+    X.save(); X.lineCap = 'round'; X.lineWidth = 6.4 * U; X.strokeStyle = mixHex(straight, C.accent, t);
+    X.beginPath(); X.moveTo(bx, by); X.bezierCurveTo(p1[0], p1[1], p2[0], p2[1], p3[0], p3[1]); X.stroke();
+    if (cw > .02 && cw < .98) { const gl = Math.sin(Math.PI * cw); X.globalAlpha = gl * .55; X.fillStyle = C.accent; X.shadowColor = C.accent; X.shadowBlur = 26 * U; X.beginPath(); X.arc(p3[0], p3[1], 9 * U * (.6 + gl), 0, 7); X.fill(); }
+    X.restore();
+  }
+  headline(s.title || [], { y: top, size: hf.size, color: ink(th), lt, start: s.titleAt ?? 2.3 });
+  if (s.sub) text(s.sub, W / 2, baseY + ah * .55 + 60 * U, { size: 46 * U, w: 600, color: mute(th), alpha: seg(lt, (s.titleAt ?? 2.3) + .9, (s.titleAt ?? 2.3) + 1.4) });
+};
 /* quote: a real customer's words, never invented */
 SC.quote = (s, lt) => {
   const th = s.theme || 'light'; ground(th, lt);
@@ -671,7 +726,7 @@ SC.cta = (s, lt) => {
   const lw = BOX.w * (s.logoW || pick(.82, .64, .6, .5)), lh = im ? lw * im.height / im.width : 0;
   const hf = hlFit(s.headline || [], (s.size || pick(104, 86, 82, 84)) * U), gapL = pick(90, 50, 44, 40) * U;
   const blockH = lh + gapL + hf.h + (s.button ? pick(110, 80, 74, 70) * U + 60 * U + (s.sub || []).length * 62 * U + 90 * U : 0);
-  const ly = blockTop(blockH, BOX.h - (s.mascot && CFG.mascot && TALL ? 420 * U : 0));
+  const ly = blockTop(blockH, BOX.h - (s.mascot && CFG.mascot ? (TALL ? (s.mascot.reserve || 420) : (s.mascot.reserveWide ?? 240)) * U : 0));
   if (im) motifReveal(im, { x: W / 2 - lw / 2, y: ly, w: lw, h: lh }, seg(lt, .1, 1.1), s.motif, { contain: true, key: 'cta' + th });
   const hb = headline(s.headline || [], { y: ly + lh + gapL, size: hf.size, color: ink(th), lt, start: .7 });
   if (s.button) {

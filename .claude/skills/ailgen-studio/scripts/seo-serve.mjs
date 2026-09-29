@@ -7,6 +7,7 @@
 import fs from 'fs';
 import path from 'path';
 import http from 'http';
+import zlib from 'zlib';
 import { fileURLToPath } from 'url';
 
 const TYPES = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.json': 'application/json', '.xml': 'application/xml', '.txt': 'text/plain; charset=utf-8', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.gif': 'image/gif', '.ico': 'image/x-icon', '.woff2': 'font/woff2', '.woff': 'font/woff', '.mp4': 'video/mp4', '.webm': 'video/webm', '.pdf': 'application/pdf' };
@@ -43,6 +44,8 @@ export function startServer({ dir, port = 0 }) {
       const h = { 'content-type': type || 'text/plain; charset=utf-8', ...extra };
       let pathForRules; try { pathForRules = decodeURIComponent(p); } catch { pathForRules = p; }
       for (const r of headerRules) if (r.pattern.test(pathForRules)) Object.assign(h, r.headers);
+      // a real host compresses text: gzip it when the client accepts it, so performance numbers are honest
+      if (req.method !== 'HEAD' && body && body.length > 1024 && /^(text\/|application\/(json|xml|javascript))|svg/.test(h['content-type']) && /gzip/.test(req.headers['accept-encoding'] || '')) { body = zlib.gzipSync(body, { level: 6 }); h['content-encoding'] = 'gzip'; h.vary = 'Accept-Encoding'; }
       res.writeHead(status, h); res.end(req.method === 'HEAD' ? undefined : body);
     };
     const rule = redirects.get(norm(p));

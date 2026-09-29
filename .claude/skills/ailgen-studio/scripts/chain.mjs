@@ -63,11 +63,14 @@ const rows = chain.elements.map(e => {
   if ((e.when || []).some(f => !flags[f])) return { ...e, status: 'na', why: [] };
   const why = check(e.check || {}); return { ...e, status: why.length ? 'missing' : 'ok', why };
 });
-// time and cost per element: exact sub-phase `phase/id`, else the phase itself shared by its elements
-const byPhase = new Map(report.rows.map(r => [r.phase, r]));
+// time and cost per element: its own mark `phase/id` (exact), else the plain phase mark shared by its elements.
+// Phases that were only marked by sub-phase (`2-brand/logo`, `2-brand/icons`, ...) sum into the phase total.
+const exact = new Map(); for (const r of report.rows) { const e = exact.get(r.phase) || { wallMs: 0, cost: 0 }; e.wallMs += r.wallMs; e.cost += r.cost; exact.set(r.phase, e); } // a phase worked in two windows counts both
+const total = new Map();
+for (const r of report.rows) { const ph = r.phase.split('/')[0], t = total.get(ph) || { wallMs: 0, cost: 0 }; t.wallMs += r.wallMs; t.cost += r.cost; total.set(ph, t); }
 const per = new Map(); for (const r of rows) if (r.status !== 'na') per.set(r.phase, (per.get(r.phase) || 0) + 1);
 for (const r of rows) {
-  const own = byPhase.get(`${r.phase}/${r.id}`), ph = byPhase.get(r.phase);
+  const own = exact.get(`${r.phase}/${r.id}`), ph = exact.get(r.phase);
   if (own) { r.ms = own.wallMs; r.cost = own.cost; r.timing = 'exact'; }
   else if (ph && r.status !== 'na') { r.ms = ph.wallMs / per.get(r.phase); r.cost = ph.cost / per.get(r.phase); r.timing = 'phase'; }
 }
@@ -78,7 +81,7 @@ const md = [`# בדיקת השרשרת: ${slug}`, '', `${new Date().toISOString(
   '## כל האלמנטים, עם זמן ועלות', '', 'זמן: `מדוד` = סימון משלו במדידה (`שלב/אלמנט`); `משוער` = חלק שווה מהשלב כולו.', '', '| שלב | אלמנט | מצב | זמן | עלות |', '|---|---|---|---|---|',
   ...rows.map(r => `| ${r.phase} | ${r.label} | ${r.status === 'ok' ? 'קיים' : r.status === 'na' ? 'לא רלוונטי' : '**חסר**'} | ${r.ms != null ? mm(r.ms) + (r.timing === 'exact' ? ' (מדוד)' : ' (משוער)') : '—'} | ${r.cost != null ? '$' + r.cost.toFixed(2) : '—'} |`), '',
   '## סיכום לפי שלב', '', '| שלב | אלמנטים | קיימים | זמן | עלות |', '|---|---|---|---|---|',
-  ...[...new Set(rows.map(r => r.phase))].map(ph => { const rs = rows.filter(r => r.phase === ph && r.status !== 'na'), row = byPhase.get(ph); return `| ${ph} | ${rs.length} | ${rs.filter(r => r.status === 'ok').length} | ${row ? mm(row.wallMs) : '—'} | ${row ? '$' + row.cost.toFixed(2) : '—'} |`; })].join('\n') + '\n';
+  ...[...new Set(rows.map(r => r.phase))].map(ph => { const rs = rows.filter(r => r.phase === ph && r.status !== 'na'), row = total.get(ph); return `| ${ph} | ${rs.length} | ${rs.filter(r => r.status === 'ok').length} | ${row ? mm(row.wallMs) : '—'} | ${row ? '$' + row.cost.toFixed(2) : '—'} |`; })].join('\n') + '\n';
 fs.writeFileSync(path.join(PROJ, 'CHAIN.md'), md);
 writeJSON(path.join(PROJ, 'chain-report.json'), { slug, at: new Date().toISOString(), ok: ok.length, missing: miss.map(r => ({ id: r.id, phase: r.phase, why: r.why })), na: na.length, elements: rows.map(({ id, phase, label, status, ms, cost, timing }) => ({ id, phase, label, status, ms, cost, timing })) });
 console.log(`${chain.elements.length} elements · ok ${ok.length} · missing ${miss.length} · n/a ${na.length}`);

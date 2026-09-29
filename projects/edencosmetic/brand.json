@@ -1,0 +1,302 @@
+{
+ "name": "עדן קוסמטיקס",
+ "slug": "edencosmetic",
+ "status": "real-client",
+ "source": {
+  "mode": "url",
+  "url": "https://edencosmetic.co.il/",
+  "brief": ""
+ },
+ "business": {
+  "type": "חנות מקוונת לציוד מקצועי להרמת ריסים וגבות: ערכות שלבים, סיליקונים, דבקים, צבעים וכלים",
+  "sector": "יופי מקצועי, קמעונאות מקוונת (Shopify), מכירה למטפלות ולמתלמדות",
+  "audience": [
+   "מטפלות בהרמת ריסים וגבות (סלון, מכון, בית)",
+   "מתלמדות וסטודנטיות לקורסים",
+   "לקוחות פרטיות שקונות לעצמן"
+  ],
+  "offer": [
+   "ערכות להרמת ריסים וגבות (THUYA, My lamination)",
+   "סיליקונים ודבקים (ZOLA, Kodi, סיליקונים בעיצובים)",
+   "צבעים וחמצן (THUYA, RefectoCil, NIKK MOLE)",
+   "כלים ומוצרים נלווים (פינצטות, מסרקים, מברשות)",
+   "קורסים והשתלמויות (הקולקציה ריקה כרגע)"
+  ],
+  "proof": [
+   "71 מוצרים בקטלוג, ₪8 עד ₪420 (נשלף 29.9.2026)",
+   "משלוח חינם מעל ₪499",
+   "משלוח 4–5 ימי עסקים, איסוף עצמי מנתיבות בתיאום",
+   "הבעלים, עדן נחמני, מטפלת ומדריכה בתחום (במילותיה)"
+  ],
+  "objections": [
+   "איזו ערכה מתאימה לי ומה עוד אני צריכה?",
+   "האם זה במלאי ומתי יגיע?",
+   "כמה יעלה עם משלוח ואיך מגיעים למשלוח חינם?",
+   "יש עם מי לדבר?",
+   "יש קורסים?"
+  ]
+ },
+ "concept": {
+  "idea": "העיקול: קו ישר שמתרומם ונהיה קימור, כמו ריס אחרי הרמה, וכמו הזנב של ה-E שהופך ל-C בסמל",
+  "claim": "ציוד מקצועי להרמת ריסים וגבות, ממי שמטפלת ומדריכה בתחום.",
+  "signature": "העיקול: קו באקסנט הוורוד שמתחיל ישר ומתעגל. בכל אייקון, בכל מפריד אזורים, בטעינת הסמל, בעיניים של לוטי ובסצנת ההרמה שבסרט.",
+  "spirit": "beauty + makers: רגוע, מנחה, חם ונשי בלי קיטש. קרם, ורוד עמוק, קקאו ושחור-שוקולד; סריף אלגנטי לכותרות",
+  "twist": "טעינת הסמל בשלוש תנועות (הטבעת נכתבת, האותיות עולות, הלוטוס נפתח) ואז קו ישר שמתרומם. בסרט: שורת ריסים שמתרוממת, \"ההרמה\"."
+ },
+ "voice": {
+  "tone": [
+   "מנחה",
+   "חם",
+   "מקצועי",
+   "בגובה העיניים של מטפלת"
+  ],
+  "slogan": "העיקול שלך מתחיל כאן.",
+  "do": [
+   "מחיר ומלאי כפי שהם בחנות, עם תאריך",
+   "פנייה בלשון נקבה (מטפלות, מתלמדות)",
+   "משפטים קצרים, רשימה לפני פסקה",
+   "מה שכתוב במוצר, מילה במילה"
+  ],
+  "dont": [
+   "\"הכי טוב\", \"הכי זול\" בלי הוכחה",
+   "הוראות שימוש, זמנים או טענות רפואיות שלא כתובים במוצר",
+   "המלצות או ביקורות בדויות",
+   "הבטחת מתנה בלי תנאים כתובים"
+  ]
+ },
+ "palette": {
+  "ink": "#241A18",
+  "paper": "#F8EFEA",
+  "surface": "#FFFFFF",
+  "blush": "#F0D3C3",
+  "petal": "#E7C3B2",
+  "rose": "#BF7F7F",
+  "accent": "#964F58",
+  "accentInk": "#964F58",
+  "onAccent": "#FFFFFF",
+  "cocoa": "#6F574B",
+  "mute": "#6B5A54",
+  "line": "#E6D3C9",
+  "onDark": "#F8EFEA",
+  "blushOnDark": "#E9B8B2",
+  "real": "#2B7049",
+  "render": "#1F6C86",
+  "concept": "#8F5C0E",
+  "demo": "#6B5A54",
+  "roles": {
+   "bg": "paper",
+   "text": "ink",
+   "accent": "accent",
+   "accent2": "cocoa",
+   "onDark": "onDark",
+   "softPanel": "blush"
+  },
+  "contrast": {
+   "ink/paper": 14.99,
+   "ink/blush": 11.98,
+   "mute/paper": 5.76,
+   "cocoa/paper": 5.9,
+   "accentInk/paper": 5.21,
+   "accentInk/surface": 5.91,
+   "onAccent/accent": 5.91,
+   "paper/ink": 14.99,
+   "blushOnDark/ink": 9.68,
+   "rose/paper (graphics only, ≥3)": 2.83,
+   "real/paper": 5.27,
+   "render/paper": 5.22,
+   "concept/paper": 5
+  },
+  "fromSite": {
+   "backgrounds": [
+    {
+     "hex": "#F8EFEA",
+     "weight": 332
+    },
+    {
+     "hex": "#000000",
+     "weight": 130
+    },
+    {
+     "hex": "#FFFFFF",
+     "weight": 32
+    },
+    {
+     "hex": "#BF7F7F",
+     "weight": 30
+    },
+    {
+     "hex": "#81685B",
+     "weight": 20
+    },
+    {
+     "hex": "#87CEEB",
+     "weight": 3
+    },
+    {
+     "hex": "#3A8DC2",
+     "weight": 1
+    },
+    {
+     "hex": "#000204",
+     "weight": 0
+    }
+   ],
+   "text": [
+    {
+     "hex": "#000000",
+     "weight": 1352
+    },
+    {
+     "hex": "#FFFFFF",
+     "weight": 302
+    },
+    {
+     "hex": "#3A8DC2",
+     "weight": 3
+    }
+   ],
+   "buttons": [
+    {
+     "hex": "#FFFFFF",
+     "weight": 180
+    },
+    {
+     "hex": "#81685B",
+     "weight": 30
+    },
+    {
+     "hex": "#F8EFEA",
+     "weight": 10
+    }
+   ]
+  },
+  "note": "paper/blush/petal/rose נלקחו מהאתר הקיים (#F8EFEA, #F0D3C3, #E7C3B2, #BF7F7F); accent (#964F58) הוא הוורוד של האתר בעומק שעומד ב-4.5:1 עם לבן; cocoa כהה מעט מהכפתור הקיים (#81685B) כדי לעבור 4.5:1. הכחולים של תבנית Shopify (#3A8DC2, #87CEEB) אינם חלק מהמותג ולא בשימוש."
+ },
+ "type": {
+  "display": {
+   "family": "Frank Ruhl Libre",
+   "weights": [
+    500,
+    700,
+    900
+   ],
+   "use": "כותרות (עברית ולטינית)"
+  },
+  "body": {
+   "family": "Assistant",
+   "weights": [
+    300,
+    400,
+    600,
+    700
+   ],
+   "use": "טקסט רץ, כפתורים"
+  },
+  "num": {
+   "family": "Frank Ruhl Libre",
+   "weights": [
+    700
+   ],
+   "use": "מחירים ומספרים"
+  },
+  "latin": {
+   "family": "Cinzel",
+   "weights": [
+    500,
+    700
+   ],
+   "use": "Eden Cosmetics ותוויות באותיות רישיות מרווחות, כמו הלוגו"
+  },
+  "fonts": "fonts/fonts.css",
+  "displayWeight": 700,
+  "bodyWeight": 400,
+  "numWeight": 700
+ },
+ "logo": {
+  "files": {
+   "light": "img/logo-light.svg",
+   "dark": "img/logo-dark.svg",
+   "mark": "brand/symbol.svg",
+   "png": "img/logo-light.png",
+   "pngDark": "img/logo-dark.png"
+  },
+  "symbol": "brand/symbol.svg",
+  "parts": "brand/symbol-parts.json",
+  "construction": "brand/board.png",
+  "note": "הלוגו הוא של הלקוחה, לא צויר מחדש: מעקב וקטורי מקובץ ה-PNG של האתר (brand/trace-logo.py, פי 6, החלקה והתאמת עקומות). הטבעת, ה-EC והלוטוס הם חלקים נפרדים כדי שאפשר יהיה להנפיש אותם בזה אחר זה.",
+  "favicon": "הסמל EC בקרם על ורוד עמוק (icon.svg, 32, 180, 512)"
+ },
+ "icons": {
+  "grid": 24,
+  "stroke": 1.6,
+  "signature": "העיקול: קו אחד באקסנט שמתחיל ישר ומתעגל, בכל אחד מ-24 האייקונים",
+  "files": "img/i-*.svg (+ -white לרקע כהה), brand/make-icons.mjs",
+  "count": 24
+ },
+ "mascot": {
+  "name": "",
+  "born_from": "",
+  "build": "",
+  "states": [
+   "idle",
+   "blink",
+   "happy",
+   "look",
+   "think",
+   "sleep"
+  ],
+  "rules": [
+   "≤6 tips per visit, 11 s apart",
+   "mute for a week / hide, remembered",
+   "reduced motion: no walking, no beam"
+  ]
+ },
+ "site": {
+  "entry": "",
+  "proof_tool": [],
+  "sections": [],
+  "agent": "",
+  "admin": [
+   "leads",
+   "content",
+   "reviews",
+   "projects",
+   "faq",
+   "agent"
+  ]
+ },
+ "campaign": {
+  "film": "film.json",
+  "motif": "lift",
+  "hook": "ההרמה",
+  "cta": "בונה הערכה"
+ },
+ "honesty": {
+  "labels": {
+   "real": "מהשטח",
+   "render": "הדמיה",
+   "concept": "קונספט",
+   "demo": "נתוני הדגמה"
+  },
+  "notes": "תמונות מוצר הן מהחנות (real). אין ביקורות ואין המלצות. מחירים ומלאי הם צילום מצב מ-29.9.2026. \"מתנה בכל רכישה\" לא מובטח באתר כי אין תנאים כתובים."
+ },
+ "outputs": {
+  "site": "",
+  "live": "",
+  "campaign": ""
+ },
+ "contacts": {
+  "phones": [
+   "0525453602"
+  ],
+  "emails": [
+   "Edencosmetics29@gmail.com",
+   "edencosmetics29@gmail.com"
+  ],
+  "whatsapp": [],
+  "socials": [
+   "https://www.instagram.com/edennahmani1?igshid=MjEwN2IyYWYwYw%3D%3D"
+  ],
+  "youtube": []
+ }
+}

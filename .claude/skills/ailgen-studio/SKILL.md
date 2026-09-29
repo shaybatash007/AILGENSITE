@@ -60,7 +60,10 @@ touching quality:
 - **Budget per phase** (measured + 30%): brief 5 min, intake 9, brand 4, site 21, film 4, QA 10. Over budget:
   stop at the gate and say why.
 - **Look once:** one desktop + one mobile screenshot pass per build, fix, then deliver.
-- **Never skip a link of the chain** unless the owner says so: mascot (born from the logo), signature film scene
+- **Mark every element, not only every phase:** `--phase 3-site/proof-tool` (sub-phases roll up into their phase).
+  `scripts/chain.mjs --project projects/<slug>` lists the 53 elements of the chain, checks the evidence for each,
+  joins its time and cost, and exits 1 while anything is missing (`references/11-chain-and-ecommerce.md`).
+- **Never skip a link of the chain** unless the owner says so (`chain.mjs` is the proof, run it soft while working and hard before delivery): mascot (born from the logo), signature film scene
   (`morph` or hand-crafted), live preview link, the film on the client's site, and the case in the studio
   (`studio/`: before/after slider + every stage with its real output) and in the AILGEN portfolio.
 
@@ -87,6 +90,8 @@ an existing site's URLs and guides are inherited (`seo/old/`), a new business ge
 - **Concept**: research the category and 3 competitors (web search when available); derive name options if
   missing; write facts vs. assumptions separately.
 - **Name**: research whether a business by that name exists; if yes treat it like a URL; if not, it is a concept.
+- **Online store (Shopify)**: also `scripts/shopify-catalog.mjs` (public storefront JSON, dated snapshot of prices and stock) and
+  `references/11-chain-and-ecommerce.md`. Behind a bot shield (Cloudflare): crawl once, slowly; when challenged, stop hitting the origin.
 - **Gate**: facts sheet in `brief.md` with a source for every number, price, testimonial and claim.
 
 ### 2 · Brand DNA → `references/01-brand-dna.md`
@@ -124,7 +129,7 @@ export it statically to the repo. Then run the user's skills in full, no shortcu
 `references/skills/levelup.md` (every region and element to ≥ 9 on 8 axes, entry choreography, motion
 system, icons) and `references/skills/levelup2.md` (copy deck, real footage, illustration system, honesty).
 Hebrew and RTL rules: `references/05-hebrew-rtl.md`. Content rules: `references/04-content-honesty.md`.
-- **Gate**: levelup VERIFY passes; zero console errors; no overflow at 390 px; keyboard and reduced-motion passes.
+- **Gate**: levelup VERIFY passes; zero console errors; no overflow at 390 px; keyboard and reduced-motion passes (`scripts/site-qa.mjs` with a scenario of real interactions; `scripts/lighthouse.mjs` for the dated numbers).
 
 ### 6 · Launch campaign → `references/06-video-campaign.md`
 Fill `film.json` from the brand kit and the real content (hook · reveal · stat · gallery · quote · cards · cta),
@@ -138,7 +143,7 @@ node $S/engine/render.mjs --project projects/<slug> --stills                    
 ```
 When a brand deserves more than the engine's scenes (a signature moment like Switching's sun test), build a
 hand-crafted scene on top, as in `campaigns/switching-tv/source/reel.html`.
-- **Gate**: every frame reviewed on a contact sheet; text inside the safe zones; every image labeled; -14 LUFS.
+- **Gate**: every frame reviewed on a contact sheet **in every ratio**; every Hebrew string proofread as text; text inside the safe zones; every image labeled; -14 ±1 LUFS measured by `scripts/film-qa.mjs`.
 
 ### 7 · Portfolio → `references/07-portfolio.md`
 Put the film in the client site (a film section + a hero link + a mascot tip). Add the project to AILGEN:
@@ -184,6 +189,12 @@ repo, commit and push, and report to the user in Hebrew: what was built, links, 
 | `scripts/contact_sheet.py` | Tile frames/screens for review |
 | `engine/film.html` + `render.mjs` + `audio.py` | The brand-film engine: any brand, 4 aspect ratios, original soundtrack. Spec in `engine/README.md` |
 | `scripts/meter.mjs` | Phase marks + measured time, tokens and cost per phase from the session log |
+| `scripts/chain.mjs` | The chain check: evidence, time and cost for each of the 53 elements; exit 1 on a gap |
+| `scripts/shopify-catalog.mjs` | Catalog from a Shopify store's public JSON (products, collections, prices, images) |
+| `scripts/shot.mjs` | Screenshot a local file or URL (boards, icon sheets, transparent logos) |
+| `scripts/site-qa.mjs` | Site gate: console, overflow at 390 px, reduced motion, keyboard, plus a scenario of real interactions |
+| `scripts/lighthouse.mjs` | Lighthouse 12 mobile + desktop on a production-like local server, dated, into `qa/lighthouse.json` |
+| `scripts/film-qa.mjs` | Film format, duration, loudness (−14 ±1 LUFS) and true peak; `--fix` re-normalizes only the audio |
 
 Environment notes: Playwright + Chromium, ffmpeg, Python with numpy/scipy/Pillow. Behind a TLS-inspecting
 proxy the scripts route browser traffic through Node's fetch (the proxy CA is trusted there); TLS stays on.

@@ -26,7 +26,7 @@ Timing: ~12 frames/s total with 3 jobs; a 25 s 1080×1920 film with soundtrack �
 | `type` | `display`, `displayWeight`, `body`, `bodyWeight`, `num`, `numWeight` (font family names) |
 | `colors` | `bg surface paper ink inkMuted text muted accent accent2 accentInk line` + honesty `real render concept demo` |
 | `logo` | `light` (for dark grounds) and `dark` (for light grounds): SVG or PNG |
-| `motif` | `pixels` · `particles` · `light` · `ink` · `iris` · `wipe` · `spin` (4 swirling blades, for round/pinwheel logos): every transition and reveal |
+| `motif` | `pixels` · `particles` · `light` · `ink` · `iris` · `wipe` · `spin` (4 swirling blades, for round/pinwheel logos) · `curl` (lashes grow up from the base and lift at the tips, for lash/beauty brands): every transition and reveal |
 | `motifColors` | colours of the lit edge for pixels/particles/spin (e.g. RGB LEDs, the logo's blade colours) |
 | `highlight` | `marker` (bar under `*word*`) or `color` (word in accent) |
 | `transition` | seconds of each scene change (0.45) |
@@ -54,6 +54,7 @@ overrides, `size`, and `mascot: { at, say, mood, finale, x, y, cell }`.
 | `quote` | `kicker`, `text`, `who`, `where`, `stars` (5) | balanced lines, stars pop, a watermark quote mark; music breaks down |
 | `cards` | `headline[]`, `cards: [{ icon, value, display, unit, label }]` | 2×2 (4×1 in 16:9), numeric values count up |
 | `cta` | `headline[]`, `button`, `sub[]` (site, phone), `logoW` | the logo lights up with the motif; button with a light sweep |
+| `lift` | `title[]`, `sub`, `n` (lashes, 21), `wave` (s, 1.9), `waveSpan` (1.7), `titleAt`, `theme` | **signature scene for lash and beauty brands**: a lid line draws, lashes grow straight, then a wave of the accent colour lifts them into a curl; the title lands. Drawn in code (no photo, no label) |
 | `morph` | `image` + `tag`, `shape` (silhouette PNG/SVG with alpha), `final` (symbol with alpha, optional), `steps[]` (up to 5 captions), `stepColors[]` (3 colours: raw, clean, shape), `cols` | **signature scene**: the photo shatters into particles, they swirl in the brand's four-blade vortex, change colour, assemble into the shape, then into the symbol. "Your waste becomes a shelter", "flour becomes bread". Example: `projects/talorkaradi/film.json` |
 
 ### Cues (for the soundtrack)
@@ -66,3 +67,15 @@ drop → breakdown in the quote → roll and big chord at the CTA → ringing la
 Add `SC.<type> = (s, lt) => { … }` in `film.html` (draw with the helpers: `ground`, `headline`, `words`,
 `text`, `pill`, `motifReveal`, `cover`, `honesty`, `hlFit` + `blockTop` for vertical centering), and its cues
 in `layout()`. Keep it a pure function of `lt` (no randomness without a seed, no timers).
+
+## Mascot placement and hook framing (added with Eden Cosmetics)
+
+| Key | Where | Meaning |
+|---|---|---|
+| `mascot.reserve` | any scene with `mascot` (cta) | 9:16: units of height kept free at the bottom for the character and its bubble (default 420) |
+| `mascot.reserveWide` | same | 4:5, 1:1, 16:9: the same, default 240 |
+| `mascot.sayWide` | same | `false` hides the speech bubble outside 9:16 (the character stays); use it when the closing lines are the phone and the URL |
+| `hook.fx` / `hook.fy` | `hook` with `image` | focal point 0..1 of the cover crop; a 9:16 collage is cropped in 4:5 and 1:1, `fy: 0.1` keeps the top of the picture |
+
+Review the closing scene and the hook in **every** ratio you deliver: the same film.json lays out differently in 9:16 and 4:5.
+Loudness is set by a two-pass linear `loudnorm` (`loudness.mjs`); check with `scripts/film-qa.mjs`.

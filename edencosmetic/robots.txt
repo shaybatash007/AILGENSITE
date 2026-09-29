@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+# paths that belong to the store (Shopify) and are not pages of this site
+Disallow: /cart
+Disallow: /checkout
+Disallow: /account
+Disallow: /orders
+Disallow: /*?*sort_by=
+Disallow: /*?*filter.
+Disallow: /*?*variant=
+# agent and commerce discovery files are served by Shopify (UCP): keep them reachable
+Allow: /agents.md
+Allow: /.well-known/ucp
+
+Sitemap: https://edencosmetic.co.il/sitemap.xml

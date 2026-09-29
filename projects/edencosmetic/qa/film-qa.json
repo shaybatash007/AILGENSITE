@@ -1,0 +1,32 @@
+{
+ "at": "2026-09-29T23:04:43.264Z",
+ "target": -14,
+ "tolerance": 1,
+ "ok": true,
+ "films": [
+  {
+   "file": "projects/edencosmetic/out/film-1080x1350.mp4",
+   "bytes": 7448556,
+   "seconds": 29,
+   "width": 1080,
+   "height": 1350,
+   "fps": 30,
+   "hasAudio": true,
+   "lufs": -13.9,
+   "truePeakDb": -1.1,
+   "ok": true
+  },
+  {
+   "file": "projects/edencosmetic/out/film-1080x1920.mp4",
+   "bytes": 9439474,
+   "seconds": 29,
+   "width": 1080,
+   "height": 1920,
+   "fps": 30,
+   "hasAudio": true,
+   "lufs": -13.9,
+   "truePeakDb": -1.1,
+   "ok": true
+  }
+ ]
+}

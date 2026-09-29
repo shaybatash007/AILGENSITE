@@ -1,0 +1,143 @@
+{
+ "at": "2026-09-29T23:20:23.402Z",
+ "tool": "lighthouse@12",
+ "url": "http://127.0.0.1:36355",
+ "note": "local production-like server with gzip; lab data, not field data; measured on a copy without the preview noindex (launch state)",
+ "mobile": {
+  "performance": 92,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 100,
+  "lcpMs": 3160,
+  "cls": 0.024,
+  "tbtMs": 0,
+  "fcpMs": 1960,
+  "speedIndexMs": 1960,
+  "transferKB": 398,
+  "fails": [
+   "first-contentful-paint (2.0 s)",
+   "largest-contentful-paint (3.2 s)",
+   "largest-contentful-paint-element (3,160 ms)",
+   "uses-long-cache-ttl (7 resources found)",
+   "render-blocking-resources (Est savings of 860 ms)",
+   "modern-image-formats (Est savings of 69 KiB)",
+   "uses-responsive-images (Est savings of 100 KiB)",
+   "dom-size (1,587 elements)",
+   "forced-reflow-insight",
+   "image-delivery-insight (Est savings of 141 KiB)",
+   "network-dependency-tree-insight",
+   "render-blocking-insight (Est savings of 860 ms)"
+  ],
+  "lcpElement": "<div class=\"bar\" id=\"bar\">"
+ },
+ "desktop": {
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 100,
+  "lcpMs": 564,
+  "cls": 0.001,
+  "tbtMs": 0,
+  "fcpMs": 444,
+  "speedIndexMs": 987,
+  "transferKB": 328,
+  "fails": [
+   "uses-long-cache-ttl (6 resources found)",
+   "modern-image-formats (Est savings of 33 KiB)",
+   "uses-responsive-images (Est savings of 40 KiB)",
+   "dom-size (1,592 elements)",
+   "forced-reflow-insight",
+   "image-delivery-insight (Est savings of 40 KiB)",
+   "network-dependency-tree-insight",
+   "render-blocking-insight"
+  ],
+  "lcpElement": "<div class=\"pv\" id=\"pv\">"
+ },
+ "pages": {
+  "/products/my-lamination-חמצן/ mobile": {
+   "performance": 99,
+   "accessibility": 100,
+   "bestPractices": 100,
+   "seo": 100,
+   "lcpMs": 1877,
+   "cls": 0.048,
+   "tbtMs": 0,
+   "fcpMs": 1352,
+   "speedIndexMs": 1352,
+   "transferKB": 151,
+   "fails": [
+    "uses-long-cache-ttl (2 resources found)",
+    "modern-image-formats (Est savings of 9 KiB)",
+    "image-delivery-insight (Est savings of 12 KiB)",
+    "lcp-discovery-insight",
+    "network-dependency-tree-insight"
+   ],
+   "lcpElement": "<img src=\"/img/p/8735746785451-1.jpg\" alt=\"My lamination חמצן\" width=\"720\" height=\"720\" fetchpriority=\"high\">"
+  },
+  "/products/my-lamination-חמצן/ desktop": {
+   "performance": 100,
+   "accessibility": 100,
+   "bestPractices": 100,
+   "seo": 100,
+   "lcpMs": 401,
+   "cls": 0.006,
+   "tbtMs": 0,
+   "fcpMs": 321,
+   "speedIndexMs": 321,
+   "transferKB": 151,
+   "fails": [
+    "uses-long-cache-ttl (2 resources found)",
+    "modern-image-formats (Est savings of 9 KiB)",
+    "uses-responsive-images (Est savings of 6 KiB)",
+    "image-delivery-insight (Est savings of 6 KiB)",
+    "lcp-discovery-insight",
+    "network-dependency-tree-insight"
+   ],
+   "lcpElement": "<img src=\"/img/p/8735746785451-1.jpg\" alt=\"My lamination חמצן\" width=\"720\" height=\"720\" fetchpriority=\"high\">"
+  },
+  "/collections/דבקים-סיליקונים/ mobile": {
+   "performance": 97,
+   "accessibility": 100,
+   "bestPractices": 100,
+   "seo": 100,
+   "lcpMs": 2553,
+   "cls": 0.048,
+   "tbtMs": 0,
+   "fcpMs": 1352,
+   "speedIndexMs": 1352,
+   "transferKB": 279,
+   "fails": [
+    "largest-contentful-paint (2.6 s)",
+    "largest-contentful-paint-element (2,550 ms)",
+    "uses-long-cache-ttl (5 resources found)",
+    "modern-image-formats (Est savings of 55 KiB)",
+    "uses-responsive-images (Est savings of 21 KiB)",
+    "image-delivery-insight (Est savings of 104 KiB)",
+    "network-dependency-tree-insight"
+   ],
+   "lcpElement": "<img src=\"/img/p/8479568789675-1.jpg\" alt=\"דבק קודי להרמת ריסים\" width=\"720\" height=\"720\" fetchpriority=\"high\" decoding="
+  },
+  "/collections/דבקים-סיליקונים/ desktop": {
+   "performance": 99,
+   "accessibility": 100,
+   "bestPractices": 100,
+   "seo": 100,
+   "lcpMs": 847,
+   "cls": 0.006,
+   "tbtMs": 0,
+   "fcpMs": 323,
+   "speedIndexMs": 323,
+   "transferKB": 956,
+   "fails": [
+    "lcp-lazy-loaded",
+    "uses-long-cache-ttl (31 resources found)",
+    "modern-image-formats (Est savings of 308 KiB)",
+    "uses-responsive-images (Est savings of 734 KiB)",
+    "image-delivery-insight (Est savings of 734 KiB)",
+    "lcp-discovery-insight",
+    "network-dependency-tree-insight"
+   ],
+   "lcpElement": "<img src=\"/img/p/8481668726955-1.jpg\" alt=\"סיליקונים צדפה - מעוגל חד 5 מידות נדבקים ללא דבק (שקוף נצנצים)\" width=\"720\" h"
+  }
+ }
+}

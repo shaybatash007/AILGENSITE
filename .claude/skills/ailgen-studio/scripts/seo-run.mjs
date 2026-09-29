@@ -48,8 +48,8 @@ if (pagesFile && fs.existsSync(pagesFile)) {
 }
 if (cfg.build) await step('build the home page', () => sh(cfg.build));
 if (hasOld && fs.existsSync(oldReport)) {
-  await step('migration plan (url-map, _redirects, sitemap, robots, _headers, llms.txt, launch.md)', () => node(S('seo-plan.mjs'), ['--old', oldReport, '--new-dir', rel(cfg.siteDir), '--site', cfg.site, '--out', planDir, '--copy', ...(launch ? ['--launch'] : []), ...(fs.existsSync(path.join(SEO, 'redirect-overrides.json')) ? ['--overrides', path.join(SEO, 'redirect-overrides.json')] : [])]), { gate: true });
-} else await step('sitemap and robots for a new site', () => node(S('seo-plan.mjs'), ['--new-dir', rel(cfg.siteDir), '--site', cfg.site, '--out', planDir, '--copy', ...(launch ? ['--launch'] : [])]));
+  await step('migration plan (url-map, _redirects, sitemap, robots, _headers, llms.txt, launch.md)', () => node(S('seo-plan.mjs'), ['--old', oldReport, '--new-dir', rel(cfg.siteDir), '--site', cfg.site, '--out', planDir, '--copy', ...(launch ? ['--launch'] : []), ...(fs.existsSync(path.join(SEO, 'redirect-overrides.json')) ? ['--overrides', path.join(SEO, 'redirect-overrides.json')] : []), ...['robots-extra', 'redirects-extra', 'external'].flatMap(k => fs.existsSync(path.join(SEO, k + '.txt')) ? ['--' + k, path.join(SEO, k + '.txt')] : [])]), { gate: true });
+} else await step('sitemap and robots for a new site', () => node(S('seo-plan.mjs'), ['--new-dir', rel(cfg.siteDir), '--site', cfg.site, '--out', planDir, '--copy', ...(launch ? ['--launch'] : []), ...['robots-extra', 'redirects-extra', 'external'].flatMap(k => fs.existsSync(path.join(SEO, k + '.txt')) ? ['--' + k, path.join(SEO, k + '.txt')] : [])]));
 const server = await startServer({ dir: rel(cfg.siteDir) });
 try {
   await step(`audit the new build (gate: no high findings) at ${server.url}`, () => node(S('seo-audit.mjs'), [server.url + '/', '--out', path.join(SEO, 'new'), '--delay', '120', '--max', '120', '--gate', 'high', ...(launch ? [] : ['--preview'])]), { gate: true });

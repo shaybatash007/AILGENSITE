@@ -1,0 +1,72 @@
+{
+  "images": {
+    "/home/user/AILGENSITE/projects/edencosmetic/intake/media/001-logo.png": [
+      {
+        "hex": "#000000",
+        "share": 1.0
+      }
+    ],
+    "/home/user/AILGENSITE/projects/edencosmetic/intake/media/002-logo.png": [
+      {
+        "hex": "#000000",
+        "share": 1.0
+      }
+    ],
+    "/home/user/AILGENSITE/projects/edencosmetic/intake/media/078-logo.png": [
+      {
+        "hex": "#000000",
+        "share": 1.0
+      }
+    ],
+    "/home/user/AILGENSITE/projects/edencosmetic/intake/media/079-logo.png": [
+      {
+        "hex": "#000000",
+        "share": 1.0
+      }
+    ],
+    "/home/user/AILGENSITE/projects/edencosmetic/intake/media/080-logo.png": [
+      {
+        "hex": "#000000",
+        "share": 1.0
+      }
+    ],
+    "/home/user/AILGENSITE/projects/edencosmetic/intake/shots/home-desktop.png": [
+      {
+        "hex": "#F0D3C3",
+        "share": 0.35
+      },
+      {
+        "hex": "#E7C3B2",
+        "share": 0.272
+      },
+      {
+        "hex": "#F8EFEB",
+        "share": 0.186
+      },
+      {
+        "hex": "#BE8077",
+        "share": 0.084
+      },
+      {
+        "hex": "#D8A796",
+        "share": 0.068
+      },
+      {
+        "hex": "#7A5851",
+        "share": 0.04
+      }
+    ]
+  },
+  "suggested": {
+    "background": "#000000",
+    "ink": "#F8EFEB",
+    "accent": "#BE8077",
+    "contrast": {
+      "ink_on_background": 18.58,
+      "accent_on_background": 6.57,
+      "background_on_accent": 6.57,
+      "ink_on_accent": 2.83
+    },
+    "notes": "WCAG AA needs 4.5 for body text and 3 for large text and UI. Adjust lightness, not hue, to pass."
+  }
+}

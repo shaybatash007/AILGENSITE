@@ -1,0 +1,597 @@
+{
+  "slug": "edencosmetic",
+  "at": "2026-09-29T20:02:32.826Z",
+  "ok": 16,
+  "missing": [
+    {
+      "id": "mascot-def",
+      "phase": "3-mascot",
+      "why": [
+        "חסר או שבור projects/edencosmetic/mascot/mascot.json"
+      ]
+    },
+    {
+      "id": "mascot-preview",
+      "phase": "3-mascot",
+      "why": [
+        "projects/edencosmetic/mascot/preview*.png: 0 קבצים, נדרשו 1"
+      ]
+    },
+    {
+      "id": "mascot-manners",
+      "phase": "3-mascot",
+      "why": [
+        "חסר edencosmetic/index.html"
+      ]
+    },
+    {
+      "id": "blueprint",
+      "phase": "4-blueprint",
+      "why": [
+        "חסר projects/edencosmetic/blueprint.md"
+      ]
+    },
+    {
+      "id": "seo-pages",
+      "phase": "4b-seo",
+      "why": [
+        "חסר או שבור projects/edencosmetic/seo/pages.json"
+      ]
+    },
+    {
+      "id": "seo-gates",
+      "phase": "4b-seo",
+      "why": [
+        "חסר projects/edencosmetic/seo/RUN.md"
+      ]
+    },
+    {
+      "id": "seo-coverage",
+      "phase": "4b-seo",
+      "why": [
+        "חסר projects/edencosmetic/seo/plan/plan.md"
+      ]
+    },
+    {
+      "id": "seo-verify",
+      "phase": "4b-seo",
+      "why": [
+        "חסר projects/edencosmetic/seo/verify/verify.md"
+      ]
+    },
+    {
+      "id": "seo-files",
+      "phase": "4b-seo",
+      "why": [
+        "חסר edencosmetic/sitemap.xml",
+        "חסר edencosmetic/robots.txt",
+        "חסר edencosmetic/_headers",
+        "חסר edencosmetic/llms.txt",
+        "חסר edencosmetic/404.html"
+      ]
+    },
+    {
+      "id": "seo-og",
+      "phase": "4b-seo",
+      "why": [
+        "edencosmetic/og/*.jpg: 0 קבצים, נדרשו 10"
+      ]
+    },
+    {
+      "id": "site-export",
+      "phase": "5-site",
+      "why": [
+        "חסר edencosmetic/index.html",
+        "חסר edencosmetic/build.sh"
+      ]
+    },
+    {
+      "id": "site-preview-link",
+      "phase": "5-site",
+      "why": [
+        "אין קישור \"site\" ב-links.json"
+      ]
+    },
+    {
+      "id": "site-proof-tool",
+      "phase": "5-site",
+      "why": [
+        "חסר projects/edencosmetic/blueprint.md"
+      ]
+    },
+    {
+      "id": "site-admin",
+      "phase": "5-site",
+      "why": [
+        "חסר edencosmetic/index.html"
+      ]
+    },
+    {
+      "id": "site-agent",
+      "phase": "5-site",
+      "why": [
+        "חסר edencosmetic/index.html"
+      ]
+    },
+    {
+      "id": "site-legal",
+      "phase": "5-site",
+      "why": [
+        "חסר edencosmetic/legal.json"
+      ]
+    },
+    {
+      "id": "site-a11y",
+      "phase": "5-site",
+      "why": [
+        "חסר edencosmetic/index.html"
+      ]
+    },
+    {
+      "id": "site-attribution",
+      "phase": "5-site",
+      "why": [
+        "חסר edencosmetic/index.html"
+      ]
+    },
+    {
+      "id": "site-store-flow",
+      "phase": "5-site",
+      "why": [
+        "חסר edencosmetic/index.html"
+      ]
+    },
+    {
+      "id": "qa-console",
+      "phase": "5-site",
+      "why": [
+        "חסר או שבור projects/edencosmetic/qa/site-qa.json"
+      ]
+    },
+    {
+      "id": "qa-lighthouse",
+      "phase": "5-site",
+      "why": [
+        "חסר או שבור projects/edencosmetic/qa/lighthouse.json"
+      ]
+    },
+    {
+      "id": "levelup",
+      "phase": "5-site",
+      "why": [
+        "חסר projects/edencosmetic/qa/levelup.md"
+      ]
+    },
+    {
+      "id": "film-signature",
+      "phase": "6-film",
+      "why": [
+        "ב-projects/edencosmetic/film.json חסר \"\"type\": ?\"(morph|signature)\"\""
+      ]
+    },
+    {
+      "id": "film-916",
+      "phase": "6-film",
+      "why": [
+        "חסר campaigns/edencosmetic/edencosmetic-film-9x16.mp4"
+      ]
+    },
+    {
+      "id": "film-45",
+      "phase": "6-film",
+      "why": [
+        "חסר campaigns/edencosmetic/edencosmetic-film-4x5.mp4"
+      ]
+    },
+    {
+      "id": "film-stills",
+      "phase": "6-film",
+      "why": [
+        "חסר campaigns/edencosmetic/ad-feed-4x5.jpg",
+        "חסר campaigns/edencosmetic/ad-square-1x1.jpg",
+        "חסר campaigns/edencosmetic/ad-story-9x16.jpg",
+        "חסר campaigns/edencosmetic/poster.jpg"
+      ]
+    },
+    {
+      "id": "film-copy",
+      "phase": "6-film",
+      "why": [
+        "חסר campaigns/edencosmetic/README.md"
+      ]
+    },
+    {
+      "id": "film-loudness",
+      "phase": "6-film",
+      "why": [
+        "חסר או שבור projects/edencosmetic/qa/film-qa.json"
+      ]
+    },
+    {
+      "id": "film-on-site",
+      "phase": "6-film",
+      "why": [
+        "חסר edencosmetic/m/film-web.mp4",
+        "חסר edencosmetic/m/film-poster.jpg"
+      ]
+    },
+    {
+      "id": "studio-case",
+      "phase": "7-portfolio",
+      "why": [
+        "ב-studio/src/3b-flow.js חסר \"edencosmetic\""
+      ]
+    },
+    {
+      "id": "studio-live",
+      "phase": "7-portfolio",
+      "why": [
+        "אין קישור \"studio\" ב-links.json"
+      ]
+    },
+    {
+      "id": "portfolio-repo",
+      "phase": "7-portfolio",
+      "why": [
+        "ב-index.html חסר \"data-case=\"edencosmetic\"\""
+      ]
+    },
+    {
+      "id": "portfolio-live",
+      "phase": "7-portfolio",
+      "why": [
+        "אין קישור \"ailgen\" ב-links.json"
+      ]
+    },
+    {
+      "id": "screencasts",
+      "phase": "7-portfolio",
+      "why": [
+        "projects/edencosmetic/out/portfolio/*.mp4: 0 קבצים, נדרשו 5"
+      ]
+    },
+    {
+      "id": "meter",
+      "phase": "8-deliver",
+      "why": [
+        "שלבים פתוחים: 2-brand/palette-board",
+        "אין meter-report.json"
+      ]
+    },
+    {
+      "id": "report",
+      "phase": "8-deliver",
+      "why": [
+        "חסר projects/edencosmetic/report.md"
+      ]
+    },
+    {
+      "id": "pushed",
+      "phase": "8-deliver",
+      "why": [
+        "2 קבצים לא מחויבים"
+      ]
+    }
+  ],
+  "na": 0,
+  "elements": [
+    {
+      "id": "brief",
+      "phase": "0-brief",
+      "label": "brief.md: facts sheet with a source for every number",
+      "status": "ok"
+    },
+    {
+      "id": "seo-brief",
+      "phase": "0-brief",
+      "label": "seo/brief.md: demand, intent, competitors, page inventory",
+      "status": "ok"
+    },
+    {
+      "id": "intake-json",
+      "phase": "1-intake",
+      "label": "Intake: every sitemap URL crawled (notCrawled = 0)",
+      "status": "ok"
+    },
+    {
+      "id": "intake-content",
+      "phase": "1-intake",
+      "label": "Intake: summary.md and content.md",
+      "status": "ok"
+    },
+    {
+      "id": "intake-shots",
+      "phase": "1-intake",
+      "label": "Screenshots of the old site (before)",
+      "status": "ok"
+    },
+    {
+      "id": "catalog",
+      "phase": "1-intake",
+      "label": "Store catalog: products, collections, prices, images",
+      "status": "ok"
+    },
+    {
+      "id": "seo-old",
+      "phase": "1-intake",
+      "label": "SEO inventory of the old site (seo/old/seo-report.md)",
+      "status": "ok"
+    },
+    {
+      "id": "media-labels",
+      "phase": "1-intake",
+      "label": "Every image labelled real / render (media-labels.json)",
+      "status": "ok"
+    },
+    {
+      "id": "brand-json",
+      "phase": "2-brand",
+      "label": "brand.json complete: concept, claim, signature, palette, type",
+      "status": "ok"
+    },
+    {
+      "id": "logo-vector",
+      "phase": "2-brand",
+      "label": "Logo as vector (symbol.svg) and light/dark PNG",
+      "status": "ok"
+    },
+    {
+      "id": "icon-family",
+      "phase": "2-brand",
+      "label": "Icon family (≥ 12 SVGs, the signature in each)",
+      "status": "ok"
+    },
+    {
+      "id": "favicon",
+      "phase": "2-brand",
+      "label": "Favicon set: icon.svg, 32 px, apple-touch, 512 px",
+      "status": "ok"
+    },
+    {
+      "id": "fonts",
+      "phase": "2-brand",
+      "label": "Fonts self-hosted (Hebrew + Latin) with fonts.css",
+      "status": "ok"
+    },
+    {
+      "id": "brand-board",
+      "phase": "2-brand",
+      "label": "Brand board image",
+      "status": "ok"
+    },
+    {
+      "id": "palette-contrast",
+      "phase": "2-brand",
+      "label": "Contrast checked: text pairs ≥ 4.5",
+      "status": "ok"
+    },
+    {
+      "id": "mascot-def",
+      "phase": "3-mascot",
+      "label": "Mascot: name, pixel grid, ≥ 6 faces",
+      "status": "missing"
+    },
+    {
+      "id": "mascot-preview",
+      "phase": "3-mascot",
+      "label": "Mascot sheet: every state visible",
+      "status": "missing"
+    },
+    {
+      "id": "mascot-manners",
+      "phase": "3-mascot",
+      "label": "Mascot manners in the site: tips ≤ 6, quiet for a week, reduced motion",
+      "status": "missing"
+    },
+    {
+      "id": "blueprint",
+      "phase": "4-blueprint",
+      "label": "Blueprint: every section has a job line and a visitor doubt",
+      "status": "missing"
+    },
+    {
+      "id": "seo-pages",
+      "phase": "4b-seo",
+      "label": "One crawlable page per service / guide / product / collection",
+      "status": "missing"
+    },
+    {
+      "id": "seo-gates",
+      "phase": "4b-seo",
+      "label": "seo-run.mjs: all gates passed",
+      "status": "missing"
+    },
+    {
+      "id": "seo-coverage",
+      "phase": "4b-seo",
+      "label": "Every old URL kept or one 301 (coverage 100%)",
+      "status": "missing"
+    },
+    {
+      "id": "seo-verify",
+      "phase": "4b-seo",
+      "label": "Verify gate: every old URL answers correctly",
+      "status": "missing"
+    },
+    {
+      "id": "seo-files",
+      "phase": "4b-seo",
+      "label": "sitemap, robots, _redirects, _headers, llms.txt, 404",
+      "status": "missing"
+    },
+    {
+      "id": "seo-og",
+      "phase": "4b-seo",
+      "label": "A share card for every page",
+      "status": "missing"
+    },
+    {
+      "id": "site-export",
+      "phase": "5-site",
+      "label": "Static export of the site (index.html + build.sh + src/)",
+      "status": "missing"
+    },
+    {
+      "id": "site-preview-link",
+      "phase": "5-site",
+      "label": "Live preview published (artifact link)",
+      "status": "missing"
+    },
+    {
+      "id": "site-proof-tool",
+      "phase": "5-site",
+      "label": "Proof tool present and answers the main question",
+      "status": "missing"
+    },
+    {
+      "id": "site-admin",
+      "phase": "5-site",
+      "label": "Owner control center (leads, content, agent tabs)",
+      "status": "missing"
+    },
+    {
+      "id": "site-agent",
+      "phase": "5-site",
+      "label": "AI agent with offline FALLBACK and create_lead",
+      "status": "missing"
+    },
+    {
+      "id": "site-legal",
+      "phase": "5-site",
+      "label": "Privacy policy and accessibility statement (pages + dialogs)",
+      "status": "missing"
+    },
+    {
+      "id": "site-a11y",
+      "phase": "5-site",
+      "label": "Accessibility menu and skip link",
+      "status": "missing"
+    },
+    {
+      "id": "site-attribution",
+      "phase": "5-site",
+      "label": "Lead source saved per lead (organic / paid / social / referral / direct)",
+      "status": "missing"
+    },
+    {
+      "id": "site-store-flow",
+      "phase": "5-site",
+      "label": "Store: product pages, collections, cart hand-off to the store's checkout",
+      "status": "missing"
+    },
+    {
+      "id": "qa-console",
+      "phase": "5-site",
+      "label": "QA: zero console errors, no overflow at 390 px, keyboard pass (qa/site-qa.json)",
+      "status": "missing"
+    },
+    {
+      "id": "qa-lighthouse",
+      "phase": "5-site",
+      "label": "Lighthouse desktop + mobile, dated (qa/lighthouse.json)",
+      "status": "missing"
+    },
+    {
+      "id": "levelup",
+      "phase": "5-site",
+      "label": "levelup VERIFY: every region and element ≥ 9 (qa/levelup.md)",
+      "status": "missing"
+    },
+    {
+      "id": "film-json",
+      "phase": "6-film",
+      "label": "film.json filled from the brand and real content",
+      "status": "ok"
+    },
+    {
+      "id": "film-signature",
+      "phase": "6-film",
+      "label": "Signature scene (morph or hand-crafted)",
+      "status": "missing"
+    },
+    {
+      "id": "film-916",
+      "phase": "6-film",
+      "label": "Film 9:16 with soundtrack",
+      "status": "missing"
+    },
+    {
+      "id": "film-45",
+      "phase": "6-film",
+      "label": "Film 4:5 for the feed",
+      "status": "missing"
+    },
+    {
+      "id": "film-stills",
+      "phase": "6-film",
+      "label": "Three ad stills + poster",
+      "status": "missing"
+    },
+    {
+      "id": "film-copy",
+      "phase": "6-film",
+      "label": "Campaign README: copy A/B/C, headlines, targeting, UTM",
+      "status": "missing"
+    },
+    {
+      "id": "film-loudness",
+      "phase": "6-film",
+      "label": "Loudness −14 LUFS ±1 measured (qa/film-qa.json)",
+      "status": "missing"
+    },
+    {
+      "id": "film-on-site",
+      "phase": "6-film",
+      "label": "The film is on the client's site (film section + poster)",
+      "status": "missing"
+    },
+    {
+      "id": "studio-case",
+      "phase": "7-portfolio",
+      "label": "Studio: closed real case (flow step with real output)",
+      "status": "missing"
+    },
+    {
+      "id": "studio-live",
+      "phase": "7-portfolio",
+      "label": "Studio artifact republished",
+      "status": "missing"
+    },
+    {
+      "id": "portfolio-repo",
+      "phase": "7-portfolio",
+      "label": "AILGEN portfolio (repo index.html): card + case",
+      "status": "missing"
+    },
+    {
+      "id": "portfolio-live",
+      "phase": "7-portfolio",
+      "label": "AILGEN portfolio (live artifact) updated",
+      "status": "missing"
+    },
+    {
+      "id": "screencasts",
+      "phase": "7-portfolio",
+      "label": "Real screencasts: desktop, mobile, tool, mascot, flow",
+      "status": "missing"
+    },
+    {
+      "id": "meter",
+      "phase": "8-deliver",
+      "label": "Meter: every phase opened and closed, report written",
+      "status": "missing"
+    },
+    {
+      "id": "report",
+      "phase": "8-deliver",
+      "label": "Report to the owner in Hebrew (report.md) with links and what only they can supply",
+      "status": "missing"
+    },
+    {
+      "id": "pushed",
+      "phase": "8-deliver",
+      "label": "Committed and pushed",
+      "status": "missing"
+    }
+  ]
+}

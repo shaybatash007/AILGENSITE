@@ -1,0 +1,2 @@
+# paths that another system serves (Shopify): counted as covered, not built here, not verified against this build
+/agents.md

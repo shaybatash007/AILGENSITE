@@ -1,0 +1,8 @@
+# these paths are served by Shopify. On a host that puts this front in front of the store, proxy them (status 200) to the store origin:
+# /cart/*        https://<store>.myshopify.com/cart/:splat   200
+# /checkout/*    https://<store>.myshopify.com/checkout/:splat 200
+# /account/*     https://<store>.myshopify.com/account/:splat  200
+# /agents.md     https://<store>.myshopify.com/agents.md      200
+# /.well-known/ucp https://<store>.myshopify.com/.well-known/ucp  200
+# /api/ucp/mcp   https://<store>.myshopify.com/api/ucp/mcp    200
+# (the store origin is decided with the owner: see launch.md, "Domain decision")

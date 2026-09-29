@@ -1,0 +1,10 @@
+{
+ "site": "https://edencosmetic.co.il",
+ "siteDir": "edencosmetic",
+ "oldUrl": "https://edencosmetic.co.il/",
+ "pages": "projects/edencosmetic/seo/pages.json",
+ "build": "sh edencosmetic/build.sh",
+ "after": [],
+ "compose": "projects/edencosmetic/seo/compose.mjs",
+ "preview": true
+}

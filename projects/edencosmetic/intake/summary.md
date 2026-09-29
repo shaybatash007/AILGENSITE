@@ -1,0 +1,114 @@
+# Intake summary: עדן קוסמטיקס
+
+- Source: https://edencosmetic.co.il/
+- Pages read: 88 · media saved: 81 · YouTube videos: 0
+- Language: he · direction: rtl
+
+## Contacts
+- Phones: 0525453602
+- Emails: Edencosmetics29@gmail.com, edencosmetics29@gmail.com
+- WhatsApp: (none found)
+- Social: https://www.instagram.com/edennahmani1?igshid=MjEwN2IyYWYwYw%3D%3D
+
+## Visual identity (sampled from the home page)
+- Background colors by area: `#F8EFEA` `#000000` `#FFFFFF` `#BF7F7F` `#81685B` `#87CEEB` `#3A8DC2` `#000204`
+- Text colors: `#000000` `#FFFFFF` `#3A8DC2`
+- Button colors: `#FFFFFF` `#81685B` `#F8EFEA`
+- Fonts: display `system_ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"` · h1 `system_ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"` · body `system_ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"`
+- Loaded faces: -
+- Logo candidates: media/001-logo.png, media/002-logo.png, media/079-logo.png, media/080-logo.png, media/logo-inline-1.svg
+
+## Pages
+- eden cosmetics – עדן קוסמטיקס (75 text blocks, 13 images)
+- הרמת ריסים וגבות – עדן קוסמטיקס (104 text blocks, 24 images)
+- דבקים | סיליקונים – עדן קוסמטיקס (103 text blocks, 30 images)
+- מוצרים נלווים – עדן קוסמטיקס (104 text blocks, 25 images)
+- קורסים והשתלמויות – עדן קוסמטיקס (60 text blocks, 3 images)
+- מוצרים – עדן קוסמטיקס (102 text blocks, 22 images)
+- . – עדן קוסמטיקס (62 text blocks, 3 images)
+- ערכת THUYA להרמת ריסים וגבות- שלושה שלבים – עדן קוסמטיקס (80 text blocks, 8 images)
+- צבע לגבות / ריסים refectocil מס' 3 – עדן קוסמטיקס (77 text blocks, 8 images)
+- צבע לגבות / ריסים refectocil מס' 2 – עדן קוסמטיקס (77 text blocks, 12 images)
+- חמצן 3% NIKK MOLA – עדן קוסמטיקס (78 text blocks, 8 images)
+- דבק בלאם פורמולה חדשה להרמת ריסים של חברת ZOLA – עדן קוסמטיקס (82 text blocks, 8 images)
+- דבק בלאם פורמולה חדשה להרמת ריסים של חברת ZOLA – עדן קוסמטיקס (82 text blocks, 8 images)
+- דבק קודי להרמת ריסים – עדן קוסמטיקס (79 text blocks, 8 images)
+- שמפו קצף ניקוי לריסים / גבות / פנים חברת nikk mola – עדן קוסמטיקס (81 text blocks, 8 images)
+- zola פינצטה מקצועית זוויתית – עדן קוסמטיקס (79 text blocks, 8 images)
+- צבע THUYA ריסים וגבות - brown – עדן קוסמטיקס (84 text blocks, 8 images)
+- צבע THUYA ריסים וגבות -bluish black – עדן קוסמטיקס (81 text blocks, 8 images)
+- צבע THUYA ריסים וגבות - Deep black – עדן קוסמטיקס (81 text blocks, 8 images)
+- קרם חמצן 3% חברת THUYA – עדן קוסמטיקס (79 text blocks, 8 images)
+- סיליקונים שועל סגול - מעוגל חד 5 מידות נדבקים ללא דבק – עדן קוסמטיקס (79 text blocks, 12 images)
+- סיליקונים שועל כתום- מעוגל חד 5 מידות נדבקים ללא דבק – עדן קוסמטיקס (79 text blocks, 8 images)
+- סיליקונים ליפט צבעוניים להרמת ריסים -6 מידות – עדן קוסמטיקס (79 text blocks, 12 images)
+- סיליקונים חתול פפיון - מעוגל חד 8 מידות נדבקים ללא דבק – עדן קוסמטיקס (81 text blocks, 18 images)
+- סיליקונים קשת בענן - מעוגל חד 10 מידות נדבקים ללא דבק – עדן קוסמטיקס (79 text blocks, 18 images)
+- סיליקונים כנפיים -מעוגל רחב 10 מידות נדבקים ללא דבק – עדן קוסמטיקס (79 text blocks, 12 images)
+- סיליקונים כריש - מעוגל רחב – עדן קוסמטיקס (79 text blocks, 12 images)
+- עדשת מאקרו לצילום איכותי - וורוד – עדן קוסמטיקס (78 text blocks, 8 images)
+- זוג תופסנים פפיון - צהוב מנצנץ – עדן קוסמטיקס (77 text blocks, 8 images)
+- זוג תופסנים פפיון - שקוף מנצנץ – עדן קוסמטיקס (77 text blocks, 8 images)
+- מסרק להפרדת הריסים רב פעמי -ורוד 3 יחידות – עדן קוסמטיקס (78 text blocks, 8 images)
+- סרט דבק רפואי -דק – עדן קוסמטיקס (79 text blocks, 8 images)
+- מספריים קפיץ לגבות – עדן קוסמטיקס (77 text blocks, 8 images)
+- מברשת זוויתית לצבע – עדן קוסמטיקס (78 text blocks, 8 images)
+- מארז 50 מסרקים לגבות וריסים - חד פעמי בצבע ורוד מנצנץ – עדן קוסמטיקס (79 text blocks, 8 images)
+- מארז 50 מסרקים לגבות וריסים - חד פעמי בצבע שחור – עדן קוסמטיקס (79 text blocks, 8 images)
+- מארז 10 מסרקונים להרמת גבות - בצבע ורוד – עדן קוסמטיקס (79 text blocks, 8 images)
+- מארז 10 מסרקונים להרמת גבות - בצבע שחור – עדן קוסמטיקס (79 text blocks, 8 images)
+- גליל ניילון נצמד – עדן קוסמטיקס (77 text blocks, 8 images)
+- כוסית קטנה לערבוב צבע - ורוד – עדן קוסמטיקס (78 text blocks, 12 images)
+- סיליקונים צדפה - מעוגל חד 5 מידות נדבקים ללא דבק – עדן קוסמטיקס (80 text blocks, 8 images)
+- סיליקונים L כחול נצנצים - נדבקים ללא דבק – עדן קוסמטיקס (79 text blocks, 8 images)
+- זוג סיליקונים לתיקונים / הסרות / צביעת ריסים – עדן קוסמטיקס (78 text blocks, 8 images)
+- בייביבראש 50 יחידות - ורוד – עדן קוסמטיקס (79 text blocks, 8 images)
+- סיליקונים צדפה - מעוגל חד 5 מידות נדבקים ללא דבק – עדן קוסמטיקס (80 text blocks, 8 images)
+- פאצים רב פעמיים לריסים- שקוף נצנצים – עדן קוסמטיקס (78 text blocks, 12 images)
+- סיליקון לכיסוי הרמת גבות - רב פעמי – עדן קוסמטיקס (78 text blocks, 8 images)
+- מוט הרמה - להרמת ריסים – עדן קוסמטיקס (79 text blocks, 8 images)
+- שמפו מוס לגבות, ריסים ופנים NIKK MOLE – עדן קוסמטיקס (76 text blocks, 8 images)
+- חמצן 3% NIKK MOLE – עדן קוסמטיקס (76 text blocks, 8 images)
+- צבע לריסים -NIKK MOLE כחול שחור – עדן קוסמטיקס (76 text blocks, 8 images)
+- צבע לגבות -NIKK MOLE חום – עדן קוסמטיקס (76 text blocks, 8 images)
+- פינצטה מקצועית קלאסית לגבות - שחור NIKK MOLE – עדן קוסמטיקס (76 text blocks, 8 images)
+- פינצטה מקצועית קלאסית לגבות -וורוד NIKK MOLE – עדן קוסמטיקס (76 text blocks, 8 images)
+- פינצטה מקצועית משופעת לגבות - שחור NIKK MOLE – עדן קוסמטיקס (76 text blocks, 8 images)
+- פינצטה מקצועית משופעת לגבות - וורוד בהירNIKK MOLE – עדן קוסמטיקס (76 text blocks, 8 images)
+- פינצטה מקצועית משופעת לגבות - וורוד כהה NIKK MOLE – עדן קוסמטיקס (76 text blocks, 8 images)
+- פינצטה מקצועית קלאסית לגבות -וורוד כההNIKK MOLE – עדן קוסמטיקס (76 text blocks, 8 images)
+- My lamination סט בקבוקים 10 מ״ל להרמת ריסים וגבות – עדן קוסמטיקס (101 text blocks, 8 images)
+- My lamination שלב 1 להרמת ריסים וגבות- מארז 5 שקיות 1.5 מ״ל – עדן קוסמטיקס (85 text blocks, 8 images)
+- My lamination שלב 2 להרמת ריסים וגבות- מארז 5 שקיות של 1.5 מ״ל – עדן קוסמטיקס (82 text blocks, 8 images)
+- My lamination שלב 3 להרמת גבות- 5 שקיות – עדן קוסמטיקס (89 text blocks, 8 images)
+- My lamination שלב 1 להרמת ריסים וגבות- שפורפרת 10 מ״ל – עדן קוסמטיקס (85 text blocks, 8 images)
+- My lamination שלב 2 להרמת ריסים וגבות- שפורפרת 10 מ״ל – עדן קוסמטיקס (82 text blocks, 8 images)
+- My lamination שלב 3 להרמת ריסים וגבות- שפורפרת 10 מ״ל – עדן קוסמטיקס (91 text blocks, 8 images)
+- My lamination מיני ערכת ניסיון להרמת ריסים וגבות- שקית אחת מכל שלב – עדן קוסמטיקס (100 text blocks, 8 images)
+- My lamination סט 5 שקיות שלב 1.2+ בקבוק שלב 3 להרמת ריסים וגבות – עדן קוסמטיקס (99 text blocks, 8 images)
+- My lamination סט 3 שקיות מכל שלב להרמת ריסים וגבות – עדן קוסמטיקס (100 text blocks, 8 images)
+- My lamination מארז 2 זוגות פאצים דביקים לריסים פרפרים – עדן קוסמטיקס (76 text blocks, 8 images)
+- My lamination סט 5 שקיות מכל שלב להרמת ריסים וגבות – עדן קוסמטיקס (100 text blocks, 8 images)
+- My lamination מסקרת ביוטין – עדן קוסמטיקס (88 text blocks, 8 images)
+- My lamination צבע לגבות/ ריסים בתוספת קרטין- חום – עדן קוסמטיקס (78 text blocks, 8 images)
+- My lamination חמצן לגבות – עדן קוסמטיקס (77 text blocks, 8 images)
+- My lamination צבע לגבות/ ריסים בתוספת קרטין- שחור כחול – עדן קוסמטיקס (78 text blocks, 8 images)
+- My lamination חמצן – עדן קוסמטיקס (77 text blocks, 8 images)
+- My lamination קצף ניקוי לפנים/ ריסים/ גבות 4 ב1 50 מ״ל – עדן קוסמטיקס (78 text blocks, 8 images)
+- zola פינצטה מקצועית זוויתית – עדן קוסמטיקס (79 text blocks, 8 images)
+- פינצטה סטאלקס 11/3 – עדן קוסמטיקס (77 text blocks, 12 images)
+- הצהרת נגישות – עדן קוסמטיקס (81 text blocks, 2 images)
+- Home page – עדן קוסמטיקס (67 text blocks, 4 images)
+- כל המוצרים – עדן קוסמטיקס (103 text blocks, 26 images)
+- הנבחרת שלנו – עדן קוסמטיקס (71 text blocks, 6 images)
+- News – עדן קוסמטיקס (58 text blocks, 2 images)
+- פרטי קשר – עדן קוסמטיקס (61 text blocks, 2 images)
+- מדיניות החזרים – עדן קוסמטיקס (62 text blocks, 2 images)
+- מדיניות הפרטיות – עדן קוסמטיקס (70 text blocks, 2 images)
+- מדיניות משלוחים – עדן קוסמטיקס (69 text blocks, 2 images)
+- תנאי השירות – עדן קוסמטיקס (95 text blocks, 2 images)
+
+## Before using any of this
+- Mark every image as real (photographed at the business) or a render/stock image. Ask the owner when unsure.
+- Numbers, prices and testimonials must be copied exactly, with the page they came from.
+- Read content.md end to end before writing a single new line.
