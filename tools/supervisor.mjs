@@ -244,31 +244,67 @@ function resolveShim(shimPath) {
   let body = "";
   try { body = fs.readFileSync(shimPath, "utf8"); } catch { return null; }
   const dir = path.dirname(shimPath);
-  // npm shims vary: some inline %~dp0, most do `SET dp0=%~dp0` and then use
-  // "%dp0%\...". Handle every form, or the resolved path stays a literal
-  // "%dp0%\..." and silently fails the existence check.
-  // cmd expands %~dp0 WITH a trailing separator, so substitute dir + sep and
-  // swallow the shim's own separator. Using the bare directory here produced
-  // "...\somedirfoo.js", which never exists, and the shim resolved to nothing.
+  // cmd expands %~dp0 WITH a trailing separator. Substituting the bare directory
+  // glues the file name onto the folder name - "...\somedirfoo.js" - so the path
+  // never exists and the shim resolves to nothing. Consume the shim's own
+  // separator too, so %~dp0\foo is not doubled.
   const dirSep = dir.endsWith(path.sep) ? dir : dir + path.sep;
-  const unquote = (p) =>
-    p.replace(/%~dp0[\\/]?/gi, dirSep)
-     .replace(/%dp0%[\\/]?/gi, dirSep)
-     .replace(/\$\{?dp0\}?[\\/]?/gi, dirSep)
-     .replace(/\\"/g, "")
-     .replace(/"/g, "");
+  // npm shims build the entry point in a variable:
+  //   SET "NPM_CLI_JS=%~dp0\node_modules\npm\bin\npm-cli.js"
+  // so collect the assignments and expand them. The FIRST definition of a
+  // variable wins: npm.cmd's IF block later reassigns NPM_CLI_JS to a runtime
+  // FOR value that does not exist on disk.
+  const vars = new Map();
+  for (const m of body.matchAll(/^[ \t]*set[ \t]+"?([A-Za-z_][A-Za-z0-9_]*)="?([^"\r\n]+?)"?[ \t]*$/gim)) {
+    const k = m[1].toLowerCase();
+    if (!vars.has(k)) vars.set(k, m[2].trim());
+  }
+  // Alternate: substitute a variable, then fix %~dp0 in what it produced. Doing
+  // the %~dp0 fix only up front leaves it literal inside the substituted value.
+  const expand = (p) => {
+    let out = String(p);
+    for (let i = 0; i < 6; i++) {
+      let next = out.replace(/%\(?([A-Za-z_][A-Za-z0-9_]*)\)?%/g, (full, k) => vars.get(k.toLowerCase()) ?? full);
+      next = next.replace(/%~dp0[\\/]?/gi, dirSep).replace(/%dp0%[\\/]?/gi, dirSep).replace(/\$\{?dp0\}?[\\/]?/gi, dirSep);
+      if (next === out) break;
+      out = next;
+    }
+    return out.replace(/\\"/g, "").replace(/"/g, "");
+  };
+  const resolvePath = (p) => { const e = expand(p); return path.isAbsolute(e) ? e : path.resolve(dir, e); };
 
-  // Case 1: the shim delegates straight to a real .exe (the common case for
-  // globally installed packages with a native binary). Prefer this: one process.
-  for (const m of body.matchAll(/["']([^"']*?\.exe)["']/gi)) {
-    const exe = path.isAbsolute(unquote(m[1])) ? unquote(m[1]) : path.resolve(dir, unquote(m[1]));
-    if (fs.existsSync(exe)) return { exe, args: [] };
+  // Which script is the ENTRY POINT? Read it off the shim's own last command
+  // line rather than taking the first .js in the file - npm.cmd runs
+  // npm-prefix.js first and npm-cli.js second, so the first one is the wrong
+  // program and it exits 0 while printing the npm prefix.
+  const last = body.split(/\r?\n/).map((l) => l.trim())
+    .filter((l) => l && !/^(@|rem\b|::)/i.test(l))
+    .filter((l) => !/^(set|if|for|goto|call|exit|shift|endlocal|setlocal|endlocal)\b/i.test(l))
+    .filter((l) => /%\*/.test(l) || /"[^"]+"\s+"?[^"\s][^"]*"?/.test(l))
+    .pop() || "";
+  const fromInvocation = [];
+  for (const m of last.matchAll(/"([^"]+)"/g)) {
+    const tok = m[1];
+    const direct = expand(tok);
+    if (/\.(c?js|mjs)$/i.test(direct) && fs.existsSync(direct)) { fromInvocation.push(direct); continue; }
+    const val = vars.get(tok.replace(/^%/, "").replace(/%$/, "").toLowerCase());
+    if (val) { const e = expand(val); if (/\.(c?js|mjs)$/i.test(e) && fs.existsSync(e)) fromInvocation.push(e); }
+  }
+  if (fromInvocation.length) return { exe: process.execPath, args: [fromInvocation[fromInvocation.length - 1]] };
+
+  const js = [];
+  const push = (p) => { const f = resolvePath(p); if (/\.(c?js|mjs)$/i.test(f) && fs.existsSync(f)) js.push(f); };
+  for (const m of body.matchAll(/["']([^"']*?\.(?:js|cjs|mjs))["']/gi)) push(m[1]);
+  for (const [, v] of vars) push(v);
+  if (js.length) {
+    const cli = js.find((f) => /cli\.(c?js|mjs)$/i.test(f));
+    return { exe: process.execPath, args: [cli || js[js.length - 1]] };
   }
 
-  // Case 2: the shim delegates to a JS entry point, so node must run it.
-  for (const m of body.matchAll(/["']([^"']*?\.(?:js|cjs|mjs))["']/gi)) {
-    const js = path.isAbsolute(unquote(m[1])) ? unquote(m[1]) : path.resolve(dir, unquote(m[1]));
-    if (fs.existsSync(js)) return { exe: process.execPath, args: [js] };
+  // Only when the shim genuinely delegates to a native binary.
+  for (const m of body.matchAll(/["']([^"']*?\.exe)["']/gi)) {
+    const exe = resolvePath(m[1]);
+    if (fs.existsSync(exe)) return { exe, args: [] };
   }
 
   return null;

@@ -12,6 +12,8 @@ Anything a script can measure, a script measures. Do not guess state; read it.
 | Command | What it does | Use it when |
 | --- | --- | --- |
 | `npm run doctor` | Config validity, memory budgets, handoff freshness, commit attribution, Hebrew copy integrity, terminal/RTL diagnosis | start of a session, before a commit, when something feels wrong |
+| `npm run check` | The runtime counterpart to `doctor`: probes both live services, the real database, the API, all four test suites, the desktop shortcut, and what a browser actually renders. Exits non-zero on FAIL; a known upstream defect is reported as KNOWN so the exit code still means "our setup is sound" | when the user asks whether things are working, or before declaring a handover complete |
+| `npm run icon` | Regenerate `brand/ailgen.ico` (7 sizes) and the per-size PNGs, rendered through Playwright. Re-run after any brand change, then `scripts\make-shortcut.ps1` | changing the brand palette or mascot |
 | `npm run resume` | Prints handoff + git log/status + auto-state + a STALE/FRESH verdict | resuming work; `/resume` runs it for you |
 | `npm run handoff` | Rewrites the machine state block in `memory/SESSION.md` and stamps the model | after a unit of work, before committing |
 | `npm run setup` | Installs the `[Model: ...]` commit guard (`core.hooksPath = .githooks`), then doctor | once per clone, and after a fresh machine |
