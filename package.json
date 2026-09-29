@@ -22,7 +22,11 @@
     "snap": "node tools/snap.mjs",
     "know": "node tools/knowledge.mjs",
     "super": "node tools/supervisor.mjs",
-    "test": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts\\doctor.ps1"
+    "safe": "node tools/safe-exec.mjs",
+    "canon:check": "node tools/canonicalize-paths.mjs --check",
+    "canon:apply": "node tools/canonicalize-paths.mjs --apply",
+    "test": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts\\doctor.ps1",
+    "test:canon": "node tools/test-canonicalize.mjs"
   },
   "devDependencies": {
     "@playwright/mcp": "^0.0.82",

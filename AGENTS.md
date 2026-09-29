@@ -24,6 +24,9 @@ Anything a script can measure, a script measures. Do not guess state; read it.
 | `npm run env` / `npm run env:stop` | One-click environment: dev server :8000, opencode web :4096, UTF-8 terminal, browser. Idempotent, adopts what is already healthy | starting work; `env:stop` leaves no orphans |
 | `npm run super -- status` | What is running, tracked PID vs real port owner, and any drift | before and after starting services |
 | `npm run super -- gc` | Kill any listener on the managed ports that nothing is tracking | after a crash or a force-kill |
+| `npm run safe -- <cmd>` | Runs one finite command under a hard wall clock (5-120s) it owns, with pipes it owns and `taskkill /T /F` on expiry. Exit 124 = deadline, 125 = could not spawn | any foreground command that might hang, spawn a daemon, or flood stdout |
+| `npm run canon:check` / `canon:apply` | Normalise every path column in `opencode.db` to the spelling opencode itself writes (forward slashes) | after any move of the repo; `--apply` rehearses on a `VACUUM INTO` copy and asserts non-destruction first |
+| `npm run test:canon` | 24-check fixture for the tool above, reproducing the live database's exact shape | **before** any `canon:apply`, and after editing that tool |
 | `npm run snap -- take v1` | Named snapshot: file tree + rendered screenshot + manifest. Never overwrites | before risky visual work |
 | `npm run snap -- diff v1` | Visual diff against a snapshot; separates motion noise from a real change | after a change, to see what moved |
 | `npm run snap -- roll v1` | Restore a snapshot and diff the result. Refuses over a dirty tree | when a change needs undoing |
@@ -216,8 +219,8 @@ time before this was found.
 Rules:
 
 1. **Never launch a daemon from a foreground tool call.** Not with `Start-Process`, not with
-   `spawn`, not with `npx`. Use `node tools/supervisor.mjs`, which creates the process through the
-   WMI provider so it is a child of the WMI host instead of the agent's shell.
+   `spawn`, not with `npx`. Use `node tools/supervisor.mjs`, which creates the process through
+   the WMI provider so it is a child of the WMI host instead of the agent's shell.
 2. **Every foreground command gets an explicit `timeout`** (milliseconds) and must be written to
    finish in seconds. A health-check loop is bounded by a hard deadline and prints the failing
    child's log tail, so a stall is an error message rather than a hang.
@@ -233,6 +236,8 @@ Rules:
    their inner quotes stripped during native-argument passing. This failed six times.
 7. `where` is an alias for `Where-Object` in PowerShell. To locate a real executable, scan `$env:PATH`
    yourself or call `where.exe`.
+8. For finite work that might still hang, wrap it in `npm run safe --`. It owns the child's pipes
+   and the clock, so a hang becomes exit 124 instead of a frozen shell.
 
 Never let a daemon outlive the session unmanaged: `.launch/state.json` records every service, and
 `node tools/supervisor.mjs gc` kills any listener on the managed ports that is not tracked.

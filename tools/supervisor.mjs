@@ -530,7 +530,10 @@ async function main() {
   switch (cmd) {
     case "start": {
       const name = a._[1];
-      const argvCmd = a._.filter((x) => x !== "start" && x !== name);
+      // Positional slicing, not filter(): filtering on the service name removes
+      // every matching token, so a service called "web" also lost opencode's own
+      // "web" subcommand - the server then started in the wrong mode and died.
+      const argvCmd = a._.slice(2);
       if (!argvCmd.length) { bad("start needs a command after --"); code = 2; break; }
       code = await start(name, {
         cmd: argvCmd[0],

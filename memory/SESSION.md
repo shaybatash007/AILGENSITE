@@ -1,90 +1,82 @@
 # SESSION — handoff note
 
-Last updated: 2026-09-28 | Space Bunny Free
+Last updated: 2026-09-29 | Space Bunny Free
 
 ## Goal reached
 
 The agent environment is hardened, and each claim was verified by running the thing:
 
-- `memory/CORE.md` — the non-negotiable invariants, loaded by opencode core via
-  `opencode.json` `instructions`, so they survive compaction, trimming and plugin failure.
-- `.opencode/plugin/memory.ts` — bounded line-aligned memory reads, a trust boundary on the
-  injected block, a per-request budget heartbeat, a self-healing `config` hook, and a throttled
+- `memory/CORE.md` — the non-negotiable invariants, loaded by opencode core via `opencode.json`
+  `instructions`, so they survive compaction, trimming and plugin failure.
+- `.opencode/plugin/memory.ts` — bounded line-aligned memory reads, a trust boundary on the injected
+  block, a per-request budget heartbeat, a self-healing `config` hook, and a throttled
   `tool.execute.after` hook that writes the git-derived state block at the bottom of this file.
-- `scripts/` — `doctor` (health check), `resume` (deterministic resume + STALE/FRESH verdict),
-  `handoff` (state + model stamp), `setup` (installs the commit guard), `he` (Windows Terminal /
-  browser launcher), plus the `version-save` / `version-restore` pair.
-- `.githooks/pre-commit` — rejects an unstamped subject or a doctor FAIL. Active via
-  `core.hooksPath = .githooks`.
-- `.opencode/agent/` — `oracle`, `verifier`, `hebrew-qa`, `archivist`. No model pins: they
-  inherit the session model, so they work with any provider.
-- Commands: `/doctor` `/ship` `/review` `/hebrew` `/archive`; `/resume` now runs a script instead
-  of asking the model to reconstruct state.
-- **Eyes**: `playwright` MCP connected in `opencode.json` (hands, inherited by every agent), plus
-  `tools/eyes.mjs` via `npm run eyes` (screenshot + computed state + rules, exits non-zero on FAIL).
-  Verified by looking at real captures. Three of its own false positives were found and fixed.
+- `scripts/` — `doctor`, `resume` (deterministic STALE/FRESH verdict), `handoff`, `setup` (commit
+  guard), `he`, `launch-env` / `make-shortcut`, and the `version-save` / `version-restore` pair.
+- `.githooks/pre-commit` — rejects an unstamped subject or a doctor FAIL.
+- `.opencode/agent/` — `oracle`, `verifier`, `hebrew-qa`, `archivist`, all with no model pin.
+- Commands: `/doctor` `/ship` `/review` `/hebrew` `/archive` `/resume`.
+- **Eyes**: `tools/eyes.mjs` (`npm run eyes`) is the diagnostic layer and gates commits. The
+  `playwright` MCP is currently broken on this machine — see `memory/ENVIRONMENT.md`.
 
-Detail and rationale for each item: `memory/DECISIONS.md`.
+Detail and rationale for each item: `memory/DECISIONS.md` and `memory/DECISIONS-ARCHIVE.md`.
 
 ## Current state
 
 Everything above is on disk; nothing is mid-edit. The block below is machine-generated — never
 hand-edit inside the markers.
 
-**Open, and verified as an opencode bug (not a config problem):** the opencode web UI renders
-"nothing here yet" for this repo. The state is shared — one server, one `opencode.db`, one
-`auth.json`; `/api/session` returns all 13 sessions — but the web client never binds a project, and
-its "Add project" picker is rooted at `C:\Users\shayb` while the repo is at `C:\mastercoding`. Until
-upstream fixes it, the TUI is the unified working path. Do not attempt a sync; there is none.
+**The repo has moved** to `%USERPROFILE%\projects\AILGENSITE`. The database, the desktop shortcut
+and every path string are reconciled. Two things were broken by that move and are now fixed; both
+were caused by `tools/migrate-home.mjs` writing Windows-style backslashes where opencode writes
+forward slashes, so the Web UI bound a project whose directory string no session matched.
+
+**Recovered after a real loss.** `tools/canonicalize-paths.mjs` had deleted 14 sessions, 675
+messages and 2,825 parts — its dedupe predicate `directory = ? AND directory != ?` was a tautology
+over every row it matched. All of it was restored additively from
+`backups/opencode-2026-09-29T06-47-55-166Z.db`. `GET /api/session` now returns 16 sessions, 15 of
+them under `C:/Users/shayb/projects/AILGENSITE`.
+
+**Still open, and still the upstream client bug:** the web UI renders "Nothing here yet" with an
+empty Projects list. The data is right and the API returns it; the client never binds a project.
+`?directory=` on the page URL does not bind it either, and the "Add project" picker, now that the
+repo is under `$HOME`, opens the right tree but the list still does not populate. The TUI remains
+the working path. Do not attempt a sync; there is none.
 
 ## Exact next command
 
 ```
-npm run doctor
+npm run canon:check
+npm run test:canon
 ```
-
-Then restart opencode: `opencode.json` and the plugin are read once at startup, so the MCP server
-and the new config only bind after a restart.
 
 ## Open questions
 
 - Keep or drop `git config core.hooksPath = .githooks` (revert: `git config --unset core.hooksPath`)?
 - `small_model` is pinned to `opencode/mimo-v2.6-flash-free`; if the free tier lapses, only title
   generation degrades.
-- The digest costs ~2k tokens per request. Tune with `AILGEN_DIGEST_SCALE` (0.25-2).
 - Hebrew in the TUI has no configuration fix (upstream renderer limitation). `npm run web` is the
   working path. See `memory/ENVIRONMENT.md`.
 
 <!-- ailgen:auto:start -->
 <!-- generated by .opencode/plugin/memory.ts — do not hand-edit inside these markers -->
 
-- refreshed: 2026-09-28T22:55:06.385Z
+- refreshed: 2026-09-29T07:32:39.388Z
 - model: opencode/space-bunny-free
 - branch: claude/cool-fermat-us543u @ no-commit
-- working tree: 1 changed
+- working tree: 11 changed
 
 ```
-M memory/SESSION.md
+M AGENTS.md
+ M memory/DECISIONS-ARCHIVE.md
+ M memory/DECISIONS.md
+ M memory/ENVIRONMENT.md
+ M memory/SESSION.md
+ M package.json
+ M tools/supervisor.mjs
+?? memory/ENVIRONMENT-ARCHIVE.md
+?? tools/canonicalize-paths.mjs
+?? tools/safe-exec.mjs
+?? tools/test-canonicalize.mjs
 ```
 <!-- ailgen:auto:end -->
-## Tooling added 2026-09-29
-
-- `tools/eyes.mjs` (npm run eyes): screenshot + computed state + deterministic rules, non-zero on
-  FAIL. Three of its own false positives found and fixed; see DECISIONS.md.
-- `tools/supervisor.mjs` (npm run super): starts daemons through WMI, which is the only method
-  that does not freeze the agent shell. `status` / `gc` / `stop --all`.
-- `tools/serve.mjs`: single-process static server, replaces `npx serve`.
-- `tools/knowledge.mjs` (npm run know): FTS5 index over code + memory + rules.
-- `tools/snap.mjs` (npm run snap): named snapshots, never overwritten, with visual diffs that
-  separate motion noise from a real change by band width (15px noise vs 796px real).
-- `tools/migrate-home.mjs`: the one-shot $HOME relocation. See below.
-- `scripts/launch-env.ps1` + `scripts/make-shortcut.ps1`: one-click launcher, desktop shortcut on
-  the OneDrive-redirected desktop (NOT C:\Users\shayb\Desktop, which does not exist).
-
-## Outstanding, needs one human action
-
-Run `node tools/migrate-home.mjs --check`, close every opencode window, then
-`node tools/migrate-home.mjs --apply`. This is the only way the Web UI can bind this project: the
-repo must sit under $HOME, and opencode keys sessions by directory string, so the strings in
-opencode.db must be rewritten too. It cannot be done from inside an agent - Windows returns EBUSY
-for a directory that is a live process's working directory, and the agent is such a process.
