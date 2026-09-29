@@ -69,8 +69,16 @@ function Strip-AutoBlock([string]$text) {
 $tracked = @($status | Where-Object { $_ -notmatch "^\?\? (memory/|scripts/|\.githooks/|\.opencode/|opencode\.json|AGENTS\.md|CLAUDE\.md|package)" })
 $sessionOnlyAutoBlock = $false
 if ($tracked.Count -eq 1 -and $tracked[0] -match "SESSION\.md$") {
-  Push-Location $root
-  try { $committed = (& git show "HEAD:memory/SESSION.md" 2>$null) -join "`n" } finally { Pop-Location }
+  # The console here is code page 862, so `git show` hands back an em dash as
+  # three mangled characters and the comparison can never succeed - resume then
+  # reports STALE forever, which is the exact failure this was meant to fix.
+  # Force UTF-8 for the duration of the call.
+  $prev = [Console]::OutputEncoding
+  try {
+    [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+    Push-Location $root
+    try { $committed = (& git show "HEAD:memory/SESSION.md" 2>$null) -join "`n" } finally { Pop-Location }
+  } finally { [Console]::OutputEncoding = $prev }
   $sessionOnlyAutoBlock = ($committed -and (Strip-AutoBlock $committed) -eq (Strip-AutoBlock $sess))
   if ($sessionOnlyAutoBlock) { $tracked = @() }
 }
