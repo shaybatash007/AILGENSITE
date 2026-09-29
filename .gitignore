@@ -14,3 +14,12 @@ projects/_eyes/scratch/
 # named snapshots (tools/snap.mjs) and the local knowledge index
 .snapshots/
 .knowledge/
+# never let a database reach a commit. opencode.db carries account/credential
+# tables and the session history, and tools/canonicalize-paths.mjs duplicates it
+# into backups/ on every run. The directories above already keep it out of the
+# index; this is the deliberate belt, not an accident of layout.
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3

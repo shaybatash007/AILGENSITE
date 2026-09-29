@@ -66,11 +66,15 @@ const bad = (m) => { console.log(`  ${C.r}!!${C.x}  ${m}`); process.exitCode = 1
 const info = (m) => console.log(`  ${C.d}${m}${C.x}`);
 
 /* Path columns. Reading these is harmless; writing to a table not listed here is
-   not attempted at all. */
+   not attempted at all. session.path is included because it IS a path column and
+   the tool claims to cover every one - it is surveyed so its shape is visible
+   and asserted, even though its stored values are not drive-absolute and are
+   therefore left alone. */
 const TABLES = [
   { table: "project", column: "worktree" },
   { table: "project_directory", column: "directory" },
   { table: "session", column: "directory" },
+  { table: "session", column: "path" },
   { table: "workspace", column: "directory" },
 ];
 
@@ -114,11 +118,18 @@ function survey(db) {
 
 function rowCounts(db) {
   const out = new Map();
-  for (const { table } of db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").all()) {
+  const uncountable = [];
+  // name AS table: the column in sqlite_master is `name`. Selecting `table`
+  // yields undefined, and the old `catch {}` swallowed it - which is how the
+  // entire non-destruction assertion managed to be vacuous while reporting
+  // "no undeclared row lost". An empty `before` map checks nothing.
+  for (const { tbl } of db.prepare("SELECT name AS tbl FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").all()) {
+    const table = tbl;
     try { out.set(table, db.prepare(`SELECT COUNT(*) c FROM "${table}"`).get().c); }
-    catch { /* a table we cannot count is a table we never write */ }
+    catch (e) { uncountable.push(`${table} (${e.message})`); }
   }
-  return out;
+  if (out.size === 0) uncountable.push("no tables were counted at all - the before-map is empty, so any assertion over it is vacuous");
+  return { counts: out, uncountable };
 }
 
 function primaryKey(db, table) {
@@ -127,8 +138,11 @@ function primaryKey(db, table) {
 
 /* ------------------------------------------------------------ transform --- */
 /* Applied identically to the rehearsal copy and to the live file. Everything it
-   is allowed to do is visible in these twenty lines. */
-function transform(db, offenders, log) {
+   is allowed to do is visible in these lines, and it reports exactly how many
+   rows it removed per table so the assertion can hold it to that number. */
+function transform(db, offenders) {
+  const log = [];
+  const deletes = new Map(); // table -> rows this tool intentionally removed
   for (const r of offenders) {
     const key = `${r.table}.${r.column}`;
     // A rename can only collide when the path column is part of the row's
@@ -149,44 +163,136 @@ function transform(db, offenders, log) {
             `${key} is part of the primary key, already holds the canonical value ` +
             `${JSON.stringify(r.canonical)}, and has no declared dedupe rule. Refusing to guess.`);
         }
+        // The identity restriction is load-bearing, not decoration: it bounds the
+        // victim set to rows that duplicate a canonical row for the SAME entity.
+        // Without it this is `DELETE ... WHERE col = ?`, which is the bug that
+        // destroyed 14 sessions. tools/test-mutation.mjs proves it.
         const where = [`${r.column} = ?`, ...rule.identity.map((c) => `${c} IN (SELECT ${c} FROM ${r.table} WHERE ${r.column} = ?)`)].join(" AND ");
         const params = [r.value, ...rule.identity.map(() => r.canonical)];
         const victims = db.prepare(`SELECT ${pk.join(", ")} FROM ${r.table} WHERE ${where}`).all(...params);
         const del = db.prepare(`DELETE FROM ${r.table} WHERE ${where}`).run(...params);
-        log(`${key}: ${del.changes} duplicate row(s) for ${JSON.stringify(victims.map((v) => pk.map((c) => v[c]).join("/")))}`);
+        if (del.changes) {
+          deletes.set(r.table, (deletes.get(r.table) || 0) + del.changes);
+          log.push(`${key}: removed ${del.changes} declared duplicate row(s) ${JSON.stringify(victims.map((v) => pk.map((c) => v[c]).join("/")))}`);
+        }
       }
     }
 
     const up = db.prepare(`UPDATE ${r.table} SET ${r.column} = ? WHERE ${r.column} = ?`).run(r.canonical, r.value);
-    if (up.changes) log(`${key}: ${up.changes} row(s) -> ${r.canonical}`);
+    if (up.changes) log.push(`${key}: ${up.changes} row(s) -> ${r.canonical}`);
   }
+  return { log, deletes };
 }
 
-/* Non-destruction proof. The only rows allowed to disappear are the duplicates
-   a declared dedupe rule named, and the transform logs those by primary key. */
-function assertNonDestructive(before, after, deletedKeys) {
-  const lost = [];
+/* Non-destruction proof.
+   The delta must equal the declared delete count EXACTLY. Treating the allowance
+   as a truthy flag is the second version of the same bug: one declared duplicate
+   plus 998 undeclared ones would pass, because a non-empty string is truthy. */
+function assertNonDestructive(before, after, deletes, where) {
+  const report = [];
   for (const [table, n] of before) {
-    if (after.get(table) === undefined) continue;
-    const delta = n - after.get(table);
+    const now = after.get(table);
+    if (now === undefined) {
+      throw new Error(
+        `${where}: table "${table}" could not be counted after the transform, so it is no longer ` +
+        `covered by the non-destruction check. Refusing to continue - an unchecked table is an ` +
+        `unbounded one.`);
+    }
+    const delta = n - now;
     if (delta === 0) continue;
-    const key = table + ".directory";
-    const allowed = deletedKeys.get(key);
-    lost.push(`${table}: ${n} -> ${after.get(table)} (${delta > 0 ? "lost " + delta : "gained " + -delta}${allowed ? ", declared dedupe logged: " + allowed : ", UNDECLARED"})`);
-    if (delta > 0 && !allowed) throw new Error("rows vanished from " + lost.join("; "));
+    if (delta < 0) { report.push(`${table}: ${n} -> ${now} (+${-delta})`); continue; }
+
+    const declared = deletes.get(table) || 0;
+    if (declared === 0) {
+      throw new Error(`${where}: ${table} lost ${delta} row(s) and no dedupe rule declared any`);
+    }
+    if (delta !== declared) {
+      throw new Error(
+        `${where}: ${table} lost ${delta} row(s) but only ${declared} were declared duplicates. ` +
+        `The transform removed ${delta - declared} undeclared row(s).`);
+    }
+    report.push(`${table}: ${n} -> ${now} (-${delta}, all declared duplicates)`);
   }
-  return lost;
+  for (const table of deletes.keys()) {
+    if (!before.has(table)) throw new Error(`${where}: transform deleted from ${table}, absent from the before-count`);
+  }
+  return report;
 }
+
+/* --------------------------------------------------------------- backup --- */
+/* A copy is not a backup until it has been opened and checked. The previous
+   version reported OK for a copyFileSync of a live 123MB database, and its
+   rollback hint copied one of three files - so restoring replayed a stale -wal
+   over the recovered file and reinstated the corruption. Both are fixed here:
+   VACUUM INTO produces a single self-contained file, and the restore deletes
+   the target's -wal/-shm before writing. */
+function verifiedBackup(dest) {
+  for (const s of ["", "-wal", "-shm"]) { if (fs.existsSync(dest + s)) fs.rmSync(dest + s, { force: true }); }
+  const seed = new DatabaseSync(DB);
+  try { seed.exec("PRAGMA wal_checkpoint(TRUNCATE)"); } catch { /* best effort */ }
+  seed.exec(`VACUUM INTO '${dest.replace(/'/g, "''")}'`);
+  seed.close();
+  const chk = new DatabaseSync(dest, { readOnly: true });
+  const integrity = Object.values(chk.prepare("PRAGMA integrity_check").get())[0];
+  const sessions = chk.prepare("SELECT COUNT(*) c FROM session").get().c;
+  chk.close();
+  if (integrity !== "ok") { try { fs.rmSync(dest, { force: true }); } catch { /* ignore */ } throw new Error(`backup failed integrity_check: ${integrity}`); }
+  return { integrity, sessions };
+}
+
+const restoreBlock = (file) => [
+  `node "${path.resolve(fileURLPath(), 'canonicalize-paths.mjs')}" --restore "${file}"`,
+  `# or by hand - the -wal/-shm MUST go first, or SQLite replays stale frames:`,
+  `Remove-Item '${DB}-wal','${DB}-shm' -Force -ErrorAction SilentlyContinue`,
+  `Copy-Item '${file}' '${DB}' -Force`,
+].join("\n     ");
+
+function fileURLPath() { return process.argv[1] || "tools/canonicalize-paths.mjs"; }
 
 /* ------------------------------------------------------------------ main --- */
+/* --- 0. restore mode: a tested escape hatch, not a printed suggestion ------- */
+const restoreIdx = argv.indexOf("--restore");
+if (restoreIdx !== -1) {
+  const file = argv[restoreIdx + 1];
+  if (!file || !fs.existsSync(file)) { bad("--restore needs the path of a backup file"); process.exit(126); }
+
+  const src = new DatabaseSync(file, { readOnly: true });
+  const srcIntegrity = Object.values(src.prepare("PRAGMA integrity_check").get())[0];
+  const srcSessions = src.prepare("SELECT COUNT(*) c FROM session").get().c;
+  src.close();
+  if (srcIntegrity !== "ok") { bad(`refusing to restore: the backup itself fails integrity_check (${srcIntegrity})`); process.exit(1); }
+  ok(`backup verified: integrity_check ok, ${srcSessions} session(s)`);
+
+  // The single most important line in this file. A stale -wal left next to the
+  // restored file is replayed over it on the next open, which silently
+  // reinstates the state the backup was taken to escape.
+  for (const s of ["-wal", "-shm"]) {
+    if (fs.existsSync(DB + s)) { fs.rmSync(DB + s, { force: true }); info(`removed stale ${path.basename(DB + s)}`); }
+  }
+  fs.copyFileSync(file, DB);
+  const after = new DatabaseSync(DB, { readOnly: true });
+  const ok2 = Object.values(after.prepare("PRAGMA integrity_check").get())[0];
+  const nowSessions = after.prepare("SELECT COUNT(*) c FROM session").get().c;
+  after.close();
+  if (ok2 !== "ok") { bad(`restore produced a file that fails integrity_check (${ok2})`); process.exit(1); }
+  ok(`restored ${DB} - integrity_check ok, ${nowSessions} session(s) (was ${srcSessions} in the backup)`);
+  info("restart opencode so it re-reads the restored database");
+  process.exit(0);
+}
+
 console.log("\n  path canonicalisation");
 info(`  database: ${DB}`);
 info(`  canonical form: ${CANON_NAME}`);
 
 const probe = new DatabaseSync(DB, { readOnly: true });
 const before = survey(probe);
-const beforeCounts = rowCounts(probe);
+const beforeRowCounts = rowCounts(probe);
 probe.close();
+if (beforeRowCounts.uncountable.length) {
+  bad(`cannot count: ${beforeRowCounts.uncountable.join("; ")} - no table is left unchecked`);
+  process.exit(1);
+}
+const beforeCounts = beforeRowCounts.counts;
 
 console.log(`\n  ${"table.column".padEnd(28)} ${"rows".padEnd(7)} value`);
 for (const r of before) {
@@ -211,37 +317,30 @@ console.log("");
 const scratch = path.join(SCRATCH_DIR, "rehearsal.db");
 for (const s of ["", "-wal", "-shm"]) { if (fs.existsSync(scratch + s)) fs.rmSync(scratch + s); }
 
-const rehearsalLog = [];
-let rehearsal;
+let rehearsalRun;
 try {
   const seed = new DatabaseSync(DB);
   try { seed.exec("PRAGMA wal_checkpoint(TRUNCATE)"); } catch { /* best effort */ }
   seed.exec(`VACUUM INTO '${scratch.replace(/'/g, "''")}'`);
   seed.close();
 
-  rehearsal = new DatabaseSync(scratch);
+  const rehearsal = new DatabaseSync(scratch);
   rehearsal.exec("BEGIN IMMEDIATE");
-  try { transform(rehearsal, offenders, (m) => rehearsalLog.push(m)); rehearsal.exec("COMMIT"); }
+  try { rehearsalRun = transform(rehearsal, offenders); rehearsal.exec("COMMIT"); }
   catch (e) { try { rehearsal.exec("ROLLBACK"); } catch { /* ignore */ } throw e; }
   rehearsal.close();
 } catch (e) {
   try { fs.rmSync(scratch, { force: true }); } catch { /* ignore */ }
-  for (const m of rehearsalLog) info("rehearsal: " + m);
   bad("rehearsal failed, live database untouched: " + e.message);
   process.exit(1);
 }
 
-const deletedKeys = new Map();
-for (const m of rehearsalLog) {
-  const mm = /^(.+?): \d+ duplicate row/.exec(m);
-  if (mm) deletedKeys.set(mm[1], (deletedKeys.get(mm[1]) || "") + "; " + m);
-  info("rehearsal: " + m);
-}
+for (const m of rehearsalRun.log) info("rehearsal: " + m);
 
 try {
   const copy = new DatabaseSync(scratch, { readOnly: true });
-  const afterCounts = rowCounts(copy);
-  const report = assertNonDestructive(beforeCounts, afterCounts, deletedKeys);
+  const afterCounts = rowCounts(copy).counts;
+  const report = assertNonDestructive(beforeCounts, afterCounts, rehearsalRun.deletes, "rehearsal");
   const still = survey(copy).filter((r) => r.needsFix);
   copy.close();
   for (const l of report) info("rehearsal: " + l);
@@ -253,34 +352,42 @@ try {
   process.exit(1);
 }
 
-/* --- 2. back up the live file ---------------------------------------------- */
+/* --- 2. back up the live file, and prove the backup is restorable ---------- */
 fs.mkdirSync(BACKUPS, { recursive: true });
 const stamp = new Date().toISOString().replace(/[:.]/g, "-");
 const dest = path.join(BACKUPS, `opencode-${stamp}.db`);
-{
-  const seed = new DatabaseSync(DB);
-  try { seed.exec("PRAGMA wal_checkpoint(TRUNCATE)"); } catch { /* best effort */ }
-  seed.close();
-  for (const s of ["", "-wal", "-shm"]) if (fs.existsSync(DB + s)) fs.copyFileSync(DB + s, dest + s);
+try {
+  const b = verifiedBackup(dest);
+  ok(`backup verified -> ${dest}`);
+  info(`  integrity_check ${b.integrity}, ${b.sessions} session(s), single self-contained file`);
+} catch (e) {
+  try { fs.rmSync(scratch, { force: true }); } catch { /* ignore */ }
+  bad(`backup unusable (${e.message}) - live database untouched`);
+  process.exit(1);
 }
-ok(`backup -> ${dest}`);
 
 /* --- 3. apply -------------------------------------------------------------- */
 const db = new DatabaseSync(DB);
 db.exec("PRAGMA busy_timeout = 8000");
-const applied = [];
+let liveRun;
 db.exec("BEGIN IMMEDIATE");
 try {
-  transform(db, offenders, (m) => applied.push(m));
-  const afterCounts = rowCounts(db);
-  const report = assertNonDestructive(beforeCounts, afterCounts, deletedKeys);
+  liveRun = transform(db, offenders);
+  const afterCounts = rowCounts(db).counts;
+  // Asserted against the LIVE run's own delete count, then cross-checked against
+  // the rehearsal. Reusing the rehearsal's permission for the live write is how
+  // an extra deletion on the real database would slip through.
+  const report = assertNonDestructive(beforeCounts, afterCounts, liveRun.deletes, "live");
   if (survey(db).some((r) => r.needsFix)) throw new Error("some spellings remain after the update");
+  for (const [t, n] of rehearsalRun.deletes) {
+    if ((liveRun.deletes.get(t) || 0) !== n) throw new Error(`live run deleted ${liveRun.deletes.get(t) || 0} row(s) from ${t}; the rehearsal deleted ${n}`);
+  }
   db.exec("COMMIT");
   for (const l of report) info("live: " + l);
 } catch (e) {
   try { db.exec("ROLLBACK"); } catch { /* ignore */ }
   bad("failed and rolled back, nothing changed: " + e.message);
-  console.log(`  ${C.d}restore with:${C.x} Copy-Item '${dest}' '${DB}'`);
+  console.log(`  ${C.d}restore with:${C.x}\n     ${restoreBlock(dest)}`);
   db.close();
   try { fs.rmSync(scratch, { force: true }); } catch { /* ignore */ }
   process.exit(1);
@@ -289,14 +396,20 @@ try { db.exec("PRAGMA wal_checkpoint(TRUNCATE)"); } catch { /* ignore */ }
 db.close();
 try { fs.rmSync(scratch, { force: true }); } catch { /* ignore */ }
 
-for (const m of applied) ok("live: " + m);
+for (const m of liveRun.log) ok("live: " + m);
 
 console.log("");
-const after = survey(new DatabaseSync(DB, { readOnly: true }));
+const afterProbe = new DatabaseSync(DB, { readOnly: true });
+const after = survey(afterProbe);
+const integrity = Object.values(afterProbe.prepare("PRAGMA integrity_check").get())[0];
+afterProbe.close();
 for (const r of after) {
   const flag = r.needsFix ? `${C.r}STILL NON-CANONICAL${C.x}` : `${C.g}ok${C.x}`;
   console.log(`  ${(r.table + "." + r.column).padEnd(28)} ${String(r.count).padEnd(7)} ${JSON.stringify(r.value)}  ${flag}`);
 }
+if (integrity !== "ok") bad(`the live database now fails integrity_check: ${integrity}`);
 console.log("");
-ok(`done; backup is ${path.basename(stamp ? dest : dest)}`);
+ok(`done; verified backup is ${path.basename(dest)} (integrity_check ${integrity})`);
+info(`restore it with: node tools/canonicalize-paths.mjs --restore "${dest}"`);
 info("restart opencode so it re-reads the database with the corrected paths");
+if (has("--prune")) info("prune is a manual operation: review the backups directory before deleting anything");
