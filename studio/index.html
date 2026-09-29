@@ -146,6 +146,7 @@ p{margin:0}
 .flow .ba .lb1{left:12px}.flow .ba .lb2{right:12px;background:var(--amber);color:var(--ink)}
 .flow .ba input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
 .flow .ba input:focus-visible+.line{outline:3px solid var(--ultra)}
+.ctabs{display:flex;gap:6px;padding:5px;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:999px;width:max-content;max-width:100%;margin:0 0 22px}.ctabs button{font:600 14px/1 var(--sans,inherit);padding:11px 20px;border-radius:999px;border:0;background:transparent;color:inherit;cursor:pointer;min-height:44px}.ctabs button[aria-selected=true]{background:var(--amber);color:var(--ink)}.ctabs button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
 .fsteps{list-style:none;padding:0;margin:48px 0 0;position:relative}
 .fsteps::before{content:"";position:absolute;inset-block:10px;inset-inline-start:27px;width:2px;background:linear-gradient(var(--ultra),var(--amber))}
 .fstep{display:grid;grid-template-columns:56px 1fr;gap:18px;padding-bottom:40px;position:relative}
@@ -228,8 +229,7 @@ p{margin:0}
 @media (max-width:860px){.doms{grid-template-columns:1fr}}
 
 /* proof */
-.cases{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:44px}
-@media (max-width:1180px){.cases{grid-template-columns:repeat(2,1fr)}}
+.cases{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:44px}
 .case{background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
 .case .shot{border-radius:0}
 .case .b{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
@@ -328,7 +328,7 @@ footer a{color:var(--mist)}
  <div class="wrap">
   <p class="eyebrow">סטודיו AILGEN · מנוע יצירה לעסקים</p>
   <h1 id="h1" style="margin-top:16px">תנו לנו קישור, רעיון או שם. <em>קבלו עסק שלם.</em></h1>
-  <p class="sub">אתר מעוצב עם מרכז בקרה וסוכן AI, אייקון ושפה חזותית, סרטון השקה ומודעות, מחובר לדומיין שלכם ובנוי כך שיימצא בחיפוש, בלי לאבד את מה שגוגל כבר מכיר. אותה שיטה שבנתה את סוויצ׳ינג TV, את AILGEN ואת האתר החדש של טלאור כראדי.</p>
+  <p class="sub">אתר מעוצב עם מרכז בקרה וסוכן AI, אייקון ושפה חזותית, סרטון השקה ומודעות, מחובר לדומיין שלכם ובנוי כך שיימצא בחיפוש, בלי לאבד את מה שגוגל כבר מכיר. אותה שיטה שבנתה את סוויצ׳ינג TV, את AILGEN, את האתר החדש של טלאור כראדי ואת חזית החנות של עדן קוסמטיקס.</p>
   <form class="launch" id="launch" aria-label="הפעלת הסטודיו">
    <div class="seg" role="tablist" aria-label="מה יש לכם">
     <button type="button" role="tab" data-m="url" aria-selected="true">יש לי אתר</button>
@@ -360,10 +360,11 @@ footer a{color:var(--mist)}
 
 <section class="sec flow" id="flow" aria-labelledby="flowH">
  <div class="wrap">
-  <p class="eyebrow">יצירה אמיתית וסגורה · טלאור כראדי</p>
+  <div class="ctabs" role="tablist" aria-label="בחירת פרויקט"><button role="tab" id="ct-talor" data-case="talor" aria-selected="true" type="button">קבוצת טלאור כראדי</button><button role="tab" id="ct-eden" data-case="eden" aria-selected="false" tabindex="-1" type="button">עדן קוסמטיקס</button></div>
+  <p class="eyebrow" id="flowEy">יצירה אמיתית וסגורה · טלאור כראדי</p>
   <h2 id="flowH">תהליך יצירה מלא, מקישור לעסק שלם.</h2>
-  <p class="lead">זו לא הדמיה. זו הריצה המלאה של הסטודיו על קבוצת טלאור כראדי, מהאתר הקיים שלהם ועד אתר חדש, דמות, סרטון וקמפיין. כל שלב עם התוצר האמיתי שלו והזמן שנמדד.</p>
-  <div class="ba" id="ba"><img src="img/tk-old.webp" alt="האתר הקיים של טלאור כראדי"><img class="new" src="img/tk-site.webp" alt="האתר החדש של טלאור כראדי"><span class="lb1">לפני · האתר הקיים</span><span class="lb2">אחרי · הסטודיו</span><input type="range" min="0" max="100" value="50" id="baR" aria-label="השוואה בין האתר הקיים לאתר החדש"><span class="line" aria-hidden="true"></span></div>
+  <p class="lead" id="flowLead"></p>
+  <div class="ba" id="ba"><img id="baOld" src="img/tk-old.webp" alt="האתר הקיים של טלאור כראדי"><img id="baNew" class="new" src="img/tk-site.webp" alt="האתר החדש של טלאור כראדי"><span class="lb1">לפני · האתר הקיים</span><span class="lb2">אחרי · הסטודיו</span><input type="range" min="0" max="100" value="50" id="baR" aria-label="השוואה בין האתר הקיים לאתר החדש"><span class="line" aria-hidden="true"></span></div>
   <ol class="fsteps" id="fsteps"></ol>
   <div class="closed" id="closed"></div>
  </div>
@@ -414,7 +415,7 @@ footer a{color:var(--mist)}
 <section class="sec dark" id="proof" aria-labelledby="proofH" style="background:var(--night)">
  <div class="wrap">
   <p class="eyebrow">עבודות ומספרים</p>
-  <h2 id="proofH">ארבעה עסקים, שלושה סוגי קלט.</h2>
+  <h2 id="proofH">חמישה עסקים, שלושה סוגי קלט.</h2>
   <div class="cases" id="cases"></div>
   <h3 style="font-size:clamp(26px,3vw,36px);margin-top:64px">הריצה האחרונה, בשקיפות מלאה</h3>
   <p class="lead" id="meterNote"></p>
@@ -530,6 +531,7 @@ const CASES=[
  ['קבוצת טלאור כראדי','קלט: קישור','קבוצת פינוי, מיחזור ובטון: אתר שבנוי סביב המעגל של העסק, מאזן פסולת להיתר ולטופס 4, דמות (סבבי), סרטון השקה עם סצנת חתימה וקמפיין. כל שלב נמדד.',['מאזן פסולת','דמות','סרטון','נמדד'],'https://claude.ai/artifact/7aj1NcY14KNP9ygLgadNYL','#C9F03A','#0B1B2E'],
  ['סוויצ׳ינג TV','קלט: קישור','אתר קיים עם 15 עמודים חופפים הפך לאתר אחד עם מתכנן מסכים, מבחן שמש, דמות (טיבי) וסרטון השקה.',['מתכנן מסכים','דמות','סרטון'],'https://claude.ai/artifact/XWtrx6tuhpq6XUgKioNobo','#F5A524','#07131F'],
  ['AILGEN','קלט: שם','מהשם בלבד: בית קטן עם חלון דולק בלילה, סוכן חי באתר, מרכז בקרה ותיק עבודות עם צילומים אמיתיים.',['סוכן חי','מרכז בקרה','תיק עבודות'],'https://claude.ai/artifact/KEyTNCaGtF4GhgHZDLPwNk','#FFB23E','#111A5A'],
+ ['עדן קוסמטיקס','קלט: קישור','חנות שופיפיי לציוד להרמת ריסים וגבות: חזית חדשה עם בונה ערכה, לוטי (דמות מהלוטוס בלוגו), סרטון עם סצנת הרמה ומעבר SEO של 88 כתובות. כל אלמנט נמדד.',['בונה ערכה','דמות','סרטון','נמדד לכל אלמנט'],'https://claude.ai/artifact/TtnovsJZu5H6P74gQYfCvb','#E7C3B2','#241A18'],
  ['VERMEIL','קלט: קונספט','רשת יין ומשקאות (פרויקט קונספט): חנות שמרגישה כמו גלריה, סומלייה דיגיטלי, בקבוקים מצוירים בקוד.',['סומלייה','קונספט','גלריה'],'https://claude.ai/artifact/Jfu3ejh3zVcUS3xJKUydcZ','#C9A45C','#161214']];
 
 /* spirit matrix (references/01-brand-dna.md): the offline fallback when Claude is not available in this view */
@@ -548,7 +550,7 @@ const DEFAULT_SPIRIT={type:'עסק שירות',spirit:'בטוח ואנושי',pa
 const FONTS_OK=['Frank Ruhl Libre','Heebo','Rubik','Assistant','Secular One','Suez One','Karantina','Varela Round','Amatic SC','Bellefair','David Libre','Noto Serif Hebrew','IBM Plex Sans Hebrew','Alef','Miriam Libre','Fredoka','Noto Sans Hebrew','Bona Nova'];
 </script>
 <script>
-/* ---------- the full creation flow (the real Talor Karadi case) ---------- */
+/* ---------- the full creation flow (two real, closed cases: Talor Karadi and Eden Cosmetics) ---------- */
 const SB={"name": "סבבי", "grid": ["........................", ".......HHHHHHHHHH.......", "......hhhhhHHhhhhh......", ".....hhhhhhHHhhhhhh.....", "...hhhhhhhhhhhhhhhhhh...", ".....gGGGGG..bbbbbb.....", "....ggGGGGG.bbbbbbbb....", "...gggGGGGGbbbbbbbbbb...", "...ggggGGG.bbbbbBBBBB...", "..gggggGGKKKKKKBBBBBBB..", "..gggggGKKKKKKKKBBBBBB..", "...gggggKKKKKKKKBBBBBB..", ".B..gggKKKKKKKKKK..BBBB.", ".BB..ggKKKKKKKKKKgg..BB.", ".BBBB..KKKKKKKKKKggg..B.", "..BBBBBBKKKKKKKKggggg...", "..BBBBBBKKKKKKKKGggggg..", "..BBBBBBBKKKKKKGGggggg..", "...BBBBBbbbbb.GGGgggg...", "...bbbbbbbbbbGGGGGggg...", "....bbbbbbbb.GGGGGgg....", ".....bbbbbb..GGGGGg.....", "......bbbb..GGGGGg......", "........KK.GGGKK........", "........KK....KK........", ".......hhh....hhh......."], "colors": {"K": "#0B1B2E", "g": "#9ACB63", "G": "#2E8B3E", "b": "#7FBEE6", "B": "#2560A8", "h": "#C9F03A", "H": "#A8CC1E", "r": "#FF5A4E", "w": "#FFFFFF"}, "faces": {"idle": [[9, 11, 2, 2, "h"], [13, 11, 2, 2, "h"], [10, 15, 4, 1, "h"]], "blink": [[9, 12, 2, 1, "h"], [13, 12, 2, 1, "h"], [10, 15, 4, 1, "h"]], "look": [[8, 11, 2, 2, "h"], [12, 11, 2, 2, "h"], [10, 15, 3, 1, "h"]], "happy": [[8, 12, 1, 1, "h"], [9, 11, 2, 1, "h"], [11, 12, 1, 1, "h"], [12, 12, 1, 1, "h"], [13, 11, 2, 1, "h"], [15, 12, 1, 1, "h"], [9, 14, 6, 1, "h"], [10, 15, 4, 1, "h"]], "think": [[9, 10, 2, 1, "h"], [13, 10, 2, 1, "h"], [9, 15, 1, 1, "h"], [11, 15, 1, 1, "h"], [13, 15, 1, 1, "h"]], "sleep": [[9, 12, 2, 1, "h"], [13, 12, 2, 1, "h"], [11, 15, 2, 1, "h"]], "surprised": [[9, 10, 2, 3, "h"], [13, 10, 2, 3, "h"], [11, 14, 2, 2, "h"]], "love": [[8, 11, 1, 1, "r"], [10, 11, 1, 1, "r"], [8, 12, 3, 1, "r"], [9, 13, 1, 1, "r"], [13, 11, 1, 1, "r"], [15, 11, 1, 1, "r"], [13, 12, 3, 1, "r"], [14, 13, 1, 1, "r"], [10, 15, 4, 1, "h"]]}, "cell": 11, "hub": [11.5, 13.0, 4.9]};
 const AIL_CASE='https://claude.ai/artifact/KEyTNCaGtF4GhgHZDLPwNk#case-talor'; /* the case in the AILGEN portfolio */
 const TK_LIVE='https://claude.ai/artifact/7aj1NcY14KNP9ygLgadNYL'; /* the live preview of the Talor Karadi site */
@@ -556,7 +558,7 @@ function sbSVG(face='idle',spinning=false){ const px=(x,y,c,w=1,h=1)=>`<rect x="
  let s=''; SB.grid.forEach((row,y)=>[...row].forEach((ch,x)=>{ if(ch!=='.')s+=px(x,y,SB.colors[ch]); }));
  s+=(SB.faces[face]||[]).map(([x,y,w,h,k])=>px(x,y,SB.colors[k],w,h)).join('');
  return `<svg viewBox="-1 -2 26 30" aria-hidden="true">${s}</svg>`; }
-const FLOW=[
+const FLOW_TALOR=[
  ['01','הקלט: קישור אחד','https://talorkaradi.co.il/','אתר וורדפרס ואלמנטור של קבוצה שעוסקת במיחזור פסולת בניין, הריסות, בטון, הנדסה ומיגון. זה כל מה שהסטודיו קיבל.',
   ()=>`<figure><img src="img/tk-old.webp" alt="האתר הקיים" loading="lazy"><figcaption><span>האתר הקיים, צילום מסך של הסורק</span><span class="lbl">מהשטח</span></figcaption></figure>`,1,'2:40 קריאת מצב'],
  ['02','איסוף: כל האתר, בנימוס','30 עמודים · 82 תמונות · 5 סרטונים','הסורק קרא כל עמוד, הוריד תמונות וסרטונים, אסף טלפונים וכתובות, וזיהה צבעים ופונטים. כל מספר נכנס לדף עובדות עם העמוד שממנו הגיע.',
@@ -577,13 +579,57 @@ const FLOW=[
   ()=>`<div class="facts"><div><b>41 נשארות · 19 ב-301</b> כיסוי 100% מ-60 כתובות ישנות<small>seo-plan.mjs</small></div><div><b>21 מדריכים</b> באותה כתובת, כל הטקסט עם הטבלאות והשאלות (לפחות 100%, בממוצע 122% ממילות גוף העמוד), עם JSON-LD<small>seo-pages.mjs</small></div><div><b>0 ממצאים חמורים</b> בבדיקה אוטומטית של האתר החדש. לפני: 2, ועמוד יתום אחד בישן<small>seo-audit.mjs</small></div><div><b>sitemap · robots · _redirects · _headers · llms.txt · 404</b> נוצרו מהתוכנית, והתצוגה noindex עד ההשקה<small>seo-run.mjs · מוכן לפריסה</small></div></div>`,1,'סבבים 3–4: 49 דק׳ · $17.42'],
  ['10','דומיין ומסירה','talorkaradi.co.il · קיים','הדומיין כבר שלהם. מחברים www ב-CNAME, מעבירים את הדומיין הראשי לשרתי השמות של ספק האחסון אחרי העתקת רשומות המייל, ו-HTTPS עולה לבד. לפני כן: קישור תצוגה לאישור, עם תווית "תצוגה מקדימה".',
   ()=>`<div class="facts"><div><b>www → CNAME</b> לפרויקט באחסון<small>DNS</small></div><div><b>@ → nameservers</b> אחרי העתקת MX ו-TXT<small>DNS</small></div><div><b>תצוגה מקדימה</b> קישור לאישור הלקוח<small id="tkLiveNote">בהמתנה לאישור</small></div></div>`,1,'']];
-function renderFlow(){
- $('#fsteps').innerHTML=FLOW.map(([n,t,sub,p,vis,cols,tm])=>`<li class="fstep"><span class="dot">${n}</span><div><h3>${esc(t)}</h3><div class="tm"><span>${esc(sub)}</span>${tm?`<span>זמן: ${esc(tm)}</span>`:''}</div><p>${esc(p)}</p><div class="vis" style="--n:${cols}">${vis()}</div>${(n==='05'||n==='10')&&TK_LIVE?`<a class="btn go" href="${TK_LIVE}" target="_blank" rel="noopener">לאתר החי של טלאור כראדי ↗</a>`:''}</div></li>`).join('');
- const T=RUN.metrics&&RUN.metrics.tiles||[];
- $('#closed').innerHTML=[[String(FLOW.length),'שלבים, כל אחד עם שער בדיקה'],[T[2]?T[2][0].replace(/\D/g,''):'—','דקות עבודה, כל השרשרת (נמדד)'],[T[3]?T[3][0]:'—','עלות API, נמדדה'],['92 / 100','Lighthouse בנייד: ביצועים / נגישות']].map(([b,t])=>`<div><b>${esc(b)}</b><span>${esc(t)}</span></div>`).join('')
-  +`<p class="cl">הפרויקט נסגר: האתר, סבבי, הסרטון והקמפיין מוכנים, והמקרה נכנס לתיק העבודות של AILGEN עם צילומי מסך אמיתיים.${AIL_CASE?` <a href="${AIL_CASE}" target="_blank" rel="noopener">לתיק הפרויקט ↗</a>`:''}</p>`;
- const r=$('#baR'), ba=$('#ba'); const upd=()=>ba.style.setProperty('--cut',r.value+'%'); r.addEventListener('input',upd); upd();
- if(TK_LIVE){const n=document.getElementById('tkLiveNote'); if(n)n.textContent='הקישור מוכן';}
+const ED_LIVE='https://claude.ai/artifact/TtnovsJZu5H6P74gQYfCvb'; /* the live preview of the Eden Cosmetics site (Claude artifact) */
+const ED_AIL='https://claude.ai/artifact/KEyTNCaGtF4GhgHZDLPwNk#case-edencosmetic'; /* the case in the AILGEN portfolio */
+const FLOW_EDEN=[
+ ['01','הקלט: קישור אחד','https://edencosmetic.co.il/','חנות שופיפיי של עדן נחמני לציוד להרמת ריסים וגבות, עיצוב גבות, דבקים וסיליקונים. זה כל מה שהסטודיו קיבל.',
+  ()=>`<figure><img src="img/ed-old.webp" alt="החנות הקיימת של עדן קוסמטיקס" loading="lazy"><figcaption><span>החנות הקיימת, צילום מסך של הסורק</span><span class="lbl">מהשטח</span></figcaption></figure>`,1,'2:30 · $2.2'],
+ ['02','איסוף: כל החנות, בנימוס','88 כתובות · 71 מוצרים · 6 קולקציות','הסורק קרא את כל האתר ואת הקטלוג מה-JSON הציבורי של החנות (מוצרים, קולקציות, מחירים ומלאי), בקצב איטי ובלי לגעת בסל, בתשלום או בחשבון. אחרי הסריקה החנות החזירה אתגר של Cloudflare, והסטודיו הפסיק לפנות אליה: את היתר לקח בבקשות בודדות.',
+  ()=>`<div class="facts"><div><b>71 מוצרים</b> מהקטלוג הציבורי של החנות, עם מחיר ומלאי. תמונת מצב מ-29.9.2026<small>/products.json</small></div><div><b>₪8–₪420</b> טווח המחירים. משלוח חינם מעל ₪499, 4–5 ימי עסקים<small>/policies/shipping-policy</small></div><div><b>קורסים: 0</b> הקולקציה ריקה, ולכן רשימת המתנה ולא קורס שהומצא<small>/collections/קורסים-והשתלמויות</small></div><div><b>"מתנה בכל רכישה"</b> מופיע בבאנר בלי תנאים כתובים, ולכן לא הובטח באתר החדש<small>דף הבית הקיים</small></div></div>`,1,'12:00 סריקה וקריאה · $4.4'],
+ ['03','DNA: הלוגו מוביל הכול','לפני ואחרי','הלוגו הקיים הוא קובץ רסטר של 800×500. הסטודיו עקב אחריו לווקטור, בלי לצייר מחדש: טבעת, מונוגרמה EC ולוטוס. הקונספט הוא העיקול: קו שמתחיל ישר ומתעקל כמו ריס שמתרומם, ובכל אייקון, בקו הפתיחה של כל סקשן, בעיניים של לוטי ובסצנת החתימה של הסרטון. הפלטה נבדקה לניגודיות, והפונטים נבחרו לעברית.',
+  ()=>`<figure><div style="background:#fff;padding:18px;display:grid;place-items:center"><img src="img/ed-logo-old.png" alt="הלוגו הקיים, רסטר" style="max-width:100%;background:none"></div><figcaption><span>לפני: קובץ רסטר 800×500</span></figcaption></figure><figure><div style="background:#241A18;padding:22px;display:grid;place-items:center"><img src="img/ed-symbol.svg" alt="הסמל בווקטור" style="width:140px;background:none"></div><figcaption><span>אחרי: ווקטור, עוקב אחרי הקווים של הלוגו</span></figcaption></figure><figure><div class="pal">${['#241A18','#F8EFEA','#F0D3C3','#E7C3B2','#BF7F7F','#964F58'].map(c=>`<span style="background:${c}"></span>`).join('')}</div><figcaption><span>פלטה: כל זוגות הטקסט AA ומעלה · Frank Ruhl Libre + Assistant + Cinzel</span></figcaption></figure>`,3,'6:40 · $2.3'],
+ ['04','הדמות: לוטי','נולדה מהלוטוס של הלוגו','גוף עגול בצבע העור של הפלטה, פפיון בצורת לוטוס, ועיניים שמתעקלות כמו ריס. שנים-עשר מצבים (כולל שבת ומצמוץ), נימוסים קבועים (עד 6 טיפים בביקור, "שקט לשבוע", ואפשר להסתיר אותה), ואותה רשת פיקסלים באתר ובסרטון. בשבת היא מספרת שההזמנות נפתחות בצאת השבת.',
+  ()=>`<figure><img src="img/ed-mascot.webp" alt="לוטי, הדמות של המותג, במצבים שונים" loading="lazy"><figcaption><span>לוטי</span><span class="lbl demo">דמות</span></figcaption></figure><figure><img src="img/ed-board.webp" alt="לוח המותג" loading="lazy" style="max-height:420px;object-fit:cover;object-position:top"><figcaption><span>לוח המותג: לוגו, אייקונים, פלטה, גופנים</span></figcaption></figure>`,2,'3:00 · $1.4'],
+ ['05','האתר: חזית לחנות','בונה הערכה · חנות · סל · מרכז בקרה','חזית חדשה שמושכת את המחירים והמלאי מהחנות עצמה ומעבירה לסל של החנות בקישור הרשמי שלה. התשלום נשאר בחנות. יש חנות עם חיפוש, מסננים, הצצה מהירה ועדכנו אותי לפריט שאזל, רשימת המתנה לקורסים, סוכנת שעונה רק מהמדיניות של החנות, פאנל נגישות ומרכז בקרה לבעלת החנות.',
+  ()=>`<figure><img src="img/ed-site.webp" alt="האתר החדש, מסך הפתיחה" loading="lazy"><figcaption><span>האתר החדש, דסקטופ</span><span class="lbl">צילום מסך</span></figcaption></figure><figure><img src="img/ed-mobile.webp" alt="האתר החדש בנייד" loading="lazy" style="max-height:420px;object-fit:cover;object-position:top"><figcaption><span>נייד</span></figcaption></figure>`,2,'42 דק׳ עם הבלופרינט ותיקוני הביצועים · $18.1'],
+ ['06','כלי ההוכחה: בונה הערכה','השאלה הראשונה של כל מטפלת','איזו ערכה, ומה עוד צריך? בוחרים טיפול (ריסים, גבות, צביעה) ומצב (מתחילה או השלמת מלאי), והכלי בונה רשימה אמיתית מהמוצרים והמחירים של החנות: מה כלול, מה חסר למשלוח חינם, חמצן מאותו מותג של הצבע, והעברה לסל של החנות או שליחה בוואטסאפ. פריט שאזל לא נכנס לרשימה.',
+  ()=>`<figure><img src="img/ed-kit.webp" alt="בונה הערכה" loading="lazy"><figcaption><span>בונה הערכה, דסקטופ</span><span class="lbl">נתוני החנות · 29.9.2026</span></figcaption></figure>`,1,''],
+ ['07','הסרטון: סצנת ה"הרמה"','29 שניות · 9:16 ו-4:5 · פסקול מקורי','סצנת החתימה: ריסים נבנים בגל, מתעקלים ומתרוממים, ומתחתם עולה "ציוד מקצועי להרמת ריסים וגבות". אחריה תמונות המוצר האמיתיות של החנות, המחירים שלה, ומשפט של עדן מהאתר שלה. לוטי פותחת וסוגרת. כל מעבר הוא העיקול. נבדק בשלושה יחסים, והעוצמה נמדדה ל-‎-13.9 LUFS.',
+  ()=>`<figure><video controls playsinline preload="none" poster="img/ed-film-poster.jpg" src="img/ed-film.mp4" style="aspect-ratio:9/16;max-height:640px;margin-inline:auto"></video><figcaption><span>הסרטון, 9:16</span><span class="lbl">תמונות מוצר מהחנות + קוד</span></figcaption></figure>`,1,'27:40 · $9.6 · רינדור 9:16 ב-318 שניות ו-4:5 ב-227 שניות, ברקע'],
+ ['08','הקמפיין','3 סטילס · 3 טקסטים · 5 כותרות','A/B לשבוע הראשון: הסרטון מול "בונים ערכה" מול "משלוח חינם מעל ₪499". קהל: מטפלות ריסים וגבות, UTM מוכן, השבתה בשבת, והערה ברורה: אין "מתנה בכל רכישה", אין ביקורות שלא פורסמו, ואין תאריכי קורסים.',
+  ()=>['ad-feed','ad-square','ad-story'].map((f,i)=>`<figure><img src="img/ed-${f}.webp" alt="מודעה ${i+1}" loading="lazy"><figcaption><span>${['פיד 4:5','ריבוע 1:1','סטורי 9:16'][i]}</span></figcaption></figure>`).join(''),3,'כלול בשלב 7'],
+ ['09','SEO והגירה: לא לאבד את מה שגוגל כבר מכיר','88 כתובות ישנות · 94 עמודים חדשים','כל כתובת של החנות הקיימת נשארת במקומה או מקבלת הפניה אחת: /products, /collections, /pages, /policies ו-/blogs. הסטודיו יצר עמוד סטטי לכל מוצר (71), קולקציה (6), מותג (5), מדריך (3) ומדיניות (5), כל אחד עם title, description, h1, canonical, JSON-LD (מוצר, מחיר, מלאי) ותמונת שיתוף. הסל, התשלום והחשבון נשארים בחנות ולא נחסמים.',
+  ()=>`<div class="facts"><div><b>100%</b> כיסוי של 88 כתובות ישנות, ואימות שכל אחת 200 או הפניה אחת<small>seo-plan.mjs · seo-verify.mjs</small></div><div><b>94 עמודים</b> 71 מוצרים, 6 קולקציות, 5 מותגים, 3 מדריכים, מדיניות ועמודי חנות<small>seo-pages.mjs</small></div><div><b>0 ממצאים חמורים</b> ואפס עמודים יתומים בבדיקה אוטומטית של האתר החדש<small>seo-audit.mjs</small></div><div><b>--external</b> מסלולים שנשארים בחנות (/cart, /checkout, /account) נספרים ככיסוי ולא נחסמים<small>כלי חדש בסטודיו</small></div></div>`,1,'7:40 · $5.0'],
+ ['10','דומיין ומסירה','edencosmetic.co.il · שייך לחנות','הדומיין פועל היום על שופיפיי. איך החזית החדשה עולה עליו היא החלטה של בעלת החנות, ולכן עד אז יש קישור תצוגה לאישור, עם תווית "תצוגה מקדימה" והוראת noindex. מה שנשאר אצל הבעלת: החלטת הדומיין, תמונות אמיתיות, המלצות, פרטי קורסים, תנאי מתנה, תיקון הטעות "Edem" בבאנר, ואישור הפרטיות.',
+  ()=>`<div class="facts"><div><b>תצוגה מקדימה</b> קישור לאישור בעלת החנות, noindex<small id="edLiveNote">בהמתנה לאישור</small></div><div><b>הסל בחנות</b> הקישור הרשמי של שופיפיי, בלי לאסוף פרטי אשראי באתר<small>/cart/&lt;variant&gt;:&lt;qty&gt;</small></div><div><b>11 מוצרים בלי תיאור</b> נשארו כפי שהחנות פרסמה, ולא נכתב להם תיאור מומצא<small>brief.md</small></div></div>`,1,'']];
+
+/* the two closed cases: same ten stages, each with its real output. A tab switches between them. */
+const CASE_CFG={
+ talor:{tab:'קבוצת טלאור כראדי',eyebrow:'יצירה אמיתית וסגורה · טלאור כראדי',title:'תהליך יצירה מלא, מקישור לעסק שלם.',
+  lead:'זו לא הדמיה. זו הריצה המלאה של הסטודיו על קבוצת טלאור כראדי, מהאתר הקיים שלהם ועד אתר חדש, דמות, סרטון וקמפיין. כל שלב עם התוצר האמיתי שלו והזמן שנמדד.',
+  ba:['img/tk-old.webp','img/tk-site.webp','האתר הקיים של טלאור כראדי','האתר החדש של טלאור כראדי'],flow:FLOW_TALOR,live:TK_LIVE,liveLabel:'לאתר החי של טלאור כראדי ↗',ail:AIL_CASE,
+  tiles:()=>{const T=RUN.metrics&&RUN.metrics.tiles||[];return [[String(FLOW_TALOR.length),'שלבים, כל אחד עם שער בדיקה'],[T[2]?T[2][0].replace(/\D/g,''):'—','דקות עבודה, כל השרשרת (נמדד)'],[T[3]?T[3][0]:'—','עלות API, נמדדה'],['92 / 100','Lighthouse בנייד: ביצועים / נגישות']];},
+  closed:'הפרויקט נסגר: האתר, סבבי, הסרטון והקמפיין מוכנים, והמקרה נכנס לתיק העבודות של AILGEN עם צילומי מסך אמיתיים.'},
+ eden:{tab:'עדן קוסמטיקס',eyebrow:'יצירה אמיתית וסגורה · עדן קוסמטיקס',title:'מחנות קיימת ל-94 עמודים, אתר, דמות וסרטון.',
+  lead:'הריצה המלאה השנייה של הסטודיו, הפעם על חנות שופיפיי: קטלוג של 71 מוצרים, חזית חדשה שמעבירה לסל של החנות, לוטי, סרטון עם סצנת "הרמה", ומעבר SEO של 88 כתובות. כל שלב עם התוצר האמיתי שלו, והזמן והעלות נמדדו לכל אלמנט.',
+  ba:['img/ed-old.webp','img/ed-site.webp','החנות הקיימת של עדן קוסמטיקס','החזית החדשה של עדן קוסמטיקס'],flow:FLOW_EDEN,live:ED_LIVE,liveLabel:'לאתר החי של עדן קוסמטיקס ↗',ail:ED_AIL,
+  tiles:()=>[[String(FLOW_EDEN.length),'שלבים, כל אחד עם שער בדיקה'],['108','דקות עבודת סוכן, מהקישור ועד הקמפיין (נמדד)'],['$44.7','עלות API, נמדדה, אותו טווח'],['92 / 100','Lighthouse בדף הבית, נייד / דסקטופ: ביצועים']],
+  closed:'הפרויקט נסגר: האתר, לוטי, הסרטון והקמפיין מוכנים, 53 אלמנטים בשרשרת נבדקו אחד אחד, והמקרה נכנס לתיק העבודות של AILGEN עם צילומי מסך אמיתיים.'}
+};
+let CUR_CASE='talor';
+function renderFlow(key){
+ key=CASE_CFG[key]?key:CUR_CASE; CUR_CASE=key; const K=CASE_CFG[key];
+ $('#flowEy').textContent=K.eyebrow; $('#flowH').textContent=K.title; $('#flowLead').textContent=K.lead;
+ const bo=$('#baOld'), bn=$('#baNew'); bo.src=K.ba[0]; bo.alt=K.ba[2]; bn.src=K.ba[1]; bn.alt=K.ba[3];
+ [...document.querySelectorAll('.ctabs [role=tab]')].forEach(b=>{const on=b.dataset.case===key; b.setAttribute('aria-selected',String(on)); b.tabIndex=on?0:-1;});
+ $('#fsteps').innerHTML=K.flow.map(([n,t,sub,p,vis,cols,tm])=>`<li class="fstep"><span class="dot">${n}</span><div><h3>${esc(t)}</h3><div class="tm"><span>${esc(sub)}</span>${tm?`<span>זמן: ${esc(tm)}</span>`:''}</div><p>${esc(p)}</p><div class="vis" style="--n:${cols}">${vis()}</div>${(n==='05'||n==='10')&&K.live?`<a class="btn go" href="${K.live}" target="_blank" rel="noopener">${K.liveLabel}</a>`:''}</div></li>`).join('');
+ $('#closed').innerHTML=K.tiles().map(([b,t])=>`<div><b>${esc(b)}</b><span>${esc(t)}</span></div>`).join('')
+  +`<p class="cl">${esc(K.closed)}${K.ail?` <a href="${K.ail}" target="_blank" rel="noopener">לתיק הפרויקט ↗</a>`:''}</p>`;
+ const r=$('#baR'), ba=$('#ba'); r.value=50; const upd=()=>ba.style.setProperty('--cut',r.value+'%'); if(!r._b){r.addEventListener('input',upd); r._b=1;} upd();
+ const n=document.getElementById(key==='eden'?'edLiveNote':'tkLiveNote'); if(n&&K.live)n.textContent='הקישור מוכן';
+ if(!renderFlow._t){renderFlow._t=1; const tabs=[...document.querySelectorAll('.ctabs [role=tab]')];
+  tabs.forEach(b=>{b.addEventListener('click',()=>renderFlow(b.dataset.case)); b.addEventListener('keydown',e=>{ if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault(); const i=tabs.indexOf(b), nx=tabs[(i+(e.key==='ArrowLeft'?1:-1)+tabs.length)%tabs.length]; renderFlow(nx.dataset.case); nx.focus();} });});
+  const h=(location.hash||'').replace('#',''); if(h==='case-edencosmetic')setTimeout(()=>renderFlow('eden'),0);}
 }
 </script>
 <script>
@@ -592,7 +638,7 @@ function renderStatic(){
  $('#getsList').innerHTML=GETS.map(([t,p,ic])=>`<div class="get"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ic}</svg><h3>${esc(t)}</h3><p>${esc(p)}</p></div>`).join('');
  $('#steps').innerHTML=STAGES.map(([t,s,w],i)=>`<li><span class="n">0${i+1}</span><b>${esc(t)}</b><p>${esc(s)}</p><span class="who">${esc(w)}</span></li>`).join('');
  $('#faqList').innerHTML=FAQ.map(([q,a],i)=>`<details${i===0?' open':''}><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('');
- const MARK={'קבוצת טלאור כראדי':a=>`<image href="img/tk-symbol.svg" x="38" y="4" width="44" height="44"/>`,'סוויצ׳ינג TV':a=>`<rect x="30" y="14" width="60" height="40" rx="6" fill="none" stroke="${a}" stroke-width="3"/><rect x="35" y="19" width="50" height="30" rx="3" fill="none" stroke="${a}" stroke-width="1.2" opacity=".6"/><rect x="72" y="42" width="5" height="5" fill="${a}"/>`,'AILGEN':a=>`<g transform="translate(46 12) scale(.29)"><polygon points="0,100 38,0 58,0 96,100 75,100 48,29 21,100" fill="#EEF0FB"/><rect x="40" y="67" width="16" height="16" fill="${a}"/></g>`,'VERMEIL':a=>`<circle cx="60" cy="34" r="20" fill="none" stroke="${a}" stroke-width="2.5"/><circle cx="60" cy="34" r="14" fill="none" stroke="${a}" stroke-width="1" opacity=".7"/><text x="60" y="39" text-anchor="middle" font-family="Frank Ruhl Libre,serif" font-size="14" font-weight="700" fill="${a}">V</text>`};
+ const MARK={'קבוצת טלאור כראדי':a=>`<image href="img/tk-symbol.svg" x="38" y="4" width="44" height="44"/>`,'סוויצ׳ינג TV':a=>`<rect x="30" y="14" width="60" height="40" rx="6" fill="none" stroke="${a}" stroke-width="3"/><rect x="35" y="19" width="50" height="30" rx="3" fill="none" stroke="${a}" stroke-width="1.2" opacity=".6"/><rect x="72" y="42" width="5" height="5" fill="${a}"/>`,'AILGEN':a=>`<g transform="translate(46 12) scale(.29)"><polygon points="0,100 38,0 58,0 96,100 75,100 48,29 21,100" fill="#EEF0FB"/><rect x="40" y="67" width="16" height="16" fill="${a}"/></g>`,'עדן קוסמטיקס':a=>`<image href="img/ed-symbol.svg" x="42" y="6" width="36" height="36"/>`,'VERMEIL':a=>`<circle cx="60" cy="34" r="20" fill="none" stroke="${a}" stroke-width="2.5"/><circle cx="60" cy="34" r="14" fill="none" stroke="${a}" stroke-width="1" opacity=".7"/><text x="60" y="39" text-anchor="middle" font-family="Frank Ruhl Libre,serif" font-size="14" font-weight="700" fill="${a}">V</text>`};
  $('#cases').innerHTML=CASES.map(([n,inp,p,tags,url,acc,bg])=>`<article class="case"><div class="shot" style="background:${bg};display:grid;place-items:center"><svg viewBox="0 0 120 80" width="60%" aria-hidden="true">${MARK[n](acc)}<text x="60" y="72" text-anchor="middle" font-family="IBM Plex Mono" font-size="7.5" fill="${acc}">${esc(inp)}</text></svg></div><div class="b"><h3>${esc(n)}</h3><p>${esc(p)}</p><div class="tags">${tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div><a class="go" href="${url}" target="_blank" rel="noopener">לאתר החי ↗</a></div></article>`).join('');
  renderMeter();
 }
