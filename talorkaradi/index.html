@@ -8,8 +8,10 @@
 <meta name="theme-color" content="#0B1B2E">
 <link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="icon" href="img/favicon-32.png" sizes="32x32"><link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <meta property="og:title" content="קבוצת טלאור כראדי · מה שיוצא מהאתר, חוזר לבנות"><meta property="og:image" content="img/hero.webp"><meta property="og:locale" content="he_IL">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Rubik:wght@400;500;700;800&display=swap">
+<link rel="preload" href="fonts/Rubik-800-hebrew.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="fonts/Rubik-400-hebrew.woff2" as="font" type="font/woff2" crossorigin>
+<style>/* fonts: self-hosted, inlined so they never block the first paint and never call Google */
+@font-face {font-family: 'Rubik'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/Rubik-400-hebrew.woff2) format('woff2'); unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;} @font-face {font-family: 'Rubik'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/Rubik-400-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;} @font-face {font-family: 'Rubik'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/Rubik-500-hebrew.woff2) format('woff2'); unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;} @font-face {font-family: 'Rubik'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/Rubik-500-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;} @font-face {font-family: 'Rubik'; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/Rubik-700-hebrew.woff2) format('woff2'); unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;} @font-face {font-family: 'Rubik'; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/Rubik-700-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;} @font-face {font-family: 'Rubik'; font-style: normal; font-weight: 800; font-display: swap; src: url(fonts/Rubik-800-hebrew.woff2) format('woff2'); unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;} @font-face {font-family: 'Rubik'; font-style: normal; font-weight: 800; font-display: swap; src: url(fonts/Rubik-800-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;} @font-face {font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/IBMPlexMono-500-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;} @font-face {font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/IBMPlexMono-600-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+</style>
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
  --night:#0B1B2E;--night2:#112841;--nightLine:rgba(201,240,58,.10);--paper:#F4F5F0;--surface:#FFFFFF;--ink:#0B1B2E;--steel:#5A6670;--line:#DCE0D8;
@@ -72,7 +74,8 @@ p{margin:0}
 .nav{display:flex;gap:4px;margin-inline-start:auto}
 .nav a{text-decoration:none;font-weight:500;font-size:15px;padding:8px 10px;border-radius:8px;opacity:.86}
 .nav a:hover,.nav a[aria-current="true"]{opacity:1;background:rgba(127,140,150,.14)}
-.hdr .call{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:0 16px;border-radius:999px;background:var(--hivis);color:#0B1B2E;text-decoration:none;font:700 15px/1 var(--display)}
+.hdr .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.call{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:0 16px;border-radius:999px;background:var(--hivis);color:#0B1B2E;text-decoration:none;font:700 15px/1 var(--display)}
 .hdr .call .mono{font-weight:600}
 .burger{display:none;width:44px;height:44px;border-radius:12px;border:1.5px solid currentColor;background:transparent;cursor:pointer;margin-inline-start:auto}
 .burger i{display:block;width:18px;height:2px;background:currentColor;margin:4px auto;border-radius:2px}
@@ -209,7 +212,7 @@ dialog::backdrop{background:rgba(7,19,31,.62);backdrop-filter:blur(4px)}
 .band-l{display:flex;justify-content:space-between;font-size:11.5px;color:#5A6670;margin-top:6px;direction:ltr}
 .back{margin-top:14px;display:flex;gap:10px;align-items:center;font-size:13.5px;line-height:1.4;color:#1E5B2E;background:#EAF4DD;border-radius:10px;padding:10px 12px}
 .back svg{width:26px;height:26px;flex:none}
-.stamp{position:absolute;top:16px;inset-inline-start:50%;transform:translateX(-50%) rotate(-8deg);border:2px solid #2560A8;color:#2560A8;border-radius:6px;padding:3px 8px;font-size:11px;letter-spacing:.12em;opacity:.8}
+.stamp{position:absolute;top:16px;inset-inline-start:50%;transform:translateX(-50%) rotate(-8deg);border:2px solid #2560A8;color:#2560A8;border-radius:6px;padding:3px 8px;font-size:11px;letter-spacing:.12em;opacity:.92}
 .calc .fine{font:500 12.5px/1.6 var(--mono);color:var(--steel);margin-top:14px}
 @media (max-width:900px){.calc .panel{grid-template-columns:1fr}}
 @media (max-width:420px){.chips{grid-template-columns:1fr}}
@@ -292,7 +295,7 @@ dialog::backdrop{background:rgba(7,19,31,.62);backdrop-filter:blur(4px)}
 .cos{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px}
 .co{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px}
 .co .mono{font-size:12px;color:var(--green);letter-spacing:.08em}
-.co h4{font-size:22px;margin-top:8px}
+.co h3{font-size:22px;margin-top:8px}
 .co p{color:var(--steel);font-size:15.5px;margin-top:8px}
 @media (max-width:900px){.story,.cos{grid-template-columns:1fr}}
 
@@ -504,20 +507,20 @@ html.a-font body,html.a-font h1,html.a-font h2,html.a-font h3{font-family:Arial,
 </defs>
 </svg>
 <a class="skip" href="#main">דלג לתוכן</a>
-<div class="pv" id="pv" hidden>תצוגה מקדימה של האתר החדש · <b>הוכן על ידי AILGEN</b> עבור קבוצת טלאור כראדי</div>
+<div class="pv" id="pv">תצוגה מקדימה של האתר החדש · <b>הוכן על ידי AILGEN</b> עבור קבוצת טלאור כראדי</div>
 
 <header class="hdr" id="hdr">
  <div class="wrap in">
-  <a class="logo" href="#top" aria-label="קבוצת טלאור כראדי, לראש העמוד"><svg viewBox="0 0 512 512" aria-hidden="true"><use href="#sym"/></svg><span class="wm"><small>קבוצת</small><b>טלאור כראדי</b></span></a>
+  <a class="logo" href="#top" aria-label="קבוצת טלאור כראדי, לראש העמוד"><svg viewBox="0 0 512 512" aria-hidden="true"><use href="#sym"/></svg><span class="wm"><small>קבוצת</small> <b>טלאור כראדי</b></span></a>
   <nav class="nav" aria-label="ניווט ראשי">
    <a href="#circle">המעגל</a><a href="#services">שירותים</a><a href="#calc">מאזן פסולת</a><a href="#sites">מתקנים</a><a href="#projects">פרויקטים</a><a href="#about">הקבוצה</a><a href="#faq">שאלות</a><a href="#contact">צור קשר</a>
   </nav>
   <button class="mini" id="admBtn" type="button">מרכז בקרה <span class="cnt" id="newCount" hidden></span></button>
-  <a class="call" href="tel:*9084" aria-label="חייגו למוקד כוכבית 9084"><span>מוקד</span><span class="mono" dir="ltr">*9084</span></a>
+  <a class="call" href="tel:*9084"><span>מוקד</span> <span class="mono" dir="ltr">*9084</span><span class="sr"> (חיוג)</span></a>
   <button class="burger" id="burger" type="button" aria-label="פתיחת תפריט" aria-expanded="false" aria-controls="drawer"><i></i><i></i><i></i></button>
  </div>
 </header>
-<div class="drawer" id="drawer" aria-hidden="true">
+<div class="drawer" id="drawer" aria-hidden="true" inert>
  <div class="in" role="dialog" aria-modal="true" aria-label="תפריט">
   <button class="mini" id="drawerX" type="button" style="align-self:flex-start;background:transparent;color:inherit;border-color:rgba(255,255,255,.3)">סגירה ✕</button>
   <a class="dl" href="#circle">המעגל</a><a class="dl" href="#services">שירותים</a><a class="dl" href="#calc">מאזן פסולת</a><a class="dl" href="#sites">מתקנים</a><a class="dl" href="#projects">פרויקטים</a><a class="dl" href="#about">הקבוצה</a><a class="dl" href="#faq">שאלות והמוקד</a><a class="dl" href="#jobs">דרושים</a><a class="dl" href="#contact">צור קשר</a>
@@ -722,7 +725,7 @@ html.a-font body,html.a-font h1,html.a-font h2,html.a-font h3{font-family:Arial,
 
 <footer>
  <div class="wrap in">
-  <a class="logo" href="#top"><svg viewBox="0 0 512 512" aria-hidden="true"><use href="#sym"/></svg><span class="wm"><small>קבוצת</small><b>טלאור כראדי</b></span></a>
+  <a class="logo" href="#top"><svg viewBox="0 0 512 512" aria-hidden="true"><use href="#sym"/></svg><span class="wm"><small>קבוצת</small> <b>טלאור כראדי</b></span></a>
   <nav aria-label="ניווט בתחתית"><a href="#circle">המעגל</a><a href="#services">שירותים</a><a href="#calc">מאזן פסולת</a><a href="#sites">מתקנים</a><a href="#projects">פרויקטים</a><a href="#jobs">דרושים</a><a href="#contact">צור קשר</a></nav>
   <div class="fine"><span>© <span id="yr"></span> קבוצת טלאור כראדי בע"מ</span><button class="lk" type="button" data-legal="privacy">מדיניות פרטיות</button><button class="lk" type="button" data-legal="a11y">הצהרת נגישות</button><span>עיצוב ופיתוח: AILGEN</span><button type="button" id="sbBack" hidden>להחזיר את סבבי</button></div>
  </div>
@@ -917,7 +920,7 @@ function bladesSVG(){
   const pts=bb.map(([x,y])=>rot(x,y,90*i)), xs=pts.map(p=>p[0]), ys=pts.map(p=>p[1]);
   const x0=Math.min(...xs)-8,y0=Math.min(...ys)-8,w=Math.max(...xs)-x0+16,h=Math.max(...ys)-y0+16;
   const [lx,ly]=rot(214,112,90*i), g=i%2?'b':'g';
-  return `<g class="bl" data-s="${i}" tabindex="0" role="button" aria-label="שלב ${i+1}: ${STAGES[i].k}">
+  return `<g class="bl" data-s="${i}" tabindex="0" role="button" aria-label="${String(i+1).padStart(2,'0')} ${STAGES[i].k}, לשלב הזה במעגל">
    <g transform="rotate(${90*i} 256 256)"><g clip-path="url(#bclip)"><image href="img/${imgs[i]}.webp" x="${x0}" y="${y0}" width="${w}" height="${h}" preserveAspectRatio="xMidYMid slice" transform="rotate(${-90*i} 256 256)"/>
     <use href="#blade" fill="url(#t${g})" opacity=".42" style="mix-blend-mode:multiply"/></g><use href="#fold" clip-path="url(#bclip)" fill="url(#t${g}d)" opacity=".62"/></g>
    <text class="lbl" x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle">${String(i+1).padStart(2,'0')} ${STAGES[i].k}</text></g>`;}).join('');
@@ -1034,18 +1037,18 @@ function renderVids(){
  const extra=(C.extraProjects||[]).filter(p=>p.kind==='yt'&&p.yt).map(p=>({id:p.yt,t:p.t,c:p.s||'',ext:1}));
  $('#vids').innerHTML=[...VIDS,...extra].map(v=>`<a class="vid" href="https://www.youtube.com/watch?v=${esc(v.id)}" target="_blank" rel="noopener"><div class="ph"><img src="${v.ext?`https://i.ytimg.com/vi/${esc(v.id)}/hqdefault.jpg`:`img/yt-${v.id}.webp`}" alt="" loading="lazy"><span class="play"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="#0B1B2E"/></svg></span></span><span class="tag">מהשטח · יוטיוב</span></div><b>${esc(v.t)}</b><small>${esc(v.c)} · לצפייה ביוטיוב ↗</small></a>`).join('');
  const photos=[...STRIP.map(k=>({src:`img/${k}.webp`,cap:PH[k]})),...(C.extraProjects||[]).filter(p=>p.kind==='real'&&p.photo).map(p=>({src:p.photo,cap:p.t}))];
- $('#strip').innerHTML=photos.map((p,i)=>`<button type="button" data-lb="${i}" aria-label="הגדלה: ${esc(p.cap)}"><div class="ph"><img src="${esc(p.src)}" alt="${esc(p.cap)}" loading="lazy"><span class="tag">מהשטח</span></div></button>`).join('');
+ $('#strip').innerHTML=photos.map((p,i)=>`<button type="button" data-lb="${i}" aria-label="מהשטח: ${esc(p.cap)}, להגדלה"><div class="ph"><img src="${esc(p.src)}" alt="" loading="lazy"><span class="tag">מהשטח</span></div></button>`).join('');
  $$('#strip [data-lb]').forEach(b=>b.addEventListener('click',()=>{lastFocus=b; const p=photos[+b.dataset.lb]; $('#lbImg').src=p.src; $('#lbImg').alt=p.cap; $('#lbCap').textContent=p.cap+' · מהשטח'; $('#lb').showModal();}));
 }
 
 /* film (filled after the launch film is rendered) */
-function filmUI(){ $('#pv').hidden=!PREVIEW; if(!FILM)return; const s=$('#film'); s.hidden=false; const v=$('#filmV'); v.poster=FILM.poster; v.src=FILM.src; $('#filmTxt').textContent=FILM.txt; $('#filmFacts').innerHTML=(FILM.facts||[]).map(([a,b])=>`<div><b>${esc(a)}</b><span>${esc(b)}</span></div>`).join(''); }
+function filmUI(){ if(!PREVIEW)$('#pv').remove(); /* at go-live also delete the #pv line from 2-body.html */ if(!FILM)return; const s=$('#film'); s.hidden=false; const v=$('#filmV'); v.poster=FILM.poster; v.src=FILM.src; $('#filmTxt').textContent=FILM.txt; $('#filmFacts').innerHTML=(FILM.facts||[]).map(([a,b])=>`<div><b>${esc(a)}</b><span>${esc(b)}</span></div>`).join(''); }
 
 /* about */
 function renderAbout(){
  $('#timeline').innerHTML=TL.map(([y,t,p])=>`<li><span class="y">${esc(y)}</span><div><b>${esc(t)}</b><p>${esc(p)}</p></div></li>`).join('');
  $('#values').innerHTML=VALUES.map(v=>`<span>${esc(v)}</span>`).join('');
- $('#cos').innerHTML=COS.map(([k,n,p])=>`<div class="co"><span class="mono">${esc(k)}</span><h4>${esc(n)}</h4><p>${esc(p)}</p></div>`).join('');
+ $('#cos').innerHTML=COS.map(([k,n,p])=>`<div class="co"><span class="mono">${esc(k)}</span><h3>${esc(n)}</h3><p>${esc(p)}</p></div>`).join('');
  $('#jobList').innerHTML=JOBS.map(j=>`<li>${esc(j)}</li>`).join('');
 }
 
@@ -1259,7 +1262,7 @@ const spy=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const
 ['circle','services','calc','sites','projects','about','faq','contact'].forEach(id=>spy.observe($('#'+id)));
 function trap(box,e){ if(e.key!=='Tab')return; const f=$$('a[href],button:not([disabled]),input,select,textarea,[tabindex="0"]',box).filter(x=>x.offsetParent); if(!f.length)return; const a=f[0],z=f[f.length-1]; if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus();} else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus();} }
 const dr=$('#drawer'), bg=$('#burger');
-const openDr=o=>{dr.classList.toggle('open',o); dr.setAttribute('aria-hidden',String(!o)); bg.setAttribute('aria-expanded',String(o)); document.body.style.overflow=o?'hidden':''; if(o)setTimeout(()=>$('#drawerX').focus(),30); else bg.focus({preventScroll:true});};
+const openDr=o=>{dr.classList.toggle('open',o); dr.setAttribute('aria-hidden',String(!o)); dr.inert=!o; bg.setAttribute('aria-expanded',String(o)); document.body.style.overflow=o?'hidden':''; if(o)setTimeout(()=>$('#drawerX').focus(),30); else bg.focus({preventScroll:true});};
 bg.onclick=()=>openDr(true); $('#drawerX').onclick=()=>openDr(false); dr.addEventListener('click',e=>{if(e.target===dr||e.target.closest('a.dl'))openDr(false);});
 dr.addEventListener('keydown',e=>{trap($('.in',dr),e); if(e.key==='Escape')openDr(false);});
 const A=$('#a11y'), AB=$('#a11yBtn');

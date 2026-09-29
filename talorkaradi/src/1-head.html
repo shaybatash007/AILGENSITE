@@ -8,8 +8,10 @@
 <meta name="theme-color" content="#0B1B2E">
 <link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="icon" href="img/favicon-32.png" sizes="32x32"><link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <meta property="og:title" content="קבוצת טלאור כראדי · מה שיוצא מהאתר, חוזר לבנות"><meta property="og:image" content="img/hero.webp"><meta property="og:locale" content="he_IL">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Rubik:wght@400;500;700;800&display=swap">
+<link rel="preload" href="fonts/Rubik-800-hebrew.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="fonts/Rubik-400-hebrew.woff2" as="font" type="font/woff2" crossorigin>
+<style>/* fonts: self-hosted, inlined so they never block the first paint and never call Google */
+@font-face {font-family: 'Rubik'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/Rubik-400-hebrew.woff2) format('woff2'); unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;} @font-face {font-family: 'Rubik'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/Rubik-400-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;} @font-face {font-family: 'Rubik'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/Rubik-500-hebrew.woff2) format('woff2'); unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;} @font-face {font-family: 'Rubik'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/Rubik-500-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;} @font-face {font-family: 'Rubik'; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/Rubik-700-hebrew.woff2) format('woff2'); unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;} @font-face {font-family: 'Rubik'; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/Rubik-700-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;} @font-face {font-family: 'Rubik'; font-style: normal; font-weight: 800; font-display: swap; src: url(fonts/Rubik-800-hebrew.woff2) format('woff2'); unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;} @font-face {font-family: 'Rubik'; font-style: normal; font-weight: 800; font-display: swap; src: url(fonts/Rubik-800-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;} @font-face {font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/IBMPlexMono-500-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;} @font-face {font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/IBMPlexMono-600-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+</style>
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
  --night:#0B1B2E;--night2:#112841;--nightLine:rgba(201,240,58,.10);--paper:#F4F5F0;--surface:#FFFFFF;--ink:#0B1B2E;--steel:#5A6670;--line:#DCE0D8;
@@ -72,7 +74,8 @@ p{margin:0}
 .nav{display:flex;gap:4px;margin-inline-start:auto}
 .nav a{text-decoration:none;font-weight:500;font-size:15px;padding:8px 10px;border-radius:8px;opacity:.86}
 .nav a:hover,.nav a[aria-current="true"]{opacity:1;background:rgba(127,140,150,.14)}
-.hdr .call{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:0 16px;border-radius:999px;background:var(--hivis);color:#0B1B2E;text-decoration:none;font:700 15px/1 var(--display)}
+.hdr .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.call{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:0 16px;border-radius:999px;background:var(--hivis);color:#0B1B2E;text-decoration:none;font:700 15px/1 var(--display)}
 .hdr .call .mono{font-weight:600}
 .burger{display:none;width:44px;height:44px;border-radius:12px;border:1.5px solid currentColor;background:transparent;cursor:pointer;margin-inline-start:auto}
 .burger i{display:block;width:18px;height:2px;background:currentColor;margin:4px auto;border-radius:2px}
@@ -209,7 +212,7 @@ dialog::backdrop{background:rgba(7,19,31,.62);backdrop-filter:blur(4px)}
 .band-l{display:flex;justify-content:space-between;font-size:11.5px;color:#5A6670;margin-top:6px;direction:ltr}
 .back{margin-top:14px;display:flex;gap:10px;align-items:center;font-size:13.5px;line-height:1.4;color:#1E5B2E;background:#EAF4DD;border-radius:10px;padding:10px 12px}
 .back svg{width:26px;height:26px;flex:none}
-.stamp{position:absolute;top:16px;inset-inline-start:50%;transform:translateX(-50%) rotate(-8deg);border:2px solid #2560A8;color:#2560A8;border-radius:6px;padding:3px 8px;font-size:11px;letter-spacing:.12em;opacity:.8}
+.stamp{position:absolute;top:16px;inset-inline-start:50%;transform:translateX(-50%) rotate(-8deg);border:2px solid #2560A8;color:#2560A8;border-radius:6px;padding:3px 8px;font-size:11px;letter-spacing:.12em;opacity:.92}
 .calc .fine{font:500 12.5px/1.6 var(--mono);color:var(--steel);margin-top:14px}
 @media (max-width:900px){.calc .panel{grid-template-columns:1fr}}
 @media (max-width:420px){.chips{grid-template-columns:1fr}}
@@ -292,7 +295,7 @@ dialog::backdrop{background:rgba(7,19,31,.62);backdrop-filter:blur(4px)}
 .cos{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px}
 .co{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px}
 .co .mono{font-size:12px;color:var(--green);letter-spacing:.08em}
-.co h4{font-size:22px;margin-top:8px}
+.co h3{font-size:22px;margin-top:8px}
 .co p{color:var(--steel);font-size:15.5px;margin-top:8px}
 @media (max-width:900px){.story,.cos{grid-template-columns:1fr}}
 

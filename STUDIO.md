@@ -88,5 +88,6 @@ node .claude/skills/ailgen-studio/scripts/meter.mjs --marks projects/<slug>/mete
 - AILGEN: האתר ב-`index.html`, המיתוג ב-`brand/`, ערכת המותג ב-`projects/ailgen/`.
 - VERMEIL: האתר ב-`vermeil/`, ערכת המותג ב-`projects/vermeil/`.
 - טלאור כראדי: האתר ב-`talorkaradi/`, הקמפיין ב-`campaigns/talorkaradi/`, ערכת המותג, דף העובדות והמדידה ב-`projects/talorkaradi/`.
+  המקרה נכנס גם לתיק העבודות ב-`index.html` (פרויקט 01, `CASES.talor`), עם צילומי מסך אמיתיים ב-`assets/talorkaradi-*`. מדידת כל השרשרת: 98 דקות, $36.32, 311 קריאות (`projects/talorkaradi/meter-report.json`).
 
 המתודולוגיה המלאה, שלב אחר שלב, נמצאת ב-`.claude/skills/ailgen-studio/SKILL.md` ובתיקיית `references/` שלידו.

@@ -9,13 +9,20 @@
 {"t": "2026-09-27T12:16:18.099Z", "phase": "4-film", "ev": "start", "note": "spin motif + film.json + renders"}
 {"t": "2026-09-27T12:18:40.000Z", "phase": "4-film", "ev": "end", "note": "film.json + spin motif + review frames done; full renders start in background (9:16 356 s, 4:5 268 s, stills 4 s machine time)"}
 {"t": "2026-09-27T12:18:40.000Z", "phase": "5-product", "ev": "start", "note": "AILGEN studio page (simulation, pricing, domain, orders) while renders run; also film packaging + campaign README"}
-{"t":"2026-09-27T12:32:18.935Z","phase":"5-product","ev":"end"}
-{"t":"2026-09-27T12:32:18.992Z","phase":"6-report","ev":"start","note":"research + measured report + business plan"}
-{"t":"2026-09-27T12:37:45.240Z","phase":"6-report","ev":"end"}
-{"t":"2026-09-27T12:37:45.287Z","phase":"7-deliver","ev":"start","note":"skill update, commit, push, report to user"}
-{"t":"2026-09-27T12:38:12.321Z","phase":"7-deliver","ev":"end"}
-{"t":"2026-09-27T12:50:46.003Z","phase":"v2-mascot","ev":"start","note":"user: full chain — mascot, signature film, live site, studio flow"}
-{"t":"2026-09-27T12:54:25.947Z","phase":"v2-mascot","ev":"end"}
-{"t":"2026-09-27T12:54:26.047Z","phase":"v2-site","ev":"start","note":"Sababi on the site + film section + preview banner"}
-{"t":"2026-09-27T12:58:32.749Z","phase":"v2-site","ev":"end"}
-{"t":"2026-09-27T12:58:32.890Z","phase":"v2-studio","ev":"start","note":"studio: full creation flow as a closed real case"}
+{"t": "2026-09-27T12:32:18.935Z", "phase": "5-product", "ev": "end"}
+{"t": "2026-09-27T12:32:18.992Z", "phase": "6-report", "ev": "start", "note": "research + measured report + business plan"}
+{"t": "2026-09-27T12:37:45.240Z", "phase": "6-report", "ev": "end"}
+{"t": "2026-09-27T12:37:45.287Z", "phase": "7-deliver", "ev": "start", "note": "skill update, commit, push, report to user"}
+{"t": "2026-09-27T12:38:12.321Z", "phase": "7-deliver", "ev": "end"}
+{"t": "2026-09-27T12:50:46.003Z", "phase": "v2-mascot", "ev": "start", "note": "user: full chain — mascot, signature film, live site, studio flow"}
+{"t": "2026-09-27T12:54:25.947Z", "phase": "v2-mascot", "ev": "end"}
+{"t": "2026-09-27T12:54:26.047Z", "phase": "v2-site", "ev": "start", "note": "Sababi on the site + film section + preview banner"}
+{"t": "2026-09-27T12:58:32.749Z", "phase": "v2-site", "ev": "end"}
+{"t": "2026-09-27T12:58:32.890Z", "phase": "v2-studio", "ev": "start", "note": "studio: full creation flow as a closed real case"}
+{"t": "2026-09-27T13:08:23.600Z", "phase": "v2-studio", "ev": "end"}
+{"t": "2026-09-27T13:08:23.647Z", "phase": "v2-portfolio", "ev": "start", "note": "AILGEN portfolio case"}
+{"t": "2026-09-27T13:27:44.170Z", "phase": "v2-portfolio", "ev": "end", "note": "recordings, lighthouse fixes, case written; publishing next"}
+{"t": "2026-09-27T13:27:52.574Z", "phase": "v2-close", "ev": "start", "note": "studio: full-chain totals, Talor in works, closed box"}
+{"t": "2026-09-27T13:33:34.040Z", "phase": "v2-close", "ev": "end", "note": "session paused here"}
+{"t": "2026-09-29T17:38:31.793Z", "phase": "v2-finish", "ev": "start", "note": "resumed: publish studio, repo mirror, docs, commit"}
+{"t": "2026-09-29T17:41:08.000Z", "phase": "v2-finish", "ev": "end", "note": "commit next"}

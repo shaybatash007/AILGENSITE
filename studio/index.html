@@ -173,6 +173,7 @@ p{margin:0}
 .closed{margin-top:8px;padding:22px 24px;border-radius:18px;background:var(--ink);color:#EEF0FB;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 .closed div b{display:block;font:600 clamp(22px,2.4vw,30px)/1.1 var(--mono);color:var(--amber);direction:ltr;text-align:right}
 .closed div span{color:var(--mist);font-size:14px}
+.closed .cl{grid-column:1/-1;margin:4px 0 0;color:var(--mist);font-size:14px}.closed .cl a{color:var(--amber)}
 @media (max-width:760px){.fstep .vis{grid-template-columns:1fr!important}.closed{grid-template-columns:1fr 1fr}.fstep{grid-template-columns:44px 1fr;gap:12px}.fstep .dot{width:44px;height:44px}.fsteps::before{inset-inline-start:21px}}
 
 /* deliverables */
@@ -227,7 +228,8 @@ p{margin:0}
 @media (max-width:860px){.doms{grid-template-columns:1fr}}
 
 /* proof */
-.cases{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px}
+.cases{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:44px}
+@media (max-width:1180px){.cases{grid-template-columns:repeat(2,1fr)}}
 .case{background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
 .case .shot{border-radius:0}
 .case .b{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
@@ -412,7 +414,7 @@ footer a{color:var(--mist)}
 <section class="sec dark" id="proof" aria-labelledby="proofH" style="background:var(--night)">
  <div class="wrap">
   <p class="eyebrow">עבודות ומספרים</p>
-  <h2 id="proofH">שלושה עסקים, שלושה סוגי קלט.</h2>
+  <h2 id="proofH">ארבעה עסקים, שלושה סוגי קלט.</h2>
   <div class="cases" id="cases"></div>
   <h3 style="font-size:clamp(26px,3vw,36px);margin-top:64px">הריצה האחרונה, בשקיפות מלאה</h3>
   <p class="lead" id="meterNote"></p>
@@ -499,7 +501,7 @@ const STAGES=[
 
 /* The measured Talor Karadi run (projects/talorkaradi/meter.jsonl → scripts/meter.mjs) */
 const RUN={name:'קבוצת טלאור כראדי',host:'talorkaradi.co.il',times:["4:35", "7:14", "2:37", "16:20", "בתוך האתר", "2:21 + 10:28 רינדור", "—", "לאורך הדרך"],
- metrics:{"note": "בניית העסק של טלאור כראדי, מהקישור ועד אתר וסרטון, נמדדה מתוך הלוג של הסוכן: זמן, קריאות למודל, טוקנים ועלות לפי המחירון של Claude API. הרינדור של הסרטון (10.5 דקות) רץ ברקע, במקביל לעבודה.", "tiles": [["33 דק׳", "עבודת הסוכן, מקישור לעסק"], ["$10.36", "עלות מחשוב (API)"], ["84", "קריאות למודל"], ["10.5 דק׳", "רינדור סרטון, ברקע"]], "head": ["שלב", "זמן", "קריאות", "פלט (טוקנים)", "עלות"], "rows": [["קריאת מצב ותוכנית", "4:35", "8", "14K", "$1.65"], ["איסוף (סריקה + קריאה)", "7:14", "28", "21K", "$1.94"], ["DNA של המותג", "2:37", "12", "13K", "$0.96"], ["אתר + מרכז בקרה + סוכן", "16:20", "27", "99K", "$4.73"], ["סרטון (תסריט + בדיקה)", "2:21", "9", "12K", "$1.08"]]}};
+ metrics:{"note": "השרשרת של טלאור כראדי נמדדה מתוך הלוג של הסוכן, שלב אחר שלב: זמן, קריאות למודל, טוקנים ועלות לפי המחירון של Claude API. הסבב הראשון בנה אתר וסרטון. אחרי המשוב, הסבב השני הוסיף את סבבי, סצנת החתימה, זרימת היצירה ותיק העבודות. הרינדורים רצו ברקע, במקביל לעבודה. ההפסקות בין הסבבים לא נספרות.", "tiles": [["33 דק׳", "סבב ראשון: מקישור לאתר וסרטון"], ["$10.36", "עלות הסבב הראשון"], ["98 דק׳", "כל השרשרת, עד תיק העבודות"], ["$36.32", "עלות כל השרשרת, 311 קריאות"]], "head": ["שלב", "זמן", "קריאות", "פלט (טוקנים)", "עלות"], "rows": [["קריאת מצב ותוכנית", "4:35", "8", "14K", "$1.65"], ["איסוף (סריקה + קריאה)", "7:15", "28", "21K", "$1.94"], ["DNA של המותג", "2:37", "12", "13K", "$0.96"], ["אתר + מרכז בקרה + סוכן", "16:21", "27", "99K", "$4.73"], ["סרטון (תסריט + בדיקה)", "2:22", "9", "12K", "$1.08"], ["הסטודיו של AILGEN", "13:39", "36", "69K", "$5.35"], ["דוח מדידה ותוכנית עסקית", "5:26", "14", "32K", "$2.38"], ["מסירה", "0:27", "2", "2K", "$0.27"], ["סבב 2: סבבי, הדמות", "3:40", "15", "18K", "$2.37"], ["סבב 2: האתר עם סבבי והסרטון", "4:07", "10", "20K", "$1.83"], ["סבב 2: זרימת היצירה בסטודיו", "9:51", "15", "23K", "$2.60"], ["סבב 2: תיק עבודות ו-Lighthouse", "19:21", "88", "61K", "$7.23"], ["סבב 2: פרסום, מראה בריפו ותיעוד", "8:18", "47", "29K", "$3.94"]]}};
 
 const GETS=[
  ['אתר חי ומעוצב','עברית ומימין לשמאל, נייד ודסקטופ, כניסה שנולדת מהלוגו, נגישות ומדיניות פרטיות.','<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8M12 18v3"/>'],
@@ -522,6 +524,7 @@ const FAQ=[
  ['איך משלמים?','אחרי ההזמנה מקבלים תוכנית עבודה וקישור לתשלום מאובטח. המנוי החודשי מתחיל רק כשהאתר באוויר.']];
 
 const CASES=[
+ ['קבוצת טלאור כראדי','קלט: קישור','קבוצת פינוי, מיחזור ובטון: אתר שבנוי סביב המעגל של העסק, מאזן פסולת להיתר ולטופס 4, דמות (סבבי), סרטון השקה עם סצנת חתימה וקמפיין. כל שלב נמדד.',['מאזן פסולת','דמות','סרטון','נמדד'],'https://claude.ai/artifact/7aj1NcY14KNP9ygLgadNYL','#C9F03A','#0B1B2E'],
  ['סוויצ׳ינג TV','קלט: קישור','אתר קיים עם 15 עמודים חופפים הפך לאתר אחד עם מתכנן מסכים, מבחן שמש, דמות (טיבי) וסרטון השקה.',['מתכנן מסכים','דמות','סרטון'],'https://claude.ai/artifact/XWtrx6tuhpq6XUgKioNobo','#F5A524','#07131F'],
  ['AILGEN','קלט: שם','מהשם בלבד: בית קטן עם חלון דולק בלילה, סוכן חי באתר, מרכז בקרה ותיק עבודות עם צילומים אמיתיים.',['סוכן חי','מרכז בקרה','תיק עבודות'],'https://claude.ai/artifact/KEyTNCaGtF4GhgHZDLPwNk','#FFB23E','#111A5A'],
  ['VERMEIL','קלט: קונספט','רשת יין ומשקאות (פרויקט קונספט): חנות שמרגישה כמו גלריה, סומלייה דיגיטלי, בקבוקים מצוירים בקוד.',['סומלייה','קונספט','גלריה'],'https://claude.ai/artifact/Jfu3ejh3zVcUS3xJKUydcZ','#C9A45C','#161214']];
@@ -544,6 +547,7 @@ const FONTS_OK=['Frank Ruhl Libre','Heebo','Rubik','Assistant','Secular One','Su
 <script>
 /* ---------- the full creation flow (the real Talor Karadi case) ---------- */
 const SB={"name": "סבבי", "grid": ["........................", ".......HHHHHHHHHH.......", "......hhhhhHHhhhhh......", ".....hhhhhhHHhhhhhh.....", "...hhhhhhhhhhhhhhhhhh...", ".....gGGGGG..bbbbbb.....", "....ggGGGGG.bbbbbbbb....", "...gggGGGGGbbbbbbbbbb...", "...ggggGGG.bbbbbBBBBB...", "..gggggGGKKKKKKBBBBBBB..", "..gggggGKKKKKKKKBBBBBB..", "...gggggKKKKKKKKBBBBBB..", ".B..gggKKKKKKKKKK..BBBB.", ".BB..ggKKKKKKKKKKgg..BB.", ".BBBB..KKKKKKKKKKggg..B.", "..BBBBBBKKKKKKKKggggg...", "..BBBBBBKKKKKKKKGggggg..", "..BBBBBBBKKKKKKGGggggg..", "...BBBBBbbbbb.GGGgggg...", "...bbbbbbbbbbGGGGGggg...", "....bbbbbbbb.GGGGGgg....", ".....bbbbbb..GGGGGg.....", "......bbbb..GGGGGg......", "........KK.GGGKK........", "........KK....KK........", ".......hhh....hhh......."], "colors": {"K": "#0B1B2E", "g": "#9ACB63", "G": "#2E8B3E", "b": "#7FBEE6", "B": "#2560A8", "h": "#C9F03A", "H": "#A8CC1E", "r": "#FF5A4E", "w": "#FFFFFF"}, "faces": {"idle": [[9, 11, 2, 2, "h"], [13, 11, 2, 2, "h"], [10, 15, 4, 1, "h"]], "blink": [[9, 12, 2, 1, "h"], [13, 12, 2, 1, "h"], [10, 15, 4, 1, "h"]], "look": [[8, 11, 2, 2, "h"], [12, 11, 2, 2, "h"], [10, 15, 3, 1, "h"]], "happy": [[8, 12, 1, 1, "h"], [9, 11, 2, 1, "h"], [11, 12, 1, 1, "h"], [12, 12, 1, 1, "h"], [13, 11, 2, 1, "h"], [15, 12, 1, 1, "h"], [9, 14, 6, 1, "h"], [10, 15, 4, 1, "h"]], "think": [[9, 10, 2, 1, "h"], [13, 10, 2, 1, "h"], [9, 15, 1, 1, "h"], [11, 15, 1, 1, "h"], [13, 15, 1, 1, "h"]], "sleep": [[9, 12, 2, 1, "h"], [13, 12, 2, 1, "h"], [11, 15, 2, 1, "h"]], "surprised": [[9, 10, 2, 3, "h"], [13, 10, 2, 3, "h"], [11, 14, 2, 2, "h"]], "love": [[8, 11, 1, 1, "r"], [10, 11, 1, 1, "r"], [8, 12, 3, 1, "r"], [9, 13, 1, 1, "r"], [13, 11, 1, 1, "r"], [15, 11, 1, 1, "r"], [13, 12, 3, 1, "r"], [14, 13, 1, 1, "r"], [10, 15, 4, 1, "h"]]}, "cell": 11, "hub": [11.5, 13.0, 4.9]};
+const AIL_CASE='https://claude.ai/artifact/KEyTNCaGtF4GhgHZDLPwNk#case-talor'; /* the case in the AILGEN portfolio */
 const TK_LIVE='https://claude.ai/artifact/7aj1NcY14KNP9ygLgadNYL'; /* the live preview of the Talor Karadi site */
 function sbSVG(face='idle',spinning=false){ const px=(x,y,c,w=1,h=1)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${c}"/>`;
  let s=''; SB.grid.forEach((row,y)=>[...row].forEach((ch,x)=>{ if(ch!=='.')s+=px(x,y,SB.colors[ch]); }));
@@ -570,6 +574,9 @@ const FLOW=[
   ()=>`<div class="facts"><div><b>www → CNAME</b> לפרויקט באחסון<small>DNS</small></div><div><b>@ → nameservers</b> אחרי העתקת MX ו-TXT<small>DNS</small></div><div><b>תצוגה מקדימה</b> קישור לאישור הלקוח<small id="tkLiveNote">בהמתנה לאישור</small></div></div>`,1,'']];
 function renderFlow(){
  $('#fsteps').innerHTML=FLOW.map(([n,t,sub,p,vis,cols,tm])=>`<li class="fstep"><span class="dot">${n}</span><div><h3>${esc(t)}</h3><div class="tm"><span>${esc(sub)}</span>${tm?`<span>זמן: ${esc(tm)}</span>`:''}</div><p>${esc(p)}</p><div class="vis" style="--n:${cols}">${vis()}</div>${(n==='05'||n==='09')&&TK_LIVE?`<a class="btn go" href="${TK_LIVE}" target="_blank" rel="noopener">לאתר החי של טלאור כראדי ↗</a>`:''}</div></li>`).join('');
+ const T=RUN.metrics&&RUN.metrics.tiles||[];
+ $('#closed').innerHTML=[['9','שלבים, כל אחד עם שער בדיקה'],[T[2]?T[2][0].replace(/\D/g,''):'—','דקות עבודה, כל השרשרת (נמדד)'],[T[3]?T[3][0]:'—','עלות API, נמדדה'],['92 / 100','Lighthouse בנייד: ביצועים / נגישות']].map(([b,t])=>`<div><b>${esc(b)}</b><span>${esc(t)}</span></div>`).join('')
+  +`<p class="cl">הפרויקט נסגר: האתר, סבבי, הסרטון והקמפיין מוכנים, והמקרה נכנס לתיק העבודות של AILGEN עם צילומי מסך אמיתיים.${AIL_CASE?` <a href="${AIL_CASE}" target="_blank" rel="noopener">לתיק הפרויקט ↗</a>`:''}</p>`;
  const r=$('#baR'), ba=$('#ba'); const upd=()=>ba.style.setProperty('--cut',r.value+'%'); r.addEventListener('input',upd); upd();
  if(TK_LIVE){const n=document.getElementById('tkLiveNote'); if(n)n.textContent='הקישור מוכן';}
 }
@@ -580,7 +587,7 @@ function renderStatic(){
  $('#getsList').innerHTML=GETS.map(([t,p,ic])=>`<div class="get"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ic}</svg><h3>${esc(t)}</h3><p>${esc(p)}</p></div>`).join('');
  $('#steps').innerHTML=STAGES.map(([t,s,w],i)=>`<li><span class="n">0${i+1}</span><b>${esc(t)}</b><p>${esc(s)}</p><span class="who">${esc(w)}</span></li>`).join('');
  $('#faqList').innerHTML=FAQ.map(([q,a],i)=>`<details${i===0?' open':''}><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('');
- const MARK={'סוויצ׳ינג TV':a=>`<rect x="30" y="14" width="60" height="40" rx="6" fill="none" stroke="${a}" stroke-width="3"/><rect x="35" y="19" width="50" height="30" rx="3" fill="none" stroke="${a}" stroke-width="1.2" opacity=".6"/><rect x="72" y="42" width="5" height="5" fill="${a}"/>`,'AILGEN':a=>`<g transform="translate(46 12) scale(.29)"><polygon points="0,100 38,0 58,0 96,100 75,100 48,29 21,100" fill="#EEF0FB"/><rect x="40" y="67" width="16" height="16" fill="${a}"/></g>`,'VERMEIL':a=>`<circle cx="60" cy="34" r="20" fill="none" stroke="${a}" stroke-width="2.5"/><circle cx="60" cy="34" r="14" fill="none" stroke="${a}" stroke-width="1" opacity=".7"/><text x="60" y="39" text-anchor="middle" font-family="Frank Ruhl Libre,serif" font-size="14" font-weight="700" fill="${a}">V</text>`};
+ const MARK={'קבוצת טלאור כראדי':a=>`<image href="img/tk-symbol.svg" x="38" y="4" width="44" height="44"/>`,'סוויצ׳ינג TV':a=>`<rect x="30" y="14" width="60" height="40" rx="6" fill="none" stroke="${a}" stroke-width="3"/><rect x="35" y="19" width="50" height="30" rx="3" fill="none" stroke="${a}" stroke-width="1.2" opacity=".6"/><rect x="72" y="42" width="5" height="5" fill="${a}"/>`,'AILGEN':a=>`<g transform="translate(46 12) scale(.29)"><polygon points="0,100 38,0 58,0 96,100 75,100 48,29 21,100" fill="#EEF0FB"/><rect x="40" y="67" width="16" height="16" fill="${a}"/></g>`,'VERMEIL':a=>`<circle cx="60" cy="34" r="20" fill="none" stroke="${a}" stroke-width="2.5"/><circle cx="60" cy="34" r="14" fill="none" stroke="${a}" stroke-width="1" opacity=".7"/><text x="60" y="39" text-anchor="middle" font-family="Frank Ruhl Libre,serif" font-size="14" font-weight="700" fill="${a}">V</text>`};
  $('#cases').innerHTML=CASES.map(([n,inp,p,tags,url,acc,bg])=>`<article class="case"><div class="shot" style="background:${bg};display:grid;place-items:center"><svg viewBox="0 0 120 80" width="60%" aria-hidden="true">${MARK[n](acc)}<text x="60" y="72" text-anchor="middle" font-family="IBM Plex Mono" font-size="7.5" fill="${acc}">${esc(inp)}</text></svg></div><div class="b"><h3>${esc(n)}</h3><p>${esc(p)}</p><div class="tags">${tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div><a class="go" href="${url}" target="_blank" rel="noopener">לאתר החי ↗</a></div></article>`).join('');
  renderMeter();
 }

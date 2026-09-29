@@ -158,6 +158,7 @@ repo, commit and push, and report to the user in Hebrew: what was built, links, 
 | `scripts/fonts.mjs` | Download Google Fonts (Hebrew + Latin woff2) and write `fonts.css` |
 | `scripts/capture.py` | levelup CAPTURE: every region and element, desktop + mobile, all states |
 | `scripts/rec.py` | levelup2 real-time screencast → MP4 for portfolio footage |
+| `scripts/rec.mjs` | the same recorder for Node-only Playwright, plus `viaCurl` for fonts |
 | `scripts/contact_sheet.py` | Tile frames/screens for review |
 | `engine/film.html` + `render.mjs` + `audio.py` | The brand-film engine: any brand, 4 aspect ratios, original soundtrack. Spec in `engine/README.md` |
 | `scripts/meter.mjs` | Phase marks + measured time, tokens and cost per phase from the session log |

@@ -80,7 +80,7 @@ const spy=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const
 ['circle','services','calc','sites','projects','about','faq','contact'].forEach(id=>spy.observe($('#'+id)));
 function trap(box,e){ if(e.key!=='Tab')return; const f=$$('a[href],button:not([disabled]),input,select,textarea,[tabindex="0"]',box).filter(x=>x.offsetParent); if(!f.length)return; const a=f[0],z=f[f.length-1]; if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus();} else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus();} }
 const dr=$('#drawer'), bg=$('#burger');
-const openDr=o=>{dr.classList.toggle('open',o); dr.setAttribute('aria-hidden',String(!o)); bg.setAttribute('aria-expanded',String(o)); document.body.style.overflow=o?'hidden':''; if(o)setTimeout(()=>$('#drawerX').focus(),30); else bg.focus({preventScroll:true});};
+const openDr=o=>{dr.classList.toggle('open',o); dr.setAttribute('aria-hidden',String(!o)); dr.inert=!o; bg.setAttribute('aria-expanded',String(o)); document.body.style.overflow=o?'hidden':''; if(o)setTimeout(()=>$('#drawerX').focus(),30); else bg.focus({preventScroll:true});};
 bg.onclick=()=>openDr(true); $('#drawerX').onclick=()=>openDr(false); dr.addEventListener('click',e=>{if(e.target===dr||e.target.closest('a.dl'))openDr(false);});
 dr.addEventListener('keydown',e=>{trap($('.in',dr),e); if(e.key==='Escape')openDr(false);});
 const A=$('#a11y'), AB=$('#a11yBtn');

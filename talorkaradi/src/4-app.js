@@ -28,7 +28,7 @@ function bladesSVG(){
   const pts=bb.map(([x,y])=>rot(x,y,90*i)), xs=pts.map(p=>p[0]), ys=pts.map(p=>p[1]);
   const x0=Math.min(...xs)-8,y0=Math.min(...ys)-8,w=Math.max(...xs)-x0+16,h=Math.max(...ys)-y0+16;
   const [lx,ly]=rot(214,112,90*i), g=i%2?'b':'g';
-  return `<g class="bl" data-s="${i}" tabindex="0" role="button" aria-label="שלב ${i+1}: ${STAGES[i].k}">
+  return `<g class="bl" data-s="${i}" tabindex="0" role="button" aria-label="${String(i+1).padStart(2,'0')} ${STAGES[i].k}, לשלב הזה במעגל">
    <g transform="rotate(${90*i} 256 256)"><g clip-path="url(#bclip)"><image href="img/${imgs[i]}.webp" x="${x0}" y="${y0}" width="${w}" height="${h}" preserveAspectRatio="xMidYMid slice" transform="rotate(${-90*i} 256 256)"/>
     <use href="#blade" fill="url(#t${g})" opacity=".42" style="mix-blend-mode:multiply"/></g><use href="#fold" clip-path="url(#bclip)" fill="url(#t${g}d)" opacity=".62"/></g>
    <text class="lbl" x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle">${String(i+1).padStart(2,'0')} ${STAGES[i].k}</text></g>`;}).join('');
@@ -145,18 +145,18 @@ function renderVids(){
  const extra=(C.extraProjects||[]).filter(p=>p.kind==='yt'&&p.yt).map(p=>({id:p.yt,t:p.t,c:p.s||'',ext:1}));
  $('#vids').innerHTML=[...VIDS,...extra].map(v=>`<a class="vid" href="https://www.youtube.com/watch?v=${esc(v.id)}" target="_blank" rel="noopener"><div class="ph"><img src="${v.ext?`https://i.ytimg.com/vi/${esc(v.id)}/hqdefault.jpg`:`img/yt-${v.id}.webp`}" alt="" loading="lazy"><span class="play"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="#0B1B2E"/></svg></span></span><span class="tag">מהשטח · יוטיוב</span></div><b>${esc(v.t)}</b><small>${esc(v.c)} · לצפייה ביוטיוב ↗</small></a>`).join('');
  const photos=[...STRIP.map(k=>({src:`img/${k}.webp`,cap:PH[k]})),...(C.extraProjects||[]).filter(p=>p.kind==='real'&&p.photo).map(p=>({src:p.photo,cap:p.t}))];
- $('#strip').innerHTML=photos.map((p,i)=>`<button type="button" data-lb="${i}" aria-label="הגדלה: ${esc(p.cap)}"><div class="ph"><img src="${esc(p.src)}" alt="${esc(p.cap)}" loading="lazy"><span class="tag">מהשטח</span></div></button>`).join('');
+ $('#strip').innerHTML=photos.map((p,i)=>`<button type="button" data-lb="${i}" aria-label="מהשטח: ${esc(p.cap)}, להגדלה"><div class="ph"><img src="${esc(p.src)}" alt="" loading="lazy"><span class="tag">מהשטח</span></div></button>`).join('');
  $$('#strip [data-lb]').forEach(b=>b.addEventListener('click',()=>{lastFocus=b; const p=photos[+b.dataset.lb]; $('#lbImg').src=p.src; $('#lbImg').alt=p.cap; $('#lbCap').textContent=p.cap+' · מהשטח'; $('#lb').showModal();}));
 }
 
 /* film (filled after the launch film is rendered) */
-function filmUI(){ $('#pv').hidden=!PREVIEW; if(!FILM)return; const s=$('#film'); s.hidden=false; const v=$('#filmV'); v.poster=FILM.poster; v.src=FILM.src; $('#filmTxt').textContent=FILM.txt; $('#filmFacts').innerHTML=(FILM.facts||[]).map(([a,b])=>`<div><b>${esc(a)}</b><span>${esc(b)}</span></div>`).join(''); }
+function filmUI(){ if(!PREVIEW)$('#pv').remove(); /* at go-live also delete the #pv line from 2-body.html */ if(!FILM)return; const s=$('#film'); s.hidden=false; const v=$('#filmV'); v.poster=FILM.poster; v.src=FILM.src; $('#filmTxt').textContent=FILM.txt; $('#filmFacts').innerHTML=(FILM.facts||[]).map(([a,b])=>`<div><b>${esc(a)}</b><span>${esc(b)}</span></div>`).join(''); }
 
 /* about */
 function renderAbout(){
  $('#timeline').innerHTML=TL.map(([y,t,p])=>`<li><span class="y">${esc(y)}</span><div><b>${esc(t)}</b><p>${esc(p)}</p></div></li>`).join('');
  $('#values').innerHTML=VALUES.map(v=>`<span>${esc(v)}</span>`).join('');
- $('#cos').innerHTML=COS.map(([k,n,p])=>`<div class="co"><span class="mono">${esc(k)}</span><h4>${esc(n)}</h4><p>${esc(p)}</p></div>`).join('');
+ $('#cos').innerHTML=COS.map(([k,n,p])=>`<div class="co"><span class="mono">${esc(k)}</span><h3>${esc(n)}</h3><p>${esc(p)}</p></div>`).join('');
  $('#jobList').innerHTML=JOBS.map(j=>`<li>${esc(j)}</li>`).join('');
 }
 

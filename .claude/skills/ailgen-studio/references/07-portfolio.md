@@ -41,6 +41,9 @@ def camera(pg):
     to(pg, '[data-s="garden"]'); pg.mouse.down(); pg.mouse.up(); pg.wait_for_timeout(1400)
 record('http://127.0.0.1:8000/<slug>/', 'out/<slug>-planner', camera)
 ```
+No Python Playwright? `scripts/rec.mjs` is the Node twin (`record(url, out, async pg => {...}, {vp, scale, cursor, init, setup})`,
+`topAt`, `to`, and `viaCurl` to fetch Google Fonts through curl when the sandbox browser cannot reach them). It found Playwright
+for Node at `/opt/node22/lib/node_modules/playwright`. Record the studio's own flow the same way for the "process" moment.
 Then: a timestamped contact sheet (`drawtext=text='%{pts\:hms}'`, 1 fps) to pick cuts; moment clips 1280w,
 crf ~23, no audio, `+faststart`; a card loop from 3–4 moments with `xfade=transition=fade:duration=0.6`; a mobile
 cut (390×844 @2x → ~468w); a poster JPG for every clip. Film **after** the copy and illustrations are final.
@@ -48,7 +51,14 @@ cut (390×844 @2x → ~468w); a poster JPG for every clip. Film **after** the co
 ## 4. Numbers
 
 Lighthouse 12 on the served page (desktop and mobile), fix what it finds first, then quote with conditions and
-date in `numnote`. Other honest numbers: page weight, pages merged, guides imported, frames built in code.
+date in `numnote`.
+
+Run it as `CHROME_PATH=/opt/pw-browsers/chromium npx -y lighthouse@12 <url> [--preset=desktop] --output=json --chrome-flags="--headless=new --no-sandbox"`
+against a **compressing static server** (`npx serve -n <folder>`, served at its own root), not `python3 -m http.server`:
+without gzip the mobile score reads 20 points low and misleads. Talor Karadi went from 64 to 92 (mobile) and 99 (desktop) with:
+a preview banner that is in the HTML instead of unhidden by script (it caused the layout shift), self-hosted fonts inlined in
+a `<style>` with `font-display:swap` and two preloads (no request to Google, nothing render-blocking), `inert` on the closed
+drawer, heading order, one contrast fix, and accessible names that contain the visible text. Other honest numbers: page weight, pages merged, guides imported, frames built in code.
 
 ## 5. Live and repo
 
