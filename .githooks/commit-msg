@@ -1,0 +1,48 @@
+#!/bin/sh
+# AILGEN commit-message guard: every subject carries [Model: <name>].
+#
+# WHY THIS IS NOT IN pre-commit - measured, not assumed:
+#   * in pre-commit the commit object does not exist yet
+#   * `git log -1 --format=%s` therefore returns the PREVIOUS commit's subject
+#   * COMMIT_EDITMSG is no better: during pre-commit it still holds the
+#     PREVIOUS message, verified with a probe hook
+#   * result: the original pre-commit rule allowed an unstamped commit whenever
+#     HEAD happened to be stamped, and blocked the FIRST commit of an empty repo
+#
+# commit-msg runs after the message is final and before the object exists, and
+# $1 is that message file. Verified: it sees the subject being written.
+#
+# Windows note: git for Windows runs hooks through sh, so this file must stay
+# POSIX sh.
+#
+# Bypass for a genuine emergency: git commit --no-verify
+
+msg="$1"
+subject=$(head -n 1 "$msg" 2>/dev/null)
+
+# Merge and fixup commits are addressed to an existing commit or produced by git
+# itself; their own message legitimately carries no attribution.
+if [ -e "$(git rev-parse --git-path MERGE_HEAD)" ]; then
+  exit 0
+fi
+case "$subject" in
+  fixup!*|squash!*|amend!*)
+    exit 0
+    ;;
+esac
+
+case "$subject" in
+  "[Model: "*"] "*)
+    exit 0
+    ;;
+esac
+
+echo ""
+echo "COMMIT BLOCKED - missing model attribution."
+echo "  subject:   $subject"
+echo "  required:  [Model: <ModelName>] <action>"
+echo "  example:   [Model: Space Bunny Free] feat: add the RTL-aware composer"
+echo "  Read the model name from the environment. Never guess it, never reuse a"
+echo "  stale stamp. Emergency bypass: git commit --no-verify"
+echo ""
+exit 1

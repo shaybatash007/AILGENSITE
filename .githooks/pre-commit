@@ -1,0 +1,50 @@
+#!/bin/sh
+# AILGEN pre-commit gate: the environment must have no FAIL-level problems.
+#
+# The model-attribution rule used to live here and did nothing - see
+# .githooks/commit-msg for the measured explanation. It is there now.
+#
+# This gate is FAIL-CLOSED. doctor.ps1 runs under $ErrorActionPreference="Stop",
+# so a thrown error exits non-zero WITHOUT printing a FAIL line. An earlier
+# version grepped for FAIL and treated "no FAIL line" as "healthy", which meant
+# a crashed doctor allowed every commit. A non-zero exit now blocks.
+#
+# Windows note: git for Windows runs hooks through sh, so this file must stay
+# POSIX sh.
+#
+# Bypass for a genuine emergency only: git commit --no-verify
+
+root=$(git rev-parse --show-toplevel)
+# Only meaningful inside this repository. In a repo without the script, say
+# nothing and do not block: a guard that fires where it does not apply is a
+# guard people learn to bypass.
+[ -f "$root/scripts/doctor.ps1" ] || exit 0
+command -v powershell >/dev/null 2>&1 || exit 0
+
+out=$(powershell -NoProfile -ExecutionPolicy Bypass -File "$root/scripts/doctor.ps1" 2>/dev/null)
+rc=$?
+
+if [ $rc -ne 0 ]; then
+  echo ""
+  echo "COMMIT BLOCKED - the environment check did not pass (exit $rc)."
+  echo "  This is treated as a failure on purpose: a crashed check is not a clean"
+  echo "  bill of health. If it is a pre-existing, unrelated problem, read it:"
+  echo "---"
+  printf '%s\n' "$out"
+  echo "---"
+  echo "  Fix it, or use --no-verify if you have verified the cause yourself."
+  echo ""
+  exit 1
+fi
+
+failures=$(printf '%s\n' "$out" | grep "^FAIL")
+if [ -n "$failures" ]; then
+  echo ""
+  echo "COMMIT BLOCKED - the environment has FAIL-level problems:"
+  echo "$failures"
+  echo "  Fix them, or use --no-verify if the failure is pre-existing and unrelated."
+  echo ""
+  exit 1
+fi
+
+exit 0

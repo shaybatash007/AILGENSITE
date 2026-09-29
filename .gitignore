@@ -1,5 +1,25 @@
+# node dev server (npm install)
+node_modules/
+# local version snapshots created by scripts/version-save.ps1
+versions/
 # studio render output (keep deliverables in projects/<slug>/demo/)
 projects/*/out/
 # raw crawl media and screenshots stay local (the site keeps only the images it uses)
 projects/*/intake/media/
 projects/*/intake/shots/
+# browser-automation scratch (throwaway probe scripts; baselines stay tracked)
+projects/_eyes/scratch/
+# launch-env runtime state (pid tracking + service logs)
+.launch/
+# named snapshots (tools/snap.mjs) and the local knowledge index
+.snapshots/
+.knowledge/
+# never let a database reach a commit. opencode.db carries account/credential
+# tables and the session history, and tools/canonicalize-paths.mjs duplicates it
+# into backups/ on every run. The directories above already keep it out of the
+# index; this is the deliberate belt, not an accident of layout.
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
