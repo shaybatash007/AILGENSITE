@@ -75,7 +75,7 @@ function stagesUI(){
 
 /* services */
 function renderServices(){
- $('#svcGroups').innerHTML=STAGES.map((s,i)=>`<div class="svc-group"><header>${stageIcon(i)}<h3>${esc(s.k)}: ${esc(s.t)}</h3><span class="mono">שלב ${i+1}/4</span></header><div class="svc-row">${Object.entries(SVCS).filter(([,v])=>v.s===i).map(([k,v])=>`<article class="svc" id="s-${k}"><div class="ph"><img src="img/${v.img}.webp" alt="${esc(PH[v.img]||v.t)}" loading="lazy"><span class="tag">מהשטח</span></div><div class="b"><h4>${esc(v.t)}</h4><p>${esc(v.sh)}</p><button type="button" data-svc="${k}" aria-haspopup="dialog">מה כולל</button></div></article>`).join('')}</div></div>`).join('');
+ $('#svcGroups').innerHTML=STAGES.map((s,i)=>`<div class="svc-group"><header>${stageIcon(i)}<h3>${esc(s.k)}: ${esc(s.t)}</h3><span class="mono">שלב ${i+1}/4</span></header><div class="svc-row">${Object.entries(SVCS).filter(([,v])=>v.s===i).map(([k,v])=>`<article class="svc" id="s-${k}"><div class="ph"><img src="img/${v.img}.webp" alt="${esc(PH[v.img]||v.t)}" loading="lazy"><span class="tag">מהשטח</span></div><div class="b"><h4>${esc(v.t)}</h4><p>${esc(v.sh)}</p><button type="button" data-svc="${k}" aria-haspopup="dialog">מה כולל</button><a class="more" href="${SVC_URL[k]}">לעמוד המלא</a></div></article>`).join('')}</div></div>`).join('');
  $$('#svcGroups [data-svc]').forEach(b=>b.addEventListener('click',()=>openSvc(b.dataset.svc)));
  $('#fSvc').innerHTML='<option value="">בחרו…</option>'+Object.values(SVCS).map(v=>`<option>${esc(v.t)}</option>`).join('')+'<option>אחר</option>';
 }

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://talorkaradi.co.il/sitemap.xml

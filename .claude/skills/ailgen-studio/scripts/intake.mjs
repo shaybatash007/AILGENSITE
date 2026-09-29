@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Site intake: crawl an existing website and pull everything a rebuild needs.
-//   node intake.mjs https://example.co.il --out projects/example/intake [--max 30] [--media 80] [--delay 800]
+//   node intake.mjs https://example.co.il --out projects/example/intake [--max 60] [--media 80] [--delay 800]
 // Output (in --out):
 //   site.json      pages, texts, contacts, socials, colors, fonts, logos, media manifest
 //   content.md     every page's text, in reading order (the raw material for the copy deck)
@@ -15,11 +15,11 @@ ensureProxyEnv();
 const args = parseArgs();
 const START = args._[0];
 if (!START || !/^https?:\/\//.test(START)) {
-  console.error('usage: node intake.mjs <https://site> --out <dir> [--max 30] [--media 80]');
+  console.error('usage: node intake.mjs <https://site> --out <dir> [--max 60] [--media 80]');
   process.exit(2);
 }
 const OUT = path.resolve(args.out || 'intake');
-const MAX_PAGES = +(args.max || 30), MAX_MEDIA = +(args.media || 80), DELAY = +(args.delay || 800);
+const MAX_PAGES = +(args.max || 60), MAX_MEDIA = +(args.media || 80), DELAY = +(args.delay || 800);
 const origin = new URL(START).origin;
 const UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36';
 // many hosting firewalls reject the headless client hint, so send the regular desktop Chrome one
@@ -75,10 +75,12 @@ function extractPage() {
     const tag = el.tagName.toLowerCase();
     const kind = /^h\d$/.test(tag) ? tag : tag === 'button' || /btn|button/.test(el.className + '') ? 'cta' : tag;
     const region = el.closest('header,nav') ? 'header' : el.closest('footer') ? 'footer' : 'main';
-    blocks.push({ kind, region, text: t });
+    const b = { kind, region, text: t };
+    if (kind === 'td' || kind === 'th') { const tb = el.closest('table'), tr = el.closest('tr'); if (tb && tr) { b.table = [...document.querySelectorAll('table')].indexOf(tb); b.row = [...tb.querySelectorAll('tr')].indexOf(tr); b.col = [...tr.children].indexOf(el); } }
+    blocks.push(b);
   });
   const dedup = []; const s = new Set();
-  for (const b of blocks) { const k = b.kind + '|' + b.text; if (!s.has(k)) { s.add(k); dedup.push(b); } }
+  for (const b of blocks) { const k = b.kind + '|' + b.text + (b.table !== undefined ? '|' + b.table + '.' + b.row + '.' + b.col : ''); if (!s.has(k)) { s.add(k); dedup.push(b); } }
   const best = img => {
     const ss = img.getAttribute('srcset') || img.getAttribute('data-srcset') || '';
     const c = ss.split(',').map(x => x.trim().split(/\s+/)).filter(x => x[0]).map(([u, w]) => [u, parseInt(w) || 0]).sort((a, b) => b[1] - a[1])[0];
@@ -102,7 +104,7 @@ function extractPage() {
   const jsonld = [...document.querySelectorAll('script[type="application/ld+json"]')].map(s => { try { return JSON.parse(s.textContent); } catch { return null; } }).filter(Boolean);
   return {
     url: location.href, title: document.title, lang: document.documentElement.lang || '', dir: document.documentElement.dir || getComputedStyle(document.body).direction,
-    description: meta('description') || meta('og:description'), ogImage: meta('og:image'), ogSite: meta('og:site_name'),
+    description: meta('description') || meta('og:description'), metaDescription: meta('description'), canonical: document.querySelector('link[rel="canonical" i]')?.href || '', robotsMeta: meta('robots'), ogImage: meta('og:image'), ogSite: meta('og:site_name'),
     blocks: dedup, images, backgrounds: [...new Set(bgs)], videos: [...new Set(videos)], embeds: [...new Set(embeds)], links, jsonld,
     text: txt(document.body).slice(0, 60000),
   };
@@ -236,13 +238,19 @@ async function main() {
     || parts.sort((x, y) => x.length - y.length)[0] || host;
   const site = {
     source: START, crawledAt: new Date().toISOString(), name, lang: home.lang, dir: home.dir,
-    counts: { pages: pages.length, media: media.filter(m => m.file).length, youtube: youtube.length },
+    counts: { pages: pages.length, sitemapUrls: sm.length, media: media.filter(m => m.file).length, youtube: youtube.length },
+    notCrawled: sm.filter(u => !pages.some(p => key(p.url) === key(u))),
     contacts: { phones, emails, whatsapp, socials, youtube },
     design: design ? { ...design, logos: design.logos.map(l => ({ ...l, svg: l.svg ? '(saved to media/)' : undefined })) } : null,
-    pages: pages.map(({ text, links, ...p }) => ({ ...p, internalLinks: links.filter(l => pageUrl(l.href, p.url)).length })),
+    pages: pages.map(({ text, links, ...p }) => {
+      // keep the link graph (targets and anchor text), not only a count: internal linking is part of what a rebuild must preserve
+      const linkList = links.map(l => ({ to: pageUrl(l.href, p.url), text: l.text, nav: l.nav })).filter(l => l.to).map(l => ({ ...l, to: new URL(l.to).pathname }));
+      return { ...p, internalLinks: linkList.length, linkList };
+    }),
     media,
   };
   writeJSON(path.join(OUT, 'site.json'), site);
+  if (site.notCrawled.length) console.log(`WARNING: the sitemap lists ${sm.length} URLs but ${site.notCrawled.length} were not crawled (raise --max). Every indexed page is part of what a rebuild inherits.`);
 
   const md = pages.map(p => `\n\n## ${p.title}\n<${decodeURI(p.url)}>\n\n` + p.blocks.filter(b => b.region === 'main').map(b => b.kind.startsWith('h') ? `${'#'.repeat(Math.min(6, +b.kind[1] + 2))} ${b.text}` : b.kind === 'li' ? `- ${b.text}` : b.kind === 'cta' ? `[${b.text}]` : b.text).join('\n\n')).join('\n');
   fs.writeFileSync(path.join(OUT, 'content.md'), `# ${name}: all site text\n\nSource: ${START} · crawled ${site.crawledAt.slice(0, 10)} · ${pages.length} pages${md}\n`);

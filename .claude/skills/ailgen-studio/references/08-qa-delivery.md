@@ -15,6 +15,13 @@ studio project. Tick every box for real; a box ticked on a broken result is wors
 - [ ] Legal: privacy policy and accessibility statement reachable from the footer and the a11y menu.
 - [ ] Lighthouse measured after the last change (quote desktop; note mobile).
 
+## Search visibility (references/10-seo.md)
+- [ ] `seo-audit.mjs` on the new build: zero high findings, no orphans, every page ≥ 3 inbound links, depth ≤ 3.
+- [ ] Old site (if any): `seo-plan.mjs` coverage 100%; `_redirects` tested on the real host; no chains, no home-page blanket.
+- [ ] Every service and guide has its own URL with unique title, description, one h1, canonical, JSON-LD, all in the served HTML.
+- [ ] sitemap.xml lists every canonical page; robots.txt names it; 404 page returns 404; http and www redirect to one host.
+- [ ] Preview is `noindex`; the launch-day flip (remove noindex, submit sitemap) is in the report to the owner.
+
 ## Film and campaign
 - [ ] Contact sheets at 9:16, 4:5, 1:1 reviewed; final MP4s watched start to end with sound.
 - [ ] −14 LUFS ±1, no clipping; the SFX match the picture (reveal hit, pops, typing).
@@ -35,3 +42,4 @@ studio project. Tick every box for real; a box ticked on a broken result is wors
 3. What is real vs. render/concept, stated plainly.
 4. What only they can supply (real photos, permissions, prices, legal texts, contacts), as a short list.
 5. Next steps (connect a form backend for the static site, point the domain, run the A/B for a week).
+6. Search: what was preserved (URLs kept / redirected), what changed, the Search Console export we still need, and the four-week watch list.

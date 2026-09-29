@@ -5,8 +5,8 @@ versions/
 # studio render output (keep deliverables in projects/<slug>/demo/)
 projects/*/out/
 # raw crawl media and screenshots stay local (the site keeps only the images it uses)
-projects/*/intake/media/
-projects/*/intake/shots/
+projects/*/intake*/media/
+projects/*/intake*/shots/
 # browser-automation scratch (throwaway probe scripts; baselines stay tracked)
 projects/_eyes/scratch/
 # launch-env runtime state (pid tracking + service logs)

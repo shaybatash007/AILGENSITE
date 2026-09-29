@@ -22,6 +22,12 @@ What lands in `intake/`:
 | `shots/` | home desktop (first screen + full) and mobile | the "before" for the case study |
 | `palette.json` | (from new-project) colour suggestion from logo + screenshot | starting point for phase 2 |
 
+**Cover the whole sitemap.** The default `--max` is 60 (it was 30, and a 52-URL site lost 22 guides from the
+inventory). If `intake/site.json` counts fewer pages than the sitemap lists, raise `--max` before designing:
+every page the owner asked Google to index is part of what the rebuild inherits. Each page keeps its full link
+graph (`linkList`: target, anchor text, whether it sits in navigation), canonical and robots meta; the SEO
+inventory itself is `seo-audit.mjs` (`references/10-seo.md`).
+
 The crawler reads the sitemap first, then navigation, then discovered links; it paces itself (`--delay`),
 stops politely on 403/429/503, strips speculative prefetch, and blocks service workers so every request is
 visible. Behind a proxy it routes browser traffic through Node's fetch with TLS verified.

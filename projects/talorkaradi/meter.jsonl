@@ -26,3 +26,5 @@
 {"t": "2026-09-27T13:33:34.040Z", "phase": "v2-close", "ev": "end", "note": "session paused here"}
 {"t": "2026-09-29T17:38:31.793Z", "phase": "v2-finish", "ev": "start", "note": "resumed: publish studio, repo mirror, docs, commit"}
 {"t": "2026-09-29T17:41:08.000Z", "phase": "v2-finish", "ev": "end", "note": "commit next"}
+{"t":"2026-09-29T17:45:57.495Z","phase":"v3-seo","ev":"start","note":"SEO audit of the studio mechanism"}
+{"t":"2026-09-29T18:14:04.948Z","phase":"v3-seo","ev":"end","note":"audit, tools, pipeline, 41 pages, docs; commit next"}

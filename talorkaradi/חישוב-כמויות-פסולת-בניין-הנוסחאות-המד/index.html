@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="he" dir="rtl"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>חישוב כמויות פסולת בניין: הנוסחאות המדויקות לכל פרויקט | טלאור כראדי</title><meta name="description" content="איך מחשבים כמויות פסולת בניין בצורה מדויקת? מדריך מקצועי לקבלנים ואדריכלים הכולל נוסחאות לפי סוגי פרויקטים בדרך לטופס 4. היכנסו &gt;&gt;">
+<link rel="canonical" href="https://talorkaradi.co.il/%D7%97%D7%99%D7%A9%D7%95%D7%91-%D7%9B%D7%9E%D7%95%D7%99%D7%95%D7%AA-%D7%A4%D7%A1%D7%95%D7%9C%D7%AA-%D7%91%D7%A0%D7%99%D7%99%D7%9F-%D7%94%D7%A0%D7%95%D7%A1%D7%97%D7%90%D7%95%D7%AA-%D7%94%D7%9E%D7%93/">
+<meta name="robots" content="noindex,follow">
+<meta name="theme-color" content="#0B1B2E"><link rel="icon" href="/icon.svg" type="image/svg+xml">
+<meta property="og:type" content="article"><meta property="og:locale" content="he_IL"><meta property="og:site_name" content="קבוצת טלאור כראדי"><meta property="og:title" content="חישוב כמויות פסולת בניין: הנוסחאות המדויקות לכל פרויקט | טלאור כראדי"><meta property="og:description" content="איך מחשבים כמויות פסולת בניין בצורה מדויקת? מדריך מקצועי לקבלנים ואדריכלים הכולל נוסחאות לפי סוגי פרויקטים בדרך לטופס 4. היכנסו &gt;&gt;"><meta property="og:url" content="https://talorkaradi.co.il/%D7%97%D7%99%D7%A9%D7%95%D7%91-%D7%9B%D7%9E%D7%95%D7%99%D7%95%D7%AA-%D7%A4%D7%A1%D7%95%D7%9C%D7%AA-%D7%91%D7%A0%D7%99%D7%99%D7%9F-%D7%94%D7%A0%D7%95%D7%A1%D7%97%D7%90%D7%95%D7%AA-%D7%94%D7%9E%D7%93/"><meta property="og:image" content="https://talorkaradi.co.il/img/team.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" as="image" href="/img/team.webp"><style>/* hebrew */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/fonts/Rubik-400-hebrew.woff2) format('woff2');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* latin */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/fonts/Rubik-400-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* hebrew */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/fonts/Rubik-500-hebrew.woff2) format('woff2');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* latin */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/fonts/Rubik-500-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* hebrew */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/fonts/Rubik-700-hebrew.woff2) format('woff2');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* latin */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/fonts/Rubik-700-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* hebrew */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(/fonts/Rubik-800-hebrew.woff2) format('woff2');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* latin */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(/fonts/Rubik-800-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/fonts/IBMPlexMono-500-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(/fonts/IBMPlexMono-600-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root{--night:#0B1B2E;--paper:#F4F5F0;--surface:#fff;--ink:#0B1B2E;--steel:#5A6670;--line:#DCE0D8;--green:#1E7A38;--blue:#2560A8;--hivis:#C9F03A;--onNight:#EEF3F6;--mute:#AFC0D0;--display:'Rubik',system-ui,'Arial Hebrew',Arial,sans-serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--paper:#0F1B27;--surface:#152536;--ink:#E7EDF1;--steel:#A3B1BE;--line:#26394C;--green:#72C487;--blue:#7AB6EC;color-scheme:dark}}
+*,*::before,*::after{box-sizing:border-box}html{-webkit-text-size-adjust:100%;overflow-x:clip}body{margin:0;background:var(--paper);color:var(--ink);font:400 18px/1.75 var(--display);-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}a{color:var(--blue)}h1,h2,h3{font-weight:800;line-height:1.15;letter-spacing:-.012em;margin:0;text-wrap:balance}p{margin:0 0 1em}
+.wrap{max-width:1100px;margin-inline:auto;padding-inline:clamp(16px,4vw,32px)}.skip{position:absolute;inset-inline-start:12px;top:-60px;background:var(--hivis);color:#0B1B2E;padding:10px 16px;border-radius:10px;font-weight:700;z-index:10}.skip:focus{top:12px}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:6px}
+.pv{background:var(--hivis);color:#0B1B2E;font:600 13px/1.4 var(--mono);text-align:center;padding:7px 16px}
+header.site{background:var(--night);color:var(--onNight)}header.site .in{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;min-height:72px;padding-block:8px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;font-weight:800;font-size:20px}.logo img{width:42px;height:42px}.logo small{display:block;font:500 12px/1 var(--display);opacity:.8;margin-bottom:3px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 6px;margin-inline-start:auto;align-items:center}nav.main a,nav.main summary{color:inherit;text-decoration:none;padding:8px 12px;border-radius:999px;font-size:15px;font-weight:500;cursor:pointer;list-style:none}
+nav.main a:hover,nav.main summary:hover,nav.main [aria-current]{background:rgba(255,255,255,.12)}nav.main summary::-webkit-details-marker{display:none}nav.main summary::after{content:" ▾";font-size:11px}
+.dd{position:relative}.dd div{position:absolute;inset-inline-start:0;top:100%;z-index:20;min-width:280px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:8px;box-shadow:0 20px 40px -20px rgba(0,0,0,.5);display:grid}
+.dd div a{color:var(--ink);border-radius:8px}.dd div a:hover{background:var(--paper)}.call{background:var(--hivis)!important;color:#0B1B2E!important;font-weight:700!important}
+.crumbs{font:500 13.5px var(--mono);color:var(--steel);padding-block:22px 0}.crumbs ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px 8px}.crumbs li+li::before{content:"‹";margin-inline-end:8px}.crumbs a{color:inherit}
+article{padding-block:16px 40px;max-width:780px}.kick{font:600 12.5px/1 var(--mono);letter-spacing:.14em;color:var(--green);margin:18px 0 12px}
+h1{font-size:clamp(32px,5vw,52px)}.lead{font-size:clamp(19px,2vw,22px);color:var(--steel);margin-top:18px}.hero{margin:26px 0;border-radius:16px;overflow:hidden;background:#1b2c3f}.hero{position:relative}.hero img{width:100%;max-height:440px;object-fit:cover}.hero .lbl{position:absolute;inset-inline-start:12px;bottom:12px;background:rgba(11,27,46,.78);color:#fff;font:600 11.5px/1 var(--mono);letter-spacing:.05em;padding:7px 10px;border-radius:999px}.hero .lbl::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--hivis);margin-inline-end:6px}
+article h2{font-size:clamp(25px,3vw,34px);margin:1.6em 0 .5em}article h3{font-size:clamp(20px,2.2vw,25px);margin:1.4em 0 .4em}article ul{padding-inline-start:1.2em;margin:0 0 1.2em}article li{margin-bottom:.35em}
+.tw{overflow-x:auto;margin:1em 0 1.4em;border:1px solid var(--line);border-radius:12px}.tw table{border-collapse:collapse;width:100%;min-width:480px;font-size:16px}.tw th,.tw td{padding:10px 14px;text-align:start;border-bottom:1px solid var(--line);vertical-align:top}.tw th{background:var(--surface);font-weight:700}article blockquote{margin:1.2em 0;padding:4px 20px;border-inline-start:4px solid var(--hivis);color:var(--steel)}
+.toc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:24px 0}.toc b{font:600 12px var(--mono);letter-spacing:.1em;color:var(--steel)}.toc ol{margin:8px 0 0;padding-inline-start:1.3em;font-size:16px}
+.cta{background:var(--night);color:var(--onNight);border-radius:20px;padding:clamp(22px,4vw,36px);margin:36px 0;display:flex;flex-wrap:wrap;gap:16px 24px;align-items:center;justify-content:space-between}.cta h2{font-size:clamp(22px,3vw,30px);margin:0;color:inherit}.cta p{margin:6px 0 0;color:var(--mute)}
+.btn{display:inline-flex;align-items:center;min-height:50px;padding:0 24px;border-radius:999px;background:var(--hivis);color:#0B1B2E;font-weight:700;text-decoration:none}.btn.ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 1.5px currentColor;margin-inline-start:8px}
+.rel{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:12px 0 0;padding:0;list-style:none}.rel a{display:block;height:100%;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;text-decoration:none;color:var(--ink);font-weight:600;line-height:1.4}.rel a:hover{border-color:var(--blue)}.rel small{display:block;color:var(--steel);font-weight:400;font-size:14px;margin-top:6px}
+.relh{font-size:22px;margin:36px 0 0}.hub{display:grid;gap:14px;list-style:none;padding:0}.hub a{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 22px;text-decoration:none;color:var(--ink)}.hub b{display:block;font-size:20px}.hub span{color:var(--steel);font-size:16px}
+footer.site{background:var(--night);color:var(--onNight);padding-block:48px 34px;margin-top:40px;font-size:15.5px}footer.site .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px}footer.site h2{font:600 13px var(--mono);letter-spacing:.12em;color:var(--hivis);margin:0 0 12px}
+footer.site ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}footer.site a{color:var(--onNight);text-decoration:none;opacity:.9}footer.site a:hover{text-decoration:underline;opacity:1}footer.site .fine{margin-top:28px;padding-top:18px;border-top:1px solid rgba(255,255,255,.14);color:var(--mute);font-size:14px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://talorkaradi.co.il/#org","name":"קבוצת טלאור כראדי","url":"https://talorkaradi.co.il/","logo":"https://talorkaradi.co.il/icon.svg","sameAs":["https://www.facebook.com/talorkaradi/","https://www.instagram.com/talor_karadi/"],"contactPoint":{"@type":"ContactPoint","telephone":"*9084","contactType":"customer service","areaServed":"IL","availableLanguage":"he"},"foundingDate":"2008"},{"@type":"Article","headline":"חישוב כמויות פסולת בניין: הנוסחאות המדויקות לכל פרויקט","description":"איך מחשבים כמויות פסולת בניין בצורה מדויקת? מדריך מקצועי לקבלנים ואדריכלים הכולל נוסחאות לפי סוגי פרויקטים בדרך לטופס 4. היכנסו >>","inLanguage":"he","mainEntityOfPage":"https://talorkaradi.co.il/%D7%97%D7%99%D7%A9%D7%95%D7%91-%D7%9B%D7%9E%D7%95%D7%99%D7%95%D7%AA-%D7%A4%D7%A1%D7%95%D7%9C%D7%AA-%D7%91%D7%A0%D7%99%D7%99%D7%9F-%D7%94%D7%A0%D7%95%D7%A1%D7%97%D7%90%D7%95%D7%AA-%D7%94%D7%9E%D7%93/","image":"https://talorkaradi.co.il/img/team.webp","datePublished":"2026-05-05T07:09:14+00:00","dateModified":"2026-05-05T07:24:24+00:00","author":{"@id":"https://talorkaradi.co.il/#org"},"publisher":{"@id":"https://talorkaradi.co.il/#org"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"האם חישוב הכמויות כולל גם את עפר החפירה?","acceptedAnswer":{"@type":"Answer","text":"בדרך כלל לא. פסולת בניין (בטון, בלוקים וכו') ועודפי עפר (אדמה, סלעים) מחושבים בנפרד. עודפי עפר נמדדים בנפח (מ\"ק) ודורשים פתרון פינוי שונה. טלאור כראדי מספקת מענה לשני הסוגים, אך חשוב להפריד ביניהם בהצהרה לוועדה כדי לא לשלם היטלי הטמנה מיותרים על עפר נקי."}},{"@type":"Question","name":"מה עושים אם הכמות שפונתה בפועל נמוכה בהרבה מההצהרה המקורית?","acceptedAnswer":{"@type":"Answer","text":"במקרה כזה, עליכם לספק הוכחה על מיחזור באתר (למשל, שימוש במגרסה ניידת של טלאור כראדי לשימוש חוזר בבטון הגרוס כמצע לתשתיות). אישור על גריסה ומיחזור באתר נחשב כפינוי לכל דבר ועניין ועוזר לסגור את המאזן מול הוועדה."}},{"@type":"Question","name":"האם יש נוסחה שונה לחישוב פסולת בשיפוץ דירה?","acceptedAnswer":{"@type":"Answer","text":"בשיפוצים קטנים, החישוב הוא לרוב לפי \"מספר מכולות\". ככלל אצבע, שיפוץ מקיף של דירת 100 מ\"ר מייצר כ-15-20 טון פסולת (כ-2-3 מכולות של 8 קוב). עבודה עם מכולות ממותגות של טלאור כראדי מבטיחה לכם שהפסולת תישקל ותדווח כחוק, גם אם מדובר בכמות קטנה."}},{"@type":"Question","name":"איך משפיע שימוש בבלוקים קלים (כמו איטונג) על החישוב?","acceptedAnswer":{"@type":"Answer","text":"שימוש בבלוקים בעלי צפיפות נמוכה מפחית את משקל הפסולת בטונות, אך הנפח נשאר דומה. זוהי נקודה חשובה: הוועדות מסתכלות על משקל (טונות), ולכן אם בניתם בשיטה קלה, עליכם לציין זאת בהצהרה כדי להסביר מדוע המשקל הכולל נמוך מהנוסחה הרגילה."}},{"@type":"Question","name":"מי אחראי לבצע את חישוב הכמויות בפועל?","acceptedAnswer":{"@type":"Answer","text":"האחריות על הגשת התחשיב היא של עורך הבקשה (אדריכל או מהנדס), אך הביצוע בפועל והדיווח הם באחריות הקבלן. טלאור כראדי מספקת את הגיבוי הטכני והנתונים המדויקים מהשטח כדי לוודא שמה שחושב על הנייר אכן מתממש במציאות."}}]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"טלאור כראדי","item":"https://talorkaradi.co.il/"},{"@type":"ListItem","position":2,"name":"מדריכים","item":"https://talorkaradi.co.il/blog/"},{"@type":"ListItem","position":3,"name":"חישוב כמויות פסולת בניין: הנוסחאות המדויקות לכל פרויקט","item":"https://talorkaradi.co.il/%D7%97%D7%99%D7%A9%D7%95%D7%91-%D7%9B%D7%9E%D7%95%D7%99%D7%95%D7%AA-%D7%A4%D7%A1%D7%95%D7%9C%D7%AA-%D7%91%D7%A0%D7%99%D7%99%D7%9F-%D7%94%D7%A0%D7%95%D7%A1%D7%97%D7%90%D7%95%D7%AA-%D7%94%D7%9E%D7%93/"}]}]}</script>
+</head><body>
+<a class="skip" href="#main">דלג לתוכן</a>
+<div class="pv">תצוגה מקדימה של האתר החדש · <b>הוכן על ידי AILGEN</b> עבור קבוצת טלאור כראדי</div>
+<header class="site"><div class="wrap in"><a class="logo" href="/" aria-label="קבוצת טלאור כראדי, לדף הבית"><img src="/icon.svg" alt="" width="42" height="42"><span><small>קבוצת</small>טלאור כראדי</span></a><nav class="main" aria-label="ניווט ראשי"><a href="/">בית</a><details class="dd"><summary>שירותים</summary><div><a href="/sevices/"><b>כל השירותים</b></a><a href="/sevices/waste-disposal/">פינוי פסולת במכולות</a><a href="/sevices/demolition/">הריסת מבנים</a><a href="/sevices/contract-agreements/">הסכמי התקשרות להיתר ולטופס 4</a><a href="/sevices/recycling-plants/">מפעלי מיחזור</a><a href="/sevices/soils/">טיפול ושיקום קרקעות</a><a href="/sevices/washing/">מפעל לשטיפת חומרים ממוחזרים</a><a href="/sevices/talor_concrete/">טלאור בטון</a><a href="/sevices/civil-engineering/">הנדסה אזרחית ומיגון</a><a href="/sevices/infrastructure/">תשתיות</a></div></details><a href="/blog/">מדריכים</a><a href="/#calc">מאזן פסולת</a><a href="/about/">הקבוצה</a><a href="/contact/">צור קשר</a><a class="call" href="tel:*9084">מוקד <bdi dir="ltr">*9084</bdi></a></nav></div></header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="פירורי לחם"><ol><li><a href="/">טלאור כראדי</a></li><li><a href="/blog/">מדריכים</a></li><li><span aria-current="page">חישוב כמויות פסולת בניין: הנוסחאות המדויקות לכל פרויקט</span></li></ol></nav>
+<article>
+<p class="kick">מדריך</p><h1>חישוב כמויות פסולת בניין: הנוסחאות המדויקות לכל פרויקט</h1><p class="lead">איך מחשבים כמויות פסולת בניין בצורה מדויקת? מדריך מקצועי לקבלנים ואדריכלים הכולל נוסחאות לפי סוגי פרויקטים בדרך לטופס 4. היכנסו</p>
+<figure class="hero" style="margin-inline:0"><img src="/img/team.webp" alt="צוות הקבוצה בשטח" width="700" height="933" fetchpriority="high"><figcaption class="lbl">מהשטח</figcaption></figure>
+<nav class="toc" aria-label="בעמוד הזה"><b>בעמוד הזה</b><ol><li><a href="#h-hu3env">למה הדיוק בחישוב הכמויות קריטי ב-2026?</a></li><li><a href="#h-h6ypaz">נוסחאות המפתח לחישוב כמויות פסולת בניין</a></li><li><a href="#h-1lqmrm">ניהול &quot;מאזן הפסולת&quot;: הסוד לטופס 4 מהיר</a></li><li><a href="#h-ujzs4p">סיכום: דיוק בנתונים הוא שקט בבירוקרטיה</a></li></ol></nav>
+<p>בכל פרויקט בנייה מודרני בשנים 2025-2026, שלב ה&quot;ניחושים&quot; הסתיים. אם בעבר הערכת הפסולת הייתה נעשית לפי &quot;תחושת בטן&quot; של מנהל העבודה, הרי שהיום, חישוב כמויות פסולת בניין הוא דרישה רגולטורית קשיחה המעוגנת בתקנות התכנון והבנייה (רישוי בנייה). חריגה משמעותית בין הכמות שהוצהרה בבקשה להיתר לבין הכמות שפונתה בפועל לאתר המורשה, היא אחת הסיבות המרכזיות לעיכובים קריטיים בקבלת טופס 4.</p>
+<p>עבור אדריכלים, מהנדסים ויזמים, הבנת הנוסחאות היא לא רק עניין של ניקיון – אלא ניהול סיכונים ובקרה תקציבית. במדריך זה נציג את נוסחאות המפתח לחישוב פסולת לפי סוגי פרויקטים (בנייה רגילה, מתועשת ומבני ציבור), ונסביר כיצד השליטה של קבוצת טלאור כראדי באתרי השקילה מאפשרת לכם לשמור על &quot;<a href="/#calc">מאזן פסולת</a>&quot; תקין ללא הפתעות מול הוועדה לתכנון ובנייה.</p>
+<h2 id="h-hu3env">למה הדיוק בחישוב הכמויות קריטי ב-2026?</h2>
+<p>לפי הרגולציה המעודכנת, כל בקשה להיתר בנייה חייבת לכלול &quot;הצהרת <a href="/sevices/waste-disposal/">פינוי פסולת</a>&quot;. הוועדות המקומיות אינן מסתפקות עוד ב<a href="/sevices/contract-agreements/">הסכם התקשרות</a> גנרי; הן בוחנות האם הכמות המוצהרת הגיונית ביחס לשטח הפרויקט. פער גדול מדי (למעלה מ-15%-20%) בין התחזית למציאות בשטח מעלה &quot;נורות אדומות&quot; אצל רשויות האכיפה, שחושדות בזליגה של פסולת לאתרים פיראטיים.</p>
+<p>כאשר אתם עובדים עם קבוצת טלאור כראדי, אנו מסייעים לכם לסגור את ה&quot;מאזן&quot; הזה. בזכות המערכות הממוחשבות באתרי השקילה שלנו, אנו מנפקים דוחות השוואתיים בזמן אמת המראים לכם בדיוק כמה פיניתם ביחס למה שהצהרתם, ובכך מבטיחים מעבר חלק בביקורת טופס 4.</p>
+<h2 id="h-h6ypaz">נוסחאות המפתח לחישוב כמויות פסולת בניין</h2>
+<p>החישוב מתבסס על מפתח של טונות לכל 100 מ&quot;ר בנוי, והוא משתנה דרמטית בהתאם לשיטת הבנייה:</p>
+<h3>1. בנייה רגילה (קונבנציונלית)</h3>
+<p>בנייה המבוססת על שלד בטון, בלוקים וטיח רטוב נחשבת ל&quot;ייצרנית&quot; הפסולת הגדולה ביותר.</p>
+<p>הנוסחה: כ-25 עד 30 טון פסולת לכל 100 מ&quot;ר בנוי.</p>
+<p>מרכיבי הפסולת: עודפי בטון, שברי בלוקים, שאריות טיח, קרמיקה ותשתיות.</p>
+<h3>2. בנייה מתועשת / טרומית</h3>
+<p>בנייה המבוססת על אלמנטים מוכנים שמגיעים מהמפעל (לוחדים, קירות טרומיים) היא נקייה בהרבה.</p>
+<p>הנוסחה: כ-10 עד 12 טון פסולת לכל 100 מ&quot;ר בנוי.</p>
+<p>הערה: כאן עיקר הפסולת מגיע משלבי הגמר והפיתוח, שכן השלד עצמו מגיע כמעט ללא פחת.</p>
+<h3>3. מבני ציבור, משרדים ומסחר</h3>
+<p>מבנים אלו מאופיינים בחללים גדולים ובשימוש נרחב בבנייה קלה (גבס, זכוכית, אלומיניום).</p>
+<p>הנוסחה: כ-15 עד 20 טון פסולת לכל 100 מ&quot;ר בנוי.</p>
+<p>מרכיבי הפסולת: הפסולת כאן היא לרוב &quot;פסולת קלה&quot; בעלת נפח גדול אך משקל נמוך, מה שמחייב שימוש במכולות רמסע גדולות (24-32 קוב) של טלאור כראדי.</p>
+<h3>4. פרויקטים של הריסה (תמ&quot;א 38/2 או פינוי בינוי)</h3>
+<p>כאן החישוב הוא נפחי ומתבסס על נפח המבנה הקיים.</p>
+<p>הנוסחה: נפח המבנה (אורך X רוחב X גובה) כפול מקדם דחיסה של כ-0.4 עד 0.5 (בהתאם לסוג החומרים).</p>
+<p>הערה: בנייה ישנה מייצרת משקל רב בגלל עובי הקירות והבטון המאסיבי.</p>
+<h2 id="h-1lqmrm">ניהול &quot;מאזן הפסולת&quot;: הסוד לטופס 4 מהיר</h2>
+<p>הטעות הנפוצה ביותר של קבלנים היא חוסר מעקב אחר &quot;מאזן הפסולת&quot; במהלך הביצוע. אם הצהרתם על 500 טון ופיניתם רק 200, הוועדה תעצור את האכלוס עד שתספקו הסברים הנדסיים לאן נעלמו 300 טון.</p>
+<p>הפתרון של טלאור כראדי: בכל פעם שמשאית שלנו יוצאת מהאתר שלכם ונשקלת באתר המורשה שלנו, הנתון מוזן אוטומטית לדשבורד הלקוח שלכם. אנו מספקים לכם:</p>
+<p>שקיפות מלאה: מעקב שוטף אחרי הכמות המצטברת.</p>
+<p>התראות חריגה: התראה אם הכמויות נמוכות או גבוהות מדי ביחס להערכה המקורית.</p>
+<p><a href="/%D7%90%D7%99%D7%A9%D7%95%D7%A8-%D7%94%D7%98%D7%9E%D7%A0%D7%94-%D7%98%D7%95%D7%A4%D7%A1-4/">אישור הטמנה</a> מסכם: אישור המרכז את כל תעודות השקילה הדיגיטליות בפורמט שהוועדה דורשת.</p>
+<h2 id="h-ujzs4p">סיכום: דיוק בנתונים הוא שקט בבירוקרטיה</h2>
+<p>חישוב כמויות פסולת בניין הוא הבסיס לניהול אתר בנייה תקין ב-2026. הבנה של הנוסחאות המדויקות מונעת הפתעות תקציביות ועיכובי מסירה כואבים. כאשר אתם בוחרים בקבוצת טלאור כראדי, אתם מקבלים יותר מספק פינוי – אתם מקבלים שותף הנדסי שמוודא שהנתונים שלכם תואמים את דרישות החוק מהקוב הראשון ועד לטופס 4.</p>
+<p>זקוקים לייעוץ בחישוב כמויות לפרויקט חדש? רוצים לוודא שהמאזן שלכם תקין? צרו קשר עם המומחים של טלאור כראדי לקבלת אומדן מקצועי וליווי רגולטורי מלא בשטח.</p>
+
+
+<section aria-labelledby="faq"><h2 id="faq">שאלות ותשובות</h2><h3>האם חישוב הכמויות כולל גם את עפר החפירה?</h3><p>בדרך כלל לא. פסולת בניין (בטון, בלוקים וכו&#39;) ועודפי עפר (אדמה, סלעים) מחושבים בנפרד. עודפי עפר נמדדים בנפח (מ&quot;ק) ודורשים פתרון פינוי שונה. טלאור כראדי מספקת מענה לשני הסוגים, אך חשוב להפריד ביניהם בהצהרה לוועדה כדי לא לשלם היטלי הטמנה מיותרים על עפר נקי.</p><h3>מה עושים אם הכמות שפונתה בפועל נמוכה בהרבה מההצהרה המקורית?</h3><p>במקרה כזה, עליכם לספק הוכחה על מיחזור באתר (למשל, שימוש במגרסה ניידת של טלאור כראדי לשימוש חוזר בבטון הגרוס כמצע לתשתיות). אישור על גריסה ומיחזור באתר נחשב כפינוי לכל דבר ועניין ועוזר לסגור את המאזן מול הוועדה.</p><h3>האם יש נוסחה שונה לחישוב פסולת בשיפוץ דירה?</h3><p>בשיפוצים קטנים, החישוב הוא לרוב לפי &quot;מספר מכולות&quot;. ככלל אצבע, שיפוץ מקיף של דירת 100 מ&quot;ר מייצר כ-15-20 טון פסולת (כ-2-3 מכולות של 8 קוב). עבודה עם מכולות ממותגות של טלאור כראדי מבטיחה לכם שהפסולת תישקל ותדווח כחוק, גם אם מדובר בכמות קטנה.</p><h3>איך משפיע שימוש בבלוקים קלים (כמו איטונג) על החישוב?</h3><p>שימוש בבלוקים בעלי צפיפות נמוכה מפחית את משקל הפסולת בטונות, אך הנפח נשאר דומה. זוהי נקודה חשובה: הוועדות מסתכלות על משקל (טונות), ולכן אם בניתם בשיטה קלה, עליכם לציין זאת בהצהרה כדי להסביר מדוע המשקל הכולל נמוך מהנוסחה הרגילה.</p><h3>מי אחראי לבצע את חישוב הכמויות בפועל?</h3><p>האחריות על הגשת התחשיב היא של עורך הבקשה (אדריכל או מהנדס), אך הביצוע בפועל והדיווח הם באחריות הקבלן. טלאור כראדי מספקת את הגיבוי הטכני והנתונים המדויקים מהשטח כדי לוודא שמה שחושב על הנייר אכן מתממש במציאות.</p></section>
+<aside class="cta" aria-label="הצעד הבא"><div><h2>כמה פסולת יהיה בפרויקט שלכם?</h2><p>מחשבון להיתר ולטופס 4, מוקד בטלפון ושיחה עם הצוות.</p></div><div><a class="btn" href="/#calc">חשבו מאזן פסולת</a><a class="btn ghost" href="tel:*9084">מוקד <bdi dir="ltr">*9084</bdi></a></div></aside>
+</article>
+<section aria-labelledby="rel"><h2 class="relh" id="rel">עוד מדריכים ושירותים בנושא</h2><ul class="rel"><li><a href="/sevices/waste-disposal/">פינוי פסולת במכולות<small>כל קבלן בשטח יודע שאתר נקי ומסודר הוא אתר בטוח יותר, בו העבודה מתנהלת בצורה יעילה ומהירה יותר, עם איכות […]</small></a></li><li><a href="/%D7%A4%D7%99%D7%A0%D7%95%D7%99-%D7%A4%D7%A1%D7%95%D7%9C%D7%AA-%D7%91%D7%A0%D7%99%D7%99%D7%9F-%D7%95%D7%AA%D7%A2%D7%A9%D7%99%D7%99%D7%94-%D7%A4%D7%AA%D7%A8%D7%95%D7%A0%D7%95%D7%AA-%D7%9E%D7%AA%D7%A7-2/">פינוי פסולת בניין ותעשייה: פתרונות מתקדמים<small>פינוי פסולת בניין ותעשייה בצורה חכמה, חוקית ובטוחה. גלו כיצד השליטה במקור והצי הלוגיסטי של קבוצת כראדי מבטיחים</small></a></li><li><a href="/%D7%9E%D7%9B%D7%95%D7%9C%D7%95%D7%AA-%D7%9C%D7%A4%D7%99%D7%A0%D7%95%D7%99-%D7%A4%D7%A1%D7%95%D7%9C%D7%AA-%D7%91%D7%A0%D7%99%D7%99%D7%9F-%D7%98%D7%9C%D7%90%D7%95%D7%A8-%D7%9B%D7%A8%D7%90%D7%93%D7%99/">מכולות לפינוי פסולת בניין<small>מחפשים מכולות לפינוי פסולת בניין? עם צי של 1,000 מכולות ושיטת &quot;אחת תמורת אחת&quot;, טלאור כראדי תדאג לאתר נקי ורציף</small></a></li><li><a href="/%D7%A4%D7%99%D7%A0%D7%95%D7%99-%D7%A4%D7%A1%D7%95%D7%9C%D7%AA-%D7%91%D7%A0%D7%99%D7%99%D7%9F/">פינוי פסולת בניין במרכז ובדרום: מדריך לקבלנים<small>פינוי פסולת בניין במרכז או בדרום דורש עבודה עם אתר מורשה. גלו למה אסור להתפשר על &quot;חאפרים&quot;, ואיך להימנע מקנסות </small></a></li></ul></section>
+</main>
+<footer class="site"><div class="wrap"><div class="cols">
+<section aria-labelledby="f-services"><h2 id="f-services">שירותים</h2><ul><li><a href="/sevices/waste-disposal/">פינוי פסולת במכולות</a></li><li><a href="/sevices/demolition/">הריסת מבנים</a></li><li><a href="/sevices/contract-agreements/">הסכמי התקשרות להיתר ולטופס 4</a></li><li><a href="/sevices/recycling-plants/">מפעלי מיחזור</a></li><li><a href="/sevices/soils/">טיפול ושיקום קרקעות</a></li><li><a href="/sevices/washing/">מפעל לשטיפת חומרים ממוחזרים</a></li><li><a href="/sevices/talor_concrete/">טלאור בטון</a></li><li><a href="/sevices/civil-engineering/">הנדסה אזרחית ומיגון</a></li><li><a href="/sevices/infrastructure/">תשתיות</a></li></ul></section>
+<section aria-labelledby="f-guides"><h2 id="f-guides">מדריכים</h2><ul><li><a href="/%D7%A7%D7%91%D7%9C%D7%9F-%D7%94%D7%A8%D7%99%D7%A1%D7%95%D7%AA-%D7%9E%D7%91%D7%A0%D7%99%D7%9D-%D7%9E%D7%95%D7%A8%D7%A9%D7%94-%D7%91%D7%99%D7%A6%D7%95%D7%A2-%D7%94%D7%A0%D7%93%D7%A1%D7%99-%D7%9E%D7%A9/">קבלן הריסות מבנים מורשה: ביצוע הנדסי משלב התכנון ועד למסירת מגרש נקי</a></li><li><a href="/%D7%9E%D7%9B%D7%95%D7%9C%D7%94-%D7%9C%D7%A4%D7%99%D7%A0%D7%95%D7%99-%D7%A4%D7%A1%D7%95%D7%9C%D7%AA-%D7%91%D7%A0%D7%99%D7%99%D7%9F-%D7%9E%D7%97%D7%99%D7%A8/">מכולה לפינוי פסולת בניין מחיר: מה משפיע על העלות ואיך חוסכים?</a></li><li><a href="/building-demolition-guide/">הריסת מבנים: מדריך לתכנון, אישורים ועלויות ופסולת</a></li><li><a href="/%D7%A4%D7%99%D7%A8%D7%95%D7%A7-%D7%95%D7%A4%D7%99%D7%A0%D7%95%D7%99-%D7%90%D7%A1%D7%91%D7%A1%D7%98-%D7%91%D7%90%D7%AA%D7%A8%D7%99-%D7%AA%D7%A2%D7%A9%D7%99%D7%99%D7%94-%D7%95%D7%91%D7%A0%D7%99%D7%99/">פירוק ופינוי אסבסט באתרי תעשייה ובנייה</a></li><li><a href="/%D7%A4%D7%99%D7%A0%D7%95%D7%99-%D7%A4%D7%A1%D7%95%D7%9C%D7%AA-%D7%91%D7%A0%D7%99%D7%99%D7%9F-%D7%95%D7%AA%D7%A2%D7%A9%D7%99%D7%99%D7%94-%D7%A4%D7%AA%D7%A8%D7%95%D7%A0%D7%95%D7%AA-%D7%9E%D7%AA%D7%A7/">מכולה לפינוי פסולת: נפחים, אישורים ופינוי מהיר</a></li><li><a href="/%D7%A4%D7%99%D7%A0%D7%95%D7%99-%D7%A4%D7%A1%D7%95%D7%9C%D7%AA-%D7%91%D7%A0%D7%99%D7%99%D7%9F-%D7%95%D7%AA%D7%A2%D7%A9%D7%99%D7%99%D7%94-%D7%A4%D7%AA%D7%A8%D7%95%D7%A0%D7%95%D7%AA-%D7%9E%D7%AA%D7%A7-2/">פינוי פסולת בניין ותעשייה: פתרונות מתקדמים</a></li><li><a href="/%D7%94%D7%A8%D7%99%D7%A1%D7%AA-%D7%9E%D7%91%D7%A0%D7%99%D7%9D-%D7%A9%D7%99%D7%A8%D7%95%D7%AA%D7%99-%D7%94%D7%A8%D7%99%D7%A1%D7%94-%D7%A4%D7%99%D7%A0%D7%95%D7%99-%D7%95%D7%AA%D7%A9%D7%AA%D7%99%D7%95/">הריסת מבנים: שירותי הריסה, פינוי ותשתיות</a></li><li><a href="/%D7%A0%D7%99%D7%94%D7%95%D7%9C-%D7%A1%D7%99%D7%9B%D7%95%D7%A0%D7%99%D7%9D-%D7%95%D7%91%D7%98%D7%99%D7%97%D7%95%D7%AA-%D7%91%D7%94%D7%A8%D7%99%D7%A1%D7%AA-%D7%9E%D7%91%D7%A0%D7%99%D7%9D-%D7%9E%D7%93/">ניהול סיכונים ובטיחות בהריסת מבנים: מדריך ליזם</a></li><li><a href="/%D7%98%D7%95%D7%A4%D7%A1-4-%D7%93%D7%A8%D7%99%D7%A9%D7%94-%D7%9C%D7%92%D7%92-%D7%94%D7%9E%D7%93%D7%A8%D7%99%D7%9A-%D7%94%D7%9E%D7%9C%D7%90-%D7%9C%D7%90%D7%99%D7%A9%D7%95%D7%A8-%D7%90%D7%9B%D7%9C/">טופס 4 דרישה לגג: המדריך המלא לאישור אכלוס</a></li><li><a href="/%D7%AA%D7%A7%D7%9F-5281-%D7%9C%D7%91%D7%A0%D7%99%D7%99%D7%94-%D7%99%D7%A8%D7%95%D7%A7%D7%94-%D7%9E%D7%99%D7%A0%D7%95%D7%A3-%D7%9E%D7%97%D7%96%D7%95%D7%A8-%D7%A4%D7%A1%D7%95%D7%9C%D7%AA-%D7%9C%D7%A0/">תקן 5281 לבנייה ירוקה: מינוף מחזור פסולת לניקוד</a></li><li><a href="/%D7%97%D7%99%D7%A9%D7%95%D7%91-%D7%9B%D7%9E%D7%95%D7%99%D7%95%D7%AA-%D7%A4%D7%A1%D7%95%D7%9C%D7%AA-%D7%91%D7%A0%D7%99%D7%99%D7%9F-%D7%94%D7%A0%D7%95%D7%A1%D7%97%D7%90%D7%95%D7%AA-%D7%94%D7%9E%D7%93/">חישוב כמויות פסולת בניין: הנוסחאות המדויקות לכל פרויקט</a></li><li><a href="/%D7%A9%D7%98%D7%A8-%D7%9E%D7%98%D7%A2%D7%9F-%D7%93%D7%99%D7%92%D7%99%D7%98%D7%9C%D7%99-%D7%95%D7%9E%D7%A2%D7%A7%D7%91-gps-%D7%94%D7%92%D7%A0%D7%94-%D7%9E%D7%A7%D7%A0%D7%A1%D7%95%D7%AA-%D7%98%D7%9C/">שטר מטען דיגיטלי ומעקב GPS: הגנה מקנסות</a></li><li><a href="/%D7%97%D7%95%D7%A7-%D7%A4%D7%A1%D7%95%D7%9C%D7%AA-%D7%91%D7%A0%D7%99%D7%99%D7%9F-2025-2026-%D7%9E%D7%93%D7%A8%D7%99%D7%9A-%D7%94%D7%99%D7%A9%D7%A8%D7%93%D7%95%D7%AA-%D7%9C%D7%A7%D7%91%D7%9C%D7%A0/">חוק פסולת בניין 2025-2026</a></li><li><a href="/%D7%94%D7%A0%D7%93%D7%A1%D7%94-%D7%90%D7%96%D7%A8%D7%97%D7%99%D7%AA-%D7%95%D7%9E%D7%99%D7%92%D7%95%D7%9F-%D7%94%D7%9E%D7%93%D7%A8%D7%99%D7%9A-%D7%94%D7%9E%D7%9C%D7%90-%D7%9C%D7%AA%D7%9B%D7%A0%D7%95/">הנדסה אזרחית ומיגון | מדריך מלא</a></li><li><a href="/%D7%94%D7%9E%D7%93%D7%A8%D7%99%D7%9A-%D7%9C%D7%9E%D7%99%D7%92%D7%95%D7%9F-%D7%9E%D7%95%D7%A1%D7%93%D7%99-%D7%95%D7%AA%D7%A2%D7%A9%D7%99%D7%99%D7%AA%D7%99-%D7%90%D7%99%D7%9A-%D7%91%D7%95%D7%97%D7%A8/">מיגוניות וממ&quot;דים ניידים למוסדות ותעשייה</a></li><li><a href="/%D7%9E%D7%97%D7%96%D7%95%D7%A8-%D7%A4%D7%A1%D7%95%D7%9C%D7%AA-%D7%91%D7%A0%D7%99%D7%99%D7%9F/">מחזור פסולת בניין: פתרונות כלכלה מעגלית לקבלנים</a></li><li><a href="/%D7%9E%D7%9B%D7%95%D7%9C%D7%95%D7%AA-%D7%9C%D7%A4%D7%99%D7%A0%D7%95%D7%99-%D7%A4%D7%A1%D7%95%D7%9C%D7%AA-%D7%91%D7%A0%D7%99%D7%99%D7%9F-%D7%98%D7%9C%D7%90%D7%95%D7%A8-%D7%9B%D7%A8%D7%90%D7%93%D7%99/">מכולות לפינוי פסולת בניין: פתרון לוגיסטי לקבלנים</a></li><li><a href="/%D7%90%D7%A1%D7%A4%D7%A7%D7%AA-%D7%91%D7%98%D7%95%D7%9F-%D7%98%D7%9C%D7%90%D7%95%D7%A8-%D7%9B%D7%A8%D7%90%D7%93%D7%99/">אספקת בטון במרכז ובדרום: איכות, דיוק וזמינות</a></li><li><a href="/%D7%94%D7%A8%D7%99%D7%A1%D7%AA-%D7%9E%D7%91%D7%A0%D7%99%D7%9D-%D7%9E%D7%95%D7%A8%D7%9B%D7%91%D7%AA-%D7%9E%D7%AA%D7%99%D7%A7-%D7%94%D7%AA%D7%99%D7%A2%D7%95%D7%93-%D7%95%D7%A2%D7%93-%D7%94%D7%A4%D7%99/">הריסת מבנים מורכבת: מדריך הנדסי מתיק תיעוד ועד פינוי</a></li><li><a href="/%D7%A4%D7%99%D7%A0%D7%95%D7%99-%D7%A4%D7%A1%D7%95%D7%9C%D7%AA-%D7%91%D7%A0%D7%99%D7%99%D7%9F/">פינוי פסולת בניין במרכז ובדרום: מדריך לקבלנים</a></li><li><a href="/%D7%90%D7%99%D7%A9%D7%95%D7%A8-%D7%94%D7%98%D7%9E%D7%A0%D7%94-%D7%98%D7%95%D7%A4%D7%A1-4/">המדריך המלא לקבלן: כך תשיגו אישור הטמנה לטופס 4 במהירות</a></li></ul></section>
+<section aria-labelledby="f-c"><h2 id="f-c">צור קשר</h2><ul><li><a href="tel:*9084">מוקד <bdi dir="ltr">*9084</bdi></a></li><li><a href="/about/">הקבוצה</a></li><li><a href="/south/">מתקנים</a></li><li><a href="/projects/">פרויקטים</a></li><li><a href="/%D7%A9%D7%90%D7%9C%D7%95%D7%AA-%D7%A0%D7%A4%D7%95%D7%A6%D7%95%D7%AA/">שאלות נפוצות</a></li><li><a href="/jobs/">דרושים</a></li><li><a href="/contact/">צור קשר</a></li><li><a href="/privacy-statement/">מדיניות פרטיות</a></li><li><a href="/accesability/">הצהרת נגישות</a></li></ul></section>
+</div><p class="fine">© 2026 קבוצת טלאור כראדי · תצוגה מקדימה</p></div></footer>
+</body></html>

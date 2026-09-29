@@ -105,6 +105,15 @@ sommelier, calculator, live agent), entry choreography born from the logo, agent
 and accessibility. Map every section to a visitor doubt it removes.
 - **Gate**: every section has a job line; the proof tool answers the main question in under a minute.
 
+### 4b · SEO and internal links → `references/10-seo.md`
+Decided in the blueprint, built into the templates, verified before launch. **Existing site:** inventory every
+URL (`scripts/seo-audit.mjs` on the old site, sitemap included), keep each URL or give it one 301, carry over
+the guides and their structured data, keep the internal link graph at least as strong. **New business:** one real
+URL per service and per guide, hub-and-spoke links, JSON-LD, sitemap and robots from the first commit. A one-URL
+single-page site is allowed only when there is nothing to inherit, and the report must say so.
+- **Gate**: `seo-plan.mjs` coverage 100%, `seo-audit.mjs` on the new build has zero high findings and no orphans,
+  the served HTML (not the rendered DOM) carries h1, text, links and JSON-LD, previews are `noindex`.
+
 ### 5 · Build the site, then raise it
 Build the artifact (content model + db + owner admin + agent with FALLBACK + WhatsApp fallback for leads),
 export it statically to the repo. Then run the user's skills in full, no shortcuts:
@@ -143,7 +152,8 @@ repo, commit and push, and report to the user in Hebrew: what was built, links, 
 - **The logo drives everything.** Signature element, icons, loader, mascot, film motif: one idea, repeated.
 - **Hebrew first, RTL correct.** Numbers and Latin isolated (`<bdi>` in HTML, LRI/PDI in canvas).
 - **No stock clichés** (robots, brains, handshakes). Imagery is real, generated to the brand, or drawn in code.
-- **Accessibility and performance are part of the design**, not a pass at the end.
+- **Accessibility, performance and search visibility are part of the design**, not a pass at the end. A rebuild
+  never drops an indexed URL, a guide or a structured-data type the old site had (`references/10-seo.md`).
 - **Never disable TLS or bypass a site's protection.** If a site blocks the crawler, slow down (`--delay`) or
   ask the owner for an export; do not hammer it.
 - **Owner-only admin**, no secrets in code, leads stored per visitor, legal texts present.
@@ -157,6 +167,10 @@ repo, commit and push, and report to the user in Hebrew: what was built, links, 
 | `scripts/palette.py` | Dominant colours from a logo/screenshot, role suggestions, WCAG contrast |
 | `scripts/fonts.mjs` | Download Google Fonts (Hebrew + Latin woff2) and write `fonts.css` |
 | `scripts/capture.py` | levelup CAPTURE: every region and element, desktop + mobile, all states |
+| `scripts/seo-audit.mjs` | SEO audit of any site (old or new): robots, sitemap, redirects, per-page head, JSON-LD, words before/after JS, internal link graph, orphans |
+| `scripts/seo-plan.mjs` | Old URL → keep / 301 / decide, with `_redirects`, `sitemap.xml`, `robots.txt` and a Hebrew plan |
+| `scripts/seo-pages.mjs` | Renders crawlable pages (title, h1, canonical, OG, JSON-LD, breadcrumbs, related, auto-links, footer map) from a composed config |
+| `scripts/seo-lib.mjs` | Shared: title tokens, crawled blocks → clean article content |
 | `scripts/rec.py` | levelup2 real-time screencast → MP4 for portfolio footage |
 | `scripts/rec.mjs` | the same recorder for Node-only Playwright, plus `viaCurl` for fonts |
 | `scripts/contact_sheet.py` | Tile frames/screens for review |
