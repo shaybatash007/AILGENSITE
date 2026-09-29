@@ -50,10 +50,14 @@ const LOG_DIR = path.join(STATE_DIR, "logs");
 /* Hard global budget. If anything in this process overruns it, we bail loudly
    instead of hanging the caller. A supervisor that can hang is worse than none. */
 let HARD_DEADLINE_MS = 45000;
-const watchdog = setTimeout(() => {
+/* mutable: `--deadline` is parsed inside main(), which runs after this. A plain
+   `let` + const timer made the flag inert - reassigning the number cannot move a
+   timer that has already been scheduled. */
+let watchdog = setTimeout(onWatchdog, HARD_DEADLINE_MS);
+function onWatchdog() {
   console.error(`FATAL: supervisor exceeded its ${HARD_DEADLINE_MS}ms hard deadline`);
   process.exit(4);
-}, HARD_DEADLINE_MS);
+}
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const C = { g: "\x1b[32m", r: "\x1b[31m", y: "\x1b[33m", c: "\x1b[36m", d: "\x1b[90m", x: "\x1b[0m" };
@@ -243,10 +247,14 @@ function resolveShim(shimPath) {
   // npm shims vary: some inline %~dp0, most do `SET dp0=%~dp0` and then use
   // "%dp0%\...". Handle every form, or the resolved path stays a literal
   // "%dp0%\..." and silently fails the existence check.
+  // cmd expands %~dp0 WITH a trailing separator, so substitute dir + sep and
+  // swallow the shim's own separator. Using the bare directory here produced
+  // "...\somedirfoo.js", which never exists, and the shim resolved to nothing.
+  const dirSep = dir.endsWith(path.sep) ? dir : dir + path.sep;
   const unquote = (p) =>
-    p.replace(/%~dp0/gi, dir)
-     .replace(/%dp0%/gi, dir)
-     .replace(/\$\{?dp0\}?/gi, dir)
+    p.replace(/%~dp0[\\/]?/gi, dirSep)
+     .replace(/%dp0%[\\/]?/gi, dirSep)
+     .replace(/\$\{?dp0\}?[\\/]?/gi, dirSep)
      .replace(/\\"/g, "")
      .replace(/"/g, "");
 
@@ -482,6 +490,7 @@ async function gc(ports) {
   const trackedPorts = new Set(Object.values(st.services).map((s) => s.port).filter(Boolean));
   const managed = [...new Set([...(ports || []), ...trackedPorts])];
   let killed = 0;
+  let stillHeld = 0;
   for (const p of managed) {
     if (trackedPorts.has(p)) continue;
     const owner = portOwner(p);
@@ -491,11 +500,14 @@ async function gc(ports) {
     killed++;
     await sleep(400);
     const still = portOwner(p);
-    if (still) bad(`port ${p} STILL held by ${still} after taskkill /T`);
+    if (still) { bad(`port ${p} STILL held by ${still} after taskkill /T`); stillHeld++; }
     else ok(`port ${p} released`);
   }
   if (!killed) ok("no orphaned listeners on managed ports");
-  return killed ? 0 : 0;
+  // Was `return killed ? 0 : 0`, which is 0 either way: a gc that could not
+  // release a port still reported success, and `super doctor` then discarded the
+  // result anyway with `code = code || s`.
+  return stillHeld ? 1 : 0;
 }
 
 /* --------------------------------------------------------------- main --- */
@@ -523,7 +535,13 @@ async function main() {
     clearTimeout(watchdog);
     return process.exit(0);
   }
-  if (a.flags.deadline) HARD_DEADLINE_MS = Math.max(5000, parseInt(a.flags.deadline, 10));
+  // Re-arm, do not just reassign: the timer was already scheduled when this
+  // module loaded, so a new number alone changed nothing.
+  if (a.flags.deadline) {
+    HARD_DEADLINE_MS = Math.max(5000, parseInt(a.flags.deadline, 10));
+    clearTimeout(watchdog);
+    watchdog = setTimeout(onWatchdog, HARD_DEADLINE_MS);
+  }
   if (a.flags.ports) a.flags.ports = a.flags.ports.split(",").map((x) => parseInt(x, 10));
 
   let code = 0;
@@ -556,8 +574,11 @@ async function main() {
     case "gc": code = await gc(a.flags.ports || [8000, 4096]); break;
     case "doctor": {
       const s = await status();
-      code = await gc(a.flags.ports || [8000, 4096]);
-      code = code || s;
+      const g = await gc(a.flags.ports || [8000, 4096]);
+      // `code = code || s` threw gc's result away whenever gc returned 0, and
+      // gc used to return 0 unconditionally - so a stuck port was invisible.
+      // Both verdicts now have to agree for this to pass.
+      code = s || g;
       break;
     }
     default: bad(`unknown command "${cmd}"`); code = 2;
