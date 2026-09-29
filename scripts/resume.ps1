@@ -28,12 +28,16 @@ try {
 
 $stale = @()
 $blockHead = $null
+$blockHeadRaw = $null
 if ($sess) {
   $i = $sess.IndexOf("<!-- ailgen:auto:start -->")
   $j = $sess.IndexOf("<!-- ailgen:auto:end -->")
   if ($i -ge 0 -and $j -gt $i) {
     $block = $sess.Substring($i, $j - $i)
     if ($block -match "@ ([0-9a-f]{7,})") { $blockHead = $Matches[1] }
+    elseif ($block -match "^- branch: (\S+) @ (.+)$", "Multiline") {
+      $blockHeadRaw = $Matches[2].Trim()
+    }
     if ($block -match "^- refreshed: (.+)$", "Multiline") {
       $age = [int]((Get-Date).ToUniversalTime() - [datetime]::Parse($Matches[1]).ToUniversalTime()).TotalMinutes
       if ($age -gt 60) { $stale += "auto-state is $age min old" }
@@ -41,8 +45,35 @@ if ($sess) {
   } else { $stale += "no plugin-generated state block in SESSION.md" }
 } else { $stale += "memory/SESSION.md is missing" }
 
+# A non-hex head is a FAILED read, not an absent one. The old regex simply did
+# not match, $blockHead stayed null, and the drift check below was skipped - so a
+# block that could not determine the commit it describes reported no drift at all.
+if ($blockHeadRaw) {
+  $stale += "the state block records HEAD as '$blockHeadRaw', which is not a commit hash - the head check was SKIPPED, not satisfied"
+}
 if ($blockHead -and $head -and $blockHead -ne $head) { $stale += "SESSION.md records HEAD $blockHead, git is at $head" }
+
+# Is memory/SESSION.md's auto-state block the ONLY thing that changed?
+# The plugin rewrites it on a throttle, so the working tree is dirty within
+# seconds of any session starting. Counting that as drift made the verdict
+# permanently STALE, which trains everyone to ignore it. Strip the machine-owned
+# region from both sides and compare what a human actually wrote.
+function Strip-AutoBlock([string]$text) {
+  if (-not $text) { return "" }
+  $a = $text.IndexOf("<!-- ailgen:auto:start -->")
+  $b = $text.IndexOf("<!-- ailgen:auto:end -->")
+  if ($a -ge 0 -and $b -gt $a) { return ($text.Substring(0, $a) + $text.Substring($b + 24)).Trim() }
+  return $text.Trim()
+}
+
 $tracked = @($status | Where-Object { $_ -notmatch "^\?\? (memory/|scripts/|\.githooks/|\.opencode/|opencode\.json|AGENTS\.md|CLAUDE\.md|package)" })
+$sessionOnlyAutoBlock = $false
+if ($tracked.Count -eq 1 -and $tracked[0] -match "SESSION\.md$") {
+  Push-Location $root
+  try { $committed = (& git show "HEAD:memory/SESSION.md" 2>$null) -join "`n" } finally { Pop-Location }
+  $sessionOnlyAutoBlock = ($committed -and (Strip-AutoBlock $committed) -eq (Strip-AutoBlock $sess))
+  if ($sessionOnlyAutoBlock) { $tracked = @() }
+}
 if ($tracked.Count -gt 0) { $stale += "working tree has $($tracked.Count) changed tracked file(s) the handoff does not mention" }
 
 if ($Json) {

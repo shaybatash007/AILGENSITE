@@ -29,11 +29,13 @@ Anything a script can measure, a script measures. Do not guess state; read it.
 | `npm run canon:restore -- <backup>` | Restore a backup, deleting the target's `-wal`/`-shm` first (a stale WAL is replayed over the restore and silently reinstates the damage), then verifying the result | only when a `canon:apply` went wrong |
 | `npm run test:canon` | 40-check fixture for the tool above. Schema is **derived from the live database's `sqlite_master`**, not hand-written, so it really has the live tables, primary keys and `ON DELETE CASCADE` | **before** any `canon:apply`, and after editing that tool |
 | `npm run test:mutate` | Reintroduces each destructive bug class into a *copy* of the tool — including the original tautology — and requires the fixture to **fail** on every one. Also pairs each safety mechanism with the bug it guards, because a mechanism alone changes nothing observable and is therefore untestable by itself | after editing `canonicalize-paths.mjs` or its fixture. A green fixture is not evidence until this is green |
+| `npm run test:plugin` | Imports the real `.opencode/plugin/memory.ts` and calls its own hooks: the SESSION digest keeps its head *and* the machine-owned auto block inside budget, and `hardenConfig` only narrows what the user already allowed | after editing the plugin, `memory/*.md`, or the digest budgets |
+| `sh tools/test-hooks.sh .githooks .tmp-hooks` | Installs the real hooks into a throwaway repo and proves an unstamped commit is **blocked**. Needs Git Bash; no npm wrapper, because `core.hooksPath` must point at the real directory | after editing `.githooks/*` |
 | `npm run snap -- take v1` | Named snapshot: file tree + rendered screenshot + manifest. Never overwrites | before risky visual work |
 | `npm run snap -- diff v1` | Visual diff against a snapshot; separates motion noise from a real change | after a change, to see what moved |
 | `npm run snap -- roll v1` | Restore a snapshot and diff the result. Refuses over a dirty tree | when a change needs undoing |
 | `npm run know -- query "<text>"` | Ranked retrieval over the code, the memory layer and the agent rules | instead of grepping across five files |
-| `node tools/inspect.mjs --url <u> --component "<sel>"` | Enumerate the page's components, then capture and audit one in isolation | when a whole-page audit says something is wrong but not where |
+| `npm run inspect -- --url <u> --component "<sel>"` | Enumerate the page's components, then capture and audit one in isolation | when a whole-page audit says something is wrong but not where |
 
 `scripts/doctor.ps1` exits non-zero only on FAIL; WARN is informational. Read the tool output — do
 not paraphrase a clean result you did not see.

@@ -3,6 +3,20 @@
 `AGENTS.md` holds the rules. Measured detail: `memory/ENVIRONMENT-ARCHIVE.md` (2026-09-29),
 narrative: `memory/DECISIONS-ARCHIVE.md`.
 
+## Browser binaries are gated by WDAC (measured 2026-09-29)
+
+- A WDAC / AppLocker **Enterprise signing** policy (Policy ID
+  `0283ac0f-fff1-49ae-ada1-8a933130cad6`) **blocks**
+  `ms-playwright\chromium-1246\chrome-win64\chrome.exe`. Evidence: the
+  `Microsoft-Windows-CodeIntegrity/Operational` log, event 3077. Node reports only
+  `spawn UNKNOWN`, which is why the MCP "failed to launch" with no visible cause.
+- What works, each verified by a real navigation **and** screenshot: Playwright's
+  default `chromium.launch()` (it resolves to the headless shell), the headless
+  shell explicitly, and the system `msedge.exe`. The MCP is therefore configured
+  `--browser msedge --headless`; `--browser chromium` forces the blocked binary.
+  A config change binds only after an opencode **restart**, so a fix cannot be
+  verified inside the session that makes it. `tools/eyes.mjs` was never affected.
+
 ## Terminal and Hebrew
 
 - Bash tool = legacy conhost: `Host=ConsoleHost`, `WT_SESSION` empty, code page **862** (Hebrew DOS

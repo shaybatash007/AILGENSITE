@@ -19,7 +19,7 @@ import { openSync, readSync, closeSync, statSync, readFileSync, writeFileSync, r
 import { join } from "node:path"
 import { spawnSync } from "node:child_process"
 
-type Keep = "head" | "tail"
+type Keep = "head" | "tail" | "both"
 
 type MemoryFile = {
   path: string
@@ -41,7 +41,7 @@ const FILES: MemoryFile[] = [
   { path: "memory/CORE.md", label: "CORE (via instructions)", maxChars: 0, keep: "head", instructions: true },
   { path: "memory/DECISIONS.md", label: "DECISIONS", maxChars: 4000, keep: "tail", instructions: false },
   { path: "memory/ENVIRONMENT.md", label: "ENVIRONMENT", maxChars: 2400, keep: "tail", instructions: false },
-  { path: "memory/SESSION.md", label: "SESSION HANDOFF", maxChars: 2600, keep: "head", instructions: false },
+  { path: "memory/SESSION.md", label: "SESSION HANDOFF", maxChars: 2600, keep: "both", instructions: false },
 ]
 
 const AUTO_START = "<!-- ailgen:auto:start -->"
@@ -76,7 +76,9 @@ function readWindow(path: string, keep: Keep, want: number): string {
   try {
     const st = statSync(path)
     if (st.size === 0) return ""
-    const bytes = Math.min(want, st.size)
+    const bytes = keep === "both" ? Math.min(st.size, want * 4) : Math.min(want, st.size)
+    // "both" must see the whole file: the head slice and the tail slice are chosen
+    // later by fit(), so a window taken from one end can never contain both.
     const start = keep === "tail" ? st.size - bytes : 0
     fd = openSync(path, "r")
     const buf = Buffer.allocUnsafe(bytes)
@@ -106,6 +108,35 @@ function fit(text: string, keep: Keep, maxChars: number): { body: string; elided
   const lines = body.split("\n")
   const picked: string[] = []
   let used = 0
+  if (keep === "both") {
+    // SESSION.md is head-and-tail: the top holds what a human wrote, the bottom
+    // holds the machine-generated state block and, above it, the "Exact next
+    // command" the session-start protocol tells the next agent to run. A pure
+    // head slice cut both of those off every time, so the compaction prompt
+    // pointed at a block the digest did not contain.
+    const half = Math.floor(maxChars / 2)
+    const head: string[] = []
+    for (const line of lines) {
+      if (used + line.length + 1 > half) break
+      head.push(line)
+      used += line.length + 1
+    }
+    const tail: string[] = []
+    let tailUsed = 0
+    for (let i = lines.length - 1; i >= head.length; i--) {
+      const line = lines[i]
+      if (tailUsed + line.length + 1 > maxChars - used) break
+      tail.unshift(line)
+      tailUsed += line.length + 1
+    }
+    if (tail.length === 0) return { body: head.join("\n"), elided: body.length - used, hard: false }
+    const elided = body.length - (used + tailUsed)
+    return {
+      body: head.join("\n") + `\n\n...[${elided} chars elided from the middle]...\n\n` + tail.join("\n"),
+      elided,
+      hard: false,
+    }
+  }
   if (keep === "head") {
     for (const line of lines) {
       if (used + line.length + 1 > maxChars) break
@@ -332,20 +363,36 @@ function hardenConfig(cfg: Loose): string[] {
   cfg.instructions = instructions
 
   cfg.permission = cfg.permission ?? {}
-  const bash: Loose = typeof cfg.permission.bash === "object" && cfg.permission.bash ? cfg.permission.bash : {}
-  // Insertion order matters: opencode evaluates the LAST matching rule, so the broad allow goes first.
-  const ordered: Loose = { "*": "allow" }
-  for (const pattern of BASH_ASK) ordered[pattern] = "ask"
-  for (const [k, v] of Object.entries(bash)) if (!(k in ordered)) ordered[k] = v
-  if (JSON.stringify(ordered) !== JSON.stringify(bash)) applied.push("permission.bash ask-list")
-  cfg.permission.bash = ordered
+  // These floors are ADDITIVE ONLY. The previous version started each map with a
+  // synthesised {"*": "allow"}, which meant a user who deliberately omitted `*`
+  // to hold a default-deny posture had "allow" injected into their config by the
+  // very plugin that claims to harden it. A floor may only ever narrow what the
+  // user already allowed: an ask-list entry is only inserted when a matching
+  // broader rule would have let the command through, and a deny is only inserted
+  // when the path is currently allowed. Set AILGEN_NO_CONFIG_FLOORS=1 to skip.
+  if (process.env.AILGEN_NO_CONFIG_FLOORS !== "1") {
+    const bash: Loose = typeof cfg.permission.bash === "object" && cfg.permission.bash ? cfg.permission.bash : {}
+    // Insertion order matters: opencode evaluates the LAST matching rule, so the
+    // broad allow goes first and the ask-list after it.
+    const ordered: Loose = {}
+    for (const [k, v] of Object.entries(bash)) ordered[k] = v
+    if (ordered["*"] === undefined) ordered["*"] = "allow"
+    for (const pattern of BASH_ASK) {
+      if (!(pattern in ordered)) { ordered[pattern] = "ask"; applied.push(`permission.bash ${pattern}=ask`) }
+    }
+    if (JSON.stringify(ordered) !== JSON.stringify(bash)) applied.push("permission.bash ask-list")
+    cfg.permission.bash = ordered
 
-  const ext: Loose = typeof cfg.permission.external_directory === "object" && cfg.permission.external_directory ? cfg.permission.external_directory : {}
-  const extOrdered: Loose = { "*": "allow" }
-  for (const pattern of PATH_DENY) extOrdered[pattern] = "deny"
-  for (const [k, v] of Object.entries(ext)) if (!(k in extOrdered)) extOrdered[k] = v
-  if (JSON.stringify(extOrdered) !== JSON.stringify(ext)) applied.push("permission.external_directory deny-list")
-  cfg.permission.external_directory = extOrdered
+    const ext: Loose = typeof cfg.permission.external_directory === "object" && cfg.permission.external_directory ? cfg.permission.external_directory : {}
+    const extOrdered: Loose = {}
+    for (const [k, v] of Object.entries(ext)) extOrdered[k] = v
+    if (extOrdered["*"] === undefined) extOrdered["*"] = "allow"
+    for (const pattern of PATH_DENY) {
+      if (!(pattern in extOrdered)) { extOrdered[pattern] = "deny"; applied.push(`permission.external_directory ${pattern}=deny`) }
+    }
+    if (JSON.stringify(extOrdered) !== JSON.stringify(ext)) applied.push("permission.external_directory deny-list")
+    cfg.permission.external_directory = extOrdered
+  }
 
   if (cfg.permission.doom_loop !== "ask") {
     cfg.permission.doom_loop = "ask"

@@ -5,7 +5,14 @@
   "mcp": {
     "playwright": {
       "type": "local",
-      "command": ["node_modules/.bin/playwright-mcp", "--browser", "chromium", "--viewport-size", "1440x900", "--no-sandbox", "--caps", "core,pdf,network"],
+      "command": [
+        "node_modules/.bin/playwright-mcp",
+        "--browser", "msedge",
+        "--headless",
+        "--viewport-size", "1440x900",
+        "--no-sandbox",
+        "--caps", "core,pdf,network"
+      ],
       "enabled": true,
       "timeout": 120000
     }

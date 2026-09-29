@@ -28,7 +28,9 @@
     "canon:restore": "node tools/canonicalize-paths.mjs --restore",
     "test": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts\\doctor.ps1",
     "test:canon": "node tools/test-canonicalize.mjs",
-    "test:mutate": "node tools/test-mutation.mjs"
+    "test:mutate": "node tools/test-mutation.mjs",
+    "test:plugin": "node tools/test-memory-plugin.mjs",
+    "inspect": "node tools/inspect.mjs"
   },
   "devDependencies": {
     "@playwright/mcp": "^0.0.82",
