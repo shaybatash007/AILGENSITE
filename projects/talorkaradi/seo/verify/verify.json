@@ -1,0 +1,1287 @@
+{
+  "base": "http://127.0.0.1:41039",
+  "ok": true,
+  "site": {
+    "/robots.txt": 200,
+    "/sitemap.xml": 200,
+    "notFound": 404
+  },
+  "results": [
+    {
+      "row": {
+        "old": "/",
+        "oldTitle": "עמוד הבית - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 59,
+        "status": 200,
+        "words": 785,
+        "action": "keep",
+        "new": "/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/privacy-statement/",
+        "oldTitle": "מדיניות פרטיות - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 59,
+        "status": 200,
+        "words": 1161,
+        "action": "keep",
+        "new": "/privacy-statement/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/privacy-statement/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/south/",
+        "oldTitle": "פארק תעשיות דרום ירוק - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 59,
+        "status": 200,
+        "words": 543,
+        "action": "keep",
+        "new": "/south/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/south/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/accesability/",
+        "oldTitle": "הצהרת נגישות - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 59,
+        "status": 200,
+        "words": 879,
+        "action": "keep",
+        "new": "/accesability/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/accesability/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/sevices/washing/",
+        "oldTitle": "מפעל לשטיפת חומרים ממוחזרים - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 59,
+        "status": 200,
+        "words": 476,
+        "action": "keep",
+        "new": "/sevices/washing/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/sevices/washing/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/sevices/talor_concrete/",
+        "oldTitle": "ייצור ואספקת בטון מובא ומוצרי גמר - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 59,
+        "status": 200,
+        "words": 688,
+        "action": "keep",
+        "new": "/sevices/talor_concrete/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/sevices/talor_concrete/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/sevices/contract-agreements/",
+        "oldTitle": "הסכמי התקשרות להיתר בניה ואישור לטופס 4 - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 59,
+        "status": 200,
+        "words": 472,
+        "action": "keep",
+        "new": "/sevices/contract-agreements/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/sevices/contract-agreements/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/sevices/waste-disposal/",
+        "oldTitle": "פינוי פסולת - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 59,
+        "status": 200,
+        "words": 641,
+        "action": "keep",
+        "new": "/sevices/waste-disposal/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/sevices/waste-disposal/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/sevices/soils/",
+        "oldTitle": "טיפול ושיקום קרקעות - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 59,
+        "status": 200,
+        "words": 441,
+        "action": "keep",
+        "new": "/sevices/soils/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/sevices/soils/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/sevices/infrastructure/",
+        "oldTitle": "תשתיות - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 59,
+        "status": 200,
+        "words": 511,
+        "action": "keep",
+        "new": "/sevices/infrastructure/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/sevices/infrastructure/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/projects/",
+        "oldTitle": "פרויקטים - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 59,
+        "status": 200,
+        "words": 361,
+        "action": "keep",
+        "new": "/projects/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/projects/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/jobs/",
+        "oldTitle": "דרושים - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 59,
+        "status": 200,
+        "words": 1185,
+        "action": "keep",
+        "new": "/jobs/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/jobs/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/about/",
+        "oldTitle": "אודות - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 59,
+        "status": 200,
+        "words": 711,
+        "action": "keep",
+        "new": "/about/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/about/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/contact/",
+        "oldTitle": "יצירת קשר - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 59,
+        "status": 200,
+        "words": 361,
+        "action": "keep",
+        "new": "/contact/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/contact/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/sevices/recycling-plants/",
+        "oldTitle": "מפעלים לטיפול ומחזור פסולת בניין, גזם ויבשה - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 59,
+        "status": 200,
+        "words": 614,
+        "action": "keep",
+        "new": "/sevices/recycling-plants/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/sevices/recycling-plants/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/sevices/civil-engineering/",
+        "oldTitle": "הנדסה אזרחית ומיגון - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 59,
+        "status": 200,
+        "words": 644,
+        "action": "keep",
+        "new": "/sevices/civil-engineering/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/sevices/civil-engineering/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/שאלות-נפוצות/",
+        "oldTitle": "שאלות נפוצות - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 59,
+        "status": 200,
+        "words": 448,
+        "action": "keep",
+        "new": "/שאלות-נפוצות/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/שאלות-נפוצות/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/blog/",
+        "oldTitle": "מאמרים - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 59,
+        "status": 200,
+        "words": 403,
+        "action": "keep",
+        "new": "/blog/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/blog/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/sevices/demolition/",
+        "oldTitle": " הריסת מבנים  - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 59,
+        "status": 200,
+        "words": 594,
+        "action": "keep",
+        "new": "/sevices/demolition/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/sevices/demolition/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/category/מאמרים/",
+        "oldTitle": "ארכיון מאמרים - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 23,
+        "status": 200,
+        "words": 691,
+        "action": "301",
+        "new": "/blog/",
+        "confidence": 1,
+        "why": "הוחלט בתהליך (כפילות, דף זמני או עמוד יורש)"
+      },
+      "chain": [
+        {
+          "url": "/category/מאמרים/",
+          "status": 301
+        },
+        {
+          "url": "/blog/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/sevices/",
+        "oldTitle": "השירותים שלנו - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 14,
+        "status": 200,
+        "words": 303,
+        "action": "keep",
+        "new": "/sevices/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/sevices/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/author/efrat/",
+        "oldTitle": "אפרת סטרוזברג, מחבר ב-קבוצת טלאור כראדי בע\"מ",
+        "inbound": 4,
+        "status": 200,
+        "words": 314,
+        "action": "301",
+        "new": "/about/",
+        "confidence": 1,
+        "why": "הוחלט בתהליך (כפילות, דף זמני או עמוד יורש)"
+      },
+      "chain": [
+        {
+          "url": "/author/efrat/",
+          "status": 301
+        },
+        {
+          "url": "/about/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/author/nofarzo/",
+        "oldTitle": "nofarzo, מחבר ב-קבוצת טלאור כראדי בע\"מ",
+        "inbound": 4,
+        "status": 200,
+        "words": 313,
+        "action": "301",
+        "new": "/about/",
+        "confidence": 1,
+        "why": "הוחלט בתהליך (כפילות, דף זמני או עמוד יורש)"
+      },
+      "chain": [
+        {
+          "url": "/author/nofarzo/",
+          "status": 301
+        },
+        {
+          "url": "/about/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/פינוי-פסולת-בניין-ותעשייה-פתרונות-מתק-2/",
+        "oldTitle": "פינוי פסולת בניין ותעשייה: פתרונות מתקדמים | טלאור כראדי",
+        "inbound": 3,
+        "status": 200,
+        "words": 1230,
+        "action": "keep",
+        "new": "/פינוי-פסולת-בניין-ותעשייה-פתרונות-מתק-2/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/פינוי-פסולת-בניין-ותעשייה-פתרונות-מתק-2/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/פינוי-פסולת-בניין-ותעשייה-פתרונות-מתק/",
+        "oldTitle": "מכולה לפינוי פסולת: נפחים, אישורים ופינוי מהיר | טלאור כראדי",
+        "inbound": 3,
+        "status": 200,
+        "words": 796,
+        "action": "keep",
+        "new": "/פינוי-פסולת-בניין-ותעשייה-פתרונות-מתק/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/פינוי-פסולת-בניין-ותעשייה-פתרונות-מתק/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/פירוק-ופינוי-אסבסט-באתרי-תעשייה-ובניי/",
+        "oldTitle": "פירוק ופינוי אסבסט באתרי תעשייה ובנייה | טלאור כראדי",
+        "inbound": 3,
+        "status": 200,
+        "words": 926,
+        "action": "keep",
+        "new": "/פירוק-ופינוי-אסבסט-באתרי-תעשייה-ובניי/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/פירוק-ופינוי-אסבסט-באתרי-תעשייה-ובניי/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/מכולה-לפינוי-פסולת-בניין-מחיר/",
+        "oldTitle": "מכולה לפינוי פסולת בניין מחיר: מה משפיע על העלות ואיך חוסכים? - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 3,
+        "status": 200,
+        "words": 867,
+        "action": "keep",
+        "new": "/מכולה-לפינוי-פסולת-בניין-מחיר/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/מכולה-לפינוי-פסולת-בניין-מחיר/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/קבלן-הריסות-מבנים-מורשה-ביצוע-הנדסי-מש/",
+        "oldTitle": "קבלן הריסות מבנים מורשה: ביצוע הנדסי משלב התכנון ועד למסירת מגרש נקי - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 3,
+        "status": 200,
+        "words": 902,
+        "action": "keep",
+        "new": "/קבלן-הריסות-מבנים-מורשה-ביצוע-הנדסי-מש/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/קבלן-הריסות-מבנים-מורשה-ביצוע-הנדסי-מש/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/building-demolition-guide/",
+        "oldTitle": "הריסת מבנים: מדריך לתכנון, אישורים ועלויות ופסולת",
+        "inbound": 3,
+        "status": 200,
+        "words": 2046,
+        "action": "keep",
+        "new": "/building-demolition-guide/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/building-demolition-guide/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/drushim/מנהל-ת-שיווק-ומכירות/",
+        "oldTitle": "מנהל /ת שיווק ומכירות - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 3,
+        "status": 200,
+        "words": 336,
+        "action": "301",
+        "new": "/jobs/",
+        "confidence": 1,
+        "why": "הוחלט בתהליך (כפילות, דף זמני או עמוד יורש)"
+      },
+      "chain": [
+        {
+          "url": "/drushim/מנהל-ת-שיווק-ומכירות/",
+          "status": 301
+        },
+        {
+          "url": "/jobs/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/drushim/מנהל-ת-עבודה-מוסמך-ת-בבנין-תנאים-מעולי/",
+        "oldTitle": "מנהל /ת עבודה מוסמך /ת בבנין - תנאים מעולים, רכב צמוד! - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 3,
+        "status": 200,
+        "words": 358,
+        "action": "301",
+        "new": "/jobs/",
+        "confidence": 1,
+        "why": "הוחלט בתהליך (כפילות, דף זמני או עמוד יורש)"
+      },
+      "chain": [
+        {
+          "url": "/drushim/מנהל-ת-עבודה-מוסמך-ת-בבנין-תנאים-מעולי/",
+          "status": 301
+        },
+        {
+          "url": "/jobs/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/drushim/מנהל-ת-עבודה-מוסמך-ת-לתחום-הפיתוח-והתש/",
+        "oldTitle": "מנהל /ת עבודה מוסמך /ת לתחום הפיתוח והתשתיות - תנאים מעולים, רכב צמוד! - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 3,
+        "status": 200,
+        "words": 366,
+        "action": "301",
+        "new": "/jobs/",
+        "confidence": 1,
+        "why": "הוחלט בתהליך (כפילות, דף זמני או עמוד יורש)"
+      },
+      "chain": [
+        {
+          "url": "/drushim/מנהל-ת-עבודה-מוסמך-ת-לתחום-הפיתוח-והתש/",
+          "status": 301
+        },
+        {
+          "url": "/jobs/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/drushim/לטלאור-בטון-דרוש-ה-סדרן-ית-משאיות/",
+        "oldTitle": "לטלאור בטון דרוש/ה סדרן/ית משאיות - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 3,
+        "status": 200,
+        "words": 332,
+        "action": "301",
+        "new": "/jobs/",
+        "confidence": 1,
+        "why": "הוחלט בתהליך (כפילות, דף זמני או עמוד יורש)"
+      },
+      "chain": [
+        {
+          "url": "/drushim/לטלאור-בטון-דרוש-ה-סדרן-ית-משאיות/",
+          "status": 301
+        },
+        {
+          "url": "/jobs/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/drushim/לטלאור-בטון-דרוש-ה-מנהל-ת-מפעל-בטון/",
+        "oldTitle": "לטלאור בטון דרוש/ה מנהל/ת מפעל בטון - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 3,
+        "status": 200,
+        "words": 332,
+        "action": "301",
+        "new": "/jobs/",
+        "confidence": 1,
+        "why": "הוחלט בתהליך (כפילות, דף זמני או עמוד יורש)"
+      },
+      "chain": [
+        {
+          "url": "/drushim/לטלאור-בטון-דרוש-ה-מנהל-ת-מפעל-בטון/",
+          "status": 301
+        },
+        {
+          "url": "/jobs/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/drushim/חשב-ת-חברה/",
+        "oldTitle": "חשב/ת חברה - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 3,
+        "status": 200,
+        "words": 322,
+        "action": "301",
+        "new": "/jobs/",
+        "confidence": 1,
+        "why": "הוחלט בתהליך (כפילות, דף זמני או עמוד יורש)"
+      },
+      "chain": [
+        {
+          "url": "/drushim/חשב-ת-חברה/",
+          "status": 301
+        },
+        {
+          "url": "/jobs/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/תקן-5281-לבנייה-ירוקה-מינוף-מחזור-פסולת-לנ/",
+        "oldTitle": "תקן 5281 לבנייה ירוקה: מינוף מחזור פסולת לניקוד | טלאור כראדי",
+        "inbound": 2,
+        "status": 200,
+        "words": 932,
+        "action": "keep",
+        "new": "/תקן-5281-לבנייה-ירוקה-מינוף-מחזור-פסולת-לנ/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/תקן-5281-לבנייה-ירוקה-מינוף-מחזור-פסולת-לנ/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/טופס-4-דרישה-לגג-המדריך-המלא-לאישור-אכל/",
+        "oldTitle": "טופס 4 דרישה לגג: המדריך המלא לאישור אכלוס | טלאור כראדי",
+        "inbound": 2,
+        "status": 200,
+        "words": 1019,
+        "action": "keep",
+        "new": "/טופס-4-דרישה-לגג-המדריך-המלא-לאישור-אכל/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/טופס-4-דרישה-לגג-המדריך-המלא-לאישור-אכל/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/הריסת-מבנים-שירותי-הריסה-פינוי-ותשתיו/",
+        "oldTitle": "הריסת מבנים: שירותי הריסה, פינוי ותשתיות | קבוצת טלאור כראדי",
+        "inbound": 2,
+        "status": 200,
+        "words": 1020,
+        "action": "keep",
+        "new": "/הריסת-מבנים-שירותי-הריסה-פינוי-ותשתיו/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/הריסת-מבנים-שירותי-הריסה-פינוי-ותשתיו/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/ניהול-סיכונים-ובטיחות-בהריסת-מבנים-מד/",
+        "oldTitle": "ניהול סיכונים ובטיחות בהריסת מבנים: מדריך ליזם | טלאור כראדי",
+        "inbound": 2,
+        "status": 200,
+        "words": 941,
+        "action": "keep",
+        "new": "/ניהול-סיכונים-ובטיחות-בהריסת-מבנים-מד/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/ניהול-סיכונים-ובטיחות-בהריסת-מבנים-מד/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/drushim/לקבוצת-טלאור-כראדי-דרוש-ה-איש-מכירות-שט/",
+        "oldTitle": "לקבוצת טלאור כראדי דרוש /ה איש מכירות שטח - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 2,
+        "status": 200,
+        "words": 344,
+        "action": "301",
+        "new": "/jobs/",
+        "confidence": 1,
+        "why": "הוחלט בתהליך (כפילות, דף זמני או עמוד יורש)"
+      },
+      "chain": [
+        {
+          "url": "/drushim/לקבוצת-טלאור-כראדי-דרוש-ה-איש-מכירות-שט/",
+          "status": 301
+        },
+        {
+          "url": "/jobs/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/drushim/דרוש-ה-פקיד-ת-קבלנים/",
+        "oldTitle": "דרוש/ה פקיד/ת קבלנים - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 2,
+        "status": 200,
+        "words": 317,
+        "action": "301",
+        "new": "/jobs/",
+        "confidence": 1,
+        "why": "הוחלט בתהליך (כפילות, דף זמני או עמוד יורש)"
+      },
+      "chain": [
+        {
+          "url": "/drushim/דרוש-ה-פקיד-ת-קבלנים/",
+          "status": 301
+        },
+        {
+          "url": "/jobs/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/author/karadi-group/",
+        "oldTitle": "KARADI GROUP, מחבר ב-קבוצת טלאור כראדי בע\"מ",
+        "inbound": 2,
+        "status": 200,
+        "words": 695,
+        "action": "301",
+        "new": "/about/",
+        "confidence": 1,
+        "why": "הוחלט בתהליך (כפילות, דף זמני או עמוד יורש)"
+      },
+      "chain": [
+        {
+          "url": "/author/karadi-group/",
+          "status": 301
+        },
+        {
+          "url": "/about/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/civil-engineering/",
+        "oldTitle": "הנדסה אזרחית ומיגון - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 2,
+        "status": 200,
+        "words": 644,
+        "action": "301",
+        "new": "/sevices/civil-engineering/",
+        "confidence": 1,
+        "why": "הוחלט בתהליך (כפילות, דף זמני או עמוד יורש)"
+      },
+      "chain": [
+        {
+          "url": "/civil-engineering/",
+          "status": 301
+        },
+        {
+          "url": "/sevices/civil-engineering/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/talor_concrete/",
+        "oldTitle": "ייצור ואספקת בטון מובא ומוצרי גמר - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 2,
+        "status": 200,
+        "words": 688,
+        "action": "301",
+        "new": "/sevices/talor_concrete/",
+        "confidence": 1,
+        "why": "הוחלט בתהליך (כפילות, דף זמני או עמוד יורש)"
+      },
+      "chain": [
+        {
+          "url": "/talor_concrete/",
+          "status": 301
+        },
+        {
+          "url": "/sevices/talor_concrete/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/contract-agreements/",
+        "oldTitle": "הסכמי התקשרות להיתר בניה ואישור לטופס 4 - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 2,
+        "status": 200,
+        "words": 472,
+        "action": "301",
+        "new": "/sevices/contract-agreements/",
+        "confidence": 1,
+        "why": "הוחלט בתהליך (כפילות, דף זמני או עמוד יורש)"
+      },
+      "chain": [
+        {
+          "url": "/contract-agreements/",
+          "status": 301
+        },
+        {
+          "url": "/sevices/contract-agreements/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/מכולות-לפינוי-פסולת-בניין-טלאור-כראדי/",
+        "oldTitle": "מכולות לפינוי פסולת בניין: פתרון לוגיסטי לקבלנים | טלאור כראדי",
+        "inbound": 1,
+        "status": 200,
+        "words": 1078,
+        "action": "keep",
+        "new": "/מכולות-לפינוי-פסולת-בניין-טלאור-כראדי/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/מכולות-לפינוי-פסולת-בניין-טלאור-כראדי/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/המדריך-למיגון-מוסדי-ותעשייתי-איך-בוחר/",
+        "oldTitle": "מיגוניות וממ\"דים ניידים למוסדות ותעשייה | טלאור כראדי הנדסה",
+        "inbound": 1,
+        "status": 200,
+        "words": 903,
+        "action": "keep",
+        "new": "/המדריך-למיגון-מוסדי-ותעשייתי-איך-בוחר/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/המדריך-למיגון-מוסדי-ותעשייתי-איך-בוחר/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/מחזור-פסולת-בניין/",
+        "oldTitle": "מחזור פסולת בניין: פתרונות כלכלה מעגלית לקבלנים | טלאור כראדי",
+        "inbound": 1,
+        "status": 200,
+        "words": 1037,
+        "action": "keep",
+        "new": "/מחזור-פסולת-בניין/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/מחזור-פסולת-בניין/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/פינוי-פסולת-בניין/",
+        "oldTitle": "פינוי פסולת בניין במרכז ובדרום: מדריך לקבלנים | טלאור כראדי",
+        "inbound": 1,
+        "status": 200,
+        "words": 1420,
+        "action": "keep",
+        "new": "/פינוי-פסולת-בניין/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/פינוי-פסולת-בניין/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/אספקת-בטון-טלאור-כראדי/",
+        "oldTitle": "אספקת בטון במרכז ובדרום: איכות, דיוק וזמינות | טל אור כראדי",
+        "inbound": 1,
+        "status": 200,
+        "words": 1089,
+        "action": "keep",
+        "new": "/אספקת-בטון-טלאור-כראדי/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/אספקת-בטון-טלאור-כראדי/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/שטר-מטען-דיגיטלי-ומעקב-gps-הגנה-מקנסות-טל/",
+        "oldTitle": "שטר מטען דיגיטלי ומעקב GPS: הגנה מקנסות | טלאור כראדי",
+        "inbound": 1,
+        "status": 200,
+        "words": 1352,
+        "action": "keep",
+        "new": "/שטר-מטען-דיגיטלי-ומעקב-gps-הגנה-מקנסות-טל/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/שטר-מטען-דיגיטלי-ומעקב-gps-הגנה-מקנסות-טל/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/חישוב-כמויות-פסולת-בניין-הנוסחאות-המד/",
+        "oldTitle": "חישוב כמויות פסולת בניין: הנוסחאות המדויקות לכל פרויקט | טלאור כראדי",
+        "inbound": 1,
+        "status": 200,
+        "words": 957,
+        "action": "keep",
+        "new": "/חישוב-כמויות-פסולת-בניין-הנוסחאות-המד/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/חישוב-כמויות-פסולת-בניין-הנוסחאות-המד/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/הריסת-מבנים-מורכבת-מתיק-התיעוד-ועד-הפי/",
+        "oldTitle": "הריסת מבנים מורכבת: מדריך הנדסי מתיק תיעוד ועד פינוי | טלאור כראדי",
+        "inbound": 1,
+        "status": 200,
+        "words": 1050,
+        "action": "keep",
+        "new": "/הריסת-מבנים-מורכבת-מתיק-התיעוד-ועד-הפי/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/הריסת-מבנים-מורכבת-מתיק-התיעוד-ועד-הפי/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/הנדסה-אזרחית-ומיגון-המדריך-המלא-לתכנו/",
+        "oldTitle": "הנדסה אזרחית ומיגון | מדריך מלא | טלאור כראדי",
+        "inbound": 1,
+        "status": 200,
+        "words": 1031,
+        "action": "keep",
+        "new": "/הנדסה-אזרחית-ומיגון-המדריך-המלא-לתכנו/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/הנדסה-אזרחית-ומיגון-המדריך-המלא-לתכנו/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/חוק-פסולת-בניין-2025-2026-מדריך-הישרדות-לקבלנ/",
+        "oldTitle": "הנדסה אזרחית ומיגון | מדריך מלא | טלאור כראדי",
+        "inbound": 1,
+        "status": 200,
+        "words": 1465,
+        "action": "keep",
+        "new": "/חוק-פסולת-בניין-2025-2026-מדריך-הישרדות-לקבלנ/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/חוק-פסולת-בניין-2025-2026-מדריך-הישרדות-לקבלנ/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/soils/",
+        "oldTitle": "טיפול ושיקום קרקעות - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 1,
+        "status": 200,
+        "words": 441,
+        "action": "301",
+        "new": "/sevices/soils/",
+        "confidence": 1,
+        "why": "הוחלט בתהליך (כפילות, דף זמני או עמוד יורש)"
+      },
+      "chain": [
+        {
+          "url": "/soils/",
+          "status": 301
+        },
+        {
+          "url": "/sevices/soils/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/infrastructure/",
+        "oldTitle": "תשתיות - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 1,
+        "status": 200,
+        "words": 511,
+        "action": "301",
+        "new": "/sevices/infrastructure/",
+        "confidence": 1,
+        "why": "הוחלט בתהליך (כפילות, דף זמני או עמוד יורש)"
+      },
+      "chain": [
+        {
+          "url": "/infrastructure/",
+          "status": 301
+        },
+        {
+          "url": "/sevices/infrastructure/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/category/מאמרים/page/2/",
+        "oldTitle": "ארכיון מאמרים - עמוד 2 מתוך 3 - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 1,
+        "status": 200,
+        "words": 688,
+        "action": "301",
+        "new": "/blog/",
+        "confidence": 1,
+        "why": "הוחלט בתהליך (כפילות, דף זמני או עמוד יורש)"
+      },
+      "chain": [
+        {
+          "url": "/category/מאמרים/page/2/",
+          "status": 301
+        },
+        {
+          "url": "/blog/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/אישור-הטמנה-טופס-4/",
+        "oldTitle": "המדריך המלא לקבלן: כך תשיגו אישור הטמנה לטופס 4 במהירות - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 0,
+        "status": 200,
+        "words": 1028,
+        "action": "keep",
+        "new": "/אישור-הטמנה-טופס-4/",
+        "confidence": 1,
+        "why": "אותה כתובת קיימת באתר החדש"
+      },
+      "chain": [
+        {
+          "url": "/אישור-הטמנה-טופס-4/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    },
+    {
+      "row": {
+        "old": "/עמוד-הבית-אפרת/",
+        "oldTitle": "עמוד הבית-אפרת - קבוצת טלאור כראדי בע\"מ",
+        "inbound": 0,
+        "status": 200,
+        "words": 770,
+        "action": "301",
+        "new": "/",
+        "confidence": 1,
+        "why": "הוחלט בתהליך (כפילות, דף זמני או עמוד יורש)"
+      },
+      "chain": [
+        {
+          "url": "/עמוד-הבית-אפרת/",
+          "status": 301
+        },
+        {
+          "url": "/",
+          "status": 200
+        }
+      ],
+      "fails": []
+    }
+  ]
+}

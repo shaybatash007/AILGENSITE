@@ -28,3 +28,5 @@
 {"t": "2026-09-29T17:41:08.000Z", "phase": "v2-finish", "ev": "end", "note": "commit next"}
 {"t":"2026-09-29T17:45:57.495Z","phase":"v3-seo","ev":"start","note":"SEO audit of the studio mechanism"}
 {"t":"2026-09-29T18:14:04.948Z","phase":"v3-seo","ev":"end","note":"audit, tools, pipeline, 41 pages, docs; commit next"}
+{"t":"2026-09-29T18:22:50.499Z","phase":"v4-seo-max","ev":"start","note":"user: SEO must be a first-class, max-quality part of the process"}
+{"t":"2026-09-29T18:44:03.340Z","phase":"v4-seo-max","ev":"end","note":"tools, gates, attribution, docs, studio offer; commit next"}

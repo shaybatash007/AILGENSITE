@@ -36,8 +36,9 @@ node $S/scripts/new-project.mjs --concept "<the idea, in the owner's words>" --s
 node $S/scripts/new-project.mjs --name "<business name>" --type "<what it does>" --slug <slug>
 ```
 
-This creates `projects/<slug>/` with `brief.md`, `brand.json`, `film.json` and, for a URL, `intake/`
-(all texts, media, contacts, colours, fonts, screenshots). Then run the phases below, in order.
+This creates `projects/<slug>/` with `brief.md`, `brand.json`, `film.json`, `seo/brief.md` (search demand, intent and the page inventory) and, for a URL,
+`intake/` (all texts, media, contacts, colours, fonts, screenshots) plus `seo/old/` (the SEO inventory of what the old site earned: every sitemap URL, links, structured data).
+Then run the phases below, in order.
 
 ## Measure every run (speed and cost are part of the job)
 
@@ -77,7 +78,8 @@ bare name with no business type). Otherwise decide, write the assumption in `bri
 
 ### 0 · Situation read (5 minutes)
 Classify the input (url / concept / name), the business type and the spirit (use the matrix in
-`references/01-brand-dna.md`). Write the atom plan into `brief.md`. Decide the deliverables (all five by default).
+`references/01-brand-dna.md`). Write the atom plan into `brief.md`. Decide the deliverables (all five by default). Search visibility is not optional:
+an existing site's URLs and guides are inherited (`seo/old/`), a new business gets its page inventory from `seo/brief.md`.
 
 ### 1 · Intake → `references/00-intake.md`
 - **URL**: `new-project.mjs --url` crawls pages, text, images, videos, YouTube IDs, contacts, colours, fonts
@@ -105,14 +107,16 @@ sommelier, calculator, live agent), entry choreography born from the logo, agent
 and accessibility. Map every section to a visitor doubt it removes.
 - **Gate**: every section has a job line; the proof tool answers the main question in under a minute.
 
-### 4b · SEO and internal links → `references/10-seo.md`
-Decided in the blueprint, built into the templates, verified before launch. **Existing site:** inventory every
-URL (`scripts/seo-audit.mjs` on the old site, sitemap included), keep each URL or give it one 301, carry over
-the guides and their structured data, keep the internal link graph at least as strong. **New business:** one real
-URL per service and per guide, hub-and-spoke links, JSON-LD, sitemap and robots from the first commit. A one-URL
-single-page site is allowed only when there is nothing to inherit, and the report must say so.
-- **Gate**: `seo-plan.mjs` coverage 100%, `seo-audit.mjs` on the new build has zero high findings and no orphans,
-  the served HTML (not the rendered DOM) carries h1, text, links and JSON-LD, previews are `noindex`.
+### 4b · SEO, internal links and search visibility → `references/10-seo.md`
+First-class, not a finishing pass. **Starts on day one:** `new-project.mjs` creates `seo/brief.md` (demand, intent, competitors, page
+inventory) and, for a URL, inventories the old site (`seo/old/`, every sitemap URL, link graph, structured data). **Existing site:**
+keep each URL or give it exactly one 301, carry every guide and its structured data word for word, keep the link graph at least as strong.
+**New business:** one real URL per service and guide, hub-and-spoke links, JSON-LD, sitemap, robots, 404, share cards from the first commit.
+A one-URL site is allowed only when there is nothing to inherit, and the report must say so. **Built in:** unique title/description/h1,
+canonical, valid JSON-LD matching visible text, static first paint of the text that should rank, per-page share cards, lead source saved per lead.
+Run `node $S/scripts/seo-run.mjs --project projects/<slug>` after every change (`--launch` on launch day).
+- **Gate**: `seo-run.mjs` green (audit: 0 high findings, no orphans; verify: every old URL is 200 or one 301), coverage 100%, previews `noindex`,
+  `launch.md` and the four-week watch list in the owner report.
 
 ### 5 · Build the site, then raise it
 Build the artifact (content model + db + owner admin + agent with FALLBACK + WhatsApp fallback for leads),
@@ -167,9 +171,13 @@ repo, commit and push, and report to the user in Hebrew: what was built, links, 
 | `scripts/palette.py` | Dominant colours from a logo/screenshot, role suggestions, WCAG contrast |
 | `scripts/fonts.mjs` | Download Google Fonts (Hebrew + Latin woff2) and write `fonts.css` |
 | `scripts/capture.py` | levelup CAPTURE: every region and element, desktop + mobile, all states |
-| `scripts/seo-audit.mjs` | SEO audit of any site (old or new): robots, sitemap, redirects, per-page head, JSON-LD, words before/after JS, internal link graph, orphans |
-| `scripts/seo-plan.mjs` | Old URL → keep / 301 / decide, with `_redirects`, `sitemap.xml`, `robots.txt` and a Hebrew plan |
-| `scripts/seo-pages.mjs` | Renders crawlable pages (title, h1, canonical, OG, JSON-LD, breadcrumbs, related, auto-links, footer map) from a composed config |
+| `scripts/seo-run.mjs` | The whole SEO phase in one command with gates (audit, plan, pages, cards, serve, verify) |
+| `scripts/seo-audit.mjs` | SEO audit of any site (old, staging, local): robots, sitemap, redirects, per-page head, JSON-LD validity, words before/after JS, link graph, orphans; `--gate` |
+| `scripts/seo-plan.mjs` | Old URL → keep / 301 / decide; `_redirects`, `sitemap.xml`, `robots.txt`, `_headers`, `llms.txt`, `launch.md` |
+| `scripts/seo-pages.mjs` | Crawlable pages, 404, breadcrumbs, related links, auto-links, tables, FAQ, JSON-LD from a composed config |
+| `scripts/seo-og.mjs` | A 1200×630 share card per page (own headline, real photo) |
+| `scripts/seo-serve.mjs` | Static server that behaves like the host: `_redirects`, `_headers`, `404.html` |
+| `scripts/seo-verify.mjs` | Every old URL on a host: 200 or one 301 to its successor, real h1/title/canonical; exit code gates a deploy |
 | `scripts/seo-lib.mjs` | Shared: title tokens, crawled blocks → clean article content |
 | `scripts/rec.py` | levelup2 real-time screencast → MP4 for portfolio footage |
 | `scripts/rec.mjs` | the same recorder for Node-only Playwright, plus `viaCurl` for fonts |

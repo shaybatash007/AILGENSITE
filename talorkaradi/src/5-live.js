@@ -53,7 +53,16 @@ $$('#advChips button').forEach(c=>c.addEventListener('click',()=>ask(c.textConte
 /* ================= leads ================= */
 let db=null,user=null,uid=null,isOwner=false;
 const cl=window.claude&&window.claude.use?window.claude:null;
-async function saveLead(l){ if(!db||!uid)throw new Error('offline'); const ref=db.doc('leads/'+uid); const s=await ref.get(); const items=(s.exists&&s.data().items)||[]; items.push({id:rid(),at:Date.now(),status:'new',note:'',...l}); await ref.set({items,updatedAt:Date.now()}); }
+/* traffic attribution: where a lead came from (first touch, kept 30 days, refreshed by a new campaign), saved with the lead so the owner can see what search and each page bring in */
+const ATTR=(()=>{try{const K='tkAttr',now=Date.now(),q=new URLSearchParams(location.search),host=location.hostname.replace(/^www\./,'');
+ let ref=''; try{ref=document.referrer?new URL(document.referrer).hostname.replace(/^www\./,''):'';}catch(_){} if(ref===host)ref='';
+ const fresh={t:now,ref,land:q.get('from')||location.pathname,utm:['utm_source','utm_medium','utm_campaign'].map(k=>q.get(k)||'').join('|').replace(/^\|+$/,'')};
+ let a=null; try{a=JSON.parse(localStorage.getItem(K)||'null');}catch(_){}
+ if(!a||now-a.t>30*864e5||(fresh.utm&&fresh.utm!==a.utm)||(fresh.ref&&!a.ref&&!a.utm)){a=fresh; try{localStorage.setItem(K,JSON.stringify(a));}catch(_){}}
+ return a;}catch(e){return null;}})();
+const srcKind=a=>{if(!a)return'direct'; const u=(a.utm||'').toLowerCase(),r=a.ref||''; if(/cpc|paid|ppc/.test(u))return'paid'; if(u)return'campaign'; if(/google|bing|duckduckgo|yahoo|ecosia/.test(r))return'organic'; if(/facebook|instagram|linkedin|t\.co|whatsapp|youtube/.test(r))return'social'; return r?'referral':'direct';};
+const KIND={organic:'חיפוש אורגני',paid:'מודעה ממומנת',social:'רשתות חברתיות',campaign:'קמפיין',referral:'אתר מפנה',direct:'כניסה ישירה'};
+async function saveLead(l){ if(!db||!uid)throw new Error('offline'); const ref=db.doc('leads/'+uid); const s=await ref.get(); const items=(s.exists&&s.data().items)||[]; items.push({id:rid(),at:Date.now(),status:'new',note:'',attr:ATTR?{kind:srcKind(ATTR),ref:ATTR.ref,land:ATTR.land,utm:ATTR.utm}:null,...l}); await ref.set({items,updatedAt:Date.now()}); }
 $('#leadForm').addEventListener('submit',async e=>{
  e.preventDefault(); const note=$('#fNote'); note.classList.remove('err'); const name=$('#fName').value.trim(), phone=$('#fPhone').value.trim();
  const bad=(m,el)=>{note.textContent=m; note.classList.add('err'); el.focus();};
@@ -108,7 +117,7 @@ $$('#adm .tab').forEach(t=>t.addEventListener('click',()=>{if(t.dataset.t==='clo
 $('#adm').addEventListener('keydown',e=>{if(e.key==='Escape')closeAdmin();});
 async function updLead(d,id,patch,remove){const ref=db.doc('leads/'+d); const s=await ref.get(); const dt=s.data()||{}; let items=dt.items||[]; items=remove?items.filter(i=>i.id!==id):items.map(i=>i.id===id?{...i,...patch}:i); await ref.set({...dt,items,updatedAt:Date.now()});}
 function leadCard(l){const [sl,sc]=SRC[l.source]||SRC.form; const k=l._d+'|'+l.id; return `<div class="box"><div class="lead-row">
- <div><b>${esc(l.name)}</b>${l.co?` · ${esc(l.co)}`:''} <span style="color:var(--steel);font-size:13px">${fmt(l.at)}</span><br><span class="badge ${sc}">${sl}</span>${l.svc?`<span class="badge">${esc(l.svc)}</span>`:''}${l.where?`<span class="badge">${esc(l.where)}</span>`:''}</div>
+ <div><b>${esc(l.name)}</b>${l.co?` · ${esc(l.co)}`:''} <span style="color:var(--steel);font-size:13px">${fmt(l.at)}</span><br><span class="badge ${sc}">${sl}</span>${l.svc?`<span class="badge">${esc(l.svc)}</span>`:''}${l.where?`<span class="badge">${esc(l.where)}</span>`:''}${l.attr?`<span class="badge" title="מקור ההגעה">${KIND[l.attr.kind]||''}${l.attr.land&&l.attr.land!=='/'?` · ${esc(decodeURIComponent(l.attr.land).slice(0,40))}`:''}</span>`:''}</div>
  <div><span class="mono" dir="ltr">${esc(l.phone)}</span><br><button class="mini" type="button" data-copyv="${esc(l.phone)}">העתקת טלפון</button></div>
  <div><select data-st="${k}" aria-label="סטטוס">${Object.entries(ST).map(([v,t])=>`<option value="${v}" ${l.status===v?'selected':''}>${t}</option>`).join('')}</select></div>
  <div>${pendingDel===k?`<span class="confirm">למחוק? <button class="mini warn" data-delok="${k}" type="button">כן</button><button class="mini" data-delno type="button">לא</button></span>`:`<button class="mini warn" data-del="${k}" type="button">מחיקה</button>`}</div>
@@ -120,7 +129,7 @@ function renderAdmin(){
  if(tab==='ov'||tab==='leads'){
   const c=k=>LEADS.filter(l=>l.status===k).length;
   const list=tab==='ov'?LEADS.slice(0,4):LEADS.filter(l=>leadFilter==='all'||l.status===leadFilter);
-  m.innerHTML=tab==='ov'?`<h2>סקירה</h2><p class="sub">כל מה שקורה באתר, במבט אחד.</p><div class="kpis"><div class="kpi hot"><b>${c('new')}</b><span>פניות חדשות</span></div><div class="kpi"><b>${c('work')+c('quote')}</b><span>בטיפול והצעות</span></div><div class="kpi"><b>${c('won')}</b><span>נסגרו</span></div><div class="kpi"><b>${LEADS.filter(l=>l.source==='calc').length}</b><span>הגיעו עם מאזן פסולת</span></div></div><h3 style="font-size:24px;margin:6px 0 12px">פניות אחרונות</h3>${list.map(leadCard).join('')||'<p class="empty">עדיין אין פניות. כשמישהו ימלא טופס, ישתמש במאזן הפסולת או ידבר עם המוקד הדיגיטלי, זה יופיע כאן.</p>'}`
+  m.innerHTML=tab==='ov'?`<h2>סקירה</h2><p class="sub">כל מה שקורה באתר, במבט אחד.</p><div class="kpis"><div class="kpi hot"><b>${c('new')}</b><span>פניות חדשות</span></div><div class="kpi"><b>${c('work')+c('quote')}</b><span>בטיפול והצעות</span></div><div class="kpi"><b>${c('won')}</b><span>נסגרו</span></div><div class="kpi"><b>${LEADS.filter(l=>l.source==='calc').length}</b><span>הגיעו עם מאזן פסולת</span></div></div><p class="sub">מקורות הפניות: ${Object.entries(LEADS.reduce((m,l)=>{const k=l.attr?l.attr.kind:'direct';m[k]=(m[k]||0)+1;return m;},{})).map(([k,n])=>`${KIND[k]} ${n}`).join(' · ')||'עדיין אין'}</p><h3 style="font-size:24px;margin:6px 0 12px">פניות אחרונות</h3>${list.map(leadCard).join('')||'<p class="empty">עדיין אין פניות. כשמישהו ימלא טופס, ישתמש במאזן הפסולת או ידבר עם המוקד הדיגיטלי, זה יופיע כאן.</p>'}`
    :`<h2>פניות</h2><p class="sub">מהטופס, ממאזן הפסולת ומהמוקד הדיגיטלי, במקום אחד.</p><div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">${[['all','הכל'],...Object.entries(ST)].map(([k,v])=>`<button class="mini" type="button" aria-pressed="${leadFilter===k}" data-f="${k}" style="${leadFilter===k?'border-color:var(--green);color:var(--green)':''}">${v} (${k==='all'?LEADS.length:c(k)})</button>`).join('')}</div>${list.map(leadCard).join('')||'<p class="empty">אין פניות בסינון הזה.</p>'}`;
   $$('[data-f]',m).forEach(b=>b.onclick=()=>{leadFilter=b.dataset.f;renderAdmin();});
   $$('[data-st]',m).forEach(s=>s.onchange=()=>{const [d,id]=s.dataset.st.split('|');updLead(d,id,{status:s.value});});

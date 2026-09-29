@@ -1,24 +1,26 @@
-# בדיקת SEO: http://localhost:8767
+# בדיקת SEO: http://127.0.0.1:41039
 
-נסרק ב-2026-09-29 18:12 · 41 עמודים · מפת אתר: 41 כתובות · קישורים פנימיים: 1640 (מתוכן העמודים: 281, ב-41 עמודים) · עמודים יתומים: 0
+נסרק ב-2026-09-29 18:43 · 41 עמודים · מפת אתר: 41 כתובות · קישורים פנימיים: 1640 (מתוכן העמודים: 281, ב-41 עמודים) · עמודים יתומים: 0
 
-חומרה: **0 גבוהה**, 0 בינונית, 44 נמוכה. ממוצע מילים: 995 ב-HTML הראשוני, 1013 אחרי JavaScript.
+חומרה: **0 גבוהה**, 0 בינונית, 45 נמוכה. ממוצע מילים: 996 ב-HTML הראשוני, 1014 אחרי JavaScript.
 
 ## האתר
 - robots.txt: 200 · Sitemap: https://talorkaradi.co.il/sitemap.xml
-- מפות אתר: http://localhost:8767/sitemap.xml
+- מפות אתר: http://127.0.0.1:41039/sitemap.xml
 - http → https: לא נבדק · www: לא נבדק
 - כתובת לא קיימת מחזירה: 404 · HSTS: אין
 
 ## ממצאים
 
-### חומרה נמוכה (44)
+### חומרה נמוכה (45)
 - **noindex-preview** (41): noindex בתצוגה מקדימה: צפוי. להסיר ביום ההשקה.
   - /: noindex בתצוגה מקדימה: צפוי. להסיר ביום ההשקה.
   - /about/: noindex בתצוגה מקדימה: צפוי. להסיר ביום ההשקה.
   - /accesability/: noindex בתצוגה מקדימה: צפוי. להסיר ביום ההשקה.
   - /blog/: noindex בתצוגה מקדימה: צפוי. להסיר ביום ההשקה.
   - ועוד 37
+- **img-no-dimensions** (1): 26 תמונות בלי width/height, וזה גורם לקפיצת פריסה (CLS).
+  - /
 - **title-long** (3): title ארוך (80 תווים), יחתך בתוצאות.
   - /אישור-הטמנה-טופס-4/: title ארוך (80 תווים), יחתך בתוצאות.
   - /מכולה-לפינוי-פסולת-בניין-מחיר/: title ארוך (86 תווים), יחתך בתוצאות.
@@ -35,7 +37,7 @@
 | /building-demolition-guide/ | 49 | 1 | 2423 / 2423 | 40 | 18 | 40 | 8 | 1 | Organization, Article, FAQPage, BreadcrumbList |
 | /contact/ | 34 | 1 | 435 / 435 | 40 | 0 | 40 | 8 | 1 | Organization, WebPage, BreadcrumbList |
 | /jobs/ | 31 | 1 | 364 / 364 | 40 | 2 | 40 | 3 | 1 | Organization, WebPage, BreadcrumbList |
-| /privacy-statement/ | 39 | 1 | 503 / 503 | 40 | 0 | 40 | 5 | 1 | Organization, WebPage, BreadcrumbList |
+| /privacy-statement/ | 39 | 1 | 532 / 532 | 40 | 0 | 40 | 5 | 1 | Organization, WebPage, BreadcrumbList |
 | /projects/ | 33 | 1 | 370 / 370 | 40 | 2 | 40 | 4 | 1 | Organization, WebPage, BreadcrumbList |
 | /sevices/civil-engineering/ | 44 | 1 | 694 / 694 | 40 | 5 | 40 | 5 | 1 | Organization, Service, BreadcrumbList |
 | /sevices/contract-agreements/ | 64 | 1 | 533 / 533 | 40 | 15 | 40 | 6 | 1 | Organization, Service, BreadcrumbList |

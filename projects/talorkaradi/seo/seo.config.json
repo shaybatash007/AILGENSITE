@@ -1,0 +1,9 @@
+{
+  "site": "https://talorkaradi.co.il",
+  "siteDir": "talorkaradi",
+  "oldUrl": "https://talorkaradi.co.il/",
+  "compose": "projects/talorkaradi/seo/compose.mjs",
+  "pages": "projects/talorkaradi/seo/pages.json",
+  "build": "sh talorkaradi/build.sh",
+  "after": ["node projects/talorkaradi/seo/compare.mjs"]
+}

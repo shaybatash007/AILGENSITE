@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // SEO audit: what a search engine gets from a site, page by page, before and after JavaScript.
 //   node seo-audit.mjs https://example.co.il --out projects/example/seo/old [--max 60] [--delay 800] [--js-only]
+//   node seo-audit.mjs http://localhost:8767/ --out projects/example/seo/new --preview --gate [high|med]   (exit code 1 when the gate fails)
 //   node seo-audit.mjs http://localhost:8767/ --out projects/example/seo/new --preview   (a local or staging copy: noindex is expected)
 // Output (in --out): seo-report.json (everything, for other tools) and seo-report.md (for people, in Hebrew).
 // What it checks
@@ -46,7 +47,10 @@ function extract() {
     words: text ? text.split(' ').length : 0,
     og: { title: meta('og:title'), description: meta('og:description'), image: meta('og:image'), url: meta('og:url'), type: meta('og:type') }, twitter: meta('twitter:card'),
     hreflang: [...document.querySelectorAll('link[rel="alternate" i][hreflang]')].map(l => l.hreflang),
-    ldTypes: [...new Set(ld.flatMap(types))],
+    ldTypes: [...new Set(ld.flatMap(types))], ld: JSON.stringify(ld).slice(0, 60000),
+    faqMissing: (() => { const q = []; const w = x => { if (!x || typeof x !== 'object') return; if (Array.isArray(x)) return x.forEach(w); if ([].concat(x['@type'] || []).includes('Question') && x.name) q.push(String(x.name)); Object.values(x).forEach(w); }; ld.forEach(w); const t = text.replace(/\s+/g, ' '); return q.filter(x => !t.includes(x.replace(/\s+/g, ' ').trim().slice(0, 40))).length; })(),
+    imgNoDim: imgs.filter(i => !(i.getAttribute('width') && i.getAttribute('height')) && i.getBoundingClientRect().width > 60).length,
+    headLevels: heads.map(h => h.l),
     imgs: imgs.length, imgNoAlt: imgs.filter(i => !i.hasAttribute('alt')).length, imgEmptyAlt: imgs.filter(i => i.getAttribute('alt') === '').length,
     main: !!q('main'), nav: !!q('nav'),
     links: [...document.querySelectorAll('a[href]')].map(a => ({ href: a.getAttribute('href') || '', abs: a.href, text: (a.textContent || a.getAttribute('aria-label') || '').replace(/\s+/g, ' ').trim().slice(0, 70), nav: !!a.closest('header,nav,footer'), nofollow: /nofollow/i.test(a.rel) })),
@@ -129,6 +133,25 @@ async function main() {
   analyse(site, pages, statuses);
 }
 
+/** Structured data checks (what the search engines' validators require, offline). */
+function validateLd(raw) {
+  if (!raw) return [];
+  let data; try { data = JSON.parse(raw); } catch { return [{ sev: 'high', code: 'ld-invalid-json', msg: 'JSON-LD שבור.' }]; }
+  const nodes = []; const walk = x => { if (!x || typeof x !== 'object') return; if (Array.isArray(x)) return x.forEach(walk); nodes.push(x); if (x['@graph']) walk(x['@graph']); };
+  walk(data); const out = [];
+  const has = (o, k) => o[k] !== undefined && o[k] !== null && o[k] !== '' && !(Array.isArray(o[k]) && !o[k].length);
+  for (const n of nodes) {
+    const t = [].concat(n['@type'] || []);
+    if (t.includes('INVALID_JSON')) out.push({ sev: 'high', code: 'ld-invalid-json', msg: 'JSON-LD שבור.' });
+    if (t.includes('Article')) for (const k of ['headline', 'image', 'author', 'publisher']) if (!has(n, k)) out.push({ sev: 'med', code: 'ld-article-incomplete', msg: `ב-Article חסר ${k}.` });
+    if (t.includes('Organization') && Object.keys(n).length > 2) for (const k of ['name', 'url']) if (!has(n, k)) out.push({ sev: 'med', code: 'ld-organization-incomplete', msg: `ב-Organization חסר ${k}.` });
+    if (t.includes('Service')) for (const k of ['name', 'provider']) if (!has(n, k)) out.push({ sev: 'med', code: 'ld-service-incomplete', msg: `ב-Service חסר ${k}.` });
+    if (t.includes('FAQPage')) { const me = [].concat(n.mainEntity || []); if (!me.length || me.some(q => !q.name || !q.acceptedAnswer?.text)) out.push({ sev: 'high', code: 'ld-faq-incomplete', msg: 'ב-FAQPage יש שאלה בלי תשובה.' }); }
+    if (t.includes('BreadcrumbList')) { const it = [].concat(n.itemListElement || []); if (!it.length || it.some((x, i) => +x.position !== i + 1 || !x.name)) out.push({ sev: 'med', code: 'ld-breadcrumb-invalid', msg: 'ב-BreadcrumbList המיקומים לא רצופים או חסר שם.' }); if (it.some(x => x.item && !/^https?:/.test(x.item))) out.push({ sev: 'med', code: 'ld-breadcrumb-relative', msg: 'ב-BreadcrumbList כתובת יחסית.' }); }
+  }
+  const seen = new Set(); return out.filter(m => !seen.has(m.code + m.msg) && seen.add(m.code + m.msg));
+}
+
 function analyse(site, pages, statuses) {
   const byKey = new Map(pages.map(p => [norm(p.url), p]));
   const home = byKey.get(norm(start.href)) || pages[0];
@@ -152,7 +175,7 @@ function analyse(site, pages, statuses) {
     const k = norm(p.url), r = p.rendered, w = p.raw;
     return { url: p.url, status: p.status, title: r.title, titleLen: r.title.length, description: r.description, descLen: r.description.length, canonical: r.canonical, robots: r.robots, xRobotsTag: p.xRobotsTag,
       h1: r.h1, h1Raw: w?.h1 ?? null, ldTypes: r.ldTypes, ldTypesRaw: w?.ldTypes ?? null, og: r.og, twitter: r.twitter, hreflang: r.hreflang, lang: r.lang,
-      wordsRendered: r.words, wordsRaw: w?.words ?? null, imgs: r.imgs, imgNoAlt: r.imgNoAlt, imgEmptyAlt: r.imgEmptyAlt,
+      wordsRendered: r.words, wordsRaw: w?.words ?? null, imgs: r.imgs, imgNoAlt: r.imgNoAlt, imgEmptyAlt: r.imgEmptyAlt, imgNoDim: r.imgNoDim, faqMissing: r.faqMissing, headLevels: r.headLevels, ldRaw: w?.ld ?? r.ld,
       ctxOut: p.rendered.links.filter(l => !l.nav && !/^#/.test(l.href) && pageUrl(l.abs, p.url) && norm(pageUrl(l.abs, p.url)) !== k).length, ctxIn: ctxIn.get(k)?.size ?? 0,
       inbound: inbound.get(k).size, outbound: out.get(k).size, anchorLinks: anchorOnly.get(k), depth: depth.has(k) ? depth.get(k) : null, inSitemap: site.sitemapUrls.some(u => norm(u) === k) };
   });
@@ -191,6 +214,10 @@ function analyse(site, pages, statuses) {
     if (!r.ldTypes.length) add('med', 'structured-data-missing', u, 'אין נתונים מובנים (JSON-LD).');
     if (!r.og.title || !r.og.image) add('low', 'og-incomplete', u, 'חסרים תגי Open Graph (שיתוף בפייסבוק ובוואטסאפ).'); else if (r.og.image && !/^https?:/.test(r.og.image)) add('med', 'og-image-relative', u, 'תמונת ה-og היא כתובת יחסית, ולכן שיתוף ייכשל.');
     if (r.imgNoAlt) add('med', 'img-alt-missing', u, `${r.imgNoAlt} תמונות בלי alt.`);
+    if (r.imgNoDim) add('low', 'img-no-dimensions', u, `${r.imgNoDim} תמונות בלי width/height, וזה גורם לקפיצת פריסה (CLS).`);
+    if (r.faqMissing) add('high', 'faq-not-visible', u, `${r.faqMissing} שאלות ב-FAQPage לא מופיעות בטקסט הגלוי של העמוד. נתונים מובנים חייבים להתאים למה שהמבקר רואה.`);
+    { const L = r.headLevels || []; for (let i = 1; i < L.length; i++) if (L[i] - L[i - 1] > 1) { add('low', 'heading-skip', u, `דילוג בכותרות (h${L[i - 1]} ואז h${L[i]}).`); break; } }
+    for (const m of validateLd(r.ldRaw)) add(m.sev, m.code, u, m.msg);
     if (r.wordsRaw !== null) {
       if (r.wordsRaw < 60 && r.wordsRendered > 150) add('high', 'js-only-content', u, `בלי JavaScript יש ${r.wordsRaw} מילים, ואחרי ${r.wordsRendered}. התוכן נבנה בדפדפן, וזה מסכן אינדוקס.`);
       else if (r.wordsRaw < r.wordsRendered * 0.6) add('med', 'js-heavy-content', u, `רק ${r.wordsRaw} מתוך ${r.wordsRendered} מילים קיימות ב-HTML הראשוני.`);
@@ -208,12 +235,26 @@ function analyse(site, pages, statuses) {
   if (weakAnchors) add('low', 'weak-anchor-text', '', `${weakAnchors} קישורים פנימיים עם טקסט כללי ("קרא עוד", "לחצו כאן") במקום מילות מפתח.`);
   const anchorsOnly = rows.length === 1 && rows[0].anchorLinks > 5;
   if (anchorsOnly) add('high', 'single-url-site', rows[0].url, `כל האתר בכתובת אחת (${rows[0].anchorLinks} קישורי #). אין דפי שירות או מאמרים שאפשר לדרג בנפרד.`);
+  { // two pages competing for the same search: near-identical title words
+    const tk = t => new Set(t.replace(/[^\p{L}\p{N}\s]/gu, ' ').split(/\s+/).filter(w => w.length > 2));
+    const T = rows.map(r => [r.url, tk(r.title.replace(/\s+[-|–·]\s+[^-|–·]*$/, ''))]);
+    for (let i = 0; i < T.length; i++) for (let j = i + 1; j < T.length; j++) {
+      const [x, y] = [T[i][1], T[j][1]]; if (x.size < 4 || y.size < 4) continue;
+      let n = 0; for (const w of x) if (y.has(w)) n++;
+      if (n / Math.min(x.size, y.size) >= 0.85) add('low', 'cannibalization-risk', T[i][0], `כותרת כמעט זהה ל-${decodeURI(T[j][0]).replace(origin, '')}: שני עמודים מתחרים על אותו חיפוש.`);
+    }
+  }
   const order = { high: 0, med: 1, low: 2 }; issues.sort((a, b) => order[a.sev] - order[b.sev]);
 
   const summary = { origin, crawledAt: new Date().toISOString(), pages: rows.length, sitemapUrls: site.sitemapUrls.length, issues: { high: issues.filter(i => i.sev === 'high').length, med: issues.filter(i => i.sev === 'med').length, low: issues.filter(i => i.sev === 'low').length },
     internalEdges: [...out.values()].reduce((a, s) => a + s.size, 0), orphans: rows.filter(r => r.inbound === 0 && norm(r.url) !== norm(start.href)).length, contextualEdges: rows.reduce((a, r) => a + r.ctxOut, 0), pagesWithContextualOut: rows.filter(r => r.ctxOut > 0).length, avgWordsRendered: Math.round(rows.reduce((a, r) => a + r.wordsRendered, 0) / Math.max(1, rows.length)), avgWordsRaw: Math.round(rows.reduce((a, r) => a + (r.wordsRaw ?? 0), 0) / Math.max(1, rows.length)) };
   writeJSON(path.join(OUT, 'seo-report.json'), { summary, site, pages: rows, issues, broken, links: Object.fromEntries([...out].map(([k, v]) => [k, [...v]])) });
   fs.writeFileSync(path.join(OUT, 'seo-report.md'), markdown(summary, site, rows, issues));
+  if (args.gate) {
+    const level = args.gate === true ? 'high' : args.gate, bad = issues.filter(i => level === 'med' ? i.sev !== 'low' : i.sev === 'high');
+    console.log(bad.length ? `\nGATE FAILED (${level}): ${bad.length} findings, e.g. ${bad.slice(0, 3).map(i => i.code).join(', ')}` : `\nGATE PASSED (${level})`);
+    process.exitCode = bad.length ? 1 : 0;
+  }
   console.log(`\n${summary.pages} pages · issues: high ${summary.issues.high} · med ${summary.issues.med} · low ${summary.issues.low} · orphans ${summary.orphans} · internal links ${summary.internalEdges}\nreport: ${path.join(OUT, 'seo-report.md')}`);
 }
 

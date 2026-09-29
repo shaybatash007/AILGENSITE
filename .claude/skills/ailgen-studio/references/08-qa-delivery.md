@@ -16,11 +16,13 @@ studio project. Tick every box for real; a box ticked on a broken result is wors
 - [ ] Lighthouse measured after the last change (quote desktop; note mobile).
 
 ## Search visibility (references/10-seo.md)
-- [ ] `seo-audit.mjs` on the new build: zero high findings, no orphans, every page ≥ 3 inbound links, depth ≤ 3.
-- [ ] Old site (if any): `seo-plan.mjs` coverage 100%; `_redirects` tested on the real host; no chains, no home-page blanket.
-- [ ] Every service and guide has its own URL with unique title, description, one h1, canonical, JSON-LD, all in the served HTML.
-- [ ] sitemap.xml lists every canonical page; robots.txt names it; 404 page returns 404; http and www redirect to one host.
-- [ ] Preview is `noindex`; the launch-day flip (remove noindex, submit sitemap) is in the report to the owner.
+- [ ] `seo/brief.md` (demand, intent, page inventory) or `seo/old/seo-report.md` done; Search Console export requested.
+- [ ] `seo-run.mjs` green: audit gate (0 high findings, no orphans, every page ≥ 3 inbound, depth ≤ 3) and verify gate (every old URL: 200 or one 301, no chains).
+- [ ] Old site (if any): `seo-plan` coverage 100%, redirect targets exist; `seo-verify` also passed on the **real staging host** (Hebrew paths).
+- [ ] Every service and guide has its own URL, unique title and description, one h1, canonical and valid JSON-LD, all in the served HTML; body text ≥ 100% of the old page.
+- [ ] sitemap.xml, robots.txt, `_redirects`, `_headers`, `llms.txt`, `404.html` (status 404), per-page share cards; http and www redirect to one host.
+- [ ] Preview is `noindex`; the launch-day flip (`--launch`) and `launch.md` are in the report to the owner.
+- [ ] Lead source (organic / paid / social / referral / direct + landing page) saved and visible in the control center; privacy text mentions it.
 
 ## Film and campaign
 - [ ] Contact sheets at 9:16, 4:5, 1:1 reviewed; final MP4s watched start to end with sound.

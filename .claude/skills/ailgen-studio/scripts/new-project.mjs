@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Start a studio project from any of the three inputs, and prepare everything the next phases need.
-//   node new-project.mjs --url https://example.co.il [--slug example]        existing site: crawl it
+//   node new-project.mjs --url https://example.co.il [--slug example] [--no-seo]   existing site: crawl it, and inventory its SEO (seo/old)
 //   node new-project.mjs --concept "בוטיק לקפה מיוחד בחיפה, אווירה חמה" --slug haifa-coffee
 //   node new-project.mjs --name "אור ים" [--type "מסעדת דגים"] --slug or-yam
 // Creates projects/<slug>/ with brief.md, brand.json, film.json (from templates), and for --url:
@@ -61,6 +61,14 @@ const brief = fs.readFileSync(path.join(TPL, 'brief.md'), 'utf8')
   .replace('{{MODE}}', mode).replace('{{SOURCE}}', source);
 if (!fs.existsSync(path.join(DIR, 'brief.md'))) fs.writeFileSync(path.join(DIR, 'brief.md'), brief);
 
+// SEO phase starts on day one: the inventory of what an existing site has earned, or the brief for a new one
+const SEO = path.join(DIR, 'seo'); fs.mkdirSync(path.join(SEO, 'inputs'), { recursive: true });
+if (!fs.existsSync(path.join(SEO, 'brief.md'))) fs.writeFileSync(path.join(SEO, 'brief.md'), fs.readFileSync(path.join(TPL, 'seo-brief.md'), 'utf8').replace('{{NAME}}', brand.name).replace('{{DATE}}', new Date().toISOString().slice(0, 10)).replace('{{MODE}}', mode).replace('{{SOURCE}}', source));
+if (!fs.existsSync(path.join(SEO, 'seo.config.json'))) writeJSON(path.join(SEO, 'seo.config.json'), { site: args.url ? new URL(args.url).origin : '', siteDir: slug, oldUrl: args.url || '', pages: `projects/${slug}/seo/pages.json`, build: '', after: [] });
+if (mode === 'url' && !args['no-seo']) {
+  const r = spawnSync(process.execPath, [path.join(HERE, 'seo-audit.mjs'), args.url, '--out', path.join(SEO, 'old'), '--max', String(args.max || 80), '--delay', String(args.delay || 900)], { stdio: 'inherit' });
+  if (r.status !== 0) console.warn('SEO inventory of the old site failed: rerun node scripts/seo-audit.mjs later (references/10-seo.md §2).');
+}
 console.log(`\nproject ready: projects/${slug}/`);
 console.log(fs.readdirSync(DIR).map(f => '  ' + f).join('\n'));
 console.log(`\nnext: phase 1 (intake) is ${mode === 'url' ? 'done: read intake/summary.md and intake/content.md' : 'research: fill brief.md from the concept/name'}; then brand DNA (references/01-brand-dna.md).`);

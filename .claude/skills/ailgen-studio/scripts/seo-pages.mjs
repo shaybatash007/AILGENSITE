@@ -26,6 +26,8 @@ const OUT = path.resolve(path.dirname(cfgFile), C.out || '.');
 const SITE = C.site.replace(/\/$/, ''), B = C.brand;
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const enc = p => encodeURI(p);
+/** Calls to action that land on the home page carry the page they came from, so the lead shows which page brought it. */
+const ctaHref = (h, from) => /^\/#/.test(h) ? `/?from=${encodeURIComponent(from)}${h.slice(1)}` : enc(h);
 const abs = p => /^https?:/.test(p) ? p : SITE + enc(p);
 const byPath = new Map(C.pages.map(p => [p.path, p]));
 const link = p => `<a href="${enc(p)}">${esc(byPath.get(p)?.h1 || byPath.get(p)?.title || p)}</a>`;
@@ -46,6 +48,7 @@ function autolink(text, used, self, max) {
   return out + esc(text.slice(at));
 }
 
+const ogMapFile = path.join(OUT, 'og', 'og-map.json'), OGMAP = fs.existsSync(ogMapFile) ? JSON.parse(fs.readFileSync(ogMapFile, 'utf8')) : {}; // written by seo-og.mjs
 const fontsCss = C.fontsCss ? fs.readFileSync(path.resolve(path.dirname(cfgFile), C.fontsCss), 'utf8').replace(/url\(([^)/][^)]*)\)/g, 'url(/fonts/$1)') : '';
 const CSS = `
 :root{--night:#0B1B2E;--paper:#F4F5F0;--surface:#fff;--ink:#0B1B2E;--steel:#5A6670;--line:#DCE0D8;--green:#1E7A38;--blue:#2560A8;--hivis:#C9F03A;--onNight:#EEF3F6;--mute:#AFC0D0;--display:'Rubik',system-ui,'Arial Hebrew',Arial,sans-serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;color-scheme:light}
@@ -89,12 +92,13 @@ function ld(p) {
 }
 
 function head(p) {
-  const url = abs(p.path), img = abs(p.image?.src || B.ogImage);
+  const url = abs(p.path), og = OGMAP[p.path], img = abs(og || p.image?.src || B.ogImage);
   return `<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>${esc(p.title)}</title><meta name="description" content="${esc(p.description)}">
 <link rel="canonical" href="${esc(url)}">${C.preview ? '\n<meta name="robots" content="noindex,follow">' : '\n<meta name="robots" content="index,follow,max-image-preview:large">'}
 <meta name="theme-color" content="${esc(B.themeColor || '#0B1B2E')}"><link rel="icon" href="/icon.svg" type="image/svg+xml">
 <meta property="og:type" content="${p.type === 'guide' ? 'article' : 'website'}"><meta property="og:locale" content="he_IL"><meta property="og:site_name" content="${esc(B.name)}"><meta property="og:title" content="${esc(p.title)}"><meta property="og:description" content="${esc(p.description)}"><meta property="og:url" content="${esc(url)}"><meta property="og:image" content="${esc(img)}">
+<meta property="og:image:alt" content="${esc(p.h1)}">${og ? '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">' : ''}
 <meta name="twitter:card" content="summary_large_image">
 ${p.image?.src ? `<link rel="preload" as="image" href="${esc(p.image.src)}">` : ''}<style>${fontsCss}${CSS}</style>
 <script type="application/ld+json">${JSON.stringify(ld(p))}</script>`;
@@ -135,13 +139,21 @@ ${body}
 ${hub}
 ${(p.after || []).map(b => b.k === 'links' ? `<h2>${esc(b.t)}</h2><ul>${b.items.map(i => `<li><a href="${enc(i.href)}">${esc(i.t)}</a>${i.note ? ' ' + esc(i.note) : ''}</li>`).join('')}</ul>` : '').join('')}
 ${p.faq?.length ? `<section aria-labelledby="faq"><h2 id="faq">${esc(p.faqTitle || 'שאלות ותשובות')}</h2>${p.faq.map(([q, a]) => `<h3>${esc(q)}</h3><p>${esc(a)}</p>`).join('')}</section>` : ''}
-${cta ? `<aside class="cta" aria-label="הצעד הבא"><div><h2>${esc(cta.title || 'רוצים לדעת כמה זה יעלה או כמה פסולת יהיה?')}</h2><p>${esc(cta.text || 'מחשבון, מוקד ושיחה עם הצוות.')}</p></div><div><a class="btn" href="${enc(cta.href)}">${esc(cta.t)}</a>${B.phone ? `<a class="btn ghost" href="tel:${esc(B.phoneHref || B.phone)}">מוקד <bdi dir="ltr">${esc(B.phone)}</bdi></a>` : ''}</div></aside>` : ''}
+${cta ? `<aside class="cta" aria-label="הצעד הבא"><div><h2>${esc(cta.title || 'רוצים לדעת כמה זה יעלה או כמה פסולת יהיה?')}</h2><p>${esc(cta.text || 'מחשבון, מוקד ושיחה עם הצוות.')}</p></div><div><a class="btn" href="${ctaHref(cta.href, p.path)}">${esc(cta.t)}</a>${B.phone ? `<a class="btn ghost" href="tel:${esc(B.phoneHref || B.phone)}">מוקד <bdi dir="ltr">${esc(B.phone)}</bdi></a>` : ''}</div></aside>` : ''}
 </article>
 ${rel.length ? `<section aria-labelledby="rel"><h2 class="relh" id="rel">${esc(p.relatedTitle || 'עוד בנושא')}</h2><ul class="rel">${rel.map(x => `<li><a href="${enc(x)}">${esc(byPath.get(x).h1)}<small>${esc(vis(byPath.get(x).description).slice(0, 110))}</small></a></li>`).join('')}</ul></section>` : ''}
 </main>
 ${footer()}
 </body></html>
 `;
+}
+
+/** A real 404 page (served with status 404 by the host): helpful links, never indexed. */
+if (C.notFound !== false) {
+  const p = { path: '/404.html', type: 'page', title: 'העמוד לא נמצא | ' + B.name, description: 'העמוד שחיפשתם לא נמצא.', h1: 'העמוד לא נמצא', short: 'לא נמצא', kicker: '404', lead: 'ייתכן שהכתובת השתנתה. אלה השירותים והמדריכים שלנו, ואפשר גם לחזור לדף הבית.', blocks: [], cta: B.cta };
+  const links = Object.entries(C.groups).map(([g, list]) => `<h2>${esc(C.groupTitles?.[g] || g)}</h2><ul>${list.map(x => `<li>${link(x)}</li>`).join('')}</ul>`).join('');
+  const html = render({ ...p, blocks: [] }).replace('<meta name="robots" content="noindex,follow">', '').replace(/<meta name="robots"[^>]*>/, '').replace('<link rel="canonical" href="' + abs('/404.html') + '">', '<meta name="robots" content="noindex,follow">').replace('</article>', links + '</article>');
+  fs.mkdirSync(OUT, { recursive: true }); fs.writeFileSync(path.join(OUT, '404.html'), html);
 }
 
 let n = 0;

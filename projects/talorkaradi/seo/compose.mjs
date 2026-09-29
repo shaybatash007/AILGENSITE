@@ -188,6 +188,7 @@ const cfg = {
   site: SITE, out: '../../../talorkaradi', preview: PREVIEW, lang: 'he', dir: 'rtl',
   brand: { name: 'קבוצת טלאור כראדי', short: 'טלאור כראדי', phone: DEF.phone, phoneHref: DEF.phone, logo: '/icon.svg', ogImage: '/img/hero.webp', themeColor: '#0B1B2E', sameAs: [DEF.facebook, DEF.instagram].filter(Boolean), foundingDate: '2008', cta: CTA, bannerHtml: 'תצוגה מקדימה של האתר החדש · <b>הוכן על ידי AILGEN</b> עבור קבוצת טלאור כראדי' },
   fontsCss: '../../../talorkaradi/fonts/fonts.css',
+  home: { h1: DEF.heroLine, kicker: DEF.heroKick, image: { src: '/img/hero.webp' } }, og: { bg: '#0B1B2E', fg: '#EEF3F6', accent: '#C9F03A' },
   nav: [{ t: 'בית', href: '/' }, { t: 'שירותים', menu: 'services', all: { t: 'כל השירותים', href: '/sevices/' } }, { t: 'מדריכים', href: '/blog/' }, { t: 'מאזן פסולת', href: '/#calc' }, { t: 'הקבוצה', href: '/about/' }, { t: 'צור קשר', href: '/contact/' }],
   groups: { services: svcList, guides: gdList }, groupTitles: { services: 'שירותים', guides: 'מדריכים' },
   footerLinks: [{ t: 'הקבוצה', href: '/about/' }, { t: 'מתקנים', href: '/south/' }, { t: 'פרויקטים', href: '/projects/' }, { t: 'שאלות נפוצות', href: '/שאלות-נפוצות/' }, { t: 'דרושים', href: '/jobs/' }, { t: 'צור קשר', href: '/contact/' }, { t: 'מדיניות פרטיות', href: '/privacy-statement/' }, { t: 'הצהרת נגישות', href: '/accesability/' }],
@@ -199,6 +200,8 @@ console.log('pages', pages.length, 'services', svcList.length, 'guides', gdList.
 
 // ---------- the home page (idempotent marker blocks)
 const enc = encodeURI, esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const ogMapFile = path.join(SITEDIR, 'og/og-map.json'), OGMAP = fs.existsSync(ogMapFile) ? JSON.parse(rd(ogMapFile)) : {};
+const HOME_OG = SITE + (OGMAP['/'] || '/img/hero.webp');
 const HOME_TITLE = 'קבוצת טלאור כראדי | פינוי פסולת, מיחזור ובטון בדרום ובמרכז';
 const HOME_DESC = `קבוצת טלאור כראדי: פינוי פסולת במכולות, מפעלי מיחזור, בטון מובא, הריסה, הנדסה ומיגון. מעל 90% מהפסולת שמגיעה למפעלים חוזרת לבנייה. מוקד ${DEF.phone}.`;
 const homeLd = { '@context': 'https://schema.org', '@graph': [
@@ -212,7 +215,7 @@ const headBlock = `<!--seo:head-->
 <meta name="description" content="${esc(HOME_DESC)}">
 <link rel="canonical" href="${SITE}/">
 ${PREVIEW ? '<meta name="robots" content="noindex,follow">' : '<meta name="robots" content="index,follow,max-image-preview:large">'}
-<meta property="og:type" content="website"><meta property="og:locale" content="he_IL"><meta property="og:site_name" content="${esc(cfg.brand.name)}"><meta property="og:title" content="${esc(HOME_TITLE)}"><meta property="og:description" content="${esc(HOME_DESC)}"><meta property="og:url" content="${SITE}/"><meta property="og:image" content="${SITE}/img/hero.webp">
+<meta property="og:type" content="website"><meta property="og:locale" content="he_IL"><meta property="og:site_name" content="${esc(cfg.brand.name)}"><meta property="og:title" content="${esc(HOME_TITLE)}"><meta property="og:description" content="${esc(HOME_DESC)}"><meta property="og:url" content="${SITE}/"><meta property="og:image" content="${HOME_OG}">${OGMAP['/'] ? '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">' : ''}
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">${JSON.stringify(homeLd)}</script>
 <!--/seo:head-->`;
