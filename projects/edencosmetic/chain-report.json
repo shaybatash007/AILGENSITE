@@ -1,80 +1,81 @@
 {
   "slug": "edencosmetic",
-  "at": "2026-09-29T23:29:16.872Z",
-  "ok": 50,
-  "missing": [
-    {
-      "id": "meter",
-      "phase": "8-deliver",
-      "why": [
-        "שלבים פתוחים: 6-film/film-json, 7-portfolio/screencasts",
-        "אין meter-report.json"
-      ]
-    },
-    {
-      "id": "report",
-      "phase": "8-deliver",
-      "why": [
-        "חסר projects/edencosmetic/report.md"
-      ]
-    },
-    {
-      "id": "pushed",
-      "phase": "8-deliver",
-      "why": [
-        "2 קבצים לא מחויבים"
-      ]
-    }
-  ],
+  "at": "2026-09-29T23:37:06.313Z",
+  "ok": 53,
+  "missing": [],
   "na": 0,
   "elements": [
     {
       "id": "brief",
       "phase": "0-brief",
       "label": "brief.md: facts sheet with a source for every number",
-      "status": "ok"
+      "status": "ok",
+      "ms": 75420.5,
+      "cost": 1.0863569000000002,
+      "timing": "phase"
     },
     {
       "id": "seo-brief",
       "phase": "0-brief",
       "label": "seo/brief.md: demand, intent, competitors, page inventory",
-      "status": "ok"
+      "status": "ok",
+      "ms": 75420.5,
+      "cost": 1.0863569000000002,
+      "timing": "phase"
     },
     {
       "id": "intake-json",
       "phase": "1-intake",
       "label": "Intake: every sitemap URL crawled (notCrawled = 0)",
-      "status": "ok"
+      "status": "ok",
+      "ms": 135538.5,
+      "cost": 0.7338282333333334,
+      "timing": "phase"
     },
     {
       "id": "intake-content",
       "phase": "1-intake",
       "label": "Intake: summary.md and content.md",
-      "status": "ok"
+      "status": "ok",
+      "ms": 135538.5,
+      "cost": 0.7338282333333334,
+      "timing": "phase"
     },
     {
       "id": "intake-shots",
       "phase": "1-intake",
       "label": "Screenshots of the old site (before)",
-      "status": "ok"
+      "status": "ok",
+      "ms": 135538.5,
+      "cost": 0.7338282333333334,
+      "timing": "phase"
     },
     {
       "id": "catalog",
       "phase": "1-intake",
       "label": "Store catalog: products, collections, prices, images",
-      "status": "ok"
+      "status": "ok",
+      "ms": 135538.5,
+      "cost": 0.7338282333333334,
+      "timing": "phase"
     },
     {
       "id": "seo-old",
       "phase": "1-intake",
       "label": "SEO inventory of the old site (seo/old/seo-report.md)",
-      "status": "ok"
+      "status": "ok",
+      "ms": 135538.5,
+      "cost": 0.7338282333333334,
+      "timing": "phase"
     },
     {
       "id": "media-labels",
       "phase": "1-intake",
       "label": "Every image labelled real / render (media-labels.json)",
-      "status": "ok"
+      "status": "ok",
+      "ms": 135538.5,
+      "cost": 0.7338282333333334,
+      "timing": "phase"
     },
     {
       "id": "brand-json",
@@ -86,13 +87,19 @@
       "id": "logo-vector",
       "phase": "2-brand",
       "label": "Logo as vector (symbol.svg) and light/dark PNG",
-      "status": "ok"
+      "status": "ok",
+      "ms": 153000,
+      "cost": 0.650142,
+      "timing": "exact"
     },
     {
       "id": "icon-family",
       "phase": "2-brand",
       "label": "Icon family (≥ 12 SVGs, the signature in each)",
-      "status": "ok"
+      "status": "ok",
+      "ms": 54000,
+      "cost": 0.26756559999999996,
+      "timing": "exact"
     },
     {
       "id": "favicon",
@@ -104,7 +111,10 @@
       "id": "fonts",
       "phase": "2-brand",
       "label": "Fonts self-hosted (Hebrew + Latin) with fonts.css",
-      "status": "ok"
+      "status": "ok",
+      "ms": 31000,
+      "cost": 0.2940186,
+      "timing": "exact"
     },
     {
       "id": "brand-board",
@@ -122,7 +132,10 @@
       "id": "mascot-def",
       "phase": "3-mascot",
       "label": "Mascot: name, pixel grid, ≥ 6 faces",
-      "status": "ok"
+      "status": "ok",
+      "ms": 183503,
+      "cost": 1.4004446,
+      "timing": "exact"
     },
     {
       "id": "mascot-preview",
@@ -140,13 +153,19 @@
       "id": "blueprint",
       "phase": "4-blueprint",
       "label": "Blueprint: every section has a job line and a visitor doubt",
-      "status": "ok"
+      "status": "ok",
+      "ms": 66550,
+      "cost": 0.33986440000000007,
+      "timing": "phase"
     },
     {
       "id": "seo-pages",
       "phase": "4b-seo",
       "label": "One crawlable page per service / guide / product / collection",
-      "status": "ok"
+      "status": "ok",
+      "ms": 261492,
+      "cost": 3.9538674,
+      "timing": "exact"
     },
     {
       "id": "seo-gates",
@@ -254,7 +273,10 @@
       "id": "film-json",
       "phase": "6-film",
       "label": "film.json filled from the brand and real content",
-      "status": "ok"
+      "status": "ok",
+      "ms": 8215726,
+      "cost": 6.442073599999999,
+      "timing": "exact"
     },
     {
       "id": "film-signature",
@@ -302,7 +324,10 @@
       "id": "studio-case",
       "phase": "7-portfolio",
       "label": "Studio: closed real case (flow step with real output)",
-      "status": "ok"
+      "status": "ok",
+      "ms": 112722,
+      "cost": 1.2358707999999998,
+      "timing": "exact"
     },
     {
       "id": "studio-live",
@@ -326,25 +351,31 @@
       "id": "screencasts",
       "phase": "7-portfolio",
       "label": "Real screencasts: desktop, mobile, tool, mascot, flow",
-      "status": "ok"
+      "status": "ok",
+      "ms": 439112,
+      "cost": 2.7122205999999998,
+      "timing": "exact"
     },
     {
       "id": "meter",
       "phase": "8-deliver",
       "label": "Meter: every phase opened and closed, report written",
-      "status": "missing"
+      "status": "ok"
     },
     {
       "id": "report",
       "phase": "8-deliver",
       "label": "Report to the owner in Hebrew (report.md) with links and what only they can supply",
-      "status": "missing"
+      "status": "ok",
+      "ms": 104814,
+      "cost": 0.8858350000000002,
+      "timing": "exact"
     },
     {
       "id": "pushed",
       "phase": "8-deliver",
       "label": "Committed and pushed",
-      "status": "missing"
+      "status": "ok"
     }
   ]
 }
