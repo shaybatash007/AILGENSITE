@@ -14,6 +14,7 @@
 import fs from 'fs';
 import path from 'path';
 import { loadPlaywright, ensureProxyEnv, routeThroughNode, parseArgs, writeJSON } from './lib.mjs';
+import { robotsAllowed } from './seo-lib.mjs';
 
 ensureProxyEnv();
 const args = parseArgs();
@@ -30,7 +31,9 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 /** Normalised page key: no hash, no query, no trailing slash, escape codes decoded. */
 const norm = u => { try { const x = new URL(u); x.hash = ''; x.search = ''; return decodeURI(x.href).replace(/\/$/, '').toLowerCase(); } catch { return null; } };
 const isAsset = u => /\.(jpe?g|png|gif|webp|svg|avif|pdf|zip|mp4|webm|mp3|docx?|xlsx?|ico|css|js|xml|json|txt|woff2?)$/i.test(new URL(u).pathname);
-const pageUrl = (href, base) => { try { const u = new URL(href, base); if (u.origin !== origin || !/^https?:$/.test(u.protocol) || isAsset(u.href)) return null; if (/\/(wp-json|wp-admin|feed|cart|checkout|my-account)\b/.test(u.pathname)) return null; u.hash = ''; return u.href; } catch { return null; } };
+let robotsOk = () => true; // set from robots.txt in siteChecks(); we never crawl what the owner disallowed
+const NOISE_URL = /\/(customer_authentication|account|cart|checkout|orders|search|sf_[^/]*|services)(\/|\?|$)|\/collections\/[^/]+\/products\/|[?&](sort_by|filter\.|variant|page)=/i;
+const pageUrl = (href, base) => { try { const u = new URL(href, base); if (u.origin !== origin || !/^https?:$/.test(u.protocol) || isAsset(u.href)) return null; if (/\/(wp-json|wp-admin|feed|cart|checkout|my-account)\b/.test(u.pathname)) return null; if (NOISE_URL.test(u.pathname + u.search) || !robotsOk(u.pathname + u.search)) return null; u.hash = ''; return u.href; } catch { return null; } };
 
 /** Runs in the page: everything an SEO review reads from one document. */
 function extract() {
@@ -66,7 +69,7 @@ async function siteChecks() {
   const get = async (u, o = {}) => { try { return await fetch(u, { headers: { 'user-agent': UA }, redirect: 'manual', ...o }); } catch { return null; } };
   const r = await get(origin + '/robots.txt', { redirect: 'follow' });
   if (r && r.ok && !/<html/i.test((await r.clone().text()).slice(0, 200))) {
-    const t = await r.text(); site.robots = { status: r.status, sitemapLines: [...t.matchAll(/^sitemap:\s*(\S+)/gim)].map(m => m[1]), disallowAll: /^disallow:\s*\/\s*$/im.test(t), text: t.slice(0, 1500) };
+    const t = await r.text(); robotsOk = robotsAllowed(t); site.robots = { status: r.status, sitemapLines: [...t.matchAll(/^sitemap:\s*(\S+)/gim)].map(m => m[1]), disallowAll: /^disallow:\s*\/\s*$/im.test(t), text: t.slice(0, 1500) };
   } else site.robots = { status: r?.status ?? 0 };
   const remap = u => { try { const x = new URL(u); return (local || args['map-origin']) && x.origin !== origin ? origin + x.pathname + x.search : u; } catch { return u; } };
   const cands = new Set([origin + '/sitemap.xml', ...(site.robots.sitemapLines || []).map(remap), origin + '/sitemap_index.xml', origin + '/wp-sitemap.xml']);

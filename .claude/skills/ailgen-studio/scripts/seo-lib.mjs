@@ -39,9 +39,29 @@ export function cleanBlocks(blocks, { stopAt = /^(צרו איתנו קשר|הש�
     if (b.kind === 'li') { const last = out[out.length - 1]; if (last && last.k === 'ul') last.items.push(t); else out.push({ k: 'ul', items: [t] }); }
     else if (['h1', 'h2', 'h3', 'p'].includes(b.kind)) out.push({ k: b.kind, t });
     else if (b.kind === 'h4') out.push({ k: 'h3', t });
+    else if (b.kind === 'h5' || b.kind === 'h6') out.push({ k: 'p', t }); // a rich-text block styled as a small heading (a story with line breaks), not an outline heading
   }
   while (out.length && ['h2', 'h3'].includes(out[out.length - 1].k)) out.pop(); // a heading whose content the crawler could not read (an accordion)
   return out;
 }
 
 export const wordCount = blocks => blocks.reduce((n, b) => n + (b.t ? b.t.split(/\s+/).length : b.items ? b.items.join(' ').split(/\s+/).length : (b.rows || []).flat().join(' ').split(/\s+/).length), 0);
+
+/**
+ * robots.txt for `User-agent: *` as a function (Google semantics: the longest matching rule wins, Allow wins a tie,
+ * `*` and `$` are wildcards). A crawler of ours never fetches what the owner disallowed.
+ */
+export function robotsAllowed(text) {
+  const rules = []; let star = false, seenGroup = false;
+  for (const raw of String(text || '').split('\n')) {
+    const line = raw.replace(/#.*$/, '').trim(); if (!line) continue;
+    const m = line.match(/^([a-z-]+)\s*:\s*(.*)$/i); if (!m) continue;
+    const k = m[1].toLowerCase(), v = m[2].trim();
+    if (k === 'user-agent') { if (seenGroup) star = false; star = star || v === '*'; seenGroup = false; if (v === '*') star = true; continue; }
+    seenGroup = true;
+    if (!star || !['allow', 'disallow'].includes(k) || !v) continue;
+    const re = new RegExp('^' + v.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*').replace(/\\\$$/, '$'));
+    rules.push({ allow: k === 'allow', len: v.length, re });
+  }
+  return path => { let best = null; for (const r of rules) if (r.re.test(path) && (!best || r.len > best.len || (r.len === best.len && r.allow))) best = r; return !best || best.allow; };
+}

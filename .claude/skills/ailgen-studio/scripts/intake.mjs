@@ -10,6 +10,7 @@
 import fs from 'fs';
 import path from 'path';
 import { loadPlaywright, ensureProxyEnv, routeThroughNode, parseArgs, writeJSON } from './lib.mjs';
+import { robotsAllowed } from './seo-lib.mjs';
 
 ensureProxyEnv();
 const args = parseArgs();
@@ -27,6 +28,9 @@ const CLIENT_HINTS = { 'sec-ch-ua': '"Chromium";v="130", "Google Chrome";v="130"
 fs.mkdirSync(path.join(OUT, 'media'), { recursive: true });
 fs.mkdirSync(path.join(OUT, 'shots'), { recursive: true });
 
+// robots.txt is honoured (longest-match Allow/Disallow for `*`); storefront noise (login, cart, search, duplicate product paths) is never a page
+let robotsOk = () => true;
+const NOISE_URL = args.skip ? new RegExp(args.skip) : /\/(customer_authentication|account|cart|checkout|orders|search|sf_[^/]*|services)(\/|\?|$)|\/collections\/[^/]+\/products\/|[?&](sort_by|filter\.|variant|page)=/i;
 /** Same-site page URL without hash, or null for assets, other hosts and non-http links. */
 function pageUrl(href, base) {
   try {
@@ -34,7 +38,9 @@ function pageUrl(href, base) {
     if (u.origin !== origin || !/^https?:$/.test(u.protocol)) return null;
     if (/\.(jpe?g|png|gif|webp|svg|pdf|zip|mp4|webm|mp3|docx?|xlsx?|ico|css|js|xml|json)$/i.test(u.pathname)) return null;
     if (/\/(wp-json|wp-admin|feed|cart|checkout|my-account)\b|[?&](add-to-cart|replytocom)=/i.test(u.href)) return null;
+    if (NOISE_URL.test(u.pathname + u.search) || !robotsOk(u.pathname + u.search)) return null;
     u.hash = '';
+    for (const k of [...u.searchParams.keys()]) if (/^(pr_|utm_|fbclid|gclid|igshid|_pos|_sid|_ss|ref$|srsltid)/i.test(k)) u.searchParams.delete(k); // tracking parameters do not make a new page
     return u.href;
   } catch { return null; }
 }
@@ -68,7 +74,7 @@ function extractPage() {
   const meta = n => document.querySelector(`meta[name="${n}"],meta[property="${n}"]`)?.content || '';
   const blocks = [];
   const skip = 'script,style,noscript,template,svg,iframe';
-  document.querySelectorAll('h1,h2,h3,h4,p,li,blockquote,figcaption,td,th,dt,dd,button,a.button,a.btn,.btn,[class*="button"]').forEach(el => {
+  document.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,blockquote,figcaption,td,th,dt,dd,button,a.button,a.btn,.btn,[class*="button"]').forEach(el => {
     if (el.closest(skip) || !vis(el)) return;
     if (el.tagName === 'LI' && el.querySelector('p,li')) return;
     const t = txt(el); if (!t || t.length < 2 || t.length > 1500) return;
@@ -76,8 +82,17 @@ function extractPage() {
     const kind = /^h\d$/.test(tag) ? tag : tag === 'button' || /btn|button/.test(el.className + '') ? 'cta' : tag;
     const region = el.closest('header,nav') ? 'header' : el.closest('footer') ? 'footer' : 'main';
     const b = { kind, region, text: t };
+    if (el.querySelector('br')) { const lines = el.innerHTML.split(/<br\s*\/?>/i).map(x => x.replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim()).filter(Boolean); if (lines.length > 1) b.lines = lines; }
     if (kind === 'td' || kind === 'th') { const tb = el.closest('table'), tr = el.closest('tr'); if (tb && tr) { b.table = [...document.querySelectorAll('table')].indexOf(tb); b.row = [...tb.querySelectorAll('tr')].indexOf(tr); b.col = [...tr.children].indexOf(el); } }
     blocks.push(b);
+  });
+  // text that sits directly in a div or span (rich-text blocks with <br> lines): the tag list above misses it
+  const covered = 'h1,h2,h3,h4,h5,h6,p,li,blockquote,figcaption,td,th,dt,dd,button,a,label';
+  document.querySelectorAll('div,span,section').forEach(el => {
+    if (el.closest(skip) || el.closest(covered) || !vis(el)) return;
+    const own = [...el.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent.replace(/\s+/g, ' ').trim()).filter(Boolean).join(' ');
+    if (own.length < 20 || own.length > 1500) return;
+    blocks.push({ kind: 'p', region: el.closest('header,nav') ? 'header' : el.closest('footer') ? 'footer' : 'main', text: own });
   });
   const dedup = []; const s = new Set();
   for (const b of blocks) { const k = b.kind + '|' + b.text + (b.table !== undefined ? '|' + b.table + '.' + b.row + '.' + b.col : ''); if (!s.has(k)) { s.add(k); dedup.push(b); } }
@@ -156,6 +171,7 @@ const CONTACT = {
 const SOCIAL = /(facebook|instagram|youtube|youtu\.be|tiktok|linkedin|twitter|x\.com|pinterest|wa\.me|api\.whatsapp)/i;
 
 async function main() {
+  try { const r = await fetch(origin + '/robots.txt', { headers: { 'user-agent': UA } }); if (r.ok) robotsOk = robotsAllowed(await r.text()); } catch { /* no robots.txt: nothing disallowed */ }
   const { chromium } = loadPlaywright();
   const browser = await chromium.launch();
   // service workers would fetch pages outside the route handler, so block them
@@ -252,7 +268,7 @@ async function main() {
   writeJSON(path.join(OUT, 'site.json'), site);
   if (site.notCrawled.length) console.log(`WARNING: the sitemap lists ${sm.length} URLs but ${site.notCrawled.length} were not crawled (raise --max). Every indexed page is part of what a rebuild inherits.`);
 
-  const md = pages.map(p => `\n\n## ${p.title}\n<${decodeURI(p.url)}>\n\n` + p.blocks.filter(b => b.region === 'main').map(b => b.kind.startsWith('h') ? `${'#'.repeat(Math.min(6, +b.kind[1] + 2))} ${b.text}` : b.kind === 'li' ? `- ${b.text}` : b.kind === 'cta' ? `[${b.text}]` : b.text).join('\n\n')).join('\n');
+  const md = pages.map(p => `\n\n## ${p.title}\n<${decodeURI(p.url)}>\n\n` + p.blocks.filter(b => b.region === 'main').map(b => b.lines ? b.lines.join('  \n') : b.kind.startsWith('h') ? `${'#'.repeat(Math.min(6, +b.kind[1] + 2))} ${b.text}` : b.kind === 'li' ? `- ${b.text}` : b.kind === 'cta' ? `[${b.text}]` : b.text).join('\n\n')).join('\n');
   fs.writeFileSync(path.join(OUT, 'content.md'), `# ${name}: all site text\n\nSource: ${START} · crawled ${site.crawledAt.slice(0, 10)} · ${pages.length} pages${md}\n`);
 
   const pal = d => (d || []).map(c => `\`${c.hex}\``).join(' ');
