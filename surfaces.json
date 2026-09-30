@@ -4,8 +4,8 @@
   "mode": "free-host",
   "$modeValues": "'free-host' = Cloudflare Pages *.pages.dev, free forever, no domain to buy. 'custom' = a domain you own. Nothing else in this repository branches on the difference.",
   "cloudflare": {
-    "$comment": "Pages needs a Cloudflare account, which an agent cannot create. This is the ONLY step between 'the code is ready' and 'the site is on a free domain'. Create the account, then: wrangler login, or set CLOUDFLARE_API_TOKEN. Everything below works either way.",
-    "accountId": null,
+    "$comment": "The account ID is an identifier, not a secret (it appears in every dashboard URL), so it lives here. The API token IS a secret: it lives only in the repository secret CLOUDFLARE_API_TOKEN (Settings -> Secrets and variables -> Actions), never in a file or a chat. Token permission: Account -> Cloudflare Pages -> Edit.",
+    "accountId": "9213747898b0eef6d720f037cb32bee4",
     "apiTokenEnv": "CLOUDFLARE_API_TOKEN",
     "projects": {
       "ailgen": "ailgen",

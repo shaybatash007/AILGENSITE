@@ -93,6 +93,8 @@ function moved(dir) {
   fs.rmSync(dir, { recursive: true, force: true }); fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, "index.html"), html); fs.writeFileSync(path.join(dir, "404.html"), html);
 }
+// the account ID comes from the environment or from surfaces.json (it is not a secret); the token only from a secret
+if (!process.env.CLOUDFLARE_ACCOUNT_ID && cfg.cloudflare?.accountId) process.env.CLOUDFLARE_ACCOUNT_ID = cfg.cloudflare.accountId;
 const hasCloudflare = () => !!(process.env.CLOUDFLARE_API_TOKEN && process.env.CLOUDFLARE_ACCOUNT_ID);
 const out = (k, v) => { if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `${k}=${v}\n`); console.log(`  ${k}: ${v}`); };
 
@@ -112,7 +114,7 @@ if (cmd === "gh-pages") {
   process.exit(0);
 }
 if (cmd === "cloudflare") {
-  if (!hasCloudflare()) { console.log("  no CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID: Cloudflare Pages skipped"); process.exit(0); }
+  if (!hasCloudflare()) { console.log("  no CLOUDFLARE_API_TOKEN secret yet: Cloudflare Pages skipped"); process.exit(0); }
   const state = readState().state; let failed = 0;
   for (const s of cfg.surfaces) {
     const name = project(s), dir = state === "off" ? path.join(root, "_closed", s.name) : path.join(root, "_surfaces", s.name);

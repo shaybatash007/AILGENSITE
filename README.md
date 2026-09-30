@@ -91,7 +91,7 @@ winget install ffmpeg                        # רק לסרטים (ב-Mac: brew i
 **הצעד היחיד שרק בעל החשבון יכול לעשות:** חשבון Cloudflare חינמי וטוקן.
 1. להירשם ב-https://dash.cloudflare.com/sign-up. אם כבר נפתח חשבון בשביל ה-AI, משתמשים בו.
 2. ליצור טוקן: My Profile ← API Tokens ← Create Token ← Custom token. הרשאה: Account ← Cloudflare Pages ← Edit.
-3. להוסיף בריפו ב-GitHub: Settings ← Secrets and variables ← Actions שני סודות: `CLOUDFLARE_API_TOKEN` (הטוקן) ו-`CLOUDFLARE_ACCOUNT_ID` (מופיע בדף הבית של החשבון, בצד ימין).
+3. להוסיף בריפו ב-GitHub סוד אחד: Settings ← Secrets and variables ← Actions ← `CLOUDFLARE_API_TOKEN`, והערך שלו הוא הטוקן. מזהה החשבון כבר שמור ב-`surfaces.json`, כי הוא לא סוד.
 4. ללחוץ על המתג `on`. ה-workflow יוצר את שלושת הפרויקטים ומעלה אותם.
 
 עד שהסודות קיימים, האתר ממשיך לעלות ל-GitHub Pages כמו קודם, והמתג עובד גם שם.

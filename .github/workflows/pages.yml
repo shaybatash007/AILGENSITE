@@ -86,7 +86,7 @@ jobs:
         run: node tools/build-surfaces.mjs && node tools/link-audit.mjs
 
       - name: Cloudflare Pages - each surface at the root of its own address
-        if: env.CLOUDFLARE_API_TOKEN != '' && env.CLOUDFLARE_ACCOUNT_ID != ''
+        if: env.CLOUDFLARE_API_TOKEN != ''   # the account ID is in surfaces.json; only the token is a secret
         run: node tools/site-switch.mjs cloudflare
 
       - name: the GitHub Pages copy (the whole site, a forward to the new addresses, or the closed page)
