@@ -1,7 +1,7 @@
 {
   "slug": "edencosmetic",
-  "at": "2026-09-30T16:11:56.510Z",
-  "ok": 66,
+  "at": "2026-09-30T21:22:25.446Z",
+  "ok": 68,
   "missing": [],
   "na": 1,
   "elements": [
@@ -429,6 +429,12 @@
       "status": "ok"
     },
     {
+      "id": "visual-live-layer",
+      "phase": "5-site",
+      "label": "The free layer is live on the site, not beside it: a GPU first screen, a signature scroll scene, brand materials, page-wide motion, each with its guardrails (reference 12)",
+      "status": "ok"
+    },
+    {
       "id": "evolve",
       "phase": "8-deliver",
       "label": "Autonomy: evolve.json and a baseline catalog snapshot",
@@ -438,6 +444,12 @@
       "id": "evolve-baseline",
       "phase": "8-deliver",
       "label": "Autonomy: the loop's first report",
+      "status": "ok"
+    },
+    {
+      "id": "site-film",
+      "phase": "7-portfolio",
+      "label": "The site filmed in motion on a virtual clock: a shot list and the film (scripts/film-site.mjs)",
       "status": "ok"
     },
     {
