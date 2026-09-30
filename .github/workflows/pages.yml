@@ -51,34 +51,11 @@ jobs:
           node-version: "20"
 
       - name: assemble the publish set from the manifest
-        run: |
-          set -euo pipefail
-          mkdir -p _site
-          node -e '
-            const fs=require("fs"), path=require("path");
-            const m=JSON.parse(fs.readFileSync("publish.manifest.json","utf8"));
-            const entries=[m.entry,...(m.files||[]),...(m.directories||[])].filter(Boolean);
-            let files=0, bytes=0;
-            for (const e of entries) {
-              if (!fs.existsSync(e)) { console.log("  skip (missing): "+e); continue; }
-              const copy=(s,d)=>{ for(const f of fs.readdirSync(s,{withFileTypes:true})){
-                const a=path.join(s,f.name), b=path.join(d,f.name);
-                if(f.name==="node_modules"||f.name===".git") continue;
-                if(f.isDirectory()) copy(a,b);
-                else { fs.copyFileSync(a,b); files++; bytes+=fs.statSync(a).size; }
-              }};
-              if (fs.statSync(e).isDirectory()) { copy(e, path.join("_site",e)); console.log("  dir  "+e); }
-              else { fs.copyFileSync(e, path.join("_site",e)); files++; bytes+=fs.statSync(e).size; console.log("  file "+e); }
-            }
-            console.log(`\n  ${files} files, ${(bytes/1048576).toFixed(1)} MB`);
-          '
-          # The manifest is a decision, not a guarantee. Refuse the build rather
-          # than publish the agent's own configuration as a public URL.
-          if grep -rIlE '(^|/)(opencode\.jsonc?|AGENTS\.md|memory/|tools/)' _site 2>/dev/null; then
-            echo "::error::the assembled site contains workstation files. Refusing to publish."
-            exit 1
-          fi
-          echo "  blocklist clear"
+        # This is the same file the workstation runs locally before pushing. The
+        # first version had this logic inline here and it failed on the first run
+        # with ENOENT, because nothing on a GitHub runner had ever executed it
+        # before it shipped. Inline-in-workflow is code nobody can test.
+        run: node tools/assemble-site.mjs _site
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
