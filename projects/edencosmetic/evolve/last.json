@@ -1,0 +1,22 @@
+{
+ "at": "2026-09-30T09:26:18.215Z",
+ "change": {
+  "added": [],
+  "removed": [],
+  "priced": [],
+  "stock": []
+ },
+ "newBrands": [],
+ "done": [],
+ "needs": [
+  "11 מוצרים בלי תיאור בחנות (לא נכתב להם תיאור מומצא): My lamination מארז 2 זוגות פאצים דביקים לריסים פרפרים · פינצטה מקצועית קלאסית לגבות -וורוד כההNIKK MOLE · פינצטה מקצועית משופעת לגבות - וורוד כהה NIKK MOLE · פינצטה מקצועית משופעת לגבות - וורוד בהירNIKK MOLE · פינצטה מקצועית משופעת לגבות - שחור NIKK MOLE ועוד."
+ ],
+ "log": [
+  {
+   "label": "gate: copy",
+   "ok": true,
+   "s": 83.7,
+   "tail": "wrote projects/edencosmetic/qa/copy/strings.json | copy-lint: 1087 strings · high 0 · medium 0 · low 5 · space-punct 5 | wrote projects/edencosmetic/qa/copy/lint.json"
+  }
+ ]
+}

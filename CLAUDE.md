@@ -10,7 +10,9 @@ mascot, a launch film, ads or a portfolio case, follow the `ailgen-studio` skill
 skill-orchestrator), copied under `references/skills/`, and ships the tools under `scripts/` and `engine/`.
 
 Conventions:
-- Hebrew first, RTL; honesty labels on every image (מהשטח / הדמיה / קונספט / נתוני הדגמה).
+- Hebrew first, RTL. Every image's provenance is recorded in the project files; visitors see a label only in visitor language
+  and only where an image could be read as documentary ("תמונת אווירה"). No production language on any page (preview, snapshot,
+  draft, "from the existing site"): `copy-lint.mjs` gates it. Product pixels are never generated; at most five generated concepts per site.
 - Project working files go in `projects/<slug>/`; render output in `projects/<slug>/out/` is not committed.
 - Live versions are Claude artifacts; read the live source in full before republishing one.
 - Never disable TLS verification or work around a site's rate limits.

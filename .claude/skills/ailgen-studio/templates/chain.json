@@ -1,67 +1,742 @@
 {
-  "_": "Every element of the chain, with the evidence that proves it exists. `chain.mjs --project projects/<slug>` checks them all, times each from the meter, and fails when a required one is missing. Placeholders: {slug} {site} (static export folder) {camp} (campaigns/<slug>). `when` lists flags from chain.flags in this file; an element with a flag that is false is skipped, never silently: it shows as 'לא רלוונטי'.",
-  "flags": { "url": true, "store": false, "mascot": true, "film": true, "seoOld": true },
-  "elements": [
-    { "id": "brief", "phase": "0-brief", "label": "brief.md: facts sheet with a source for every number", "check": { "file": "projects/{slug}/brief.md", "min": 1200 } },
-    { "id": "seo-brief", "phase": "0-brief", "label": "seo/brief.md: demand, intent, competitors, page inventory", "check": { "file": "projects/{slug}/seo/brief.md", "min": 1500 } },
-    { "id": "intake-json", "phase": "1-intake", "label": "Intake: every sitemap URL crawled (notCrawled = 0)", "when": ["url"], "check": { "json": "projects/{slug}/intake/site.json", "path": "notCrawled", "length": 0 } },
-    { "id": "intake-content", "phase": "1-intake", "label": "Intake: summary.md and content.md", "when": ["url"], "check": { "files": ["projects/{slug}/intake/summary.md", "projects/{slug}/intake/content.md"] } },
-    { "id": "intake-shots", "phase": "1-intake", "label": "Screenshots of the old site (before)", "when": ["url"], "check": { "files": ["projects/{slug}/intake/shots/home-desktop.png", "projects/{slug}/intake/shots/home-mobile.png"] } },
-    { "id": "catalog", "phase": "1-intake", "label": "Store catalog: products, collections, prices, images", "when": ["store"], "check": { "json": "projects/{slug}/catalog/catalog.json", "path": "products", "minLength": 1 } },
-    { "id": "seo-old", "phase": "1-intake", "label": "SEO inventory of the old site (seo/old/seo-report.md)", "when": ["seoOld"], "check": { "file": "projects/{slug}/seo/old/seo-report.md", "min": 800 } },
-    { "id": "media-labels", "phase": "1-intake", "label": "Every image labelled real / render (media-labels.json)", "check": { "file": "projects/{slug}/media-labels.json", "min": 20 } },
-
-    { "id": "brand-json", "phase": "2-brand", "label": "brand.json complete: concept, claim, signature, palette, type", "check": { "json": "projects/{slug}/brand.json", "paths": ["concept.idea", "concept.claim", "concept.signature", "palette", "type", "logo"] } },
-    { "id": "logo-vector", "phase": "2-brand", "label": "Logo as vector (symbol.svg) and light/dark PNG", "check": { "files": ["projects/{slug}/brand/symbol.svg", "projects/{slug}/img/logo-light.png", "projects/{slug}/img/logo-dark.png"] } },
-    { "id": "icon-family", "phase": "2-brand", "label": "Icon family (≥ 12 SVGs, the signature in each)", "check": { "glob": "projects/{slug}/img/i-*.svg", "min": 12 } },
-    { "id": "favicon", "phase": "2-brand", "label": "Favicon set: icon.svg, 32 px, apple-touch, 512 px", "check": { "files": ["{site}/icon.svg", "{site}/img/favicon-32.png", "{site}/img/apple-touch-icon.png", "{site}/img/icon-512.png"] } },
-    { "id": "fonts", "phase": "2-brand", "label": "Fonts self-hosted (Hebrew + Latin) with fonts.css", "check": { "files": ["{site}/fonts/fonts.css"], "glob": "{site}/fonts/*.woff2", "min": 4 } },
-    { "id": "brand-board", "phase": "2-brand", "label": "Brand board image", "check": { "glob": "projects/{slug}/brand/board*.png", "min": 1 } },
-    { "id": "palette-contrast", "phase": "2-brand", "label": "Contrast checked: text pairs ≥ 4.5", "check": { "json": "projects/{slug}/brand.json", "path": "palette.contrast", "minKeys": 3 } },
-
-    { "id": "mascot-def", "phase": "3-mascot", "label": "Mascot: name, pixel grid, ≥ 6 faces", "when": ["mascot"], "check": { "json": "projects/{slug}/mascot/mascot.json", "paths": ["name", "grid", "faces"], "minKeys": { "faces": 6 } } },
-    { "id": "mascot-preview", "phase": "3-mascot", "label": "Mascot sheet: every state visible", "when": ["mascot"], "check": { "glob": "projects/{slug}/mascot/preview*.png", "min": 1 } },
-    { "id": "mascot-manners", "phase": "3-mascot", "label": "Mascot manners in the site: tips ≤ 6, quiet for a week, reduced motion", "when": ["mascot"], "check": { "contains": ["{site}/index.html", "prefers-reduced-motion", "mutedUntil"] } },
-
-    { "id": "blueprint", "phase": "4-blueprint", "label": "Blueprint: every section has a job line and a visitor doubt", "check": { "file": "projects/{slug}/blueprint.md", "min": 1500 } },
-
-    { "id": "seo-pages", "phase": "4b-seo", "label": "One crawlable page per service / guide / product / collection", "check": { "json": "projects/{slug}/seo/pages.json", "path": "pages", "minLength": 10 } },
-    { "id": "seo-gates", "phase": "4b-seo", "label": "seo-run.mjs: all gates passed", "check": { "contains": ["projects/{slug}/seo/RUN.md", "כל השערים עברו"] } },
-    { "id": "seo-coverage", "phase": "4b-seo", "label": "Every old URL kept or one 301 (coverage 100%)", "when": ["seoOld"], "check": { "contains": ["projects/{slug}/seo/plan/plan.md", "כיסוי: **100%**"] } },
-    { "id": "seo-verify", "phase": "4b-seo", "label": "Verify gate: every old URL answers correctly", "when": ["seoOld"], "check": { "contains": ["projects/{slug}/seo/verify/verify.md", "**עבר**"] } },
-    { "id": "seo-files", "phase": "4b-seo", "label": "sitemap, robots, _redirects, _headers, llms.txt, 404", "check": { "files": ["{site}/sitemap.xml", "{site}/robots.txt", "{site}/_headers", "{site}/llms.txt", "{site}/404.html"] } },
-    { "id": "seo-og", "phase": "4b-seo", "label": "A share card for every page", "check": { "glob": "{site}/og/*.jpg", "min": 10 } },
-
-    { "id": "site-export", "phase": "5-site", "label": "Static export of the site (index.html + build.sh + src/)", "check": { "files": ["{site}/index.html", "{site}/build.sh"] } },
-    { "id": "site-preview-link", "phase": "5-site", "label": "Live preview published (artifact link)", "check": { "link": "site" } },
-    { "id": "site-proof-tool", "phase": "5-site", "label": "Proof tool present and answers the main question", "check": { "file": "projects/{slug}/blueprint.md", "contains": "כלי ההוכחה" } },
-    { "id": "site-admin", "phase": "5-site", "label": "Owner control center (leads, content, agent tabs)", "check": { "contains": ["{site}/index.html", "מרכז הבקרה"] } },
-    { "id": "site-agent", "phase": "5-site", "label": "AI agent with offline FALLBACK and create_lead", "check": { "contains": ["{site}/index.html", "create_lead"] } },
-    { "id": "site-legal", "phase": "5-site", "label": "Privacy policy and accessibility statement (pages + dialogs)", "check": { "files": ["{site}/legal.json"] } },
-    { "id": "site-a11y", "phase": "5-site", "label": "Accessibility menu and skip link", "check": { "contains": ["{site}/index.html", "skip"] } },
-    { "id": "site-attribution", "phase": "5-site", "label": "Lead source saved per lead (organic / paid / social / referral / direct)", "check": { "contains": ["{site}/index.html", "srcKind"] } },
-    { "id": "site-store-flow", "phase": "5-site", "label": "Store: product pages, collections, cart hand-off to the store's checkout", "when": ["store"], "check": { "contains": ["{site}/index.html", "/cart/"] } },
-    { "id": "qa-console", "phase": "5-site", "label": "QA: zero console errors, no overflow at 390 px, keyboard pass (qa/site-qa.json)", "check": { "json": "projects/{slug}/qa/site-qa.json", "path": "ok", "equals": true } },
-    { "id": "qa-lighthouse", "phase": "5-site", "label": "Lighthouse desktop + mobile, dated (qa/lighthouse.json)", "check": { "json": "projects/{slug}/qa/lighthouse.json", "paths": ["mobile", "desktop"] } },
-    { "id": "levelup", "phase": "5-site", "label": "levelup VERIFY: every region and element ≥ 9 (qa/levelup.md)", "check": { "file": "projects/{slug}/qa/levelup.md", "min": 1500 } },
-
-    { "id": "film-json", "phase": "6-film", "label": "film.json filled from the brand and real content", "when": ["film"], "check": { "json": "projects/{slug}/film.json", "path": "scenes", "minLength": 6 } },
-    { "id": "film-signature", "phase": "6-film", "label": "Signature scene (morph or hand-crafted)", "when": ["film"], "check": { "contains": ["projects/{slug}/film.json", { "re": "\"type\": ?\"(morph|signature|lift)\"" }] } },
-    { "id": "film-916", "phase": "6-film", "label": "Film 9:16 with soundtrack", "when": ["film"], "check": { "file": "{camp}/{slug}-film-9x16.mp4", "min": 500000 } },
-    { "id": "film-45", "phase": "6-film", "label": "Film 4:5 for the feed", "when": ["film"], "check": { "file": "{camp}/{slug}-film-4x5.mp4", "min": 500000 } },
-    { "id": "film-stills", "phase": "6-film", "label": "Three ad stills + poster", "when": ["film"], "check": { "files": ["{camp}/ad-feed-4x5.jpg", "{camp}/ad-square-1x1.jpg", "{camp}/ad-story-9x16.jpg", "{camp}/poster.jpg"] } },
-    { "id": "film-copy", "phase": "6-film", "label": "Campaign README: copy A/B/C, headlines, targeting, UTM", "when": ["film"], "check": { "file": "{camp}/README.md", "min": 1800 } },
-    { "id": "film-loudness", "phase": "6-film", "label": "Loudness −14 LUFS ±1 measured (qa/film-qa.json)", "when": ["film"], "check": { "json": "projects/{slug}/qa/film-qa.json", "path": "ok", "equals": true } },
-    { "id": "film-on-site", "phase": "6-film", "label": "The film is on the client's site (film section + poster)", "when": ["film"], "check": { "files": ["{site}/m/film-web.mp4", "{site}/m/film-poster.jpg"] } },
-
-    { "id": "studio-case", "phase": "7-portfolio", "label": "Studio: closed real case (flow step with real output)", "check": { "contains": ["studio/src/3b-flow.js", "{slug}"] } },
-    { "id": "studio-live", "phase": "7-portfolio", "label": "Studio artifact republished", "check": { "link": "studio" } },
-    { "id": "portfolio-repo", "phase": "7-portfolio", "label": "AILGEN portfolio (repo index.html): card + case", "check": { "contains": ["index.html", "data-case=\"{slug}\""] } },
-    { "id": "portfolio-live", "phase": "7-portfolio", "label": "AILGEN portfolio (live artifact) updated", "check": { "link": "ailgen" } },
-    { "id": "screencasts", "phase": "7-portfolio", "label": "Real screencasts: desktop, mobile, tool, mascot, flow", "check": { "glob": "projects/{slug}/out/portfolio/*.mp4", "min": 5 } },
-
-    { "id": "meter", "phase": "8-deliver", "label": "Meter: every phase opened and closed, report written", "check": { "meterClosed": true } },
-    { "id": "report", "phase": "8-deliver", "label": "Report to the owner in Hebrew (report.md) with links and what only they can supply", "check": { "file": "projects/{slug}/report.md", "min": 1500 } },
-    { "id": "pushed", "phase": "8-deliver", "label": "Committed and pushed", "check": { "gitClean": ["projects/{slug}", "{site}", "{camp}"] } }
-  ]
+ "_": "Every element of the chain, with the evidence that proves it exists. `chain.mjs --project projects/<slug>` checks them all, times each from the meter, and fails when a required one is missing. Placeholders: {slug} {site} (static export folder) {camp} (campaigns/<slug>). `when` lists flags from chain.flags in this file; an element with a flag that is false is skipped, never silently: it shows as 'לא רלוונטי'.",
+ "flags": {
+  "url": true,
+  "store": false,
+  "mascot": true,
+  "film": true,
+  "seoOld": true
+ },
+ "elements": [
+  {
+   "id": "brief",
+   "phase": "0-brief",
+   "label": "brief.md: facts sheet with a source for every number",
+   "check": {
+    "file": "projects/{slug}/brief.md",
+    "min": 1200
+   }
+  },
+  {
+   "id": "seo-brief",
+   "phase": "0-brief",
+   "label": "seo/brief.md: demand, intent, competitors, page inventory",
+   "check": {
+    "file": "projects/{slug}/seo/brief.md",
+    "min": 1500
+   }
+  },
+  {
+   "id": "intake-json",
+   "phase": "1-intake",
+   "label": "Intake: every sitemap URL crawled (notCrawled = 0)",
+   "when": [
+    "url"
+   ],
+   "check": {
+    "json": "projects/{slug}/intake/site.json",
+    "path": "notCrawled",
+    "length": 0
+   }
+  },
+  {
+   "id": "intake-content",
+   "phase": "1-intake",
+   "label": "Intake: summary.md and content.md",
+   "when": [
+    "url"
+   ],
+   "check": {
+    "files": [
+     "projects/{slug}/intake/summary.md",
+     "projects/{slug}/intake/content.md"
+    ]
+   }
+  },
+  {
+   "id": "intake-shots",
+   "phase": "1-intake",
+   "label": "Screenshots of the old site (before)",
+   "when": [
+    "url"
+   ],
+   "check": {
+    "files": [
+     "projects/{slug}/intake/shots/home-desktop.png",
+     "projects/{slug}/intake/shots/home-mobile.png"
+    ]
+   }
+  },
+  {
+   "id": "catalog",
+   "phase": "1-intake",
+   "label": "Store catalog: products, collections, prices, images",
+   "when": [
+    "store"
+   ],
+   "check": {
+    "json": "projects/{slug}/catalog/catalog.json",
+    "path": "products",
+    "minLength": 1
+   }
+  },
+  {
+   "id": "seo-old",
+   "phase": "1-intake",
+   "label": "SEO inventory of the old site (seo/old/seo-report.md)",
+   "when": [
+    "seoOld"
+   ],
+   "check": {
+    "file": "projects/{slug}/seo/old/seo-report.md",
+    "min": 800
+   }
+  },
+  {
+   "id": "media-labels",
+   "phase": "1-intake",
+   "label": "Every image labelled real / render (media-labels.json)",
+   "check": {
+    "file": "projects/{slug}/media-labels.json",
+    "min": 20
+   }
+  },
+  {
+   "id": "brand-json",
+   "phase": "2-brand",
+   "label": "brand.json complete: concept, claim, signature, palette, type",
+   "check": {
+    "json": "projects/{slug}/brand.json",
+    "paths": [
+     "concept.idea",
+     "concept.claim",
+     "concept.signature",
+     "palette",
+     "type",
+     "logo"
+    ]
+   }
+  },
+  {
+   "id": "logo-vector",
+   "phase": "2-brand",
+   "label": "Logo as vector (symbol.svg) and light/dark PNG",
+   "check": {
+    "files": [
+     "projects/{slug}/brand/symbol.svg",
+     "projects/{slug}/img/logo-light.png",
+     "projects/{slug}/img/logo-dark.png"
+    ]
+   }
+  },
+  {
+   "id": "icon-family",
+   "phase": "2-brand",
+   "label": "Icon family (≥ 12 SVGs, the signature in each)",
+   "check": {
+    "glob": "projects/{slug}/img/i-*.svg",
+    "min": 12
+   }
+  },
+  {
+   "id": "favicon",
+   "phase": "2-brand",
+   "label": "Favicon set: icon.svg, 32 px, apple-touch, 512 px",
+   "check": {
+    "files": [
+     "{site}/icon.svg",
+     "{site}/img/favicon-32.png",
+     "{site}/img/apple-touch-icon.png",
+     "{site}/img/icon-512.png"
+    ]
+   }
+  },
+  {
+   "id": "fonts",
+   "phase": "2-brand",
+   "label": "Fonts self-hosted (Hebrew + Latin) with fonts.css",
+   "check": {
+    "files": [
+     "{site}/fonts/fonts.css"
+    ],
+    "glob": "{site}/fonts/*.woff2",
+    "min": 4
+   }
+  },
+  {
+   "id": "brand-board",
+   "phase": "2-brand",
+   "label": "Brand board image",
+   "check": {
+    "glob": "projects/{slug}/brand/board*.png",
+    "min": 1
+   }
+  },
+  {
+   "id": "palette-contrast",
+   "phase": "2-brand",
+   "label": "Contrast checked: text pairs ≥ 4.5",
+   "check": {
+    "json": "projects/{slug}/brand.json",
+    "path": "palette.contrast",
+    "minKeys": 3
+   }
+  },
+  {
+   "id": "mascot-def",
+   "phase": "3-mascot",
+   "label": "Mascot: name, pixel grid, ≥ 6 faces",
+   "when": [
+    "mascot"
+   ],
+   "check": {
+    "json": "projects/{slug}/mascot/mascot.json",
+    "paths": [
+     "name",
+     "grid",
+     "faces"
+    ],
+    "minKeys": {
+     "faces": 6
+    }
+   }
+  },
+  {
+   "id": "mascot-preview",
+   "phase": "3-mascot",
+   "label": "Mascot sheet: every state visible",
+   "when": [
+    "mascot"
+   ],
+   "check": {
+    "glob": "projects/{slug}/mascot/preview*.png",
+    "min": 1
+   }
+  },
+  {
+   "id": "mascot-manners",
+   "phase": "3-mascot",
+   "label": "Mascot manners in the site: tips ≤ 6, quiet for a week, reduced motion",
+   "when": [
+    "mascot"
+   ],
+   "check": {
+    "contains": [
+     "{site}/index.html",
+     "prefers-reduced-motion",
+     "mutedUntil"
+    ]
+   }
+  },
+  {
+   "id": "blueprint",
+   "phase": "4-blueprint",
+   "label": "Blueprint: every section has a job line and a visitor doubt",
+   "check": {
+    "file": "projects/{slug}/blueprint.md",
+    "min": 1500
+   }
+  },
+  {
+   "id": "seo-pages",
+   "phase": "4b-seo",
+   "label": "One crawlable page per service / guide / product / collection",
+   "check": {
+    "json": "projects/{slug}/seo/pages.json",
+    "path": "pages",
+    "minLength": 10
+   }
+  },
+  {
+   "id": "seo-gates",
+   "phase": "4b-seo",
+   "label": "seo-run.mjs: all gates passed",
+   "check": {
+    "contains": [
+     "projects/{slug}/seo/RUN.md",
+     "כל השערים עברו"
+    ]
+   }
+  },
+  {
+   "id": "seo-coverage",
+   "phase": "4b-seo",
+   "label": "Every old URL kept or one 301 (coverage 100%)",
+   "when": [
+    "seoOld"
+   ],
+   "check": {
+    "contains": [
+     "projects/{slug}/seo/plan/plan.md",
+     "כיסוי: **100%**"
+    ]
+   }
+  },
+  {
+   "id": "seo-verify",
+   "phase": "4b-seo",
+   "label": "Verify gate: every old URL answers correctly",
+   "when": [
+    "seoOld"
+   ],
+   "check": {
+    "contains": [
+     "projects/{slug}/seo/verify/verify.md",
+     "**עבר**"
+    ]
+   }
+  },
+  {
+   "id": "seo-files",
+   "phase": "4b-seo",
+   "label": "sitemap, robots, _redirects, _headers, llms.txt, 404",
+   "check": {
+    "files": [
+     "{site}/sitemap.xml",
+     "{site}/robots.txt",
+     "{site}/_headers",
+     "{site}/llms.txt",
+     "{site}/404.html"
+    ]
+   }
+  },
+  {
+   "id": "seo-og",
+   "phase": "4b-seo",
+   "label": "A share card for every page",
+   "check": {
+    "glob": "{site}/og/*.jpg",
+    "min": 10
+   }
+  },
+  {
+   "id": "site-export",
+   "phase": "5-site",
+   "label": "Static export of the site (index.html + build.sh + src/)",
+   "check": {
+    "files": [
+     "{site}/index.html",
+     "{site}/build.sh"
+    ]
+   }
+  },
+  {
+   "id": "site-preview-link",
+   "phase": "5-site",
+   "label": "Live preview published (artifact link)",
+   "check": {
+    "link": "site"
+   }
+  },
+  {
+   "id": "site-proof-tool",
+   "phase": "5-site",
+   "label": "Proof tool present and answers the main question",
+   "check": {
+    "file": "projects/{slug}/blueprint.md",
+    "contains": "כלי ההוכחה"
+   }
+  },
+  {
+   "id": "site-admin",
+   "phase": "5-site",
+   "label": "Owner control center (leads, content, agent tabs)",
+   "check": {
+    "contains": [
+     "{site}/index.html",
+     "מרכז הבקרה"
+    ]
+   }
+  },
+  {
+   "id": "site-agent",
+   "phase": "5-site",
+   "label": "AI agent with offline FALLBACK and create_lead",
+   "check": {
+    "contains": [
+     "{site}/index.html",
+     "create_lead"
+    ]
+   }
+  },
+  {
+   "id": "site-legal",
+   "phase": "5-site",
+   "label": "Privacy policy and accessibility statement (pages + dialogs)",
+   "check": {
+    "files": [
+     "{site}/legal.json"
+    ]
+   }
+  },
+  {
+   "id": "site-a11y",
+   "phase": "5-site",
+   "label": "Accessibility menu and skip link",
+   "check": {
+    "contains": [
+     "{site}/index.html",
+     "skip"
+    ]
+   }
+  },
+  {
+   "id": "site-attribution",
+   "phase": "5-site",
+   "label": "Lead source saved per lead (organic / paid / social / referral / direct)",
+   "check": {
+    "contains": [
+     "{site}/index.html",
+     "srcKind"
+    ]
+   }
+  },
+  {
+   "id": "site-store-flow",
+   "phase": "5-site",
+   "label": "Store: product pages, collections, cart hand-off to the store's checkout",
+   "when": [
+    "store"
+   ],
+   "check": {
+    "contains": [
+     "{site}/index.html",
+     "/cart/"
+    ]
+   }
+  },
+  {
+   "id": "qa-console",
+   "phase": "5-site",
+   "label": "QA: zero console errors, no overflow at 390 px, keyboard pass (qa/site-qa.json)",
+   "check": {
+    "json": "projects/{slug}/qa/site-qa.json",
+    "path": "ok",
+    "equals": true
+   }
+  },
+  {
+   "id": "qa-lighthouse",
+   "phase": "5-site",
+   "label": "Lighthouse desktop + mobile, dated (qa/lighthouse.json)",
+   "check": {
+    "json": "projects/{slug}/qa/lighthouse.json",
+    "paths": [
+     "mobile",
+     "desktop"
+    ]
+   }
+  },
+  {
+   "id": "levelup",
+   "phase": "5-site",
+   "label": "levelup VERIFY: every region and element ≥ 9 (qa/levelup.md)",
+   "check": {
+    "file": "projects/{slug}/qa/levelup.md",
+    "min": 1500
+   }
+  },
+  {
+   "id": "film-json",
+   "phase": "6-film",
+   "label": "film.json filled from the brand and real content",
+   "when": [
+    "film"
+   ],
+   "check": {
+    "json": "projects/{slug}/film.json",
+    "path": "scenes",
+    "minLength": 6
+   }
+  },
+  {
+   "id": "film-signature",
+   "phase": "6-film",
+   "label": "Signature scene (morph or hand-crafted)",
+   "when": [
+    "film"
+   ],
+   "check": {
+    "contains": [
+     "projects/{slug}/film.json",
+     {
+      "re": "\"type\": ?\"(morph|signature|lift)\""
+     }
+    ]
+   }
+  },
+  {
+   "id": "film-916",
+   "phase": "6-film",
+   "label": "Film 9:16 with soundtrack",
+   "when": [
+    "film"
+   ],
+   "check": {
+    "file": "{camp}/{slug}-film-9x16.mp4",
+    "min": 500000
+   }
+  },
+  {
+   "id": "film-45",
+   "phase": "6-film",
+   "label": "Film 4:5 for the feed",
+   "when": [
+    "film"
+   ],
+   "check": {
+    "file": "{camp}/{slug}-film-4x5.mp4",
+    "min": 500000
+   }
+  },
+  {
+   "id": "film-stills",
+   "phase": "6-film",
+   "label": "Three ad stills + poster",
+   "when": [
+    "film"
+   ],
+   "check": {
+    "files": [
+     "{camp}/ad-feed-4x5.jpg",
+     "{camp}/ad-square-1x1.jpg",
+     "{camp}/ad-story-9x16.jpg",
+     "{camp}/poster.jpg"
+    ]
+   }
+  },
+  {
+   "id": "film-copy",
+   "phase": "6-film",
+   "label": "Campaign README: copy A/B/C, headlines, targeting, UTM",
+   "when": [
+    "film"
+   ],
+   "check": {
+    "file": "{camp}/README.md",
+    "min": 1800
+   }
+  },
+  {
+   "id": "film-loudness",
+   "phase": "6-film",
+   "label": "Loudness −14 LUFS ±1 measured (qa/film-qa.json)",
+   "when": [
+    "film"
+   ],
+   "check": {
+    "json": "projects/{slug}/qa/film-qa.json",
+    "path": "ok",
+    "equals": true
+   }
+  },
+  {
+   "id": "film-on-site",
+   "phase": "6-film",
+   "label": "The film is on the client's site (film section + poster)",
+   "when": [
+    "film"
+   ],
+   "check": {
+    "files": [
+     "{site}/m/film-web.mp4",
+     "{site}/m/film-poster.jpg"
+    ]
+   }
+  },
+  {
+   "id": "studio-case",
+   "phase": "7-portfolio",
+   "label": "Studio: closed real case (flow step with real output)",
+   "check": {
+    "contains": [
+     "studio/src/3b-flow.js",
+     "{slug}"
+    ]
+   }
+  },
+  {
+   "id": "studio-live",
+   "phase": "7-portfolio",
+   "label": "Studio artifact republished",
+   "check": {
+    "link": "studio"
+   }
+  },
+  {
+   "id": "portfolio-repo",
+   "phase": "7-portfolio",
+   "label": "AILGEN portfolio (repo index.html): card + case",
+   "check": {
+    "contains": [
+     "index.html",
+     "data-case=\"{slug}\""
+    ]
+   }
+  },
+  {
+   "id": "portfolio-live",
+   "phase": "7-portfolio",
+   "label": "AILGEN portfolio (live artifact) updated",
+   "check": {
+    "link": "ailgen"
+   }
+  },
+  {
+   "id": "screencasts",
+   "phase": "7-portfolio",
+   "label": "Real screencasts: desktop, mobile, tool, mascot, flow",
+   "check": {
+    "glob": "projects/{slug}/out/portfolio/*.mp4",
+    "min": 5
+   }
+  },
+  {
+   "id": "domain-dna",
+   "phase": "2-brand",
+   "label": "Domain language: design-dna.json (feeling, signature, imagery policy, density, motion, voice, what it is not)",
+   "check": {
+    "json": "projects/{slug}/design-dna.json",
+    "paths": [
+     "domain",
+     "feeling",
+     "signature",
+     "imagery",
+     "layout",
+     "motion",
+     "voice",
+     "notThis"
+    ]
+   }
+  },
+  {
+   "id": "brand-registry",
+   "phase": "2-brand",
+   "label": "Brand registry: every brand the business sells, facts with official sources, colours from its packaging",
+   "when": [
+    "brands"
+   ],
+   "check": {
+    "json": "projects/{slug}/brands.json",
+    "path": "brands",
+    "minLength": 1
+   }
+  },
+  {
+   "id": "copy-harvest",
+   "phase": "5-site",
+   "label": "Content: every visitor string harvested (all pages, all states, script literals)",
+   "check": {
+    "json": "projects/{slug}/qa/copy/strings.json",
+    "path": "strings",
+    "minLength": 200
+   }
+  },
+  {
+   "id": "copy-gate",
+   "phase": "5-site",
+   "label": "Content gate: 0 high (internal, developer, placeholder language)",
+   "check": {
+    "json": "projects/{slug}/qa/copy/lint.json",
+    "path": "count.high",
+    "equals": 0
+   }
+  },
+  {
+   "id": "copy-gate-medium",
+   "phase": "5-site",
+   "label": "Content gate: 0 medium (stale dates, filler, language leaks, voice)",
+   "check": {
+    "json": "projects/{slug}/qa/copy/lint.json",
+    "path": "count.medium",
+    "equals": 0
+   }
+  },
+  {
+   "id": "cutouts",
+   "phase": "5-site",
+   "label": "Real product cutouts with pixels proven kept (cutouts.json)",
+   "when": [
+    "products"
+   ],
+   "check": {
+    "json": "projects/{slug}/visual/cutouts.json",
+    "minKeys": {
+     "cutouts": 3
+    }
+   }
+  },
+  {
+   "id": "visual-concepts",
+   "phase": "5-site",
+   "label": "Visual system: at most five concepts, each with a job, placements and a never-list",
+   "check": {
+    "json": "projects/{slug}/visual/concepts.json",
+    "path": "concepts",
+    "maxLength": 5
+   }
+  },
+  {
+   "id": "visual-published",
+   "phase": "5-site",
+   "label": "Approved generated visuals published with provenance (needs the image key)",
+   "when": [
+    "visualKey"
+   ],
+   "check": {
+    "json": "{site}/img/v/manifest.json",
+    "minKeys": {
+     "images": 1
+    }
+   }
+  },
+  {
+   "id": "evolve",
+   "phase": "8-deliver",
+   "label": "Autonomy: evolve.json and a baseline catalog snapshot",
+   "check": {
+    "file": "projects/{slug}/evolve.json",
+    "min": 200
+   }
+  },
+  {
+   "id": "evolve-baseline",
+   "phase": "8-deliver",
+   "label": "Autonomy: the loop's first report",
+   "check": {
+    "json": "projects/{slug}/evolve/last.json",
+    "path": "log",
+    "minLength": 0
+   }
+  },
+  {
+   "id": "meter",
+   "phase": "8-deliver",
+   "label": "Meter: every phase opened and closed, report written",
+   "check": {
+    "meterClosed": true
+   }
+  },
+  {
+   "id": "report",
+   "phase": "8-deliver",
+   "label": "Report to the owner in Hebrew (report.md) with links and what only they can supply",
+   "check": {
+    "file": "projects/{slug}/report.md",
+    "min": 1500
+   }
+  },
+  {
+   "id": "pushed",
+   "phase": "8-deliver",
+   "label": "Committed and pushed",
+   "check": {
+    "gitClean": [
+     "projects/{slug}",
+     "{site}",
+     "{camp}"
+    ]
+   }
+  }
+ ]
 }

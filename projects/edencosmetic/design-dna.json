@@ -1,0 +1,24 @@
+{
+ "_doc": "The domain language applied to this business (references/14-domain-language.md). The structure of the site is shared across projects; everything in this file is why it looks and speaks like Eden Cosmetics and nobody else.",
+ "domain": "professional beauty supply: lash and brow lift, sold by a practitioner and trainer",
+ "audience": "lash and brow technicians (mostly small home or salon businesses), students, and some private buyers; they know the craft and the brands, and they buy by treatment, price, stock and free-shipping threshold",
+ "feeling": "an atelier: calm, warm, precise, feminine without kitsch; the confidence of someone who does the work",
+ "commercialJob": "turn 'which kit and what else do I need' into a cart in the store, or a WhatsApp message to Eden",
+ "signature": "the curl: a straight line that lifts into a curve (a lash after a lift, the tail of the E in the logo); the lotus of the logo and Lotti born from it",
+ "type": { "display": "Frank Ruhl Libre (Hebrew serif, editorial weight)", "body": "Assistant", "latin": "Cinzel for the wordmark only; brand names take their own typographic character on the shelf" },
+ "palette": { "paper": "#F8EFEA", "blush": "#F0D3C3", "accent": "#964F58", "ink": "#241A18", "rule": "brand colours appear only inside that brand's panel and page, measured from its real packaging" },
+ "imagery": {
+  "products": "the store's own photos; on stages, real cutouts that keep every product pixel (cutouts.json, PSNR ≥ 32 dB)",
+  "atmosphere": "at most five generated concepts (visual/concepts.json): the atelier surface, the curl, the craft, brand fields, the lotus",
+  "never": "generated products, logos, text, faces or results; stock clichés of beauty (scattered petals on marble, fanned brushes, spa stones)"
+ },
+ "layout": {
+  "firstScreen": "headline and the two actions on the first mobile screen; a flat lay of real products on the atelier surface; a live kit card (the proof tool's answer) and the brand line",
+  "density": "compact and scannable: counts, prices, stock and the free-shipping gap are always visible; long text only where a buyer needs it (policies, guides)",
+  "clean": "the shop grid, the kit builder, the cart and the forms stay imagery-free and content-first"
+ },
+ "motion": "slow and precise: products settle onto the surface, the curl draws in section headers, cards lift on hover; nothing moves on its own after the first seconds; reduced motion removes all of it",
+ "voice": { "address": "one woman (את) in conversation; actions named with an infinitive or a noun", "tone": "plain, warm, exact; numbers instead of adjectives; no superlatives nobody can check", "rules": "projects/edencosmetic/copy-rules.json" },
+ "guide": "Lotti: a quiet corner guide who speaks only when useful, never over the first screen, never while the visitor types; she tours the brands and answers from the site's facts",
+ "notThis": ["a generic Shopify theme", "a luxury perfume site (too cold, too dark)", "a spa site (too soft, no commerce)", "a medical clinic (too clinical)"]
+}

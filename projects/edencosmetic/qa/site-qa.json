@@ -1,8 +1,8 @@
 {
- "url": "http://127.0.0.1:8123/",
- "at": "2026-09-29T23:34:26.118Z",
+ "url": "http://127.0.0.1:8131/",
+ "at": "2026-09-30T09:19:32.649Z",
  "ok": true,
- "passed": 71,
+ "passed": 82,
  "failed": 0,
  "checks": [
   {
@@ -113,7 +113,7 @@
   {
    "name": "kit: tint lists a tint and an oxidant (חמצן)",
    "ok": true,
-   "note": "צבעצבע לגבות -NIKK MOLE חום · ₪45צבע לריסים -NIKK MOLE כחול שחור · ₪45My lamination צבע לגבות/ ריסים בתוספת קרטין- שחור "
+   "note": "צבעצבע לגבות – NIKK MOLE חום · ₪45צבע לריסים – NIKK MOLE כחול שחור · ₪45My lamination צבע לגבות / ריסים בתוספת קרטין – ש"
   },
   {
    "name": "kit: the default oxidant is in stock and of the tint's brand",
@@ -238,7 +238,7 @@
   {
    "name": "form: with no database the note offers a WhatsApp link with the message",
    "ok": true,
-   "note": "לא הצלחנו לשמור את הפנייה בתצוגה הזו. אפשר לשלוח אותה לעדן בוואטסאפ: <a href=\"https://wa.me/972525453602?text=%D7%A9%D7%"
+   "note": "הפנייה מוכנה. לשליחה לעדן: <a href=\"https://wa.me/972525453602?text=%D7%A9%D7%9C%D7%95%D7%9D%2C%20%D7%90%D7%A0%D7%99%20%"
   },
   {
    "name": "courses: the waiting-list form has the same fallback",
@@ -256,14 +256,19 @@
    "note": "האספקה באמצעות חברת שליחויות: 4‎–‎5 ימי עסקים לבית או לעסק, וליישובים מרוחקים עד 2 ימי עסקים נוספים "
   },
   {
-   "name": "agent: says the truth about courses (the collection is empty)",
+   "name": "agent: says the truth about courses (none open, no dates or price)",
    "ok": true,
-   "note": "עדן מעבירה קורסים והשתלמויות, אבל הקולקציה בחנות ריקה כרגע, ולכן אין תאריכים או מחירים. אפשר להצטרף "
+   "note": "עדן מלמדת הרמת ריסים, הרמת גבות ועיצוב גבות. כרגע אין קורס פתוח להרשמה, ולכן אין מועדים או מחיר. אפש"
+  },
+  {
+   "name": "agent: names the brands with their verified origins only",
+   "ok": true,
+   "note": "על המדף 7 מותגים: THUYA (ברצלונה, ספרד), 5 מוצרים; My lamination (איטליה), 18 מוצרים; RefectoCil (אוסטריה), 2 מוצרים; ZOLA (אוקראינה), 4 מוצ"
   },
   {
    "name": "agent: never invents a course price",
    "ok": true,
-   "note": "עדן מעבירה קורסים והשתלמויות, אבל הקולקציה בחנות ריקה כרגע, ולכן אין תאריכים או מחירים. אפשר להצטרף "
+   "note": "עדן מלמדת הרמת ריסים, הרמת גבות ועיצוב גבות. כרגע אין קורס פתוח להרשמה, ולכן אין מועדים או מחיר. אפש"
   },
   {
    "name": "agent: Escape closes it",
@@ -286,9 +291,9 @@
    "note": ""
   },
   {
-   "name": "legal: the privacy draft opens with the owner's contact",
+   "name": "legal: the privacy text opens with the owner's contact and no draft wording",
    "ok": true,
-   "note": "מדיניות פרטיות · עדן קוסמטיקס (טיוטה שהוכנה עם האתר החדש. יש"
+   "note": "פרטיות באתר · עדן קוסמטיקס 1. מי אנחנו האתר הוא האתר של החנו"
   },
   {
    "name": "legal: the accessibility statement opens and names the coordinator",
@@ -303,7 +308,7 @@
   {
    "name": "Lotti: at most 6 tips in the visit",
    "ok": true,
-   "note": "3"
+   "note": "4"
   },
   {
    "name": "Lotti: \"quiet for a week\" is remembered",
@@ -323,10 +328,10 @@
   {
    "name": "film: a video with a poster, controls and no autoplay",
    "ok": true,
-   "note": "{\"video\":true,\"poster\":true,\"src\":\"m/film-web.mp4\",\"transcript\":593,\"label\":true,\"heroLink\":\"#film\",\"ld\":true}"
+   "note": "{\"video\":true,\"poster\":true,\"src\":\"m/film-web.mp4\",\"transcript\":593,\"label\":false,\"heroLink\":\"#film\",\"ld\":true}"
   },
   {
-   "name": "film: a text transcript and the honesty label are next to it",
+   "name": "film: a text transcript is next to it, and no production label",
    "ok": true,
    "note": "593"
   },
@@ -341,14 +346,64 @@
    "note": "200 video/mp4"
   },
   {
+   "name": "first screen: headline and the kit action are inside the first viewport",
+   "ok": true,
+   "note": "{\"h1\":true,\"cta\":true,\"cuts\":5,\"ticket\":\"307\"}"
+  },
+  {
+   "name": "first screen: five real product cutouts are loaded on the stage",
+   "ok": true,
+   "note": "5"
+  },
+  {
+   "name": "first screen: the kit card equals the kit builder's lash/start default",
+   "ok": true,
+   "note": "307 vs 307"
+  },
+  {
+   "name": "brands: 7 brands and the house selection, each in its own colours",
+   "ok": true,
+   "note": "8 / 8"
+  },
+  {
+   "name": "brands: brands with ≥ 2 products link to their page, single-product brands to the product",
+   "ok": true,
+   "note": "/brands/my-lamination/ /brands/nikk-mole/ /brands/thuya/ /brands/zola/ /brands/refectocil/ /products/%D7%93%D7%91%D7%A7-%D7%A7%D7%95%D7%93%D7%99/ /products/%D7%A4%D7%99%D7%A0%D7%A6%D7%98%D7%94-%D7%A1%D7%98%D7%90%D7%9C%D7%A7%D7%A1-11-3/ /collections/%D7%93%D7%91%D7%A7%D7%99%D7%9D-%D7%A1%D7%99%D7%9C%D"
+  },
+  {
+   "name": "Lotti tour: opens on the first brand with its facts and a way on",
+   "ok": true,
+   "note": "My lamination · איטליהמותג איטלקי להרמת ריסים וגבות ולמינציה, מאיזולה ויצ'נטינה."
+  },
+  {
+   "name": "Lotti tour: focus moves into it",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "Lotti tour: Escape ends it",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "words: no production language anywhere on the page",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "visuals: with no approved images, no empty slot is rendered",
+   "ok": true,
+   "note": ""
+  },
+  {
    "name": "seo: title 30–65 chars, description 70–160",
    "ok": true,
-   "note": "44/133"
+   "note": "44/144"
   },
   {
    "name": "seo: canonical and JSON-LD present",
    "ok": true,
-   "note": "{\"title\":\"עדן קוסמטיקס | ציוד מקצועי להרמת ריסים וגבות\",\"desc\":\"ציוד מקצועי להרמת ריסים וגבות: ערכות, סיליקונים, דבקים וצבעים במחירי החנות ובמלאי שלה. משלוח חינם מעל ₪499. עדן נחמני, מטפלת ומדריכה.\",\"canon\":\"https://edencosmetic.co.il/\",\"ld\":1,\"links\":93}"
+   "note": "{\"title\":\"עדן קוסמטיקס | ציוד מקצועי להרמת ריסים וגבות\",\"desc\":\"ציוד מקצועי להרמת ריסים וגבות: ערכות, סיליקונים, דבקים וצבעים של THUYA, My lamination, ZOLA ועוד. משלוח חינם מעל ₪499. עדן נחמני, מטפלת ומדריכה.\",\"canon\":\"https://edencosmetic.co.il/\",\"ld\":1,\"links\":93}"
   },
   {
    "name": "seo: the footer carries static links to collections, guides, brands and policies",

@@ -1,0 +1,246 @@
+{
+ "cutouts": {
+  "thuya-kit": {
+   "id": "thuya-kit",
+   "src": "projects/edencosmetic/catalog/img/8479070290091-1.jpg",
+   "out": "edencosmetic/img/cut/thuya-kit.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.386,
+   "suitable": true,
+   "size": [
+    681,
+    656
+   ],
+   "bytes": 55422,
+   "psnr": 39.7,
+   "pixelsKept": true,
+   "review": "ok"
+  },
+  "zola-balm": {
+   "id": "zola-balm",
+   "src": "projects/edencosmetic/catalog/img/8479559844011-1.jpg",
+   "out": "edencosmetic/img/cut/zola-balm.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.317,
+   "suitable": true,
+   "size": [
+    583,
+    583
+   ],
+   "bytes": 64198,
+   "psnr": 38.3,
+   "pixelsKept": true,
+   "review": "ok"
+  },
+  "nikk-tint": {
+   "id": "nikk-tint",
+   "src": "projects/edencosmetic/catalog/img/8640508592299-1.jpg",
+   "out": "edencosmetic/img/cut/nikk-tint.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.143,
+   "suitable": true,
+   "size": [
+    240,
+    752
+   ],
+   "bytes": 42456,
+   "psnr": 36.6,
+   "pixelsKept": true,
+   "review": "ok"
+  },
+  "pads-fox": {
+   "id": "pads-fox",
+   "src": "projects/edencosmetic/catalog/img/8480545898667-1.jpg",
+   "out": "edencosmetic/img/cut/pads-fox.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.371,
+   "suitable": true,
+   "size": [
+    760,
+    688
+   ],
+   "bytes": 74982,
+   "psnr": 40.0,
+   "pixelsKept": true,
+   "review": "ok"
+  },
+  "tweezers": {
+   "id": "tweezers",
+   "src": "projects/edencosmetic/catalog/img/8640535134379-1.jpg",
+   "out": "edencosmetic/img/cut/tweezers.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.044,
+   "suitable": true,
+   "size": [
+    79,
+    657
+   ],
+   "bytes": 6792,
+   "psnr": 40.8,
+   "pixelsKept": true,
+   "review": "ok"
+  },
+  "ml-oxidant": {
+   "id": "ml-oxidant",
+   "src": "projects/edencosmetic/catalog/img/8735729483947-1.jpg",
+   "out": "edencosmetic/img/cut/ml-oxidant.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.11,
+   "suitable": true,
+   "size": [
+    189,
+    760
+   ],
+   "bytes": 20276,
+   "psnr": 42.6,
+   "pixelsKept": true,
+   "review": "rejected: the white cap merged with the white background (flood fill cannot separate white on white); not used",
+   "use": false
+  },
+  "pads-mix": {
+   "id": "pads-mix",
+   "src": "projects/edencosmetic/catalog/img/8480548651179-1.jpg",
+   "out": "edencosmetic/img/cut/pads-mix.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.183,
+   "suitable": true,
+   "size": [
+    504,
+    685
+   ],
+   "bytes": 25470,
+   "psnr": 42.4,
+   "pixelsKept": true,
+   "review": "ok"
+  },
+  "nikk-tweezers": {
+   "id": "nikk-tweezers",
+   "src": "projects/edencosmetic/catalog/img/8640558301355-1.jpg",
+   "out": "edencosmetic/img/cut/nikk-tweezers.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.174,
+   "suitable": true,
+   "size": [
+    746,
+    259
+   ],
+   "bytes": 25208,
+   "psnr": 33.9,
+   "pixelsKept": true,
+   "review": "ok"
+  },
+  "refecto": {
+   "id": "refecto",
+   "src": "projects/edencosmetic/catalog/img/8479554338987-1.jpg",
+   "out": "edencosmetic/img/cut/refecto.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.325,
+   "suitable": true,
+   "size": [
+    623,
+    760
+   ],
+   "bytes": 62866,
+   "psnr": 41.7,
+   "pixelsKept": true,
+   "review": "ok"
+  },
+  "ml-steps": {
+   "id": "ml-steps",
+   "src": "projects/edencosmetic/catalog/img/8730719125675-1.jpg",
+   "out": "edencosmetic/img/cut/ml-steps.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.377,
+   "suitable": true,
+   "size": [
+    540,
+    759
+   ],
+   "bytes": 38462,
+   "psnr": 45.1,
+   "pixelsKept": true,
+   "review": "ok"
+  },
+  "zola-tweezers": {
+   "id": "zola-tweezers",
+   "src": "projects/edencosmetic/catalog/img/8778855645355-1.jpg",
+   "out": "edencosmetic/img/cut/zola-tweezers.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.045,
+   "suitable": true,
+   "size": [
+    95,
+    760
+   ],
+   "bytes": 12756,
+   "psnr": 38.6,
+   "pixelsKept": true,
+   "review": "ok"
+  },
+  "staleks": {
+   "id": "staleks",
+   "src": "projects/edencosmetic/catalog/img/8778860462251-1.jpg",
+   "out": "edencosmetic/img/cut/staleks.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.066,
+   "suitable": true,
+   "size": [
+    92,
+    760
+   ],
+   "bytes": 11650,
+   "psnr": 41.0,
+   "pixelsKept": true,
+   "review": "ok"
+  },
+  "kodi": {
+   "id": "kodi",
+   "src": "projects/edencosmetic/catalog/img/8479568789675-1.jpg",
+   "out": "edencosmetic/img/cut/kodi.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.081,
+   "suitable": true,
+   "size": [
+    116,
+    659
+   ],
+   "bytes": 8054,
+   "psnr": 45.4,
+   "pixelsKept": true,
+   "review": "ok"
+  },
+  "nikk-foam": {
+   "id": "nikk-foam",
+   "src": "projects/edencosmetic/catalog/img/8479575113899-1.jpg",
+   "out": "edencosmetic/img/cut/nikk-foam.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.134,
+   "suitable": true,
+   "size": [
+    210,
+    599
+   ],
+   "bytes": 20954,
+   "psnr": 40.5,
+   "pixelsKept": true,
+   "review": "ok"
+  },
+  "nikk-ox": {
+   "id": "nikk-ox",
+   "src": "projects/edencosmetic/catalog/img/8640474644651-1.jpg",
+   "out": "edencosmetic/img/cut/nikk-ox.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.179,
+   "suitable": true,
+   "size": [
+    253,
+    743
+   ],
+   "bytes": 28544,
+   "psnr": 40.1,
+   "pixelsKept": true,
+   "review": "ok"
+  }
+ },
+ "_doc": "Real product cutouts (scripts/cutout.py): only an alpha channel is added; psnr compares the product pixels with the store photo. review = a person or the vision pass looked at each cutout on a light and a dark background."
+}

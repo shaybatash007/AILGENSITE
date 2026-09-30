@@ -4,7 +4,11 @@
 // The config is composed per project (see projects/talorkaradi/seo/compose.mjs); this tool only renders it, so the
 // rules live in one place: unique title, description, one h1, canonical, Open Graph, JSON-LD, breadcrumbs, related
 // links, contextual auto-links, and a footer that lists every service and guide. No JavaScript is needed to read any
-// of it. Previews are written with noindex (config.preview) and the banner; flip the flag on launch day.
+// of it. Previews are written with noindex (config.preview); nothing about the preview is shown to visitors (a banner only with
+// config.showPreviewBanner). Flip the flag on launch day.
+// Page extensions (trusted HTML from the project composer, never from a visitor): p.style (extra CSS, e.g. a brand's colours),
+// p.bodyClass, p.heroHtml (replaces kicker/h1/lead; must hold the one h1), p.intro (HTML after the lead), p.trail (HTML after the
+// article), p.guide {lines, links} (a corner guide, needs C.guideAvatar), blocks {k:'html', html}, p.product.brandCard {name, origin, about, href, t}.
 //
 // config = {
 //   site: 'https://example.co.il', out: 'folder', preview: true, lang: 'he', dir: 'rtl',
@@ -86,7 +90,12 @@ article.wide{max-width:none}
 .avail{display:inline-flex;align-items:center;gap:8px;font-weight:600;margin:0}.avail::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--kick)}.avail.out::before{background:var(--steel)}
 .pdp .acts{display:flex;flex-wrap:wrap;gap:10px}.snap{font-size:14.5px;color:var(--steel);margin:0}.facts{list-style:none;margin:0;padding:0;display:grid;gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden}.facts li{display:flex;justify-content:space-between;gap:16px;padding:10px 14px;border-bottom:1px solid var(--line);margin:0}.facts li:last-child{border-bottom:0}.facts b{font-weight:600}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px;list-style:none;margin:18px 0 0;padding:0}.pc{display:flex;flex-direction:column;height:100%;background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;text-decoration:none;color:var(--ink)}.pc:hover{border-color:var(--link)}.pc img{width:100%;aspect-ratio:1/1;object-fit:contain;background:#fff}.pc .in{padding:12px 14px 14px;display:grid;gap:4px}.pc b{font-weight:600;line-height:1.35;font-size:16px}.pc .pr{font:700 19px var(--num)}.pc .av{font-size:13.5px;color:var(--steel)}
-@media (max-width:760px){.pdp{grid-template-columns:1fr}}
+.mmenu{display:none;margin-inline-start:auto;position:relative}.mmenu summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border-radius:999px;font-weight:700;border:1.5px solid color-mix(in srgb,currentColor 30%,transparent)}.mmenu summary::-webkit-details-marker{display:none}.mmenu summary span{width:18px;height:2px;background:currentColor;box-shadow:0 -6px 0 currentColor,0 6px 0 currentColor;margin-block:6px}
+.mmenu div{position:absolute;inset-inline-end:0;top:calc(100% + 8px);z-index:40;width:min(330px,calc(100vw - 32px));max-height:75vh;overflow:auto;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:18px;padding:10px;display:grid;gap:2px;box-shadow:0 26px 50px -24px rgba(0,0,0,.45)}.mmenu div a{color:var(--ink);text-decoration:none;padding:10px 12px;border-radius:10px;min-height:44px;display:flex;align-items:center}.mmenu div a:hover{background:var(--paper)}.mmenu div b{font-size:12.5px;letter-spacing:.1em;color:var(--steel);padding:12px 12px 4px}.mmenu .call{justify-content:center;margin-top:8px}
+.guide{position:fixed;z-index:25;inset-inline-end:16px;bottom:16px;display:flex;flex-direction:column-reverse;align-items:flex-end;gap:8px}.guide summary{list-style:none;cursor:pointer;width:64px;height:70px;filter:drop-shadow(0 8px 10px rgba(60,30,25,.25));border-radius:14px}.guide summary::-webkit-details-marker{display:none}.guide summary svg{width:100%;height:100%;display:block}
+.guide .gb{width:min(300px,calc(100vw - 32px));background:var(--surface);color:var(--ink);border:1.5px solid var(--ink);border-radius:18px 18px 4px 18px;padding:12px 14px;box-shadow:0 20px 40px -24px rgba(0,0,0,.45);font-size:15.5px;line-height:1.55}.guide .gb p{margin:0 0 6px}.guide .gl{display:flex;flex-wrap:wrap;gap:6px 14px;margin:6px 0 0}.guide .gl a{font-weight:700;min-height:32px;display:inline-flex;align-items:center}
+@media print{.guide{display:none}}
+@media (max-width:760px){.pdp{grid-template-columns:1fr}nav.main{display:none}.mmenu{display:block}header.site .in{flex-wrap:nowrap}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 ${C.theme?.css || ''}
 ${C.css || ''}`;
@@ -115,7 +124,7 @@ function head(p) {
 <meta property="og:type" content="${p.type === 'guide' ? 'article' : p.type === 'product' ? 'product' : 'website'}">${p.type === 'product' ? `<meta property="product:price:amount" content="${esc(p.product.price)}"><meta property="product:price:currency" content="${esc(p.product.currency || 'ILS')}"><meta property="product:availability" content="${p.product.availability === 'OutOfStock' ? 'out of stock' : 'in stock'}">` : ''}<meta property="og:locale" content="he_IL"><meta property="og:site_name" content="${esc(B.name)}"><meta property="og:title" content="${esc(p.title)}"><meta property="og:description" content="${esc(p.description)}"><meta property="og:url" content="${esc(url)}"><meta property="og:image" content="${esc(img)}">
 <meta property="og:image:alt" content="${esc(p.h1)}">${og ? '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">' : ''}
 <meta name="twitter:card" content="summary_large_image">
-${preloadFonts}${p.image?.src ? `<link rel="preload" as="image" href="${esc(p.image.src)}">` : ''}<style>${fontsCss}${CSS}</style>
+${preloadFonts}${p.image?.src ? `<link rel="preload" as="image" href="${esc(p.image.src)}">` : ''}<style>${fontsCss}${CSS}${p.style || ''}</style>
 <script type="application/ld+json">${JSON.stringify(ld(p))}</script>`;
 }
 
@@ -123,16 +132,20 @@ const navHtml = cur => `<nav class="main" aria-label="ניווט ראשי">${(C.
   ? `<details class="dd"><summary>${esc(n.t)}</summary><div>${n.all ? `<a href="${enc(n.all.href)}"${n.all.href === cur ? ' aria-current="page"' : ''}><b>${esc(n.all.t)}</b></a>` : ''}${(C.groups[n.menu] || []).map(x => `<a href="${enc(x)}"${x === cur ? ' aria-current="page"' : ''}>${short(x)}</a>`).join('')}</div></details>`
   : `<a href="${enc(n.href)}"${n.href === cur ? ' aria-current="page"' : ''}>${esc(n.t)}</a>`).join('')}${B.phone ? `<a class="call" href="tel:${esc(B.phoneHref || B.phone)}">${esc(B.phoneLabel ?? 'מוקד')} <bdi dir="ltr">${esc(B.phone)}</bdi></a>` : ''}</nav>`;
 
+/** On narrow screens the nav collapses into one menu (a native details element: no script, keyboard and screen-reader friendly). */
+const mobileMenu = cur => `<details class="mmenu"><summary aria-label="תפריט"><span aria-hidden="true"></span>תפריט</summary><div>${(C.nav || []).map(n => n.menu
+  ? `<b>${esc(n.t)}</b>${n.all ? `<a href="${enc(n.all.href)}">${esc(n.all.t)}</a>` : ''}${(C.groups[n.menu] || []).map(x => `<a href="${enc(x)}"${x === cur ? ' aria-current="page"' : ''}>${short(x)}</a>`).join('')}`
+  : `<a href="${enc(n.href)}"${n.href === cur ? ' aria-current="page"' : ''}>${esc(n.t)}</a>`).join('')}${B.phone ? `<a class="call" href="tel:${esc(B.phoneHref || B.phone)}">${esc(B.phoneLabel ?? 'מוקד')} <bdi dir="ltr">${esc(B.phone)}</bdi></a>` : ''}</div></details>`;
 const footer = () => `<footer class="site"><div class="wrap"><div class="cols">
 ${Object.entries(C.groups).map(([g, list]) => `<section aria-labelledby="f-${g}"><h2 id="f-${g}">${esc(C.groupTitles?.[g] || g)}</h2><ul>${list.map(x => `<li><a href="${enc(x)}">${short(x)}</a></li>`).join('')}</ul></section>`).join('\n')}
 <section aria-labelledby="f-c"><h2 id="f-c">${esc(C.contactTitle || 'צור קשר')}</h2><ul>${B.phone ? `<li><a href="tel:${esc(B.phoneHref || B.phone)}">${esc(B.phoneLabel ?? 'מוקד')} <bdi dir="ltr">${esc(B.phone)}</bdi></a></li>` : ''}${(C.footerLinks || []).map(l => `<li><a href="${enc(l.href)}">${esc(l.t)}</a></li>`).join('')}</ul></section>
-</div><p class="fine">© ${new Date().getFullYear()} ${esc(B.name)}${C.preview ? ' · תצוגה מקדימה' : ''}</p></div></footer>`;
+</div><p class="fine">© ${new Date().getFullYear()} ${esc(B.name)}${B.credit ? ' · ' + esc(B.credit) : ''}</p></div></footer>`;
 
 function render(p) {
   const used = new Set(), h2s = p.blocks.filter(b => b.k === 'h2');
   const id = t => 'h-' + Math.abs([...t].reduce((h, c) => (h * 31 + c.charCodeAt(0)) | 0, 7)).toString(36);
   const table = b => `<div class="tw"><table><thead><tr>${(b.rows[0] || []).map(c => `<th scope="col">${esc(c)}</th>`).join('')}</tr></thead><tbody>${b.rows.slice(1).filter(Boolean).map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
-  const body = p.blocks.map(b => b.k === 'table' ? table(b) : b.k === 'quote' ? `<blockquote>${esc(b.t)}</blockquote>` : b.k === 'links' ? `<ul>${b.items.map(i => `<li><a href="${/^https?:/.test(i.href) ? esc(i.href) : enc(i.href)}"${/^https?:/.test(i.href) ? ' rel="noopener"' : ''}>${esc(i.t)}</a>${i.note ? ' ' + esc(i.note) : ''}</li>`).join('')}</ul>` : b.k === 'p' ? `<p>${autolink(b.t, used, p.path, p.type === 'guide' ? 4 : 2)}</p>` : b.k === 'ul' ? `<ul>${b.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>` : `<${b.k}${b.k === 'h2' ? ` id="${id(b.t)}"` : ''}>${esc(b.t)}</${b.k}>`).join('\n');
+  const body = p.blocks.map(b => b.k === 'html' ? b.html : b.k === 'table' ? table(b) : b.k === 'quote' ? `<blockquote>${esc(b.t)}</blockquote>` : b.k === 'links' ? `<ul>${b.items.map(i => `<li><a href="${/^https?:/.test(i.href) ? esc(i.href) : enc(i.href)}"${/^https?:/.test(i.href) ? ' rel="noopener"' : ''}>${esc(i.t)}</a>${i.note ? ' ' + esc(i.note) : ''}</li>`).join('')}</ul>` : b.k === 'p' ? `<p>${autolink(b.t, used, p.path, p.type === 'guide' ? 4 : 2)}</p>` : b.k === 'ul' ? `<ul>${b.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>` : `<${b.k}${b.k === 'h2' ? ` id="${id(b.t)}"` : ''}>${esc(b.t)}</${b.k}>`).join('\n');
   const toc = p.type === 'guide' && h2s.length >= 4 ? `<nav class="toc" aria-label="בעמוד הזה"><b>בעמוד הזה</b><ol>${h2s.map(h => `<li><a href="#${id(h.t)}">${esc(h.t)}</a></li>`).join('')}</ol></nav>` : '';
   const crumbs = [{ t: B.short || B.name, h: '/' }, ...(p.parent ? [{ t: p.parent.t, h: p.parent.href }] : []), { t: p.short || p.h1 }];
   const cta = p.cta || B.cta;
@@ -141,19 +154,19 @@ function render(p) {
   const pdp = pr ? `<div class="pdp"><figure class="gal"><img src="${esc(pr.images[0].src)}" alt="${esc(pr.images[0].alt || p.h1)}" width="${pr.images[0].w || 900}" height="${pr.images[0].h || 900}" fetchpriority="high">${pr.images[0].label ? `<figcaption class="lbl">${esc(pr.images[0].label)}</figcaption>` : ''}</figure>
 <div class="buy"><p class="price">${money(pr.priceText)}${pr.compareText ? `<s>${money(pr.compareText)}</s>` : ''}</p><p class="avail${pr.availability === 'InStock' ? '' : ' out'}">${pr.availability === 'InStock' ? 'במלאי' : 'אזל מהמלאי'}</p>
 <div class="acts">${pr.buy ? `<a class="btn" href="${esc(pr.buy.href)}" rel="nofollow noopener">${esc(pr.buy.t)}</a>` : ''}${pr.ask ? `<a class="btn ghost" href="${esc(pr.ask.href)}" rel="noopener">${esc(pr.ask.t)}</a>` : ''}</div>
-${(pr.facts || []).length ? `<ul class="facts">${pr.facts.map(([k, v]) => `<li><b>${esc(k)}</b><span>${esc(v)}</span></li>`).join('')}</ul>` : ''}${pr.snapshot ? `<p class="snap">${esc(pr.snapshot)}</p>` : ''}</div></div>` : '';
+${(pr.facts || []).length ? `<ul class="facts">${pr.facts.map(([k, v]) => `<li><b>${esc(k)}</b><span>${esc(v)}</span></li>`).join('')}</ul>` : ''}${pr.brandCard ? `<aside class="bcard" aria-label="על המותג"><b>${esc(pr.brandCard.name)}</b>${pr.brandCard.origin ? `<span class="or">${esc(pr.brandCard.origin)}</span>` : ''}${pr.brandCard.about ? `<p>${esc(pr.brandCard.about)}</p>` : ''}${pr.brandCard.href ? `<a href="${enc(pr.brandCard.href)}">${esc(pr.brandCard.t || 'לעמוד המותג')}</a>` : ''}</aside>` : ''}${pr.snapshot ? `<p class="snap">${esc(pr.snapshot)}</p>` : ''}</div></div>` : '';
   const grid = p.type === 'collection' ? `<ul class="grid">${(p.list || []).filter(x => byPath.has(x)).map((x, gi) => { const c = byPath.get(x), q = c.product; return `<li><a class="pc" href="${enc(x)}">${q ? `<img src="${esc(q.images[0].src)}" alt="${esc(q.images[0].alt || c.h1)}" width="${q.images[0].w || 900}" height="${q.images[0].h || 900}"${gi < 4 ? (gi === 0 ? ' fetchpriority="high"' : '') : ' loading="lazy"'} decoding="async">` : ''}<span class="in"><b>${esc(c.short || c.h1)}</b>${q ? `<span class="pr">${money(q.priceText)}</span><span class="av">${q.availability === 'InStock' ? 'במלאי' : 'אזל מהמלאי'}</span>` : `<span class="av">${esc(vis(c.description).slice(0, 90))}</span>`}</span></a></li>`; }).join('')}</ul>` : '';
   const hub = p.type === 'hub' ? `<ul class="hub">${(p.list || []).map(x => `<li><a href="${enc(x)}"><b>${esc(byPath.get(x).h1)}</b><span>${esc(vis(byPath.get(x).description))}</span></a></li>`).join('')}</ul>` : '';
   return `<!doctype html>
 <html lang="${C.lang || 'he'}" dir="${C.dir || 'rtl'}"><head>
 ${head(p)}
-</head><body>
-<a class="skip" href="#main">דלג לתוכן</a>${C.preview && B.bannerHtml ? `\n<div class="pv">${B.bannerHtml}</div>` : ''}
-<header class="site"><div class="wrap in"><a class="logo" href="/"><img src="${esc(B.logo || '/icon.svg')}" alt="" width="42" height="42"><span>${(() => { const sm = B.logoSmall === undefined ? (B.short ? 'קבוצת' : '') : B.logoSmall; return (sm ? `<small>${esc(sm)}</small>` : '') + esc(B.short || B.name); })()}</span></a>${navHtml(p.path)}</div></header>
+</head><body${p.bodyClass ? ` class="${esc(p.bodyClass)}"` : ''}>
+<a class="skip" href="#main">דלג לתוכן</a>${C.preview && C.showPreviewBanner && B.bannerHtml ? `\n<div class="pv">${B.bannerHtml}</div>` : ''}
+<header class="site"><div class="wrap in"><a class="logo" href="/"><img src="${esc(B.logo || '/icon.svg')}" alt="" width="42" height="42"><span>${(() => { const sm = B.logoSmall === undefined ? (B.short ? 'קבוצת' : '') : B.logoSmall; return (sm ? `<small>${esc(sm)}</small>` : '') + esc(B.short || B.name); })()}</span></a>${navHtml(p.path)}${mobileMenu(p.path)}</div></header>
 <main id="main" class="wrap">
 <nav class="crumbs" aria-label="פירורי לחם"><ol>${crumbs.map((c, i) => `<li>${c.h ? `<a href="${enc(c.h)}">${esc(c.t)}</a>` : `<span aria-current="page">${esc(c.t)}</span>`}</li>`).join('')}</ol></nav>
 <article${['product', 'collection'].includes(p.type) ? ' class="wide"' : ''}>
-<p class="kick">${esc(p.kicker || '')}</p><h1>${esc(p.h1)}</h1>${p.lead ? `<p class="lead">${esc(p.lead)}</p>` : ''}
+${p.heroHtml ? p.heroHtml : `<p class="kick">${esc(p.kicker || '')}</p><h1>${esc(p.h1)}</h1>${p.lead ? `<p class="lead">${esc(p.lead)}</p>` : ''}`}${p.intro || ''}
 ${pdp}
 ${p.image?.src && !p.product ? `<figure class="hero" style="margin-inline:0"><img src="${esc(p.image.src)}" alt="${esc(p.image.alt || '')}" width="${p.image.w || 1200}" height="${p.image.h || 675}" fetchpriority="high">${p.image.label ? `<figcaption class="lbl">${esc(p.image.label)}</figcaption>` : ''}</figure>` : ''}
 ${toc}
@@ -163,9 +176,9 @@ ${(p.after || []).map(b => b.k === 'links' ? `<h2>${esc(b.t)}</h2><ul>${b.items.
 ${p.faq?.length ? `<section aria-labelledby="faq"><h2 id="faq">${esc(p.faqTitle || 'שאלות ותשובות')}</h2>${p.faq.map(([q, a]) => `<h3>${esc(q)}</h3><p>${esc(a)}</p>`).join('')}</section>` : ''}
 ${cta ? `<aside class="cta" aria-label="הצעד הבא"><div><h2>${esc(cta.title || C.strings?.ctaTitle || 'רוצים לדעת כמה זה יעלה או כמה פסולת יהיה?')}</h2><p>${esc(cta.text || C.strings?.ctaText || 'מחשבון, מוקד ושיחה עם הצוות.')}</p></div><div><a class="btn" href="${ctaHref(cta.href, p.path)}">${esc(cta.t)}</a>${B.phone ? `<a class="btn ghost" href="tel:${esc(B.phoneHref || B.phone)}">${esc(B.phoneLabel ?? 'מוקד')} <bdi dir="ltr">${esc(B.phone)}</bdi></a>` : ''}</div></aside>` : ''}
 </article>
-${rel.length ? `<section aria-labelledby="rel"><h2 class="relh" id="rel">${esc(p.relatedTitle || 'עוד בנושא')}</h2><ul class="rel">${rel.map(x => `<li><a href="${enc(x)}">${esc(byPath.get(x).h1)}<small>${esc(vis(byPath.get(x).description).slice(0, 110))}</small></a></li>`).join('')}</ul></section>` : ''}
+${p.trail ? `<section class="trail">${p.trail}</section>` : ''}${rel.length ? `<section aria-labelledby="rel"><h2 class="relh" id="rel">${esc(p.relatedTitle || 'עוד בנושא')}</h2><ul class="rel">${rel.map(x => `<li><a href="${enc(x)}">${esc(byPath.get(x).h1)}<small>${esc(vis(byPath.get(x).description).slice(0, 110))}</small></a></li>`).join('')}</ul></section>` : ''}
 </main>
-${footer()}
+${footer()}${p.guide && C.guideAvatar ? `\n<details class="guide"><summary aria-label="${esc(C.guideLabel || 'עזרה')}">${C.guideAvatar}</summary><div class="gb">${p.guide.lines.map(l => `<p>${esc(l)}</p>`).join('')}<p class="gl">${(p.guide.links || []).map(l => `<a href="${/^https?:/.test(l.href) ? esc(l.href) : enc(l.href)}"${/^https?:/.test(l.href) ? ' rel="noopener"' : ''}>${esc(l.t)}</a>`).join('')}</p></div></details>` : ''}
 </body></html>
 `;
 }

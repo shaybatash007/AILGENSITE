@@ -14,6 +14,7 @@ const sprite = `<svg width="0" height="0" style="position:absolute" aria-hidden=
 <defs>
 <symbol id="sym-eden" viewBox="${parts.viewBox.join(' ')}"><path fill="currentColor" fill-rule="evenodd" d="${all}"/></symbol>
 <symbol id="sym-mono" viewBox="${parts.viewBox.join(' ')}"><path fill="currentColor" fill-rule="evenodd" d="${parts.parts.mono}"/></symbol>
+<symbol id="sym-lotus-shade" viewBox="426 102 68 60"><path fill="currentColor" d="${parts.parts.lotus}"/></symbol>
 <symbol id="sym-logo" viewBox="${fullVb}"><path fill="currentColor" fill-rule="evenodd" d="${fullD}"/></symbol>
 ${syms}
 </defs>

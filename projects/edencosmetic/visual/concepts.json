@@ -1,0 +1,198 @@
+{
+ "_doc": "Eden Cosmetics · the controlled visual system: at most five generated concepts, each with a job, its placements, and hard limits. Rules in .claude/skills/ailgen-studio/references/12-visual-production.md. Products are never generated: product imagery is the store's own photos (cutouts keep their pixels, scripts/cutout.py). Generated plates carry no products, logos, text, faces or results. Run: node .claude/skills/ailgen-studio/scripts/imagegen.mjs --project projects/edencosmetic --concept <id>",
+ "project": "edencosmetic",
+ "palette": {
+  "paper": "#F8EFEA",
+  "blush": "#F0D3C3",
+  "petal": "#E7C3B2",
+  "rose": "#BF7F7F",
+  "accent": "#964F58",
+  "cocoa": "#6F574B",
+  "ink": "#241A18"
+ },
+ "house": "Warm, calm, precise; an atelier for lash and brow professionals. Cream, blush and dusty rose; soft window light from the upper right; natural stone and satin; generous negative space. Editorial beauty still life, never glossy advertising, never clinical.",
+ "never": [
+  "products, bottles, tubes, jars, boxes, packaging or labels",
+  "text, letters, numbers, logos, watermarks or brand marks",
+  "faces, eyes, lashes or brows; before-and-after or treatment results",
+  "a recognisable person",
+  "stock clichés: flowers scattered on marble, fanned makeup brushes, spa stones, candles, champagne, gold glitter"
+ ],
+ "routing": {
+  "draft": "gemini-3.1-flash-image",
+  "final": "gemini-3-pro-image",
+  "alt": "gpt-image-2",
+  "video": "veo-3.1-generate-preview",
+  "videoDraft": "veo-3.1-fast-generate-preview"
+ },
+ "budgetUsd": 30,
+ "concepts": [
+  {
+   "id": "atelier",
+   "name": "סדנת האור · The atelier surface",
+   "class": "product-supporting",
+   "job": "The stage for real products: the hero flat lay, the kit summary, share cards. Makes the products feel placed in Eden's studio without inventing a studio.",
+   "placements": [
+    {
+     "where": "home hero stage (behind the product cutouts)",
+     "ratio": "4:5",
+     "treatment": "photo plate under real cutouts; video V2 on desktop"
+    },
+    {
+     "where": "share cards (og) behind a product cutout",
+     "ratio": "16:9"
+    },
+    {
+     "where": "mobile hero and stories",
+     "ratio": "9:16"
+    }
+   ],
+   "prompt": "Top-down editorial photograph of an empty warm travertine stone surface in blush-cream tones, from #F4E9E2 to #DFC7BA. Late-afternoon window light from the upper right casts long, soft diagonal shadows of window mullions and the blurred silhouette of a lotus leaf and petals across the lower left third. Fine natural stone pores, a faint linen texture at one edge, a gentle tonal gradient. Medium-format still-life photography, overhead, 50mm, f/8, soft and even. The surface is completely empty. The centre stays open and calm, ready for objects to be placed later.",
+   "avoid": "objects, products, bottles, tubes, jars, boxes, tools, flowers, petals on the surface, people, hands, text, logos, watermark, glitter, marble veins, heavy vignette",
+   "ratios": [
+    "4:5",
+    "16:9",
+    "9:16"
+   ],
+   "candidates": 4,
+   "size": "2K",
+   "label": null,
+   "video": {
+    "id": "V2",
+    "prompt": "Locked-off overhead camera over the same empty stone surface. The window light drifts very slowly across it and the soft lotus-leaf shadow sways gently, as in a light breeze. Nothing enters the frame. Calm, continuous, no cuts.",
+    "ratio": "16:9",
+    "seconds": 8,
+    "use": "desktop hero plate, muted, plays when visible, poster on mobile and with reduced motion"
+   }
+  },
+  {
+   "id": "curl",
+   "name": "העיקול · The curl",
+   "class": "atmospheric",
+   "job": "The brand's signature in photography: a straight line that lifts into a curl, the lash after a lift and the tail of the E in the logo. Opens the kit builder band and the film.",
+   "placements": [
+    {
+     "where": "band between the kit builder and the brand shelf",
+     "ratio": "21:9",
+     "treatment": "photo, video V1 when visible"
+    },
+    {
+     "where": "launch film opening",
+     "ratio": "9:16"
+    }
+   ],
+   "prompt": "Macro studio photograph of a single narrow ribbon of dusty-rose silk satin, #BF7F7F to #964F58, lying straight across a cream background (#F8EFEA); toward one end it lifts into a soft, elegant upward curl, like an eyelash after a lift. Soft diffused light, a gentle sheen along the satin, extremely shallow depth of field, creamy background blur. Minimal and sculptural, with wide negative space on both sides.",
+   "avoid": "eyes, eyelashes, faces, text, logos, several ribbons, bows, knots, gift wrapping, glitter, jewellery",
+   "ratios": [
+    "21:9",
+    "16:9",
+    "9:16"
+   ],
+   "candidates": 4,
+   "size": "2K",
+   "label": null,
+   "video": {
+    "id": "V1",
+    "prompt": "The satin ribbon lies straight, then slowly lifts at one end into a soft curl and holds there. Static camera, slow and graceful, one continuous motion, no cuts.",
+    "ratio": "16:9",
+    "seconds": 8,
+    "use": "the band, muted, plays once when it enters the view, then rests on the curl"
+   }
+  },
+  {
+   "id": "craft",
+   "name": "המקצוע · The craft",
+   "class": "editorial",
+   "job": "Shows the profession behind the store for the courses section: precise, calm hands at work. It is atmosphere, not a claim about Eden's studio, and it says so.",
+   "placements": [
+    {
+     "where": "courses section",
+     "ratio": "4:5"
+    },
+    {
+     "where": "courses page header",
+     "ratio": "16:9"
+    }
+   ],
+   "prompt": "Close-up editorial photograph of a beauty professional's hands in blush-pink nitrile gloves arranging plain, unbranded lash-lift tools on a warm cream travertine tray: simple stainless steel tweezers, a slim lift rod, a few translucent silicone shields. Soft window light from the upper right, shallow depth of field, calm and precise. Cropped at the wrists.",
+   "avoid": "faces, eyes, lashes being treated, a client, brand names, text, logos, packaging, bottles, tubes, jars, jewellery, long nails, messy surface",
+   "ratios": [
+    "4:5",
+    "16:9"
+   ],
+   "candidates": 4,
+   "size": "2K",
+   "label": "תמונת אווירה"
+  },
+  {
+   "id": "field",
+   "name": "שדות המותג · Brand fields",
+   "class": "brand-supporting",
+   "job": "Gives each brand its own world on its page and its shelf panel, from the colours of its real packaging (brands.json look), without touching its identity: no logos, no packaging, no claims.",
+   "placements": [
+    {
+     "where": "brand page hero, behind the real product cutout",
+     "ratio": "16:9"
+    },
+    {
+     "where": "brand shelf panel",
+     "ratio": "1:1"
+    }
+   ],
+   "perBrand": {
+    "thuya": "glossy red lacquer plane (#C10C08) meeting matte charcoal paper (#1F1A1C) at a soft angle, a thin brushed-silver edge between them",
+    "my-lamination": "layered matte white and pale grey paper forms with soft, clinical shadows, calm and exact",
+    "refectocil": "deep brown and ink-navy velvet folds in warm side light, classic and quiet",
+    "zola": "translucent hot-pink and coral gel drops on a soft pink ground, playful and glossy",
+    "nikk-mole": "bold magenta and black paper planes with crisp, graphic shadows",
+    "kodi": "brushed grey metal meeting soft grey paper, cool and precise",
+    "staleks": "brushed stainless steel with a soft baby-pink reflection"
+   },
+   "prompt": "Abstract studio photograph, a material study: {brand}. Soft studio light, shallow depth, generous empty space on one side for a product to be placed later.",
+   "avoid": "text, logos, letters, packaging, products, bottles, tubes, jars, boxes, people, hands, faces",
+   "ratios": [
+    "16:9",
+    "1:1"
+   ],
+   "candidates": 2,
+   "size": "1K",
+   "label": null
+  },
+  {
+   "id": "lotus",
+   "name": "הלוטוס · The lotus at dawn",
+   "class": "atmospheric",
+   "job": "The origin of the logo's lotus and of Lotti: a quiet image for Eden's story, Lotti's introduction and the 404 page.",
+   "placements": [
+    {
+     "where": "behind the Eden section, very soft",
+     "ratio": "16:9"
+    },
+    {
+     "where": "Lotti's introduction in the agent",
+     "ratio": "1:1"
+    },
+    {
+     "where": "404 page",
+     "ratio": "16:9"
+    }
+   ],
+   "prompt": "Soft-focus fine-art photograph of a single pale blush lotus flower floating on still water at dawn, light mist, warm cream light, muted palette of #F8EFEA, #F0D3C3 and #BF7F7F, the flower small in the lower third with calm open space above.",
+   "avoid": "several flowers, frogs, people, text, logos, saturated pink, dark water, lily pads covering the frame",
+   "ratios": [
+    "16:9",
+    "1:1"
+   ],
+   "candidates": 3,
+   "size": "2K",
+   "label": null
+  }
+ ],
+ "disclosure": "חלק מתמונות האווירה באתר נוצרו בעזרת בינה מלאכותית. תמונות המוצרים הן הצילומים של המוצרים עצמם.",
+ "neverWhy": {
+  "products": "product imagery is only the store's own photos; a generated product would invent packaging, labels and claims",
+  "text": "generated letters are wrong or invented; all words on the site are set in type",
+  "people": "a generated face can pass as Eden, a client or a student; results must be real photos of real work",
+  "cliches": "they make any beauty site look like every other one"
+ }
+}

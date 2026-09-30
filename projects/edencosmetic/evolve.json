@@ -1,0 +1,16 @@
+{
+ "_doc": "The autonomy loop for Eden Cosmetics (scripts/evolve.mjs). Weekly, or when Eden adds products: node .claude/skills/ailgen-studio/scripts/evolve.mjs --project projects/edencosmetic --fetch --apply",
+ "store": "https://edencosmetic.co.il",
+ "catalogDir": "projects/edencosmetic/catalog",
+ "brands": "projects/edencosmetic/brands.json",
+ "concepts": "projects/edencosmetic/visual/concepts.json",
+ "cutouts": { "dir": "edencosmetic/img/cut", "manifest": "projects/edencosmetic/visual/cutouts.json" },
+ "steps": {
+  "data": "node projects/edencosmetic/site-src/make-data.mjs",
+  "pages": "node .claude/skills/ailgen-studio/scripts/seo-run.mjs --project projects/edencosmetic",
+  "build": "sh edencosmetic/build.sh"
+ },
+ "gates": {
+  "copy": "node .claude/skills/ailgen-studio/scripts/copy-harvest.mjs --site edencosmetic --out projects/edencosmetic/qa/copy --states projects/edencosmetic/qa/copy-states.mjs --js \"src/3-data.js,src/4-app.js,src/4b-lotti.js\" && node .claude/skills/ailgen-studio/scripts/copy-lint.mjs --in projects/edencosmetic/qa/copy/strings.json --rules projects/edencosmetic/copy-rules.json --gate"
+ }
+}

@@ -1,17 +1,17 @@
 # ריצת SEO: https://edencosmetic.co.il
 
-2026-09-29 23:20 · מצב: תצוגה מקדימה (noindex) · **כל השערים עברו**
+2026-09-30 09:21 · מצב: תצוגה מקדימה (noindex) · **כל השערים עברו**
 
 | שלב | תוצאה | שניות |
 |---|---|---|
 | audit the old site (what we inherit) | עבר · exists, reused (--refresh-old to crawl again) | 0 |
-| compose pages and home from intake and data | עבר | 0.1 |
-| social preview cards | עבר | 12.9 |
+| compose pages and home from intake and data | עבר | 0.2 |
+| social preview cards | עבר | 14.6 |
 | compose again (picks up the cards) | עבר | 0.1 |
-| render crawlable pages and 404 | עבר | 0.1 |
+| render crawlable pages and 404 | עבר | 0.2 |
 | build the home page | עבר | 0 |
-| migration plan (url-map, _redirects, sitemap, robots, _headers, llms.txt, launch.md) (שער) | עבר | 0.1 |
-| audit the new build (gate: no high findings) at http://127.0.0.1:37109 (שער) | עבר | 95.6 |
-| verify every old URL on the production-like server (שער) | עבר | 0.5 |
+| migration plan (url-map, _redirects, sitemap, robots, _headers, llms.txt, launch.md) (שער) | עבר | 0.4 |
+| audit the new build (gate: no high findings) at http://127.0.0.1:45275 (שער) | עבר | 98.9 |
+| verify every old URL on the production-like server (שער) | עבר | 0.8 |
 
 קבצים: `plan/plan.md` (הגירה), `plan/launch.md` (השקה ושבועות אחריה), `new/seo-report.md` (ביקורת), `verify/verify.md` (אימות כתובות ישנות), `old/seo-report.md` (מה ירשנו).

@@ -1,0 +1,79 @@
+{
+ "voice": {
+  "address": "fem-singular",
+  "ctas": "infinitive",
+  "note": "Eden speaks to one woman (את) in conversation; actions are named with an infinitive or a noun (לבניית ערכה, הוספה לסל)."
+ },
+ "latinAllowed": [
+  "THUYA",
+  "My",
+  "lamination",
+  "RefectoCil",
+  "ZOLA",
+  "NIKK",
+  "MOLE",
+  "MOLA",
+  "Kodi",
+  "Professional",
+  "Staleks",
+  "Stalex",
+  "Eden",
+  "Cosmetics",
+  "Lami",
+  "Balm",
+  "Deep",
+  "black",
+  "bluish",
+  "brown",
+  "Lash",
+  "Brow",
+  "Lift",
+  "WhatsApp",
+  "Instagram",
+  "Edencosmetics29",
+  "gmail",
+  "com",
+  "edennahmani1",
+  "edencosmetic",
+  "co",
+  "il",
+  "Shopify",
+  "PPD",
+  "UnAble",
+  "Barcelona",
+  "GW",
+  "AILGEN",
+  "Lifting",
+  "Cream",
+  "WCAG",
+  "Esc",
+  "Fixing",
+  "Botox",
+  "Keratin"
+ ],
+ "allow": [
+  "אז אם את שואפת לתוצאה מדויקת או רוצה לרכוש ידע מקצועי ברמה הגבוהה ביותר, את מוזמנת ליצור קשר, לתאם טיפול או להצטרף לקורס הבא."
+ ],
+ "allowRe": [
+  "^איזו ערכה, ומה עוד צריך\\?",
+  "^על המותג, מתוך האתר שלו: [a-z0-9.-]+$"
+ ],
+ "banned": [
+  {
+   "re": "Edem",
+   "why": "the store's banner misspells the brand; never copy it"
+  },
+  {
+   "re": "מתנה בכל רכישה",
+   "why": "no written terms for the gift: not promised anywhere"
+  }
+ ],
+ "gate": {
+  "high": 0,
+  "medium": 0
+ },
+ "_allowWhy": {
+  "^איזו ערכה": "the film transcript must match the film word for word, including its dated prices",
+  "על המותג, מתוך האתר שלו": "the source line shows the brand's own domain"
+ }
+}

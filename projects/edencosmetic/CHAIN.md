@@ -1,8 +1,10 @@
 # בדיקת השרשרת: edencosmetic
 
-2026-09-29 23:37 · 53 אלמנטים · **53 קיימים** · 0 חסרים · 0 לא רלוונטיים
+2026-09-30 09:28 · 63 אלמנטים · **61 קיימים** · **1 חסרים** · 1 לא רלוונטיים
 
-כל אלמנט בשרשרת קיים, עם ראיה.
+## חסרים (חוסמים מסירה)
+
+- **Committed and pushed** (8-deliver): 205 קבצים לא מחויבים
 
 ## כל האלמנטים, עם זמן ועלות
 
@@ -60,9 +62,19 @@
 | 7-portfolio | AILGEN portfolio (repo index.html): card + case | קיים | — | — |
 | 7-portfolio | AILGEN portfolio (live artifact) updated | קיים | — | — |
 | 7-portfolio | Real screencasts: desktop, mobile, tool, mascot, flow | קיים | 7.3 דק׳ (מדוד) | $2.71 |
+| 2-brand | Domain language: design-dna.json (feeling, signature, imagery policy, density, motion, voice, what it is not) | קיים | — | — |
+| 2-brand | Brand registry: every brand the business sells, facts with official sources, colours from its packaging | קיים | — | — |
+| 5-site | Content: every visitor string harvested (all pages, all states, script literals) | קיים | — | — |
+| 5-site | Content gate: 0 high (internal, developer, placeholder language) | קיים | — | — |
+| 5-site | Content gate: 0 medium (stale dates, filler, language leaks, voice) | קיים | — | — |
+| 5-site | Real product cutouts with pixels proven kept (cutouts.json) | קיים | — | — |
+| 5-site | Visual system: at most five concepts, each with a job, placements and a never-list | קיים | — | — |
+| 5-site | Approved generated visuals published with provenance (needs the image key) | לא רלוונטי | — | — |
+| 8-deliver | Autonomy: evolve.json and a baseline catalog snapshot | קיים | — | — |
+| 8-deliver | Autonomy: the loop's first report | קיים | — | — |
 | 8-deliver | Meter: every phase opened and closed, report written | קיים | — | — |
 | 8-deliver | Report to the owner in Hebrew (report.md) with links and what only they can supply | קיים | 1.7 דק׳ (מדוד) | $0.89 |
-| 8-deliver | Committed and pushed | קיים | — | — |
+| 8-deliver | Committed and pushed | **חסר** | — | — |
 
 ## סיכום לפי שלב
 
@@ -70,11 +82,11 @@
 |---|---|---|---|---|
 | 0-brief | 2 | 2 | 2.5 דק׳ | $2.17 |
 | 1-intake | 6 | 6 | 13.6 דק׳ | $4.40 |
-| 2-brand | 7 | 7 | 6.7 דק׳ | $2.33 |
+| 2-brand | 9 | 9 | 6.7 דק׳ | $2.33 |
 | 3-mascot | 3 | 3 | 3.1 דק׳ | $1.40 |
 | 4-blueprint | 1 | 1 | 1.1 דק׳ | $0.34 |
 | 4b-seo | 6 | 6 | 7.7 דק׳ | $5.05 |
-| 5-site | 12 | 12 | 41.1 דק׳ | $17.80 |
+| 5-site | 17 | 17 | 41.1 דק׳ | $17.80 |
 | 6-film | 8 | 8 | 146.3 דק׳ | $9.62 |
 | 7-portfolio | 5 | 5 | 11.7 דק׳ | $6.88 |
-| 8-deliver | 3 | 3 | 1.7 דק׳ | $0.89 |
+| 8-deliver | 5 | 4 | 1.7 דק׳ | $0.89 |

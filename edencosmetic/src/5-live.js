@@ -4,7 +4,7 @@ let LEGAL=null;
 function legalUI(){
  $$('[data-legal]').forEach(b=>b.addEventListener('click',async()=>{
   lastFocus=b; const k=b.dataset.legal, d=$('#lg');
-  $('#lgT').textContent=k==='privacy'?'מדיניות פרטיות (טיוטה)':'הצהרת נגישות'; $('#lgTxt').textContent='טוען…'; if(!d.open)d.showModal();
+  $('#lgT').textContent=k==='privacy'?'פרטיות באתר':'הצהרת נגישות'; $('#lgTxt').textContent='טוען…'; if(!d.open)d.showModal();
   if(!LEGAL){try{LEGAL=await (await fetch('legal.json')).json();}catch(_){LEGAL={};}}
   const own=k==='privacy'?C.privacy:C.a11yText; $('#lgTxt').textContent=(own&&own.trim())||LEGAL[k]||'המסמך אינו זמין כרגע. אפשר לפנות אלינו: '+C.phone+' · '+C.email;
  }));
@@ -16,7 +16,7 @@ function legalUI(){
 let sample=null, hist=[], busyA=false;
 const abody=$('#advBody'), ain=$('#advIn');
 function bb(cls,text){const b=document.createElement('div'); b.className='bb '+cls; b.textContent=text; abody.appendChild(b); abody.scrollTop=abody.scrollHeight; return b;}
-bb('ai','שלום, אני לוטי, העוזרת הדיגיטלית של החנות. אפשר לשאול על הערכות, הסיליקונים, הצבעים, המשלוח וההחזרות. אני עונה רק לפי מה שכתוב באתר.');
+bb('ai','היי, אני לוטי, המדריכה של החנות. אפשר לשאול אותי על הערכות, המותגים, הסיליקונים, הצבעים, המשלוח וההחזרות. אני עונה לפי מה שכתוב באתר, ועל כל השאר עדן עונה בוואטסאפ.');
 function openAgent(o){
  const a=$('#agent'); a.classList.toggle('open',o); a.setAttribute('aria-hidden',String(!o)); a.inert=!o;
  if(o){lastFocus=document.activeElement; setTimeout(()=>ain.focus(),40);} else if(lastFocus&&lastFocus.focus)lastFocus.focus({preventScroll:true});
@@ -25,9 +25,9 @@ const range=(k)=>{const a=ITEMS.filter(x=>x.k===k); return a.length?{n:a.length,
 function advPrompt(){
  const list=ITEMS.map(x=>title(x)+' | '+money(x.p)+' | '+(x.a?'במלאי':'אזל')+(x.b?' | '+x.b:'')).join('\n');
  const faq=C.faq.map(([q,a])=>'ש: '+q+' ת: '+a).join('\n');
- return 'את לוטי, העוזרת הדיגיטלית של עדן קוסמטיקס: חנות מקוונת לציוד מקצועי להרמת ריסים וגבות (הבעלים, עדן נחמני, מטפלת ומדריכה בתחום). הקהל: מטפלות, מתלמדות ולקוחות פרטיות.\n'
- +'עובדות שמותר להשתמש בהן בלבד:\n- '+ITEMS.length+' מוצרים, צילום מצב של החנות מ-'+CAT.snap+'. מחירים ומלאי משתנים בחנות, והתשלום בחנות.\n- משלוח חינם מעל '+money(FREE)+'. המחירים כוללים מע"מ ואינם כוללים משלוח. אספקה 4–5 ימי עסקים, ליישובים מרוחקים עד 2 ימי עסקים נוספים. איסוף עצמי מנתיבות בתיאום מראש. החנות שומרת שבת.\n- החזרות והחלפות עד 14 ימים, מוצר שלא נפתח, באריזה מקורית; החזר בניכוי 7% דמי ביטול. קורסים: הקולקציה ריקה, אין תאריכים או מחירים.\n- קשר: וואטסאפ וטלפון '+C.phone+', אימייל '+C.email+'.\nהמוצרים (שם | מחיר | מלאי | מותג):\n'+list+'\nשאלות נפוצות:\n'+faq+'\n'+(C.agentNotes?'מידע נוסף מעדן: '+C.agentNotes+'\n':'')
- +'כללים: עני בעברית, בלשון נקבה, קצר, עד 4 משפטים. אל תמציאי מחירים, מפרט, הוראות שימוש, זמני מריחה, טענות רפואיות, מתנות או הבטחות שלא מופיעים למעלה. כשחסר מידע אמרי שעדן תענה בוואטסאפ '+C.phone+'. הציעי את בונה הערכה כשמישהי מחפשת מה לקנות. שאלי שאלה ממוקדת אחת כשזה עוזר. אם ביקשו שיחזרו אליהן, קראי ל-create_lead רק כשיש שם וטלפון.';
+ return 'את לוטי, המדריכה של עדן קוסמטיקס: חנות מקוונת לציוד מקצועי להרמת ריסים וגבות (הבעלים, עדן נחמני, מטפלת ומדריכה בתחום). הקהל: מטפלות, מתלמדות ולקוחות פרטיות.\n'
+ +'עובדות שמותר להשתמש בהן בלבד:\n- '+ITEMS.length+' מוצרים. מחירים ומלאי מהחנות; הסכום הסופי מוצג בקופה של החנות.\n- המותגים (רק העובדות האלה, מהאתר הרשמי של כל מותג): '+BRANDS.list.map(b=>b.name+(b.origin?' ('+b.origin+')':'')+(b.about?': '+b.about:'')+' · '+brandItems(b).length+' מוצרים בחנות').join(' | ')+'.\n- משלוח חינם מעל '+money(FREE)+'. המחירים כוללים מע"מ ואינם כוללים משלוח. אספקה 4–5 ימי עסקים, ליישובים מרוחקים עד 2 ימי עסקים נוספים. איסוף עצמי מנתיבות בתיאום מראש. החנות שומרת שבת.\n- החזרות והחלפות עד 14 ימים, מוצר שלא נפתח, באריזה מקורית; החזר בניכוי 7% דמי ביטול. קורסים: אין כרגע קורס פתוח להרשמה, ולכן אין תאריכים או מחירים; יש רשימת המתנה באתר.\n- קשר: וואטסאפ וטלפון '+C.phone+', אימייל '+C.email+'.\nהמוצרים (שם | מחיר | מלאי | מותג):\n'+list+'\nשאלות נפוצות:\n'+faq+'\n'+(C.agentNotes?'מידע נוסף מעדן: '+C.agentNotes+'\n':'')
+ +'כללים: עני בעברית, בלשון נקבה, קצר, עד 4 משפטים. אל תכתבי מונחי הפקה או מערכת (צילום מצב, קטלוג, תצוגה מקדימה, טיוטה). אל תמציאי מחירים, מפרט, הוראות שימוש, זמני מריחה, טענות רפואיות, מתנות או הבטחות שלא מופיעים למעלה. כשחסר מידע אמרי שעדן תענה בוואטסאפ '+C.phone+'. הציעי את בונה הערכה כשמישהי מחפשת מה לקנות. שאלי שאלה ממוקדת אחת כשזה עוזר. אם ביקשו שיחזרו אליהן, קראי ל-create_lead רק כשיש שם וטלפון.';
 }
 const leadTool={name:'create_lead',description:'שומר פנייה של מבקרת שביקשה שיחזרו אליה. לקרוא רק כשיש שם וטלפון.',inputSchema:{type:'object',properties:{name:{type:'string'},phone:{type:'string'},need:{type:'string',description:'תקציר הצורך'}},required:['name','phone']},
  async execute(i){try{await saveLead({name:String(i.name).slice(0,80),phone:String(i.phone).slice(0,30),svc:'שאלה',msg:String(i.need||'').slice(0,600),spec:'',source:'ai'});return{ok:true};}catch(e){return{ok:false,reason:'השמירה אינה זמינה כרגע'};}}};
@@ -37,12 +37,13 @@ const FALLBACK=[
  [/איסוף|נתיבות|לאסוף/,()=>'אפשר לאסוף מנתיבות, בתיאום מראש בלבד: '+C.phone+'.'],
  [/החזר|החלפ|ביטול|להחזיר/,()=>'החלפות והחזרות עד 14 ימים (לא עסקים) מקבלת המוצר, כל עוד לא נפתח, באריזתו המקורית ולא נעשה בו שימוש. עלות המשלוח על הלקוחה. החזר בניכוי 7% דמי ביטול. לתיאום שליח: '+C.phone+'.'],
  [/שבת/,()=>'החנות שומרת שבת. אפשר לבצע הזמנות בצאת השבת.'],
- [/מלאי|אזל|זמין|חסר/,()=>'הנתונים באתר הם צילום מצב של החנות מ-29.9.2026: '+ITEMS.filter(x=>x.a).length+' מוצרים במלאי ו-'+ITEMS.filter(x=>!x.a).length+' שאזלו (מסומנים "אזל"). על מוצר שאזל אפשר לבחור "עדכנו אותי". אם מוצר שהזמנת אזל, לפי מדיניות החנות תוצע לך ביטול ללא דמי ביטול או מוצר חלופי.'],
- [/קורס|השתלמות|הדרכה|ללמוד/,()=>'עדן מעבירה קורסים והשתלמויות, אבל הקולקציה בחנות ריקה כרגע, ולכן אין תאריכים או מחירים. אפשר להצטרף לרשימת המתנה באתר, ועדן תחזור כשיהיה קורס.'],
- [/ערכ|מתחיל|מה צריך|מה לקנות|להתחיל/,()=>{const s=range('set');return 'בחנות '+s.n+' ערכות וסטים להרמת ריסים וגבות, '+money(s.min)+'–'+money(s.max)+'. בונה הערכה באתר מרכיב רשימה אמיתית מהחנות לפי הטיפול ולפי אם את מתחילה או משלימה מלאי, עם סכום ומה חסר למשלוח חינם.';}],
- [/סיליקון|מידה|מידות/,()=>{const s=range('pads');return 'בחנות '+s.n+' סוגי סיליקונים, '+money(s.min)+'–'+money(s.max)+', בצורות וצבעים שונים. מספר המידות מצוין בשם כל מוצר (למשל 5, 6, 8 או 10 מידות).';}],
- [/צבע|חמצן|thuya|טויה|refecto|nikk|ניק/i,()=>{const t=range('tint'),o=range('oxidant');return 'בחנות '+t.n+' צבעים לריסים וגבות ('+money(t.min)+'–'+money(t.max)+') ו-'+o.n+' סוגי חמצן ('+money(o.min)+'–'+money(o.max)+'), ממותגים כמו THUYA, RefectoCil, NIKK MOLE ו-My lamination. חלק מהם אזלו כרגע. בבונה הערכה, "צביעה", החמצן מותאם למותג.';}],
- [/דבק|בלאם|zola|קודי|kodi/i,()=>{const s=range('glue');return 'יש '+s.n+' דברי דבק ובלאם (ZOLA Lami Balm, Kodi), '+money(s.min)+'–'+money(s.max)+'. שניים מהם אזלו כרגע.';}],
+ [/מלאי|אזל|זמין|חסר/,()=>'כרגע '+ITEMS.filter(x=>x.a).length+' מוצרים במלאי ו-'+ITEMS.filter(x=>!x.a).length+' שאזלו (מסומנים "אזל"). על מוצר שאזל אפשר לבחור "עדכנו אותי". אם מוצר שהזמנת אזל, לפי מדיניות החנות תוצע לך ביטול ללא דמי ביטול או מוצר חלופי.'],
+ [/קורס|השתלמות|הדרכה|ללמוד/,()=>'עדן מלמדת הרמת ריסים, הרמת גבות ועיצוב גבות. כרגע אין קורס פתוח להרשמה, ולכן אין מועדים או מחיר. אפשר להצטרף לרשימה באתר, ועדן תחזור אלייך כשייפתח הקורס הבא.'],
+ [/מותג|מותגים|מאיפה|תוצרת|איטל|ספרד|אוסטר|אוקראינ|my lamination|למינציה|staleks|סטאלקס/i,()=>'על המדף '+BRANDS.list.length+' מותגים: '+BRANDS.list.map(b=>b.name+(b.origin?' ('+b.origin+')':'')+', '+nProd(brandItems(b).length)).join('; ')+'. לכל מותג יש מקום משלו במדף המותגים באתר.'],
+ [/ערכ|מתחיל|מה צריך|מה לקנות|להתחיל/,()=>{const s=range('set');return 'בחנות '+s.n+' ערכות וסטים להרמת ריסים וגבות, '+toRange(s.min,s.max)+'. בונה הערכה מרכיב רשימה של מוצרים מהחנות לפי הטיפול, ולפי אם את מתחילה או משלימה מלאי, עם סכום ומה חסר למשלוח חינם.';}],
+ [/סיליקון|מידה|מידות/,()=>{const s=range('pads');return 'בחנות '+s.n+' סוגי סיליקונים, '+toRange(s.min,s.max)+', בצורות וצבעים שונים. מספר המידות מצוין בשם כל מוצר (למשל 5, 6, 8 או 10 מידות).';}],
+ [/צבע|חמצן|thuya|טויה|refecto|nikk|ניק/i,()=>{const t=range('tint'),o=range('oxidant');return 'בחנות '+t.n+' צבעים לריסים וגבות ('+toRange(t.min,t.max)+') ו-'+o.n+' סוגי חמצן ('+toRange(o.min,o.max)+'), ממותגים כמו THUYA, RefectoCil, NIKK MOLE ו-My lamination. חלק מהם אזלו כרגע. בבונה הערכה, "צביעה", החמצן מותאם למותג.';}],
+ [/דבק|בלאם|zola|קודי|kodi/i,()=>{const s=range('glue');return 'בחנות '+s.n+' מוצרי דבק ובלאם (ZOLA Lami Balm ו-Kodi), '+toRange(s.min,s.max)+'. '+(s.out?(s.out===1?'אחד מהם אזל כרגע.':s.out+' מהם אזלו כרגע.'):'כולם במלאי.');}],
  [/תשלום|לשלם|אשראי|גיל/,()=>'הסל והתשלום בחנות. הרכישה מותנית בגיל 18 ומעלה ובכרטיס אשראי ישראלי תקף.'],
  [/וואטסאפ|טלפון|לדבר|נציג|עדן|מייל/,()=>'אפשר לכתוב לעדן בוואטסאפ או להתקשר: '+C.phone+', או במייל '+C.email+'.'],
  [/.*/,()=>'אשמח לעזור. אפשר לשאול על ערכות, סיליקונים, צבעים, משלוח והחזרות, או לבנות רשימה בבונה הערכה. לשאלה שאינה כאן, עדן עונה בוואטסאפ: '+C.phone+'.']];
@@ -86,12 +87,12 @@ function openLead(o){
 function sentUI(form,text,who){
  [...form.children].forEach(c=>c.hidden=true);
  const d=document.createElement('div'); d.className='sent'; d.setAttribute('role','status'); d.tabIndex=-1;
- d.innerHTML='<svg aria-hidden="true"><use href="#i-check"/></svg><h3>'+esc(text)+'</h3><p>עדן תחזור אליך. אם דחוף: וואטסאפ או טלפון <bdi dir="ltr">'+esc(C.phone)+'</bdi>.</p>';
- form.appendChild(d); d.focus(); LOT.state('love',2600); LOT.say('נשלח. עדן תחזור אליך.',{force:true});
+ d.innerHTML='<svg aria-hidden="true"><use href="#i-check"/></svg><h3>'+esc(text)+'</h3><p>עדן תחזור אלייך. אם דחוף: וואטסאפ או טלפון <bdi dir="ltr">'+esc(C.phone)+'</bdi>.</p>';
+ form.appendChild(d); d.focus(); LOT.state('love',2600); LOT.say('נשלח. עדן תחזור אלייך.',{force:true});
 }
 function fallbackNote(note,name,phone,text){
  const t='שלום, אני '+name+' ('+phone+'). '+text;
- note.innerHTML='לא הצלחנו לשמור את הפנייה בתצוגה הזו. אפשר לשלוח אותה לעדן בוואטסאפ: <a href="'+esc(waHref(t))+'" target="_blank" rel="noopener">לפתיחת וואטסאפ עם ההודעה</a>, או להתקשר <bdi dir="ltr">'+esc(C.phone)+'</bdi>.';
+ note.innerHTML='הפנייה מוכנה. לשליחה לעדן: <a href="'+esc(waHref(t))+'" target="_blank" rel="noopener">פתיחת וואטסאפ עם ההודעה</a>, או בטלפון <bdi dir="ltr">'+esc(C.phone)+'</bdi>.';
 }
 function formUI(){
  const guard=(note,name,phone,agree,nameEl,phoneEl,agreeEl)=>{const bad=(m,el)=>{note.textContent=m;note.classList.add('err');el.focus();return true;}; note.classList.remove('err');
@@ -208,7 +209,7 @@ function adminUI(){
 
 /* ================= init ================= */
 function init(){
- applyContent(); renderCourses(); renderCats(); shopUI(); qvUI(); cartUI(); kitUI(); formUI(); legalUI(); agentUI(); a11yUI(); adminUI(); chrome();
+ applyContent(); renderCourses(); renderCats(); shopUI(); heroTicket(); applyVisuals(); qvUI(); cartUI(); kitUI(); formUI(); legalUI(); agentUI(); a11yUI(); adminUI(); chrome();
  $('#agentAv').innerHTML=''; entry(); LOT.tipsOnView();
  if(cl){
   cl.use('db').then(d=>{db=d; if(!db)return; db.doc('data/site').onSnapshot(s=>{ if(s.exists){ const d=s.data()||{}; C={...structuredClone(DEF),...d}; ['faq','story'].forEach(k=>{if(!Array.isArray(C[k])||!C[k].length)C[k]=structuredClone(DEF[k]);}); if(!$('#adm').classList.contains('open')){applyContent();renderCourses();} } },()=>{}); });

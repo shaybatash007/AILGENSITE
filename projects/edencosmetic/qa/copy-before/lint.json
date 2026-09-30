@@ -1,0 +1,1749 @@
+{
+ "in": "projects/edencosmetic/qa/copy-before/strings.json",
+ "at": "2026-09-30T08:31:39.033Z",
+ "strings": 1014,
+ "count": {
+  "high": 25,
+  "medium": 41,
+  "low": 55
+ },
+ "byRule": {
+  "internal": 25,
+  "stale-date": 24,
+  "english-leak": 16,
+  "voice-plural": 1,
+  "spelling": 27,
+  "space-punct": 21,
+  "glued": 7
+ },
+ "findings": [
+  {
+   "rule": "internal",
+   "sev": "high",
+   "hit": "תצוגה מקדימה",
+   "t": "תצוגה מקדימה של האתר החדש · עדן קוסמטיקס · לא מוצג במנועי חיפוש",
+   "kind": "text",
+   "where": "div.pv",
+   "pages": [
+    "/blogs/news/",
+    "/brands/my-lamination/",
+    "/brands/nikk-mole/",
+    "/brands/refectocil/",
+    "/brands/thuya/",
+    "/brands/zola/",
+    "/collections/%D7%93%D7%91%D7%A7%D7%99%D7%9D-%D7%A1%D7%99%D7%9C%D7%99%D7%A7%D7%95%D7%A0%D7%99%D7%9D/",
+    "/collections/%D7%94%D7%A0%D7%91%D7%97%D7%A8%D7%AA-%D7%A9%D7%9C%D7%A0%D7%95/"
+   ],
+   "pageCount": 94,
+   "visible": true,
+   "why": "production or provenance language: where a text or image came from belongs in the project files, not on the page"
+  },
+  {
+   "rule": "internal",
+   "sev": "high",
+   "hit": "תצוגה מקדימה",
+   "t": "© 2026 עדן קוסמטיקס · תצוגה מקדימה",
+   "kind": "text",
+   "where": "footer.site > div.wrap > p.fine",
+   "pages": [
+    "/blogs/news/",
+    "/brands/my-lamination/",
+    "/brands/nikk-mole/",
+    "/brands/refectocil/",
+    "/brands/thuya/",
+    "/brands/zola/",
+    "/collections/%D7%93%D7%91%D7%A7%D7%99%D7%9D-%D7%A1%D7%99%D7%9C%D7%99%D7%A7%D7%95%D7%A0%D7%99%D7%9D/",
+    "/collections/%D7%94%D7%A0%D7%91%D7%97%D7%A8%D7%AA-%D7%A9%D7%9C%D7%A0%D7%95/"
+   ],
+   "pageCount": 94,
+   "visible": true,
+   "why": "production or provenance language: where a text or image came from belongs in the project files, not on the page"
+  },
+  {
+   "rule": "internal",
+   "sev": "high",
+   "hit": "כפי שהוא באתר",
+   "t": "הנוסח של החנות, כפי שהוא באתר הקיים.",
+   "kind": "text",
+   "where": "main#main > article > p.lead",
+   "pages": [
+    "/policies/contact-information/",
+    "/policies/privacy-policy/",
+    "/policies/refund-policy/",
+    "/policies/shipping-policy/",
+    "/policies/terms-of-service/"
+   ],
+   "pageCount": 5,
+   "visible": true,
+   "why": "production or provenance language: where a text or image came from belongs in the project files, not on the page"
+  },
+  {
+   "rule": "internal",
+   "sev": "high",
+   "hit": "תצוגה מקדימה",
+   "t": "תצוגה מקדימה של חזית חדשה לחנות · הוכן על ידי AILGEN עבור עדן קוסמטיקס · מחירים ומלאי: צילום מצב של החנות מ-29.9.2026",
+   "kind": "text",
+   "where": "div#pv",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "production or provenance language: where a text or image came from belongs in the project files, not on the page"
+  },
+  {
+   "rule": "internal",
+   "sev": "high",
+   "hit": "תמונות מוצר מהחנות",
+   "t": "תמונות מוצר מהחנות",
+   "kind": "text",
+   "where": "div#vis > div.arch > span.lbl",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "production or provenance language: where a text or image came from belongs in the project files, not on the page"
+  },
+  {
+   "rule": "internal",
+   "sev": "high",
+   "hit": "בקטלוג",
+   "t": "מוצרים בקטלוג",
+   "kind": "text",
+   "where": "div.wrap > ul.fl > li.rv > span",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "production or provenance language: where a text or image came from belongs in the project files, not on the page"
+  },
+  {
+   "rule": "internal",
+   "sev": "high",
+   "hit": "לפי השמות בקטלוג",
+   "t": "לפי השמות בקטלוג. 28 מוצרים (סיליקונים, מסרקים וכלים) נמכרים בלי שם מותג.",
+   "kind": "text",
+   "where": "section#brands > div.wrap > header.sh.rv > p",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "production or provenance language: where a text or image came from belongs in the project files, not on the page"
+  },
+  {
+   "rule": "internal",
+   "sev": "high",
+   "hit": "תמונות מוצר מהחנות",
+   "t": "תמונות מוצר מהחנות · אנימציה",
+   "kind": "text",
+   "where": "section#film > div.wrap.in > figure.fv.rv > span.lbl",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "production or provenance language: where a text or image came from belongs in the project files, not on the page"
+  },
+  {
+   "rule": "internal",
+   "sev": "high",
+   "hit": "מדף הבית של האתר",
+   "t": "אישה מרימה ריסים מול מראה יד, צילום מדף הבית של האתר הקיים",
+   "kind": "alt",
+   "where": "section#about > div.wrap.in > figure.ph.rv > img",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "production or provenance language: where a text or image came from belongs in the project files, not on the page"
+  },
+  {
+   "rule": "internal",
+   "sev": "high",
+   "hit": "צילום מהאתר",
+   "t": "צילום מהאתר הקיים",
+   "kind": "text",
+   "where": "section#about > div.wrap.in > figure.ph.rv > figcaption.lbl",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "production or provenance language: where a text or image came from belongs in the project files, not on the page"
+  },
+  {
+   "rule": "internal",
+   "sev": "high",
+   "hit": "מדף הבית של החנות",
+   "t": "הסיפור במילים של עדן, מדף הבית של החנות.",
+   "kind": "text",
+   "where": "section#about > div.wrap.in > div.tx.rv > p.cite",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "production or provenance language: where a text or image came from belongs in the project files, not on the page"
+  },
+  {
+   "rule": "internal",
+   "sev": "high",
+   "hit": "חזית חדשה לחנות",
+   "t": "חזית חדשה לחנות של עדן נחמני. החנות עצמה, הסל והתשלום: edencosmetic.co.il.",
+   "kind": "text",
+   "where": "div.wrap > div.fl2 > div.fb > p",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "production or provenance language: where a text or image came from belongs in the project files, not on the page"
+  },
+  {
+   "rule": "internal",
+   "sev": "high",
+   "hit": "(טיוטה)",
+   "t": "פרטיות (טיוטה)",
+   "kind": "action",
+   "where": "nav > ul.lg > li > button.lnk",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "production or provenance language: where a text or image came from belongs in the project files, not on the page"
+  },
+  {
+   "rule": "internal",
+   "sev": "high",
+   "hit": "צילום מצב",
+   "t": "© 2026 עדן קוסמטיקס · מחירים ומלאי: צילום מצב מ-29.9.2026, התשלום בחנות · עיצוב ופיתוח: AILGEN",
+   "kind": "text",
+   "where": "footer#ft > div.wrap > p.fine",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "production or provenance language: where a text or image came from belongs in the project files, not on the page"
+  },
+  {
+   "rule": "internal",
+   "sev": "high",
+   "hit": "(טיוטה)",
+   "t": "מדיניות פרטיות (טיוטה)",
+   "kind": "heading",
+   "where": "h2#lgT",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "production or provenance language: where a text or image came from belongs in the project files, not on the page"
+  },
+  {
+   "rule": "internal",
+   "sev": "high",
+   "hit": "האתר החדש",
+   "t": "מדיניות פרטיות · עדן קוסמטיקס (טיוטה שהוכנה עם האתר החדש. יש לאשר מול יועץ משפטי לפני פרסום.) 1. מי אנחנו האתר הוא חזית של החנות עדן קוסמטיקס, בבעלות עדן נחמני. לפניות בנושא פרטיות: Edencosmetics29@gmail.com, טלפון 052-5",
+   "kind": "text",
+   "where": "div#lgTxt",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "production or provenance language: where a text or image came from belongs in the project files, not on the page"
+  },
+  {
+   "rule": "internal",
+   "sev": "high",
+   "hit": "האתר החדש",
+   "t": "הצהרת נגישות · עדן קוסמטיקס (טיוטה שהוכנה עם האתר החדש. יש לאשר לפני פרסום.) אנחנו שואפות שהאתר יהיה נגיש לכולן, בהתאם לחוק שוויון זכויות לאנשים עם מוגבלות, התשנ\"ח-1998, ולתקנות שהותקנו מכוחו, ועל בסיס הנחיות WCAG 2.1 בר",
+   "kind": "text",
+   "where": "div#lgTxt",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "production or provenance language: where a text or image came from belongs in the project files, not on the page"
+  },
+  {
+   "rule": "internal",
+   "sev": "high",
+   "hit": "מנתוני הקטלוג",
+   "t": "הבלוג של החנות היה ריק. במקומו, שלושה מדריכים שנבנו מנתוני הקטלוג. טיוטה לאישור עדן.",
+   "kind": "text",
+   "where": "main#main > article > p.lead",
+   "pages": [
+    "/blogs/news/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "production or provenance language: where a text or image came from belongs in the project files, not on the page"
+  },
+  {
+   "rule": "internal",
+   "sev": "high",
+   "hit": "טיוטה לאישור",
+   "t": "מדריכים של עדן קוסמטיקס: ערכות להרמת ריסים וגבות, סיליקונים ומידות, צבעים וחמצן, בטבלאות ממחירי החנות. טיוטה לאישור עדן.",
+   "kind": "meta:description",
+   "where": "head",
+   "pages": [
+    "/blogs/news/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "production or provenance language: where a text or image came from belongs in the project files, not on the page"
+  },
+  {
+   "rule": "internal",
+   "sev": "high",
+   "hit": "טיוטה לאישור",
+   "t": "מדריכים של עדן קוסמטיקס: ערכות להרמת ריסים וגבות, סיליקונים ומידות, צבעים וחמצן, בטבלאות ממחירי החנות. טיוטה לאישור עדן.",
+   "kind": "meta:og:description",
+   "where": "head",
+   "pages": [
+    "/blogs/news/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "production or provenance language: where a text or image came from belongs in the project files, not on the page"
+  },
+  {
+   "rule": "internal",
+   "sev": "high",
+   "hit": "לפי שם המוצר בקטלוג",
+   "t": "18 מוצרים של My lamination בחנות, ₪30 עד ₪420. 16 במלאי נכון ל-29.9.2026. המותג לפי שם המוצר בקטלוג.",
+   "kind": "text",
+   "where": "main#main > article.wide > p.lead",
+   "pages": [
+    "/brands/my-lamination/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "production or provenance language: where a text or image came from belongs in the project files, not on the page"
+  },
+  {
+   "rule": "internal",
+   "sev": "high",
+   "hit": "לפי שם המוצר בקטלוג",
+   "t": "12 מוצרים של NIKK MOLE בחנות, ₪29 עד ₪60. 10 במלאי נכון ל-29.9.2026. המותג לפי שם המוצר בקטלוג.",
+   "kind": "text",
+   "where": "main#main > article.wide > p.lead",
+   "pages": [
+    "/brands/nikk-mole/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "production or provenance language: where a text or image came from belongs in the project files, not on the page"
+  },
+  {
+   "rule": "internal",
+   "sev": "high",
+   "hit": "לפי שם המוצר בקטלוג",
+   "t": "2 מוצרים של RefectoCil בחנות, ₪60 עד ₪60. 0 במלאי נכון ל-29.9.2026. המותג לפי שם המוצר בקטלוג.",
+   "kind": "text",
+   "where": "main#main > article.wide > p.lead",
+   "pages": [
+    "/brands/refectocil/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "production or provenance language: where a text or image came from belongs in the project files, not on the page"
+  },
+  {
+   "rule": "internal",
+   "sev": "high",
+   "hit": "לפי שם המוצר בקטלוג",
+   "t": "5 מוצרים של THUYA בחנות, ₪65 עד ₪330. 3 במלאי נכון ל-29.9.2026. המותג לפי שם המוצר בקטלוג.",
+   "kind": "text",
+   "where": "main#main > article.wide > p.lead",
+   "pages": [
+    "/brands/thuya/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "production or provenance language: where a text or image came from belongs in the project files, not on the page"
+  },
+  {
+   "rule": "internal",
+   "sev": "high",
+   "hit": "לפי שם המוצר בקטלוג",
+   "t": "4 מוצרים של ZOLA בחנות, ₪68 עד ₪120. 3 במלאי נכון ל-29.9.2026. המותג לפי שם המוצר בקטלוג.",
+   "kind": "text",
+   "where": "main#main > article.wide > p.lead",
+   "pages": [
+    "/brands/zola/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "production or provenance language: where a text or image came from belongs in the project files, not on the page"
+  },
+  {
+   "rule": "stale-date",
+   "sev": "medium",
+   "hit": "29.9.2026",
+   "t": "תצוגה מקדימה של חזית חדשה לחנות · הוכן על ידי AILGEN עבור עדן קוסמטיקס · מחירים ומלאי: צילום מצב של החנות מ-29.9.2026",
+   "kind": "text",
+   "where": "div#pv",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "a hard-coded date in visitor copy goes stale; state live data without a date, or keep dates to legal \"last updated\" lines"
+  },
+  {
+   "rule": "english-leak",
+   "sev": "medium",
+   "hit": "AILGEN",
+   "t": "תצוגה מקדימה של חזית חדשה לחנות · הוכן על ידי AILGEN עבור עדן קוסמטיקס · מחירים ומלאי: צילום מצב של החנות מ-29.9.2026",
+   "kind": "text",
+   "where": "div#pv",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "Latin words inside Hebrew copy that are not brand names or units"
+  },
+  {
+   "rule": "voice-plural",
+   "sev": "medium",
+   "hit": "בנו",
+   "t": "בנו ערכה בדקה",
+   "kind": "action",
+   "where": "a#heroKit",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "plural imperative in an action; the site speaks to one woman (את) and names actions with an infinitive or noun"
+  },
+  {
+   "rule": "stale-date",
+   "sev": "medium",
+   "hit": "29.9.2026",
+   "t": "נתוני החנות, 29.9.2026 · מדיניות משלוחים",
+   "kind": "text",
+   "where": "main#main > section.facts > div.wrap > p.src",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "a hard-coded date in visitor copy goes stale; state live data without a date, or keep dates to legal \"last updated\" lines"
+  },
+  {
+   "rule": "stale-date",
+   "sev": "medium",
+   "hit": "29.9.2026",
+   "t": "מחירים ומלאי: החנות, 29.9.2026. התשלום והסל הסופי בחנות.",
+   "kind": "text",
+   "where": "p#kNote",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "a hard-coded date in visitor copy goes stale; state live data without a date, or keep dates to legal \"last updated\" lines"
+  },
+  {
+   "rule": "stale-date",
+   "sev": "medium",
+   "hit": "29.9.2026",
+   "t": "התמונות הן תמונות המוצר של החנות. מחירים ומלאי בסרטון: 29.9.2026. אם מחיר השתנה, המחיר בחנות הוא הקובע.",
+   "kind": "text",
+   "where": "section#film > div.wrap.in > div.tx.rv > p.src",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "a hard-coded date in visitor copy goes stale; state live data without a date, or keep dates to legal \"last updated\" lines"
+  },
+  {
+   "rule": "stale-date",
+   "sev": "medium",
+   "hit": "29.9.2026",
+   "t": "איזו ערכה, ומה עוד צריך? לוטי: בואי נבנה רשימה. ציוד מקצועי להרמת ריסים וגבות, ממי שמטפלת ומדריכה בתחום. מה יש בחנות: ערכת THUYA, ₪330, שלושה שלבים. My lamination, ₪399, סט של חמש שקיות מכל שלב. דבק בלאם ZOLA, ₪120. סילי",
+   "kind": "text",
+   "where": "div.wrap.in > div.tx.rv > details.tr > p",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "a hard-coded date in visitor copy goes stale; state live data without a date, or keep dates to legal \"last updated\" lines"
+  },
+  {
+   "rule": "stale-date",
+   "sev": "medium",
+   "hit": "29.9.2026",
+   "t": "© 2026 עדן קוסמטיקס · מחירים ומלאי: צילום מצב מ-29.9.2026, התשלום בחנות · עיצוב ופיתוח: AILGEN",
+   "kind": "text",
+   "where": "footer#ft > div.wrap > p.fine",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "a hard-coded date in visitor copy goes stale; state live data without a date, or keep dates to legal \"last updated\" lines"
+  },
+  {
+   "rule": "english-leak",
+   "sev": "medium",
+   "hit": "AILGEN",
+   "t": "© 2026 עדן קוסמטיקס · מחירים ומלאי: צילום מצב מ-29.9.2026, התשלום בחנות · עיצוב ופיתוח: AILGEN",
+   "kind": "text",
+   "where": "footer#ft > div.wrap > p.fine",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "Latin words inside Hebrew copy that are not brand names or units"
+  },
+  {
+   "rule": "english-leak",
+   "sev": "medium",
+   "hit": "JavaScript",
+   "t": "הסל ובונה הערכה דורשים JavaScript. אפשר לגלוש בכל המוצרים והמדיניות דרך הקישורים בתחתית העמוד, ולהזמין בחנות: edencosmetic.co.il , או בוואטסאפ 052-545-3602 .",
+   "kind": "noscript",
+   "where": "noscript",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "Latin words inside Hebrew copy that are not brand names or units"
+  },
+  {
+   "rule": "english-leak",
+   "sev": "medium",
+   "hit": "Lifting, Cream",
+   "t": "קרם קיבוע+ המשמש במהלך למינציה של ריסים כדי לקבע את הסלסול החדש של הריסים שהתקבל בעזרת Lifting Cream (שלב 1). קרם מנטרל זה מקמר בעדינות את הריסים מבלי לפגוע בהם, הריסים נראים בריאים ומבריקים יותר. בעזרת הפורמולה המיוחדת ",
+   "kind": "text",
+   "where": "div#qvDesc > p",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "Latin words inside Hebrew copy that are not brand names or units"
+  },
+  {
+   "rule": "stale-date",
+   "sev": "medium",
+   "hit": "29.9.2026",
+   "t": "מחיר ומלאי כפי שמופיעים בחנות ב-29.9.2026. התשלום בחנות.",
+   "kind": "text",
+   "where": "p#qvSnap",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "a hard-coded date in visitor copy goes stale; state live data without a date, or keep dates to legal \"last updated\" lines"
+  },
+  {
+   "rule": "english-leak",
+   "sev": "medium",
+   "hit": "WCAG, Esc, prefers-reduced-motion",
+   "t": "הצהרת נגישות · עדן קוסמטיקס (טיוטה שהוכנה עם האתר החדש. יש לאשר לפני פרסום.) אנחנו שואפות שהאתר יהיה נגיש לכולן, בהתאם לחוק שוויון זכויות לאנשים עם מוגבלות, התשנ\"ח-1998, ולתקנות שהותקנו מכוחו, ועל בסיס הנחיות WCAG 2.1 בר",
+   "kind": "text",
+   "where": "div#lgTxt",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "Latin words inside Hebrew copy that are not brand names or units"
+  },
+  {
+   "rule": "stale-date",
+   "sev": "medium",
+   "hit": "29.9.2026",
+   "t": "9 צבעים ו-5 סוגי חמצן בחנות, ₪45 עד ₪65, לפי מותג, גוון ומלאי (29.9.2026).",
+   "kind": "action",
+   "where": "article > ul.hub > li > a",
+   "pages": [
+    "/blogs/news/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "a hard-coded date in visitor copy goes stale; state live data without a date, or keep dates to legal \"last updated\" lines"
+  },
+  {
+   "rule": "stale-date",
+   "sev": "medium",
+   "hit": "29.9.2026",
+   "t": "18 מוצרים של My lamination בחנות, ₪30 עד ₪420. 16 במלאי נכון ל-29.9.2026. המותג לפי שם המוצר בקטלוג.",
+   "kind": "text",
+   "where": "main#main > article.wide > p.lead",
+   "pages": [
+    "/brands/my-lamination/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "a hard-coded date in visitor copy goes stale; state live data without a date, or keep dates to legal \"last updated\" lines"
+  },
+  {
+   "rule": "stale-date",
+   "sev": "medium",
+   "hit": "29.9.2026",
+   "t": "My lamination בעדן קוסמטיקס: 18 מוצרים, ₪30 עד ₪420, 16 במלאי (29.9.2026). ציוד מקצועי להרמת ריסים וגבות.",
+   "kind": "meta:description",
+   "where": "head",
+   "pages": [
+    "/brands/my-lamination/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "a hard-coded date in visitor copy goes stale; state live data without a date, or keep dates to legal \"last updated\" lines"
+  },
+  {
+   "rule": "stale-date",
+   "sev": "medium",
+   "hit": "29.9.2026",
+   "t": "My lamination בעדן קוסמטיקס: 18 מוצרים, ₪30 עד ₪420, 16 במלאי (29.9.2026). ציוד מקצועי להרמת ריסים וגבות.",
+   "kind": "meta:og:description",
+   "where": "head",
+   "pages": [
+    "/brands/my-lamination/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "a hard-coded date in visitor copy goes stale; state live data without a date, or keep dates to legal \"last updated\" lines"
+  },
+  {
+   "rule": "stale-date",
+   "sev": "medium",
+   "hit": "29.9.2026",
+   "t": "12 מוצרים של NIKK MOLE בחנות, ₪29 עד ₪60. 10 במלאי נכון ל-29.9.2026. המותג לפי שם המוצר בקטלוג.",
+   "kind": "text",
+   "where": "main#main > article.wide > p.lead",
+   "pages": [
+    "/brands/nikk-mole/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "a hard-coded date in visitor copy goes stale; state live data without a date, or keep dates to legal \"last updated\" lines"
+  },
+  {
+   "rule": "stale-date",
+   "sev": "medium",
+   "hit": "29.9.2026",
+   "t": "NIKK MOLE בעדן קוסמטיקס: 12 מוצרים, ₪29 עד ₪60, 10 במלאי (29.9.2026). ציוד מקצועי להרמת ריסים וגבות.",
+   "kind": "meta:description",
+   "where": "head",
+   "pages": [
+    "/brands/nikk-mole/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "a hard-coded date in visitor copy goes stale; state live data without a date, or keep dates to legal \"last updated\" lines"
+  },
+  {
+   "rule": "stale-date",
+   "sev": "medium",
+   "hit": "29.9.2026",
+   "t": "NIKK MOLE בעדן קוסמטיקס: 12 מוצרים, ₪29 עד ₪60, 10 במלאי (29.9.2026). ציוד מקצועי להרמת ריסים וגבות.",
+   "kind": "meta:og:description",
+   "where": "head",
+   "pages": [
+    "/brands/nikk-mole/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "a hard-coded date in visitor copy goes stale; state live data without a date, or keep dates to legal \"last updated\" lines"
+  },
+  {
+   "rule": "stale-date",
+   "sev": "medium",
+   "hit": "29.9.2026",
+   "t": "2 מוצרים של RefectoCil בחנות, ₪60 עד ₪60. 0 במלאי נכון ל-29.9.2026. המותג לפי שם המוצר בקטלוג.",
+   "kind": "text",
+   "where": "main#main > article.wide > p.lead",
+   "pages": [
+    "/brands/refectocil/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "a hard-coded date in visitor copy goes stale; state live data without a date, or keep dates to legal \"last updated\" lines"
+  },
+  {
+   "rule": "stale-date",
+   "sev": "medium",
+   "hit": "29.9.2026",
+   "t": "RefectoCil בעדן קוסמטיקס: 2 מוצרים, ₪60 עד ₪60, 0 במלאי (29.9.2026). ציוד מקצועי להרמת ריסים וגבות.",
+   "kind": "meta:description",
+   "where": "head",
+   "pages": [
+    "/brands/refectocil/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "a hard-coded date in visitor copy goes stale; state live data without a date, or keep dates to legal \"last updated\" lines"
+  },
+  {
+   "rule": "stale-date",
+   "sev": "medium",
+   "hit": "29.9.2026",
+   "t": "RefectoCil בעדן קוסמטיקס: 2 מוצרים, ₪60 עד ₪60, 0 במלאי (29.9.2026). ציוד מקצועי להרמת ריסים וגבות.",
+   "kind": "meta:og:description",
+   "where": "head",
+   "pages": [
+    "/brands/refectocil/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "a hard-coded date in visitor copy goes stale; state live data without a date, or keep dates to legal \"last updated\" lines"
+  },
+  {
+   "rule": "stale-date",
+   "sev": "medium",
+   "hit": "29.9.2026",
+   "t": "5 מוצרים של THUYA בחנות, ₪65 עד ₪330. 3 במלאי נכון ל-29.9.2026. המותג לפי שם המוצר בקטלוג.",
+   "kind": "text",
+   "where": "main#main > article.wide > p.lead",
+   "pages": [
+    "/brands/thuya/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "a hard-coded date in visitor copy goes stale; state live data without a date, or keep dates to legal \"last updated\" lines"
+  },
+  {
+   "rule": "stale-date",
+   "sev": "medium",
+   "hit": "29.9.2026",
+   "t": "THUYA בעדן קוסמטיקס: 5 מוצרים, ₪65 עד ₪330, 3 במלאי (29.9.2026). ציוד מקצועי להרמת ריסים וגבות.",
+   "kind": "meta:description",
+   "where": "head",
+   "pages": [
+    "/brands/thuya/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "a hard-coded date in visitor copy goes stale; state live data without a date, or keep dates to legal \"last updated\" lines"
+  },
+  {
+   "rule": "stale-date",
+   "sev": "medium",
+   "hit": "29.9.2026",
+   "t": "THUYA בעדן קוסמטיקס: 5 מוצרים, ₪65 עד ₪330, 3 במלאי (29.9.2026). ציוד מקצועי להרמת ריסים וגבות.",
+   "kind": "meta:og:description",
+   "where": "head",
+   "pages": [
+    "/brands/thuya/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "a hard-coded date in visitor copy goes stale; state live data without a date, or keep dates to legal \"last updated\" lines"
+  },
+  {
+   "rule": "stale-date",
+   "sev": "medium",
+   "hit": "29.9.2026",
+   "t": "4 מוצרים של ZOLA בחנות, ₪68 עד ₪120. 3 במלאי נכון ל-29.9.2026. המותג לפי שם המוצר בקטלוג.",
+   "kind": "text",
+   "where": "main#main > article.wide > p.lead",
+   "pages": [
+    "/brands/zola/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "a hard-coded date in visitor copy goes stale; state live data without a date, or keep dates to legal \"last updated\" lines"
+  },
+  {
+   "rule": "stale-date",
+   "sev": "medium",
+   "hit": "29.9.2026",
+   "t": "ZOLA בעדן קוסמטיקס: 4 מוצרים, ₪68 עד ₪120, 3 במלאי (29.9.2026). ציוד מקצועי להרמת ריסים וגבות.",
+   "kind": "meta:description",
+   "where": "head",
+   "pages": [
+    "/brands/zola/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "a hard-coded date in visitor copy goes stale; state live data without a date, or keep dates to legal \"last updated\" lines"
+  },
+  {
+   "rule": "stale-date",
+   "sev": "medium",
+   "hit": "29.9.2026",
+   "t": "ZOLA בעדן קוסמטיקס: 4 מוצרים, ₪68 עד ₪120, 3 במלאי (29.9.2026). ציוד מקצועי להרמת ריסים וגבות.",
+   "kind": "meta:og:description",
+   "where": "head",
+   "pages": [
+    "/brands/zola/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "a hard-coded date in visitor copy goes stale; state live data without a date, or keep dates to legal \"last updated\" lines"
+  },
+  {
+   "rule": "english-leak",
+   "sev": "medium",
+   "hit": "test",
+   "t": "&&!/גבות/.test(x.t)},{k:",
+   "kind": "js",
+   "where": "src/3-data.js:44",
+   "pages": [
+    "js"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "Latin words inside Hebrew copy that are not brand names or units"
+  },
+  {
+   "rule": "english-leak",
+   "sev": "medium",
+   "hit": "test",
+   "t": "&&/גבות/.test(x.t)},{k:",
+   "kind": "js",
+   "where": "src/3-data.js:48",
+   "pages": [
+    "js"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "Latin words inside Hebrew copy that are not brand names or units"
+  },
+  {
+   "rule": "english-leak",
+   "sev": "medium",
+   "hit": "esc, soon, bdi, span",
+   "t": "> '+esc(c.t)+' '+(soon?'בקרוב, השאירי פרטים':bdi(c.n)+' מוצרים')+' <span class=",
+   "kind": "js",
+   "where": "src/4-app.js:43",
+   "pages": [
+    "js"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "Latin words inside Hebrew copy that are not brand names or units"
+  },
+  {
+   "rule": "english-leak",
+   "sev": "medium",
+   "hit": "soon, svg, aria-hidden",
+   "t": ">'+(soon?'לרשימת ההמתנה':'לקולקציה')+' <svg aria-hidden=",
+   "kind": "js",
+   "where": "src/4-app.js:43",
+   "pages": [
+    "js"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "Latin words inside Hebrew copy that are not brand names or units"
+  },
+  {
+   "rule": "english-leak",
+   "sev": "medium",
+   "hit": "aria-label",
+   "t": "\" aria-label=\"מבט מהיר:",
+   "kind": "js",
+   "where": "src/4-app.js:67",
+   "pages": [
+    "js"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "Latin words inside Hebrew copy that are not brand names or units"
+  },
+  {
+   "rule": "stale-date",
+   "sev": "medium",
+   "hit": "29.9.2026",
+   "t": "מחיר ומלאי כפי שמופיעים בחנות ב-29.9.2026. התשלום בחנות.",
+   "kind": "js",
+   "where": "src/4-app.js:116",
+   "pages": [
+    "js"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "a hard-coded date in visitor copy goes stale; state live data without a date, or keep dates to legal \"last updated\" lines"
+  },
+  {
+   "rule": "english-leak",
+   "sev": "medium",
+   "hit": "aria-label",
+   "t": "\" aria-label=\"הפחתה\">−",
+   "kind": "js",
+   "where": "src/4-app.js:145",
+   "pages": [
+    "js"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "Latin words inside Hebrew copy that are not brand names or units"
+  },
+  {
+   "rule": "english-leak",
+   "sev": "medium",
+   "hit": "aria-label",
+   "t": "\" aria-label=\"הוספה\">+",
+   "kind": "js",
+   "where": "src/4-app.js:145",
+   "pages": [
+    "js"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "Latin words inside Hebrew copy that are not brand names or units"
+  },
+  {
+   "rule": "english-leak",
+   "sev": "medium",
+   "hit": "aria-label",
+   "t": "aria-label=\"כלול:",
+   "kind": "js",
+   "where": "src/4-app.js:190",
+   "pages": [
+    "js"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "Latin words inside Hebrew copy that are not brand names or units"
+  },
+  {
+   "rule": "english-leak",
+   "sev": "medium",
+   "hit": "select, aria-label",
+   "t": "<select aria-label=\"בחירה אחרת ב",
+   "kind": "js",
+   "where": "src/4-app.js:190",
+   "pages": [
+    "js"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "Latin words inside Hebrew copy that are not brand names or units"
+  },
+  {
+   "rule": "english-leak",
+   "sev": "medium",
+   "hit": "selected', esc, title, slice",
+   "t": "'+(o.i===x.i?' selected':'')+'>'+esc(title(o).slice(0,58))+' · '+money(o.p)+(o.a?'':' (אזל)')+' ').join('')+' ':' '+esc(title(x))+' ')+(x.a?'':'<span class=",
+   "kind": "js",
+   "where": "src/4-app.js:190",
+   "pages": [
+    "js"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "Latin words inside Hebrew copy that are not brand names or units"
+  },
+  {
+   "rule": "english-leak",
+   "sev": "medium",
+   "hit": "span, class",
+   "t": ">אזל בחנות ')+' <span class=",
+   "kind": "js",
+   "where": "src/4-app.js:190",
+   "pages": [
+    "js"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "Latin words inside Hebrew copy that are not brand names or units"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "zola פינצטה מקצועית זוויתית (וורוד כהה)",
+   "kind": "text",
+   "where": "div.wrap > details.all > ul.cols > li",
+   "pages": [
+    "/",
+    "/brands/zola/"
+   ],
+   "pageCount": 2,
+   "visible": true,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "פינצטה מקצועית קלאסית לגבות -וורוד NIKK MOLE",
+   "kind": "text",
+   "where": "div.wrap > details.all > ul.cols > li",
+   "pages": [
+    "/",
+    "/brands/nikk-mole/"
+   ],
+   "pageCount": 2,
+   "visible": true,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "zola פינצטה מקצועית זוויתית (וורוד בייבי)",
+   "kind": "text",
+   "where": "div.wrap > details.all > ul.cols > li",
+   "pages": [
+    "/",
+    "/brands/zola/"
+   ],
+   "pageCount": 2,
+   "visible": true,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "space-punct",
+   "sev": "low",
+   "hit": " :",
+   "t": "מדניות הפרטיות : רכישה באתר מותנת מגיל 18 ומעלה ,המחזיקים כדין בכרטיס אשראי ישראלי (מקומי או בינלאומי( תקף. ההשתתפות מותנית בהרשמה לאתר ומסירת פרטים אישיים מלאים, נכונים ומדויקים, הכוללים שם, מס' זהות ,כתובת, מס' טלפון ו",
+   "kind": "text",
+   "where": "main#main > article > p",
+   "pages": [
+    "/policies/privacy-policy/",
+    "/policies/terms-of-service/"
+   ],
+   "pageCount": 2,
+   "visible": true,
+   "why": "space before punctuation, or none after a comma"
+  },
+  {
+   "rule": "space-punct",
+   "sev": "low",
+   "hit": " .",
+   "t": "מסירת הפרטים האישיים בטופס ההזמנה נעשית עפ\"י רצונו של הלקוח ובהסכמתו. מילוי הפרטים מעיד על הסכמתו של הלקוח למסירתם. מטרת מסירת הפרטים האישיים היא לאפשר לספק את המוצרים ללקוח . כמו כן נדרשים פרטי כרטיס האשראי של הלקוח על ",
+   "kind": "text",
+   "where": "main#main > article > p",
+   "pages": [
+    "/policies/privacy-policy/",
+    "/policies/terms-of-service/"
+   ],
+   "pageCount": 2,
+   "visible": true,
+   "why": "space before punctuation, or none after a comma"
+  },
+  {
+   "rule": "space-punct",
+   "sev": "low",
+   "hit": " ,",
+   "t": "* עדן קוסמטיקס נוקטת בכל האמצעים העומדים לרשותה כדי להגן על פרטיות הלקוחות ועל סודיות הנתונים. האתר מאובטח ברמה גבוהה ביותר, ומוגן מפני פריצה בזדון או בשוגג באמצעות טכנולוגיה מתקדמת , ומוגנת בקפידה .",
+   "kind": "text",
+   "where": "main#main > article > p",
+   "pages": [
+    "/policies/privacy-policy/",
+    "/policies/terms-of-service/"
+   ],
+   "pageCount": 2,
+   "visible": true,
+   "why": "space before punctuation, or none after a comma"
+  },
+  {
+   "rule": "space-punct",
+   "sev": "low",
+   "hit": " .",
+   "t": "* בשום מקרה לא מועברים נתונים, פרטים אישיים או כתובות דואר אלקטרוני לצד שלישי שלא בהסכמה מפורשת של הלקוח, בכתב ומראש, למעט העברת פרטי העסקה לחברת האשראי לצורך חיוב ופרטי הלקוח לחברת המשלוחים לצורך ביצוע אספקת ההזמנה .",
+   "kind": "text",
+   "where": "main#main > article > p",
+   "pages": [
+    "/policies/privacy-policy/",
+    "/policies/terms-of-service/"
+   ],
+   "pageCount": 2,
+   "visible": true,
+   "why": "space before punctuation, or none after a comma"
+  },
+  {
+   "rule": "space-punct",
+   "sev": "low",
+   "hit": " ,",
+   "t": "כל המוצרים המוצעים באתר הם מקוריים, חדשים, באריזתם המקורית, ללא פגם, ללא נזק , אלא אם מצוין בהבלטה ובמפורש אחרת בכותרת המכירה ובתיאור המוצר.",
+   "kind": "text",
+   "where": "main#main > article > p",
+   "pages": [
+    "/policies/privacy-policy/",
+    "/policies/terms-of-service/"
+   ],
+   "pageCount": 2,
+   "visible": true,
+   "why": "space before punctuation, or none after a comma"
+  },
+  {
+   "rule": "space-punct",
+   "sev": "low",
+   "hit": " ,",
+   "t": "* עדן קוסמטיקס שומרת לעצמה את הזכות, לפי שיקול דעתה הבלעדי, שלא לספק מוצר מסוים, במידה והמוצר אזל במלאי. במקרה כזה ניצור קשר עם הלקוח ונציע לו ביטול העסקה ללא דמי ביטול ,או לחילופין, יוצע לו מוצר חלופי אחר .",
+   "kind": "text",
+   "where": "main#main > article > p",
+   "pages": [
+    "/policies/privacy-policy/",
+    "/policies/terms-of-service/"
+   ],
+   "pageCount": 2,
+   "visible": true,
+   "why": "space before punctuation, or none after a comma"
+  },
+  {
+   "rule": "space-punct",
+   "sev": "low",
+   "hit": " .",
+   "t": "* הפרטים המפורסמים באתר כוללים את תמונת המוצר, שם היצרן, הדגם. עם זאת, התמונות המוצגות הנן לצורך המחשה בלבד. במקרה שבו קיים הבדל בין פרטי המוצר בכתב לתמונה המתפרסמת באתר )לדוגמה – לגבי צבע המוצר) הנתונים בכתב הם המחייבים",
+   "kind": "text",
+   "where": "main#main > article > p",
+   "pages": [
+    "/policies/privacy-policy/",
+    "/policies/terms-of-service/"
+   ],
+   "pageCount": 2,
+   "visible": true,
+   "why": "space before punctuation, or none after a comma"
+  },
+  {
+   "rule": "space-punct",
+   "sev": "low",
+   "hit": " .",
+   "t": "• המוצרים המשתתפים באתר זה ומחיריהם בתוקף לגבי המלאי הקיים בלבד. עדן קוסמטיקס שומרת לעצמה את הזכות לשנות את המוצרים ומחיריהם בכל עת וללא מתן הודעה מוקדמת ללקוחותיה ורשאית לשנותם בכול עת .",
+   "kind": "text",
+   "where": "main#main > article > p",
+   "pages": [
+    "/policies/privacy-policy/",
+    "/policies/terms-of-service/"
+   ],
+   "pageCount": 2,
+   "visible": true,
+   "why": "space before punctuation, or none after a comma"
+  },
+  {
+   "rule": "space-punct",
+   "sev": "low",
+   "hit": " .",
+   "t": "* מחיר המוצרים באתר אינו כולל משלוח לבית הלקוח. * יש להוסיף משלוח בדף התשלום / איסוף עצמי בתיאום מראש .",
+   "kind": "text",
+   "where": "main#main > article > p",
+   "pages": [
+    "/policies/privacy-policy/",
+    "/policies/terms-of-service/"
+   ],
+   "pageCount": 2,
+   "visible": true,
+   "why": "space before punctuation, or none after a comma"
+  },
+  {
+   "rule": "space-punct",
+   "sev": "low",
+   "hit": " :",
+   "t": "החזרות החלפות :",
+   "kind": "text",
+   "where": "main#main > article > p",
+   "pages": [
+    "/policies/refund-policy/",
+    "/policies/terms-of-service/"
+   ],
+   "pageCount": 2,
+   "visible": true,
+   "why": "space before punctuation, or none after a comma"
+  },
+  {
+   "rule": "space-punct",
+   "sev": "low",
+   "hit": " .",
+   "t": "אספקה בין 4-5 ימים עסקיים לבית/ לעסק .",
+   "kind": "text",
+   "where": "main#main > article > p",
+   "pages": [
+    "/policies/shipping-policy/",
+    "/policies/terms-of-service/"
+   ],
+   "pageCount": 2,
+   "visible": true,
+   "why": "space before punctuation, or none after a comma"
+  },
+  {
+   "rule": "space-punct",
+   "sev": "low",
+   "hit": " ,",
+   "t": "במידה שהלקוח מבקש לשנות את הכתובת לאספקה ,ובכפוף לאישור בקשה זו ע\"י עדן קוסמטיקס ,ייספרו ימי העבודה מיום אישור בקשת שינוי הכתובת .",
+   "kind": "text",
+   "where": "main#main > article > p",
+   "pages": [
+    "/policies/shipping-policy/",
+    "/policies/terms-of-service/"
+   ],
+   "pageCount": 2,
+   "visible": true,
+   "why": "space before punctuation, or none after a comma"
+  },
+  {
+   "rule": "space-punct",
+   "sev": "low",
+   "hit": " ,",
+   "t": "במידה וגורמים ו/או אירועים שאינם בשליטת בעלי האתר ו/או מפעיליו יעכבו /או ימנעו את קיום מכירת המוצרים, מכל סוג שהוא, באופן מלא או באופן חלקי, ובכל דרך שהיא ,ו/או את אספקת המוצרים שפורסמו באתר במועדים שנקבעו, ו/או יפגעו תק",
+   "kind": "text",
+   "where": "main#main > article > p",
+   "pages": [
+    "/policies/shipping-policy/",
+    "/policies/terms-of-service/"
+   ],
+   "pageCount": 2,
+   "visible": true,
+   "why": "space before punctuation, or none after a comma"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "דבק בלאם פורמולה חדשה להרמת ריסים של חברת ZOLA (וורוד) · ₪120",
+   "kind": "option",
+   "where": "li.krow > div.nm > select > option",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "zola פינצטה מקצועית זוויתית (וורוד כהה)",
+   "kind": "link",
+   "where": "details.all > ul.cols > li > a",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "glued",
+   "sev": "low",
+   "hit": "הN",
+   "t": "פינצטה מקצועית קלאסית לגבות -וורוד כההNIKK MOLE",
+   "kind": "text",
+   "where": "div.wrap > details.all > ul.cols > li",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "Hebrew and Latin letters without a space between them"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "פינצטה מקצועית קלאסית לגבות -וורוד כההNIKK MOLE",
+   "kind": "text",
+   "where": "div.wrap > details.all > ul.cols > li",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "glued",
+   "sev": "low",
+   "hit": "הN",
+   "t": "פינצטה מקצועית קלאסית לגבות -וורוד כההNIKK MOLE",
+   "kind": "link",
+   "where": "details.all > ul.cols > li > a",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "Hebrew and Latin letters without a space between them"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "פינצטה מקצועית קלאסית לגבות -וורוד כההNIKK MOLE",
+   "kind": "link",
+   "where": "details.all > ul.cols > li > a",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "פינצטה מקצועית משופעת לגבות - וורוד כהה NIKK MOLE",
+   "kind": "text",
+   "where": "div.wrap > details.all > ul.cols > li",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "פינצטה מקצועית משופעת לגבות - וורוד כהה NIKK MOLE",
+   "kind": "link",
+   "where": "details.all > ul.cols > li > a",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "glued",
+   "sev": "low",
+   "hit": "רN",
+   "t": "פינצטה מקצועית משופעת לגבות - וורוד בהירNIKK MOLE",
+   "kind": "text",
+   "where": "div.wrap > details.all > ul.cols > li",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "Hebrew and Latin letters without a space between them"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "פינצטה מקצועית משופעת לגבות - וורוד בהירNIKK MOLE",
+   "kind": "text",
+   "where": "div.wrap > details.all > ul.cols > li",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "glued",
+   "sev": "low",
+   "hit": "רN",
+   "t": "פינצטה מקצועית משופעת לגבות - וורוד בהירNIKK MOLE",
+   "kind": "link",
+   "where": "details.all > ul.cols > li > a",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "Hebrew and Latin letters without a space between them"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "פינצטה מקצועית משופעת לגבות - וורוד בהירNIKK MOLE",
+   "kind": "link",
+   "where": "details.all > ul.cols > li > a",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "פינצטה מקצועית קלאסית לגבות -וורוד NIKK MOLE",
+   "kind": "link",
+   "where": "details.all > ul.cols > li > a",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "עדשת מאקרו לצילום איכותי - וורוד",
+   "kind": "text",
+   "where": "div.wrap > details.all > ul.cols > li",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "עדשת מאקרו לצילום איכותי - וורוד",
+   "kind": "link",
+   "where": "details.all > ul.cols > li > a",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "zola פינצטה מקצועית זוויתית (וורוד בייבי)",
+   "kind": "link",
+   "where": "details.all > ul.cols > li > a",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "דבק בלאם פורמולה חדשה להרמת ריסים של חברת ZOLA (וורוד)",
+   "kind": "text",
+   "where": "div.wrap > details.all > ul.cols > li",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "דבק בלאם פורמולה חדשה להרמת ריסים של חברת ZOLA (וורוד)",
+   "kind": "link",
+   "where": "details.all > ul.cols > li > a",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "space-punct",
+   "sev": "low",
+   "hit": " ,",
+   "t": "הסל ובונה הערכה דורשים JavaScript. אפשר לגלוש בכל המוצרים והמדיניות דרך הקישורים בתחתית העמוד, ולהזמין בחנות: edencosmetic.co.il , או בוואטסאפ 052-545-3602 .",
+   "kind": "noscript",
+   "where": "noscript",
+   "pages": [
+    "/"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "space before punctuation, or none after a comma"
+  },
+  {
+   "rule": "glued",
+   "sev": "low",
+   "hit": "הN",
+   "t": "פינצטה מקצועית קלאסית לגבות -וורוד כההNIKK MOLE",
+   "kind": "alt",
+   "where": "ul.grid > li > a.pc > img",
+   "pages": [
+    "/brands/nikk-mole/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "Hebrew and Latin letters without a space between them"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "פינצטה מקצועית קלאסית לגבות -וורוד כההNIKK MOLE",
+   "kind": "alt",
+   "where": "ul.grid > li > a.pc > img",
+   "pages": [
+    "/brands/nikk-mole/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "glued",
+   "sev": "low",
+   "hit": "הN",
+   "t": "פינצטה מקצועית קלאסית לגבות -וורוד כההNIKK",
+   "kind": "text",
+   "where": "li > a.pc > span.in > b",
+   "pages": [
+    "/brands/nikk-mole/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "Hebrew and Latin letters without a space between them"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "פינצטה מקצועית קלאסית לגבות -וורוד כההNIKK",
+   "kind": "text",
+   "where": "li > a.pc > span.in > b",
+   "pages": [
+    "/brands/nikk-mole/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "פינצטה מקצועית משופעת לגבות - וורוד כהה NIKK MOLE",
+   "kind": "alt",
+   "where": "ul.grid > li > a.pc > img",
+   "pages": [
+    "/brands/nikk-mole/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "פינצטה מקצועית משופעת לגבות - וורוד כהה",
+   "kind": "text",
+   "where": "li > a.pc > span.in > b",
+   "pages": [
+    "/brands/nikk-mole/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "glued",
+   "sev": "low",
+   "hit": "רN",
+   "t": "פינצטה מקצועית משופעת לגבות - וורוד בהירNIKK MOLE",
+   "kind": "alt",
+   "where": "ul.grid > li > a.pc > img",
+   "pages": [
+    "/brands/nikk-mole/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "Hebrew and Latin letters without a space between them"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "פינצטה מקצועית משופעת לגבות - וורוד בהירNIKK MOLE",
+   "kind": "alt",
+   "where": "ul.grid > li > a.pc > img",
+   "pages": [
+    "/brands/nikk-mole/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "פינצטה מקצועית משופעת לגבות - וורוד",
+   "kind": "text",
+   "where": "li > a.pc > span.in > b",
+   "pages": [
+    "/brands/nikk-mole/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "פינצטה מקצועית קלאסית לגבות -וורוד NIKK MOLE",
+   "kind": "alt",
+   "where": "ul.grid > li > a.pc > img",
+   "pages": [
+    "/brands/nikk-mole/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "zola פינצטה מקצועית זוויתית (וורוד כהה)",
+   "kind": "alt",
+   "where": "ul.grid > li > a.pc > img",
+   "pages": [
+    "/brands/zola/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "zola פינצטה מקצועית זוויתית (וורוד בייבי)",
+   "kind": "alt",
+   "where": "ul.grid > li > a.pc > img",
+   "pages": [
+    "/brands/zola/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "spelling",
+   "sev": "low",
+   "hit": "וורוד",
+   "t": "דבק בלאם פורמולה חדשה להרמת ריסים של חברת ZOLA (וורוד)",
+   "kind": "alt",
+   "where": "ul.grid > li > a.pc > img",
+   "pages": [
+    "/brands/zola/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "standard spelling is ורוד (one vav at the start)"
+  },
+  {
+   "rule": "space-punct",
+   "sev": "low",
+   "hit": " !",
+   "t": "החלפות- יבוצעו עד 14 ימים (לא עסקים) מיום קבלת המוצר. ניתן לבצע החלפה כל עוד המוצר לא נפתח, ארוז באריזתו המקורית ולא נעשה בו שימוש כלל ! עלויות המשלוחים הנוספות הן על חשבון הלקוח/ה בלבד. מס טלפון- 0525453602",
+   "kind": "text",
+   "where": "main#main > article > p",
+   "pages": [
+    "/policies/refund-policy/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "space before punctuation, or none after a comma"
+  },
+  {
+   "rule": "space-punct",
+   "sev": "low",
+   "hit": " !",
+   "t": "* החלפות- יבוצעו עד 14 ימים (לא עסקים) מיום קבלת המוצר. ניתן לבצע החלפה כל עוד המוצר לא נפתח, ארוז באריזתו המקורית ולא נעשה בו שימוש כלל ! עלויות המשלוחים הנוספות הן על חשבון הלקוח/ה בלבד. מס טלפון- 0525453602",
+   "kind": "text",
+   "where": "main#main > article > p",
+   "pages": [
+    "/policies/terms-of-service/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "space before punctuation, or none after a comma"
+  },
+  {
+   "rule": "space-punct",
+   "sev": "low",
+   "hit": " ,",
+   "t": "* כל לקוח/ה אשר מבצע/ת פעולה באתר מצהיר/ה כי הנו מודע/ת לתקנון האתר ולכללי ההשתתפות באתר ומקבלם. ,וכי לא תהא לו ו/או למי מטעמו כל טענה ו/או תביעה כנגד בעלי האתר ו/או מפעיליו ו/או מי מטעמם מלבד טענות הקשורות בהפרת התחייבו",
+   "kind": "text",
+   "where": "main#main > article > p",
+   "pages": [
+    "/policies/terms-of-service/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "space before punctuation, or none after a comma"
+  },
+  {
+   "rule": "space-punct",
+   "sev": "low",
+   "hit": " !",
+   "t": "* אחריות המוצר- האחריות על המוצרים יהיו ע\"פ הכתוב באריזת המוצר ו/או הדף נלווה למוצר אם ישנו. מידע אודות המוצרים נלקח מהיצרנים. על כן לא תשמע טענה כלפי עדן קוסמטיקס לגבי השימוש במוצרים - אופן השימוש באתר כהמלצה בלבד ! אם ",
+   "kind": "text",
+   "where": "main#main > article > p",
+   "pages": [
+    "/policies/terms-of-service/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "space before punctuation, or none after a comma"
+  },
+  {
+   "rule": "space-punct",
+   "sev": "low",
+   "hit": " .",
+   "t": "* עדן קוסמטיקס אינה אחראית לתגובות אלרגיות או נזקים שעלולים להיגרם כתוצאה משימוש לא נכון במוצרים. יש לקרוא היטב את הוראות השימוש המצורפות לכל מוצר. האחריות לשימוש נכון של כל מוצר - באחריות הרוכשת בלבד .",
+   "kind": "text",
+   "where": "main#main > article > p",
+   "pages": [
+    "/policies/terms-of-service/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "space before punctuation, or none after a comma"
+  },
+  {
+   "rule": "space-punct",
+   "sev": "low",
+   "hit": " .",
+   "t": "עדן קוסמטיקס ו/או הספק לא יהיו אחראיים ולא יישאו בכל נזק ישיר או עקיף, הנגרם ללקוחה או לצד שלישי, לרבות נזק כספי בגין רכישת המוצר, או תגובה אלרגית עבור רכיב שקיים במוצר. הלקוחה מתבקשת להשתמש במוצרים רק לשם מטרתם. אין להש",
+   "kind": "text",
+   "where": "main#main > article > p",
+   "pages": [
+    "/policies/terms-of-service/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "space before punctuation, or none after a comma"
+  },
+  {
+   "rule": "space-punct",
+   "sev": "low",
+   "hit": " .",
+   "t": "הסל ריק. בונה הערכה או החנות .",
+   "kind": "js",
+   "where": "src/4-app.js:146",
+   "pages": [
+    "js"
+   ],
+   "pageCount": 1,
+   "visible": false,
+   "why": "space before punctuation, or none after a comma"
+  }
+ ]
+}

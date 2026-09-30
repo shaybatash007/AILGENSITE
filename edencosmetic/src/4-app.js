@@ -6,9 +6,10 @@ const pUrl=x=>'/products/'+enc(x.h)+'/', cUrl=h=>'/collections/'+enc(h)+'/';
 const thumb=x=>'img/p/t/'+x.img+'.jpg', big=x=>'img/p/'+x.img+'.jpg';
 const title=x=>x.dt||x.t;
 const cheap=a=>a.slice().sort((p,q)=>p.p-q.p);
+const cutW=(t,n)=>t.length<=n?t:t.slice(0,n).replace(/\s+\S*$/,'')+'…';
 const waHref=t=>'https://wa.me/'+C.wa+'?text='+encodeURIComponent(t);
 const FREE=CAT.freeShip;
-const shipLine=(sum)=>sum<=0?'משלוח חינם בהזמנה מעל <b>'+money(FREE)+'</b>.':sum>=FREE?'<b>המשלוח חינם.</b> ההזמנה מעל '+money(FREE)+'.':'עוד <b>'+money(FREE-sum)+'</b> למשלוח חינם.';
+const shipLine=(sum)=>sum<=0?'משלוח חינם בהזמנה מעל <b>'+money(FREE)+'</b>.':sum>=FREE?'<b>המשלוח חינם</b>: ההזמנה מעל '+money(FREE)+'.':'עוד <b>'+money(FREE-sum)+'</b> למשלוח חינם.';
 const pct=sum=>Math.max(0,Math.min(100,sum/FREE*100));
 
 /* Israel time, Friday afternoon to Saturday night: the store keeps Shabbat (approximate on purpose) */
@@ -20,12 +21,12 @@ const same=(k)=>JSON.stringify(C[k])===JSON.stringify(DEF[k]);
 function applyContent(){
  if(!same('heroLine'))$('[data-c=heroLine]').innerHTML=hl(C.heroLine);
  if(!same('heroSub'))$('[data-c=heroSub]').textContent=C.heroSub;
- if(!same('bar'))$('#barTxt').textContent=C.bar;
+ if(!same('bar')){const parts=String(C.bar).split('·'); $('#barTxt').innerHTML='<span>'+esc(parts[0].trim())+'</span>'+(parts.length>1?'<span class="more"> · '+esc(parts.slice(1).join('·').trim())+'</span>':'');}
  if(!same('story'))$('#story').innerHTML=C.story.map(p=>'<p>'+p.map(esc).join('<br>')+'</p>').join('');
  if(!same('courseText'))$('[data-c=courseText]').textContent=C.courseText;
  renderFaq();
  const wa=waHref('שלום עדן, הגעתי מהאתר. '); $('#waLink').href=wa; $('#mWa').href=wa;
- $('#fN').textContent=ITEMS.length; $('#heroN').textContent=ITEMS.length; $('#allN').textContent=ITEMS.length;
+ $('#heroN').textContent=ITEMS.length; $('#shopN').textContent=ITEMS.length; $('#allN').textContent=ITEMS.length;
  $('#yr').textContent=new Date().getFullYear();
 }
 function renderFaq(){
@@ -35,12 +36,12 @@ function renderFaq(){
 }
 
 /* ================= categories ================= */
-const COVER={'הרמת-ריסים-וגבות':8479070290091,'דבקים-סיליקונים':8480545898667,'מוצרים-נלווים':8479577800875};
+const COVER={'הרמת-ריסים-וגבות':'thuya-kit','דבקים-סיליקונים':'pads-fox','מוצרים-נלווים':'nikk-tweezers'};
 const COLORDER=['הרמת-ריסים-וגבות','דבקים-סיליקונים','מוצרים-נלווים','קורסים-והשתלמויות'];
 function renderCats(){
  const cols=COLORDER.map(h=>CAT.cols.find(c=>c.h===h)).filter(Boolean);
- $('#catsList').innerHTML=cols.map(c=>{const soon=!c.n, x=BYID.get(COVER[c.h]);
-  return '<li><a class="cat'+(soon?' soon':'')+'" href="'+cUrl(c.h)+'" data-col="'+esc(c.h)+'"><span class="im">'+(x?'<img src="'+thumb(x)+'" alt="" width="360" height="360" loading="lazy">':'<svg aria-hidden="true"><use href="#i-course"/></svg>')+'</span><span class="tx2"><b>'+esc(c.t)+'</b><span>'+(soon?'בקרוב, השאירי פרטים':bdi(c.n)+' מוצרים')+'</span><span class="go">'+(soon?'לרשימת ההמתנה':'לקולקציה')+' <svg aria-hidden="true"><use href="#i-arrow"/></svg></span></span></a></li>';}).join('');
+ $('#catsList').innerHTML=cols.map(c=>{const soon=!c.n, cv=COVER[c.h];
+  return '<li><a class="cat'+(soon?' soon':'')+'" href="'+cUrl(c.h)+'" data-col="'+esc(c.h)+'"><span class="im">'+(cv?'<img src="img/cut/'+cv+'-380.webp" alt="" width="190" height="190" loading="lazy" decoding="async">':'<svg aria-hidden="true"><use href="#i-course"/></svg>')+'</span><span class="tx2"><b>'+esc(c.t)+'</b><span>'+(soon?'רשימת המתנה לקורס הבא':bdi(c.n)+' מוצרים')+'</span><span class="go">'+(soon?'להצטרפות לרשימה':'לקולקציה')+' <svg aria-hidden="true"><use href="#i-arrow"/></svg></span></span></a></li>';}).join('');
  $$('#catsList a').forEach(a=>a.addEventListener('click',e=>{
   const h=a.dataset.col, c=CAT.cols.find(c=>c.h===h);
   if(!c.n){e.preventDefault(); location.hash='#courses'; $('#courses').scrollIntoView({behavior:reduce()?'auto':'smooth'}); return;}
@@ -63,8 +64,8 @@ function filtered(){
  return a;
 }
 function card(x){
- const out=!x.a;
- return '<li><article class="pc"><button class="ph2" type="button" data-qv="'+x.i+'" aria-label="מבט מהיר: '+esc(title(x))+(out?', אזל':x.c?', מבצע':'')+'"><img src="'+thumb(x)+'" alt="'+esc(title(x))+'" width="360" height="360" loading="lazy" decoding="async">'+(out?'<span class="tagg out">אזל</span>':x.c?'<span class="tagg">מבצע</span>':'')+'</button>'
+ const out=!x.a, bk=brandOfItem(x);
+ return '<li><article class="pc"'+(bk?' style="--pa:'+bk.look.accent+'"':'')+'><button class="ph2" type="button" data-qv="'+x.i+'" aria-label="מבט מהיר: '+esc(title(x))+(out?', אזל':x.c?', מבצע':'')+'"><img src="'+thumb(x)+'" alt="'+esc(title(x))+'" width="360" height="360" loading="lazy" decoding="async">'+(out?'<span class="tagg out">אזל</span>':x.c?'<span class="tagg">מבצע</span>':'')+'</button>'
  +'<div class="bd"><p class="br">'+esc(x.b)+'</p><h3><a href="'+pUrl(x)+'" data-qv="'+x.i+'">'+esc(title(x))+'</a></h3><div class="row"><span class="pr">'+bdi(money(x.p))+(x.c?'<s>'+bdi(money(x.c))+'</s>':'')+'</span>'
  +(out?'<button class="add alt" type="button" data-notify="'+x.i+'">עדכנו אותי</button>':'<button class="add" type="button" data-add="'+x.i+'"><svg aria-hidden="true"><use href="#i-cart"/></svg>הוספה</button>')+'</div></div></article></li>';
 }
@@ -98,9 +99,60 @@ function shopUI(){
  });
  // brands
  const cnt={}; ITEMS.forEach(x=>{if(x.b)cnt[x.b]=(cnt[x.b]||0)+1;});
- $('#brandList').innerHTML=Object.entries(cnt).sort((a,b)=>b[1]-a[1]).map(([b,n])=>'<li><button type="button" data-b="'+esc(b)+'">'+esc(b)+'<small>'+bdi(n)+'</small></button></li>').join('');
- $$('#brandList button').forEach(b=>b.addEventListener('click',()=>{F.brand=b.dataset.b;F.kind='';F.col='';F.n=24;$('#brand').value=F.brand;renderShop();$('#shop').scrollIntoView({behavior:reduce()?'auto':'smooth'});}));
+ renderBrands();
  renderShop();
+}
+
+
+/* ================= brands: the registry (3c-brands.js, facts with sources) ================= */
+const BKEY=new Map(); BRANDS.list.forEach(b=>b.ids.forEach(i=>BKEY.set(i,b)));
+const brandOfItem=x=>BKEY.get(x.i)||null;
+const brandItems=b=>b.ids.map(i=>BYID.get(i)).filter(Boolean);
+const bUrl=b=>b.page?'/brands/'+b.key+'/':pUrl(brandItems(b)[0]);
+const dark=hex=>{const n=parseInt(hex.slice(1),16),r=n>>16,g=n>>8&255,bl=n&255;return (r*299+g*587+bl*114)/1000<128;};
+function brandPanel(b,house){
+ const list=house?b.ids.map(i=>BYID.get(i)).filter(Boolean):brandItems(b), lo=Math.min(...list.map(x=>x.p)), hi=Math.max(...list.map(x=>x.p)), inS=list.filter(x=>x.a).length;
+ const kinds=[...new Set(list.map(x=>x.k))].map(k=>CAT.kinds[k]).slice(0,4), L=b.look, d=dark(L.field);
+ const name=house?'הבחירה של עדן':b.short, href=house?cUrl('דבקים-סיליקונים'):(LIVE?'#shop':bUrl(b));
+ return '<li><a class="bp'+(d?' dark':'')+'" href="'+href+'" data-bk="'+esc(house?'':b.key)+'" style="--bf:'+L.field+';--bi:'+L.ink+';--ba:'+L.accent+'"><span class="im"><img src="'+b.cut.replace('.webp','-380.webp')+'" alt="" width="190" height="190" loading="lazy" decoding="async"></span><span class="tx"><b class="nm bt" data-type="'+esc(L.type)+'">'+esc(name)+'</b>'
+  +(house?'<span class="or">בלי שם מותג · נבחרו לחנות</span>':b.origin?'<span class="or">'+esc(b.origin)+'</span>':'')
+  +'<span class="ln">'+(list.length===1?'מוצר אחד':bdi(list.length)+' מוצרים')+' · '+(lo===hi?bdi(money(lo)):bdi(money(lo))+' עד '+bdi(money(hi)))+' · '+(inS?bdi(inS)+' במלאי':list.length===1?'אזל כרגע':'אזלו כרגע')+'</span>'
+  +'<ul class="kz">'+kinds.map(k=>'<li>'+esc(k)+'</li>').join('')+'</ul><span class="go">'+(house?'לסיליקונים ולכלים':b.page?'לעמוד המותג':'לעמוד המוצר')+'</span></span></a></li>';
+}
+function renderBrands(){
+ const order=BRANDS.list.slice().sort((a,b)=>b.ids.length-a.ids.length);
+ $('#brandList').innerHTML=order.map(b=>brandPanel(b)).join('')+brandPanel(BRANDS.house,true);
+ $('#brandLine').innerHTML=order.map(b=>'<li><a class="bt" data-type="'+esc(b.look.type)+'" href="'+(LIVE?'#brands':bUrl(b))+'" style="--bc:'+b.look.accent+'">'+esc(b.short)+'</a></li>').join('');
+ if(LIVE)$$('#brandList a[data-bk]').forEach(a=>a.addEventListener('click',e=>{const b=BRANDS.list.find(x=>x.key===a.dataset.bk); if(!b)return; e.preventDefault(); F.brand=brandItems(b)[0].b; F.kind='';F.col='';F.n=24; $('#brand').value=F.brand; renderShop(); $('#shop').scrollIntoView({behavior:reduce()?'auto':'smooth'});}));
+}
+/* the hero ticket: the kit builder's answer for the most common question (lash lift, starting out), computed from the catalog */
+function heroTicket(){
+ const cats=KIT.lash.start, rows=cats.map(c=>{const o=cheap(ITEMS.filter(c.f)); return o.find(x=>x.a);}).filter(Boolean);
+ const sum=rows.reduce((s,x)=>s+x.p,0);
+ $('#tkIm').innerHTML=rows.slice(0,5).map(x=>'<img src="'+thumb(x)+'" alt="" width="46" height="46" loading="lazy">').join('');
+ $('#tkTot').innerHTML=bdi(money(sum)); $('#tkN').innerHTML=bdi(rows.length)+' מוצרים · '+(sum>=FREE?'משלוח חינם':'עוד '+bdi(money(FREE-sum))+' למשלוח חינם');
+ requestAnimationFrame(()=>{$('#tkPg').style.width=pct(sum)+'%';});
+}
+
+
+/* ================= generated visuals: placed only when approved (VISUAL, from img/v/manifest.json); the site is complete without them ================= */
+function applyVisuals(){
+ const I=VISUAL.images||{}, V=VISUAL.videos||{}, big=matchMedia('(min-width:981px)').matches, calm=reduce()||(navigator.connection&&navigator.connection.saveData);
+ const pic=(set,sizes,cls)=>{const s=set.srcset; return '<img class="'+(cls||'')+'" src="'+s[s.length-1].src+'" srcset="'+s.map(x=>x.src+' '+x.w+'w').join(', ')+'" sizes="'+sizes+'" alt="" loading="lazy" decoding="async">';};
+ const vid=(v,cls)=>'<video class="'+(cls||'')+'" muted playsinline preload="none" poster="'+v.poster+'"><source src="'+(v.src[1920]||v.src[1280])+'" type="video/mp4"></video>';
+ const playWhenSeen=el=>{ if(!el)return; const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ el.play().catch(()=>{}); io.disconnect(); } }),{threshold:.4}); io.observe(el); };
+ let used=0;
+ const at=I.atelier&&(I.atelier['4:5']||I.atelier['16:9']);
+ if(at){ const pl=$('#stage .plate'); pl.classList.add('gen'); pl.insertAdjacentHTML('afterbegin',pic(at,'(max-width:980px) 90vw, 560px')); used++;
+  if(V.atelier&&big&&!calm){ pl.insertAdjacentHTML('afterbegin',vid(V.atelier,'plv')); playWhenSeen($('.plv',pl)); } }
+ const cu=I.curl&&(I.curl['21:9']||I.curl['16:9']);
+ if(cu){ $('#kit').insertAdjacentHTML('afterend','<div class="band" aria-hidden="true">'+(V.curl&&big&&!calm?vid(V.curl,'bv'):'')+pic(cu,'100vw')+'</div>'); playWhenSeen($('.band .bv')); used++; }
+ const cr=I.craft&&I.craft['4:5'];
+ if(cr){ $('#courses .tx').insertAdjacentHTML('beforebegin','<figure class="craft rv on">'+pic(cr,'(max-width:980px) 90vw, 420px')+(cr.label?'<figcaption class="aura">'+esc(cr.label)+'</figcaption>':'')+'</figure>'); $('#courses').classList.add('withcraft'); used++; }
+ const lo=I.lotus&&I.lotus['16:9'];
+ if(lo){ $('#about').insertAdjacentHTML('afterbegin','<div class="lotusbg" aria-hidden="true">'+pic(lo,'100vw')+'</div>'); used++; }
+ $$('#brandList .bp[data-bk]').forEach(a=>{ const f=I['field-'+a.dataset.bk]; const r=f&&(f['1:1']||f['16:9']); if(r){ a.insertAdjacentHTML('afterbegin','<span class="bf" aria-hidden="true">'+pic(r,'(max-width:700px) 76vw, 300px')+'</span>'); used++; } });
+ if(used&&VISUAL.disclosure){ const d=document.createElement('p'); d.className='fine disc'; d.textContent=VISUAL.disclosure; $('#ft .wrap').appendChild(d); }
 }
 
 /* ================= quick view ================= */
@@ -112,8 +164,8 @@ function openQV(x){
  const av=$('#qvAvail'); av.textContent=x.a?'במלאי':'אזל מהמלאי'; av.classList.toggle('out',!x.a);
  const add=$('#qvAdd'); add.textContent=x.a?'הוספה לסל':'עדכנו אותי כשיחזור'; add.dataset.mode=x.a?'add':'notify';
  $('#qvAsk').href=waHref('שלום עדן, שאלה על: '+title(x)+' ('+money(x.p)+')');
- $('#qvDesc').innerHTML=x.d?x.d.split('\n').map(l=>'<p>'+esc(l)+'</p>').join(''):'<p class="fine">אין תיאור לעמוד הזה בחנות. אפשר לשאול את עדן בוואטסאפ.</p>';
- $('#qvSnap').textContent='מחיר ומלאי כפי שמופיעים בחנות ב-29.9.2026. התשלום בחנות.';
+ $('#qvDesc').innerHTML=x.d?x.d.split('\n').map(l=>'<p>'+esc(l)+'</p>').join(''):'<p class="fine">יש שאלה על המוצר? עדן עונה בוואטסאפ.</p>';
+ $('#qvSnap').textContent='הסכום הסופי מוצג בקופה של החנות.';
  const pg=$('#qvPage'); pg.hidden=LIVE; pg.href=pUrl(x);
  const d=$('#qv'); if(!d.open)d.showModal();
 }
@@ -141,12 +193,12 @@ function cartLink(){return CAT.origin+'/cart/'+cartLines().filter(l=>l.x.a).map(
 function cartText(){const ls=cartLines().filter(l=>l.x.a); return 'שלום עדן, אני רוצה להזמין מהאתר:\n'+ls.map(l=>'• '+title(l.x)+(l.q>1?' ×'+l.q:'')+' – '+money(l.x.p*l.q)).join('\n')+'\nסה"כ מוצרים: '+money(cartSum());}
 function renderCart(){
  const ls=cartLines(), sum=cartSum(), n=ls.reduce((s,l)=>s+l.q,0);
- const cc=$('#cartCnt'); cc.hidden=!n; cc.textContent=n; $('#cartBtn').setAttribute('aria-label','הסל שלי, '+n+' פריטים');
+ const cc=$('#cartCnt'); cc.hidden=!n; cc.textContent=n; $('#cartBtn').setAttribute('aria-label','הסל שלי, '+(n?nP(n,'פריט אחד','פריטים'):'ריק'));
  $('#cartList').innerHTML=ls.length?ls.map(({x,q})=>'<li class="ci"><img src="'+thumb(x)+'" alt="" width="64" height="64"><div><b>'+esc(title(x))+'</b>'+(x.a?'<div class="q"><button type="button" data-q="-1" data-v="'+x.v+'" aria-label="הפחתה">−</button><span>'+q+'</span><button type="button" data-q="1" data-v="'+x.v+'" aria-label="הוספה">+</button></div>':'<div class="fine" style="color:var(--warn);font-weight:700">אזל, לא יועבר לחנות</div>')+'<button class="rm" type="button" data-rm="'+x.v+'">הסרה</button></div><span class="pr">'+bdi(x.a?money(x.p*q):'—')+'</span></li>').join('')
   :'<li class="empty">הסל ריק.<br><a href="#kit" data-close>בונה הערכה</a> או <a href="#shop" data-close>החנות</a>.</li>';
  $('#cTot').innerHTML=bdi(money(sum)); $('#cPg').style.width=pct(sum)+'%'; $('#cShip').innerHTML=shipLine(sum);
  const go=$('#cGo'); go.href=cartLink(); go.toggleAttribute('hidden',!ls.some(l=>l.x.a)); $('#cWa').href=waHref(cartText()); $('#cWa').toggleAttribute('hidden',!ls.some(l=>l.x.a)); $('#cClear').hidden=!ls.length;
- const sh=$('#shab'); if(shabbat()){sh.hidden=false;sh.textContent='החנות שומרת שבת (בקירוב, לפי שעון ישראל). אפשר להזמין בצאת השבת.';} else sh.hidden=true;
+ const sh=$('#shab'); if(shabbat()){sh.hidden=false;sh.textContent='שבת עכשיו: אפשר לבנות סל, וההזמנות נפתחות בצאת השבת.';} else sh.hidden=true;
 }
 function openCart(o){
  const c=$('#cart'), s=$('#scrim'); c.classList.toggle('open',o); c.setAttribute('aria-hidden',String(!o)); c.inert=!o; s.hidden=!o; document.body.style.overflow=o?'hidden':'';
@@ -187,7 +239,7 @@ function renderKit(){
  const rs=kitSel();
  $('#kList').innerHTML=rs.length?rs.map(({c,x,on})=>{
   const opts=kitOpts(c);
-  return '<li class="krow'+(on&&x.a?'':' off')+'" data-c="'+c.k+'"><input class="ck" type="checkbox" '+(on&&x.a?'checked':'')+(x.a?'':' disabled')+' aria-label="כלול: '+esc(c.t)+'"><img src="'+thumb(x)+'" alt="" width="76" height="76" loading="lazy"><div class="nm"><span class="cat2">'+esc(c.t)+'</span>'+(opts.length>1?'<select aria-label="בחירה אחרת ב'+esc(c.t)+'">'+opts.map(o=>'<option value="'+o.i+'"'+(o.i===x.i?' selected':'')+'>'+esc(title(o).slice(0,58))+' · '+money(o.p)+(o.a?'':' (אזל)')+'</option>').join('')+'</select>':'<b>'+esc(title(x))+'</b>')+(x.a?'':'<span class="out">אזל בחנות</span>')+'</div><span class="pr">'+bdi(x.a?money(x.p):'—')+'</span></li>';
+  return '<li class="krow'+(on&&x.a?'':' off')+'" data-c="'+c.k+'"><input class="ck" type="checkbox" '+(on&&x.a?'checked':'')+(x.a?'':' disabled')+' aria-label="כלול: '+esc(c.t)+'"><img src="'+thumb(x)+'" alt="" width="76" height="76" loading="lazy"><div class="nm"><span class="cat2">'+esc(c.t)+'</span>'+(opts.length>1?'<select aria-label="בחירה אחרת ב'+esc(c.t)+'">'+opts.map(o=>'<option value="'+o.i+'"'+(o.i===x.i?' selected':'')+'>'+esc(cutW(title(o),56))+' · '+money(o.p)+(o.a?'':' (אזל)')+'</option>').join('')+'</select>':'<b>'+esc(title(x))+'</b>')+(x.a?'':'<span class="out">אזל בחנות</span>')+'</div><span class="pr">'+bdi(x.a?money(x.p):'—')+'</span></li>';
  }).join(''):'<li class="krow empty">אין מוצרים לקטגוריה הזו כרגע.</li>';
  const sum=kitSum(); $('#kTot').innerHTML=bdi(money(sum)); $('#kPg').style.width=pct(sum)+'%'; $('#kShip').innerHTML=shipLine(sum);
  const has=rs.some(r=>r.on&&r.x.a); $('#kCart').disabled=!has; $('#kWa').setAttribute('aria-disabled',String(!has)); $('#kWa').href=waHref(kitText());
@@ -248,15 +300,17 @@ function chrome(){
  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}}),{rootMargin:'0px 0px -8% 0px',threshold:.08});
  $$('.rv').forEach(el=>{ if(el.closest('.hero'))return; io.observe(el); });
  const spy=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const id=e.target.id; $$('.nav a').forEach(a=>a.setAttribute('aria-current',String(a.getAttribute('href')==='#'+id)));}}),{rootMargin:'-45% 0px -50% 0px'});
- ['kit','shop','brands','film','about','courses','faq','contact'].forEach(id=>{const el=$('#'+id); el&&spy.observe(el);});
+ ['shop','brands','kit','about','courses','prep','contact'].forEach(id=>{const el=$('#'+id); el&&spy.observe(el);});
  const dr=$('#drawer'), bg=$('#burger');
  const openDr=o=>{dr.classList.toggle('open',o); dr.setAttribute('aria-hidden',String(!o)); dr.inert=!o; bg.setAttribute('aria-expanded',String(o)); document.body.style.overflow=o?'hidden':''; if(o)setTimeout(()=>$('#drawerX').focus(),30); else bg.focus({preventScroll:true});};
  bg.onclick=()=>openDr(true); $('#drawerX').onclick=()=>openDr(false);
  dr.addEventListener('click',e=>{if(e.target===dr||e.target.closest('a.dl'))openDr(false);});
  dr.addEventListener('keydown',e=>{if(e.key==='Escape')openDr(false);});
  window.openDr=openDr;
- $('#liftBtn').onclick=()=>{liftHero(0,1500);LOT.state('happy',1600);};
+ const lb=$('#liftBtn'); if(lb)lb.onclick=()=>{liftHero(0,1500);LOT.state('happy',1600);};
  $('#vis').addEventListener('pointerenter',()=>{if(liftT>.98&&!reduce())liftHero(.55,900);});
  // the shabbat notice
- if(shabbat()){ $('#barTxt').textContent='החנות שומרת שבת (בקירוב, לפי שעון ישראל). אפשר להזמין בצאת השבת. אפשר להמשיך לבנות סל.'; }
+ if(shabbat()){ $('#barTxt').textContent='שבת שלום. ההזמנות נפתחות בצאת השבת, ואפשר כבר לבנות סל.'; }
+ // the film card grows when it plays
+ const fv=$('#filmV'); if(fv){fv.addEventListener('play',()=>$('#film').classList.add('playing')); fv.addEventListener('ended',()=>$('#film').classList.remove('playing'));}
 }

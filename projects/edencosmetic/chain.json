@@ -5,7 +5,10 @@
   "store": true,
   "mascot": true,
   "film": true,
-  "seoOld": true
+  "seoOld": true,
+  "brands": true,
+  "products": true,
+  "visualKey": false
  },
  "elements": [
   {
@@ -589,6 +592,124 @@
    "check": {
     "glob": "projects/{slug}/out/portfolio/*.mp4",
     "min": 5
+   }
+  },
+  {
+   "id": "domain-dna",
+   "phase": "2-brand",
+   "label": "Domain language: design-dna.json (feeling, signature, imagery policy, density, motion, voice, what it is not)",
+   "check": {
+    "json": "projects/{slug}/design-dna.json",
+    "paths": [
+     "domain",
+     "feeling",
+     "signature",
+     "imagery",
+     "layout",
+     "motion",
+     "voice",
+     "notThis"
+    ]
+   }
+  },
+  {
+   "id": "brand-registry",
+   "phase": "2-brand",
+   "label": "Brand registry: every brand the business sells, facts with official sources, colours from its packaging",
+   "when": [
+    "brands"
+   ],
+   "check": {
+    "json": "projects/{slug}/brands.json",
+    "path": "brands",
+    "minLength": 1
+   }
+  },
+  {
+   "id": "copy-harvest",
+   "phase": "5-site",
+   "label": "Content: every visitor string harvested (all pages, all states, script literals)",
+   "check": {
+    "json": "projects/{slug}/qa/copy/strings.json",
+    "path": "strings",
+    "minLength": 200
+   }
+  },
+  {
+   "id": "copy-gate",
+   "phase": "5-site",
+   "label": "Content gate: 0 high (internal, developer, placeholder language)",
+   "check": {
+    "json": "projects/{slug}/qa/copy/lint.json",
+    "path": "count.high",
+    "equals": 0
+   }
+  },
+  {
+   "id": "copy-gate-medium",
+   "phase": "5-site",
+   "label": "Content gate: 0 medium (stale dates, filler, language leaks, voice)",
+   "check": {
+    "json": "projects/{slug}/qa/copy/lint.json",
+    "path": "count.medium",
+    "equals": 0
+   }
+  },
+  {
+   "id": "cutouts",
+   "phase": "5-site",
+   "label": "Real product cutouts with pixels proven kept (cutouts.json)",
+   "when": [
+    "products"
+   ],
+   "check": {
+    "json": "projects/{slug}/visual/cutouts.json",
+    "minKeys": {
+     "cutouts": 3
+    }
+   }
+  },
+  {
+   "id": "visual-concepts",
+   "phase": "5-site",
+   "label": "Visual system: at most five concepts, each with a job, placements and a never-list",
+   "check": {
+    "json": "projects/{slug}/visual/concepts.json",
+    "path": "concepts",
+    "maxLength": 5
+   }
+  },
+  {
+   "id": "visual-published",
+   "phase": "5-site",
+   "label": "Approved generated visuals published with provenance (needs the image key)",
+   "when": [
+    "visualKey"
+   ],
+   "check": {
+    "json": "{site}/img/v/manifest.json",
+    "minKeys": {
+     "images": 1
+    }
+   }
+  },
+  {
+   "id": "evolve",
+   "phase": "8-deliver",
+   "label": "Autonomy: evolve.json and a baseline catalog snapshot",
+   "check": {
+    "file": "projects/{slug}/evolve.json",
+    "min": 200
+   }
+  },
+  {
+   "id": "evolve-baseline",
+   "phase": "8-deliver",
+   "label": "Autonomy: the loop's first report",
+   "check": {
+    "json": "projects/{slug}/evolve/last.json",
+    "path": "log",
+    "minLength": 0
    }
   },
   {

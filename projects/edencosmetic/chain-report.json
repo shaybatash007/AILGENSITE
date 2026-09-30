@@ -1,9 +1,17 @@
 {
   "slug": "edencosmetic",
-  "at": "2026-09-29T23:37:13.175Z",
-  "ok": 53,
-  "missing": [],
-  "na": 0,
+  "at": "2026-09-30T09:28:27.901Z",
+  "ok": 61,
+  "missing": [
+    {
+      "id": "pushed",
+      "phase": "8-deliver",
+      "why": [
+        "205 קבצים לא מחויבים"
+      ]
+    }
+  ],
+  "na": 1,
   "elements": [
     {
       "id": "brief",
@@ -357,6 +365,66 @@
       "timing": "exact"
     },
     {
+      "id": "domain-dna",
+      "phase": "2-brand",
+      "label": "Domain language: design-dna.json (feeling, signature, imagery policy, density, motion, voice, what it is not)",
+      "status": "ok"
+    },
+    {
+      "id": "brand-registry",
+      "phase": "2-brand",
+      "label": "Brand registry: every brand the business sells, facts with official sources, colours from its packaging",
+      "status": "ok"
+    },
+    {
+      "id": "copy-harvest",
+      "phase": "5-site",
+      "label": "Content: every visitor string harvested (all pages, all states, script literals)",
+      "status": "ok"
+    },
+    {
+      "id": "copy-gate",
+      "phase": "5-site",
+      "label": "Content gate: 0 high (internal, developer, placeholder language)",
+      "status": "ok"
+    },
+    {
+      "id": "copy-gate-medium",
+      "phase": "5-site",
+      "label": "Content gate: 0 medium (stale dates, filler, language leaks, voice)",
+      "status": "ok"
+    },
+    {
+      "id": "cutouts",
+      "phase": "5-site",
+      "label": "Real product cutouts with pixels proven kept (cutouts.json)",
+      "status": "ok"
+    },
+    {
+      "id": "visual-concepts",
+      "phase": "5-site",
+      "label": "Visual system: at most five concepts, each with a job, placements and a never-list",
+      "status": "ok"
+    },
+    {
+      "id": "visual-published",
+      "phase": "5-site",
+      "label": "Approved generated visuals published with provenance (needs the image key)",
+      "status": "na"
+    },
+    {
+      "id": "evolve",
+      "phase": "8-deliver",
+      "label": "Autonomy: evolve.json and a baseline catalog snapshot",
+      "status": "ok"
+    },
+    {
+      "id": "evolve-baseline",
+      "phase": "8-deliver",
+      "label": "Autonomy: the loop's first report",
+      "status": "ok"
+    },
+    {
       "id": "meter",
       "phase": "8-deliver",
       "label": "Meter: every phase opened and closed, report written",
@@ -375,7 +443,7 @@
       "id": "pushed",
       "phase": "8-deliver",
       "label": "Committed and pushed",
-      "status": "ok"
+      "status": "missing"
     }
   ]
 }

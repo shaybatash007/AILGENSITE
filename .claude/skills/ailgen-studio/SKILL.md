@@ -22,6 +22,9 @@ producer in one. Input is one of three things. Output is a complete, honest, pub
 | Website | A live Claude artifact (content model, leads DB, owner admin, AI agent with offline fallback) **and** a static export in the repo |
 | Launch film | 9:16 and 4:5 MP4 with an original soundtrack, 3 stills, ad copy A/B/C, targeting notes |
 | Portfolio | The film placed in the client site, and an AILGEN portfolio card + 11-part case study with measured numbers |
+| Visual system | `visual/concepts.json` (≤ 5 generated concepts with jobs and limits), real product cutouts, approved images and video with provenance (`img/v/manifest.json`) |
+| Content quality | every visitor string harvested and linted to 0 high / 0 medium (`qa/copy/lint.json`), and reviewed against the rubric |
+| Autonomy | `evolve.json` + a baseline snapshot: new products, brands and prices reach the site without a rebuild |
 
 The three reference builds show the range: **AILGEN** (own brand, from a name), **VERMEIL** (concept, from a
 written idea), **Switching TV** (real client, from a URL). Their kits are in `projects/*/brand.json`, and
@@ -61,7 +64,7 @@ touching quality:
   stop at the gate and say why.
 - **Look once:** one desktop + one mobile screenshot pass per build, fix, then deliver.
 - **Mark every element, not only every phase:** `--phase 3-site/proof-tool` (sub-phases roll up into their phase).
-  `scripts/chain.mjs --project projects/<slug>` lists the 53 elements of the chain, checks the evidence for each,
+  `scripts/chain.mjs --project projects/<slug>` lists the elements of the chain, checks the evidence for each,
   joins its time and cost, and exits 1 while anything is missing (`references/11-chain-and-ecommerce.md`).
 - **Never skip a link of the chain** unless the owner says so (`chain.mjs` is the proof, run it soft while working and hard before delivery): mascot (born from the logo), signature film scene
   (`morph` or hand-crafted), live preview link, the film on the client's site, and the case in the studio
@@ -101,6 +104,13 @@ Concept in one sentence, the strongest **true** claim, a **signature element** b
 draw a new one only for concept/own brands), one icon family with the signature in every icon, favicon.
 - **Gate**: `brand.json` complete, contrast ≥ 4.5 for text, every token used for a reason.
 
+### 2b · Domain language → `references/14-domain-language.md`
+The structure is shared; the expression is not. Write `design-dna.json`: domain, audience, the feeling, the commercial job, the
+signature, the imagery policy (which of the six classes, where imagery stays out), density, motion tempo, voice, and what the site
+must not look like. A brand the business sells gets its own record in `brands.json` (facts from its official site with the source,
+colours measured from its real packaging), and its own panel and page.
+- **Gate**: `design-dna.json` complete; every brand fact has a source or is left out.
+
 ### 3 · Mascot (optional) → `references/02-mascot.md`
 Only if it serves the brand (friendly consumer or SMB brands: yes; luxury: usually no, VERMEIL has a voice
 instead). Born from the logo, drawn on a pixel grid, faces on its own "screen", 6–8 states, strict manners.
@@ -131,6 +141,19 @@ system, icons) and `references/skills/levelup2.md` (copy deck, real footage, ill
 Hebrew and RTL rules: `references/05-hebrew-rtl.md`. Content rules: `references/04-content-honesty.md`.
 - **Gate**: levelup VERIFY passes; zero console errors; no overflow at 390 px; keyboard and reduced-motion passes (`scripts/site-qa.mjs` with a scenario of real interactions; `scripts/lighthouse.mjs` for the dated numbers).
 
+### 5b · Content quality → `references/13-content-quality.md`
+`copy-harvest.mjs` collects every string on every page and in every state (dialogs, empty states, errors, agent answers, alt and
+aria text, share texts); `copy-lint.mjs` stops internal, developer and placeholder language, stale dates, filler, language leaks and
+voice errors; then read the harvest against the rubric. No word on a page says where a text or image came from.
+- **Gate**: `copy-lint.mjs --gate` passes (0 high, 0 medium) after the last change, and the rubric review is done.
+
+### 5c · Visual system → `references/12-visual-production.md`
+At most five generated concepts, each with a job, placements and a never-list (`visual/concepts.json`); product pixels never
+generated (real cutouts, `cutout.py`); `imagegen.mjs` (Gemini 3 Pro Image for finals, 3.1 Flash Image for drafts, gpt-image-2
+optional), `image-review.mjs` (automatic checks, contact sheets, verdicts, publish), `videogen.mjs` (Veo 3.1 from an approved still).
+The site renders a slot only when an approved asset exists, and is complete without any.
+- **Gate**: every published asset approved with a reason; cutouts keep their pixels; the budget cap held; the disclosure line shown when generated images are.
+
 ### 6 · Launch campaign → `references/06-video-campaign.md`
 Fill `film.json` from the brand kit and the real content (hook · reveal · stat · gallery · quote · cards · cta),
 pick the motif from the spirit, then:
@@ -154,10 +177,18 @@ numbers · honesty note), real footage recorded with `scripts/rec.py`, Lighthous
 Run the certification checklist, publish/refresh the artifacts (read the live version first), export to the
 repo, commit and push, and report to the user in Hebrew: what was built, links, what only the owner can supply.
 
+### 9 · Evolve → `references/15-autonomy.md`
+Set up `evolve.json` and take the baseline snapshot, so new products, prices, stock and brands reach the site through
+`evolve.mjs --fetch --apply` (weekly, or as a scheduled routine) with the gates and a report of what needs a person.
+
 ## Non-negotiables
 
-- **Truth before wow.** No invented clients, numbers, prices, testimonials, awards or photos. Renders are
-  labeled "הדמיה", real footage "מהשטח", concept work "קונספט", demo data "נתוני הדגמה".
+- **Truth before wow.** No invented clients, numbers, prices, testimonials, awards, products or photos. The provenance of every
+  image is recorded (`media-labels.json`, `img/v/manifest.json`, `visual/cutouts.json`); visitors see a label only in their own
+  language and only where an image could be read as documentary ("תמונת אווירה"); demo data stays in the owner's screens.
+- **No production language on a page.** Preview, snapshot, draft, "from the existing site", "by the name in the catalog",
+  prepared-by lines and dates of data pulls belong in the project files. `copy-lint.mjs` enforces it.
+- **Product pixels are never generated**, and a site has at most five generated concepts.
 - **The logo drives everything.** Signature element, icons, loader, mascot, film motif: one idea, repeated.
 - **Hebrew first, RTL correct.** Numbers and Latin isolated (`<bdi>` in HTML, LRI/PDI in canvas).
 - **No stock clichés** (robots, brains, handshakes). Imagery is real, generated to the brand, or drawn in code.
@@ -189,8 +220,15 @@ repo, commit and push, and report to the user in Hebrew: what was built, links, 
 | `scripts/contact_sheet.py` | Tile frames/screens for review |
 | `engine/film.html` + `render.mjs` + `audio.py` | The brand-film engine: any brand, 4 aspect ratios, original soundtrack. Spec in `engine/README.md` |
 | `scripts/meter.mjs` | Phase marks + measured time, tokens and cost per phase from the session log |
-| `scripts/chain.mjs` | The chain check: evidence, time and cost for each of the 53 elements; exit 1 on a gap |
+| `scripts/chain.mjs` | The chain check: evidence, time and cost for every element of the chain; exit 1 on a gap |
 | `scripts/shopify-catalog.mjs` | Catalog from a Shopify store's public JSON (products, collections, prices, images) |
+| `scripts/copy-harvest.mjs` | Every visitor string on every page and in every state (with a project states module), plus script literals |
+| `scripts/copy-lint.mjs` | The content gate: internal, developer, placeholder, stale-date, filler, language-leak, voice and typography rules |
+| `scripts/cutout.py` | Real product cutouts: alpha only, pixels proven kept (PSNR), unsuitable photos refused |
+| `scripts/imagegen.mjs` | Generated candidates per concept: Gemini (default), OpenAI (optional), stub (pipeline tests); probe, dry run, budget, ledger |
+| `scripts/image-review.mjs` | Automatic checks, review sheets, verdicts (Claude or owner), publish approved picks with provenance |
+| `scripts/videogen.mjs` | Veo 3.1 image-to-video from an approved still; muted web versions and poster to the manifest |
+| `scripts/evolve.mjs` | The autonomy loop: catalog diff, draft brands, updates, gates and a report of what needs a person |
 | `scripts/shot.mjs` | Screenshot a local file or URL (boards, icon sheets, transparent logos) |
 | `scripts/site-qa.mjs` | Site gate: console, overflow at 390 px, reduced motion, keyboard, plus a scenario of real interactions |
 | `scripts/lighthouse.mjs` | Lighthouse 12 mobile + desktop on a production-like local server, dated, into `qa/lighthouse.json` |

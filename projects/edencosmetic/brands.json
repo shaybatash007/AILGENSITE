@@ -1,0 +1,212 @@
+{
+ "_doc": "The brand registry: one record per brand the store carries. Facts come from the brand's official site (source + date) or from the store's own catalog; nothing else. 'look' is the brand's visual logic on this site, measured from its real packaging photos (dominant colours, projects/edencosmetic/brands-research.md). New brands found by the autonomy loop (scripts/evolve.mjs) are added with status 'draft' and only the catalog facts, until a person verifies the rest.",
+ "checked": "2026-09-30",
+ "pageMin": 2,
+ "brands": [
+  {
+   "key": "thuya",
+   "name": "THUYA",
+   "match": [
+    "THUYA",
+    "טויה"
+   ],
+   "status": "verified",
+   "origin": {
+    "he": "ברצלונה, ספרד",
+    "src": "https://www.thuya.com/en/",
+    "quote": "Sant Gervasi de Cassoles, 68, 08022 Barcelona"
+   },
+   "about": {
+    "he": "מותג מקצועי מברצלונה להרמת ריסים וגבות ולצבעים. לפי האתר של המותג, לצד המוצרים יש לו בית ספר מקצועי, מעבדה ומרכז לוגיסטי שמשרת אנשי מקצוע ביותר מ-65 מדינות.",
+    "src": "https://www.thuya.com/en/"
+   },
+   "look": {
+    "field": "#1F1A1C",
+    "ink": "#FFFFFF",
+    "accent": "#C10C08",
+    "soft": "#F4E3E2",
+    "type": "caps-bold",
+    "motif": "lacquer",
+    "note": "red lacquer box on charcoal, silver tubes"
+   },
+   "cut": "thuya-kit"
+  },
+  {
+   "key": "my-lamination",
+   "name": "My lamination",
+   "match": [
+    "My lamination",
+    "מיי למינציה"
+   ],
+   "status": "verified",
+   "origin": {
+    "he": "איטליה",
+    "src": "https://mylamination.com/",
+    "quote": "Exclusive Lash & Brow SRL, Via Vicenza 5, Isola Vicentina 36033 (VI) Italy · Made in Italy"
+   },
+   "about": {
+    "he": "מותג איטלקי להרמת ריסים וגבות ולמינציה, מאיזולה ויצ'נטינה. לפי האתר של המותג, המוצרים מיוצרים באיטליה.",
+    "src": "https://mylamination.com/"
+   },
+   "look": {
+    "field": "#F3F3F2",
+    "ink": "#232222",
+    "accent": "#3A3A3C",
+    "soft": "#ECECEA",
+    "type": "lower-light",
+    "motif": "matte-white",
+    "note": "matte white bottles and sachets, graphite type"
+   },
+   "cut": "ml-steps"
+  },
+  {
+   "key": "refectocil",
+   "name": "RefectoCil",
+   "match": [
+    "RefectoCil"
+   ],
+   "status": "verified",
+   "origin": {
+    "he": "אוסטריה",
+    "src": "https://www.refectocil.at/",
+    "quote": "GW Cosmetics, Leopoldsdorf bei Wien · since 1930"
+   },
+   "about": {
+    "he": "מותג הצבעים לריסים וגבות של GW Cosmetics, יצרנית אוסטרית מליאופולדסדורף שליד וינה, שפועלת מאז 1930.",
+    "src": "https://www.refectocil.at/"
+   },
+   "look": {
+    "field": "#2A2226",
+    "ink": "#FFFFFF",
+    "accent": "#6E4A3F",
+    "soft": "#EFE6E2",
+    "type": "serif-classic",
+    "motif": "heritage",
+    "note": "tint tubes in deep brown and navy"
+   },
+   "cut": "refecto"
+  },
+  {
+   "key": "zola",
+   "name": "ZOLA",
+   "match": [
+    "ZOLA",
+    "זולה"
+   ],
+   "status": "verified",
+   "origin": {
+    "he": "אוקראינה",
+    "src": "https://zola.ua/en/",
+    "quote": "a cosmetics brand founded in 2018 by brow and makeup artist Tatiana Zolotashko · a young Ukrainian brand"
+   },
+   "about": {
+    "he": "מותג אוקראיני צעיר שהקימה ב-2018 טטיאנה זולוטשקו, מעצבת גבות ומאפרת, למוצרים לגבות, לריסים ולאיפור.",
+    "src": "https://zola.ua/en/"
+   },
+   "look": {
+    "field": "#FFE9EF",
+    "ink": "#3A1030",
+    "accent": "#C2185B",
+    "soft": "#FFF1F5",
+    "type": "round-bold",
+    "motif": "gel",
+    "note": "hot pink and coral balm jars"
+   },
+   "cut": "zola-balm"
+  },
+  {
+   "key": "nikk-mole",
+   "name": "NIKK MOLE",
+   "match": [
+    "NIKK MOLE",
+    "NIKK MOLA",
+    "nikk mola",
+    "ניק מול"
+   ],
+   "status": "store-facts-only",
+   "origin": null,
+   "about": {
+    "he": null,
+    "src": null,
+    "note": "no official site found (checked 2026-09-30); the page states only what the store carries"
+   },
+   "look": {
+    "field": "#191416",
+    "ink": "#FFFFFF",
+    "accent": "#C80E7D",
+    "soft": "#F7E4EF",
+    "type": "caps-heavy",
+    "motif": "graphic",
+    "note": "magenta and black tweezers and tint"
+   },
+   "cut": "nikk-tint"
+  },
+  {
+   "key": "kodi",
+   "name": "Kodi Professional",
+   "short": "Kodi",
+   "match": [
+    "Kodi",
+    "קודי"
+   ],
+   "status": "verified",
+   "origin": {
+    "he": "אוקראינה",
+    "src": "https://wholesale.kodi-professional.ua/en/",
+    "quote": "KODI Professional has Ukrainian roots"
+   },
+   "about": {
+    "he": "מותג מקצועי עם שורשים אוקראיניים, לציפורניים, לריסים, לגבות ולאיפור קבוע.",
+    "src": "https://wholesale.kodi-professional.ua/en/"
+   },
+   "look": {
+    "field": "#EDEDEE",
+    "ink": "#1E1E20",
+    "accent": "#55565A",
+    "soft": "#F2F2F3",
+    "type": "caps-light",
+    "motif": "graphite",
+    "note": "grey glue bottle"
+   },
+   "cut": "kodi"
+  },
+  {
+   "key": "staleks",
+   "name": "Staleks",
+   "match": [
+    "Stalex",
+    "Staleks",
+    "סטאלקס"
+   ],
+   "status": "verified",
+   "origin": null,
+   "about": {
+    "he": "יצרנית בינלאומית של כלים מקצועיים לטיפולי יופי. לפי האתר שלה, 30 שנה בתחום.",
+    "src": "https://staleks.com/en/"
+   },
+   "look": {
+    "field": "#F6E6E7",
+    "ink": "#2B1D1F",
+    "accent": "#A8505A",
+    "soft": "#FBF0F0",
+    "type": "caps-wide",
+    "motif": "steel",
+    "note": "baby-pink tweezers"
+   },
+   "cut": "staleks"
+  }
+ ],
+ "house": {
+  "key": "eden",
+  "name": "הבחירה של עדן",
+  "note": "the 28 products sold without a brand name (silicone shields, combs, tools): Eden's own selection, shown in the house palette",
+  "cut": "pads-mix",
+  "look": {
+   "field": "#F0D3C3",
+   "ink": "#241A18",
+   "accent": "#964F58",
+   "soft": "#F6E4DF",
+   "type": "house"
+  }
+ }
+}

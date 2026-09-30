@@ -73,8 +73,10 @@ export default async function (pg, T) {
   await pg.click('#lbtn'); await pg.click('#lm [data-l=ask]'); await pg.waitForTimeout(300); T.check('agent: opens from Lotti\'s menu', await pg.$eval('#agent', e => e.classList.contains('open')));
   await pg.fill('#advIn', 'מתי המשלוח חינם?'); await pg.press('#advIn', 'Enter'); await pg.waitForTimeout(1200);
   const ans = await pg.$$eval('#advBody .bb.ai', b => b[b.length - 1].textContent); T.check('agent: answers the free-shipping question from the policy (₪499)', /499/.test(ans), ans.slice(0, 100));
-  await pg.click('#advChips button >> nth=3'); await pg.waitForTimeout(1200);
-  const ans2 = await pg.$$eval('#advBody .bb.ai', b => b[b.length - 1].textContent); T.check('agent: says the truth about courses (the collection is empty)', /ריקה|אין תאריכים/.test(ans2), ans2.slice(0, 100));
+  await pg.click('#advChips button >> nth=4'); await pg.waitForTimeout(1200);
+  const ans2 = await pg.$$eval('#advBody .bb.ai', b => b[b.length - 1].textContent); T.check('agent: says the truth about courses (none open, no dates or price)', /אין קורס פתוח|אין מועדים/.test(ans2), ans2.slice(0, 100));
+  await pg.click('#advChips button >> nth=1'); await pg.waitForTimeout(1200);
+  const ans4 = await pg.$$eval('#advBody .bb.ai', b => b[b.length - 1].textContent); T.check('agent: names the brands with their verified origins only', /THUYA \(ברצלונה, ספרד\)/.test(ans4) && /NIKK MOLE, /.test(ans4) && !/NIKK MOLE \(/.test(ans4), ans4.slice(0, 140));
   await pg.fill('#advIn', 'כמה עולה קורס?'); await pg.press('#advIn', 'Enter'); await pg.waitForTimeout(1200);
   const ans3 = await pg.$$eval('#advBody .bb.ai', b => b[b.length - 1].textContent); T.check('agent: never invents a course price', !/₪\s?\d{3,}/.test(ans3) || /אין/.test(ans3), ans3.slice(0, 100));
   await pg.keyboard.press('Escape'); await pg.waitForTimeout(200); T.check('agent: Escape closes it', !(await pg.$eval('#agent', e => e.classList.contains('open'))));
@@ -86,7 +88,7 @@ export default async function (pg, T) {
   await pg.click('#a11yBtn'); await pg.click('#a11yReset'); T.check('a11y: reset clears them', await pg.evaluate(() => !document.documentElement.classList.contains('a-contrast')));
   await pg.keyboard.press('Escape');
   // legal dialogs
-  await pg.click('footer [data-legal=privacy]'); await pg.waitForTimeout(500); const lg = await txt('#lgTxt'); T.check('legal: the privacy draft opens with the owner\'s contact', /עדן קוסמטיקס/.test(lg) && /טיוטה/.test(lg), lg.slice(0, 60)); await pg.keyboard.press('Escape');
+  await pg.click('footer [data-legal=privacy]'); await pg.waitForTimeout(500); const lg = await txt('#lgTxt'); T.check('legal: the privacy text opens with the owner\'s contact and no draft wording', /עדן קוסמטיקס/.test(lg) && /Edencosmetics29@gmail\.com/.test(lg) && !/טיוטה|האתר החדש/.test(lg), lg.slice(0, 60)); await pg.keyboard.press('Escape');
   await pg.click('footer [data-legal=a11y]'); await pg.waitForTimeout(500); T.check('legal: the accessibility statement opens and names the coordinator', /עדן נחמני/.test(await txt('#lgTxt'))); await pg.keyboard.press('Escape');
 
   // ---- owner-only console stays hidden
@@ -102,9 +104,27 @@ export default async function (pg, T) {
   // ---- the film section
   const film = await pg.evaluate(() => { const v = document.getElementById('filmV'); const s = document.getElementById('film'); return { video: !!v, poster: !!v?.getAttribute('poster'), src: v?.querySelector('source')?.getAttribute('src') || '', transcript: (s?.querySelector('details.tr p')?.textContent || '').length, label: /תמונות מוצר מהחנות/.test(s?.textContent || ''), heroLink: document.querySelector('.tlink')?.getAttribute('href') || '', ld: /VideoObject/.test(document.querySelector('script[type="application/ld+json"]')?.textContent || '') }; });
   T.check('film: a video with a poster, controls and no autoplay', film.video && film.poster && await pg.$eval('#filmV', e => e.controls && !e.autoplay), JSON.stringify(film));
-  T.check('film: a text transcript and the honesty label are next to it', film.transcript > 300 && film.label, film.transcript);
+  T.check('film: a text transcript is next to it, and no production label', film.transcript > 300 && !film.label, film.transcript);
   T.check('film: the hero links to it and the page declares a VideoObject', film.heroLink === '#film' && film.ld, film.heroLink + ' ' + film.ld);
   const fr = await pg.evaluate(async () => { const r = await fetch('m/film-web.mp4', { method: 'HEAD' }); return r.status + ' ' + r.headers.get('content-type'); }); T.check('film: the file is served as video/mp4', /^200 video\/mp4/.test(fr), fr);
+
+  // ---- next level: first screen, brand shelf, tour, words
+  await pg.evaluate(() => scrollTo(0, 0)); await pg.waitForTimeout(400);
+  const hero = await pg.evaluate(() => { const r = s => document.querySelector(s)?.getBoundingClientRect(); const h1 = r('h1'), cta = r('#heroKit'); return { h1: h1 && h1.bottom <= innerHeight, cta: cta && cta.bottom <= innerHeight, cuts: [...document.querySelectorAll('#stage .cut')].filter(i => i.complete && i.naturalWidth > 0).length, ticket: (document.querySelector('#tkTot')?.textContent || '').replace(/[^\d]/g, '') }; });
+  T.check('first screen: headline and the kit action are inside the first viewport', hero.h1 && hero.cta, JSON.stringify(hero));
+  T.check('first screen: five real product cutouts are loaded on the stage', hero.cuts === 5, hero.cuts);
+  const kitDefault = await pg.evaluate(() => KIT.lash.start.map(c => cheap(ITEMS.filter(c.f)).find(x => x.a)).filter(Boolean).reduce((s, x) => s + x.p, 0));
+  T.check('first screen: the kit card equals the kit builder\'s lash/start default', +hero.ticket === kitDefault, hero.ticket + ' vs ' + kitDefault);
+  const shelf = await pg.$$eval('#brandList .bp', b => b.map(x => ({ k: x.dataset.bk, bg: getComputedStyle(x).backgroundColor, href: x.getAttribute('href') })));
+  T.check('brands: 7 brands and the house selection, each in its own colours', shelf.length === 8 && new Set(shelf.map(x => x.bg)).size >= 6, shelf.length + ' / ' + new Set(shelf.map(x => x.bg)).size);
+  T.check('brands: brands with ≥ 2 products link to their page, single-product brands to the product', shelf.filter(x => x.k).every(x => /^\/(brands|products)\//.test(x.href)), shelf.map(x => x.href).join(' '));
+  await pg.evaluate(() => LOT.tour()); await pg.waitForTimeout(600);
+  const t1 = await txt('#ltour'); T.check('Lotti tour: opens on the first brand with its facts and a way on', /מוצרים בחנות/.test(t1) && !!(await pg.$('#ltour [data-t=next]')), t1.slice(0, 80));
+  T.check('Lotti tour: focus moves into it', await pg.evaluate(() => !!document.activeElement.closest('#ltour')));
+  await pg.keyboard.press('Escape'); T.check('Lotti tour: Escape ends it', await pg.$eval('#ltour', e => e.hidden));
+  const leak = await pg.evaluate(() => { const t = document.body.innerText; return ['תצוגה מקדימה', 'צילום מצב', 'מהאתר הקיים', 'נתוני הדגמה', 'טיוטה', 'לפי שם המוצר', 'הוכן על ידי'].filter(w => t.includes(w)); });
+  T.check('words: no production language anywhere on the page', !leak.length, leak.join(', '));
+  T.check('visuals: with no approved images, no empty slot is rendered', await pg.evaluate(() => !document.querySelector('.band, .craft, .lotusbg') || Object.keys(VISUAL.images).length > 0));
 
   // ---- SEO surface of the home page
   const h = await pg.evaluate(() => ({ title: document.title, desc: document.querySelector('meta[name=description]')?.content || '', canon: document.querySelector('link[rel=canonical]')?.href || '', ld: [...document.querySelectorAll('script[type="application/ld+json"]')].length, links: document.querySelectorAll('footer a[href^="/"]').length }));

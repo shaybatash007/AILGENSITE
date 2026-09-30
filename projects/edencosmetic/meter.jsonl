@@ -1,42 +1,48 @@
-{"t":"2026-09-29T19:33:29.159Z","phase":"0-brief","ev":"start","note":"user: Eden Cosmetic, full chain, nothing skipped, upgrade further"}
-{"t":"2026-09-29T19:36:00.000Z","phase":"0-brief","ev":"end","note":"situation read: Shopify store, lash/brow supplies"}
-{"t":"2026-09-29T19:36:00.000Z","phase":"0-tooling","ev":"start","note":"robots honoured by crawlers, shopify-catalog, chain checker + template (crawl ran in background)"}
-{"t":"2026-09-29T19:42:22.000Z","phase":"0-tooling","ev":"end"}
-{"t":"2026-09-29T19:42:22.000Z","phase":"1-intake","ev":"start","note":"read the whole intake, catalog, SEO inventory; facts sheet"}
-{"t":"2026-09-29T19:50:00.000Z","phase":"1-intake","ev":"end","note":"retro: crawl (88 pages), crawler fixes (h5, br lines, docs), catalog + 71 images, home photos"}
-{"t":"2026-09-29T19:50:00.000Z","phase":"2-brand/fonts","ev":"start","note":"retro from file times: Frank Ruhl Libre + Assistant + Cinzel, 18 faces"}
-{"t":"2026-09-29T19:50:31.000Z","phase":"2-brand/fonts","ev":"end"}
-{"t":"2026-09-29T19:50:31.000Z","phase":"2-brand/logo-vector","ev":"start","note":"retro: logo traced from the real PNG (cv2), ring/monogram/lotus parts"}
-{"t":"2026-09-29T19:53:04.000Z","phase":"2-brand/logo-vector","ev":"end"}
-{"t":"2026-09-29T19:53:04.000Z","phase":"2-brand/icon-family","ev":"start","note":"retro: 24 icons with the curl in each"}
-{"t":"2026-09-29T19:53:58.000Z","phase":"2-brand/icon-family","ev":"end"}
-{"t":"2026-09-29T19:53:58.000Z","phase":"1-intake","ev":"start","note":"facts sheet, media labels, seo brief (second window)"}
-{"t":"2026-09-29T19:59:53.231Z","phase":"1-intake","ev":"end","note":"facts sheet, media labels, seo brief written"}
-{"t":"2026-09-29T19:59:53.284Z","phase":"2-brand/palette-board","ev":"start","note":"brand.json, contrast, favicon set, logo PNGs, board"}
-{"t":"2026-09-29T20:02:38.195Z","phase":"2-brand/palette-board","ev":"end"}
-{"t":"2026-09-29T20:02:38.244Z","phase":"3-mascot/mascot-def","ev":"start","note":"לוטי: born from ring + lotus"}
-{"t":"2026-09-29T20:05:41.747Z","phase":"3-mascot/mascot-def","ev":"end"}
-{"t":"2026-09-29T20:05:41.801Z","phase":"4-blueprint","ev":"start","note":"blueprint: sections, proof tool, choreography, admin, agent"}
-{"t":"2026-09-29T20:06:48.351Z","phase":"4-blueprint","ev":"end"}
-{"t":"2026-09-29T20:06:48.415Z","phase":"4b-seo/seo-pages-generalize","ev":"start","note":"seo-pages.mjs: theme tokens, strings, product/collection/brand types, Product+Offer JSON-LD"}
-{"t":"2026-09-29T20:10:10.873Z","phase":"4b-seo/seo-pages-generalize","ev":"end"}
-{"t":"2026-09-29T20:10:10.922Z","phase":"5-site/site-source","ev":"start","note":"src/: head+css, body, data, app, lotti, live (admin, agent, leads, legal, a11y)"}
-{"t":"2026-09-29T20:34:02.671Z","phase":"5-site/site-source","ev":"end"}
-{"t":"2026-09-29T20:34:02.719Z","phase":"4b-seo/seo-pages","ev":"start","note":"compose 93 pages, cards, plan, audit, verify"}
-{"t":"2026-09-29T20:38:24.211Z","phase":"4b-seo/seo-pages","ev":"end"}
-{"t":"2026-09-29T20:38:24.274Z","phase":"6-film/film-json","ev":"start","note":"lift scene + curl motif in the engine, film.json, review frames"}
-{"t":"2026-09-29T22:55:20.000Z","phase":"6-film/film-json","ev":"end","note":"end corrected: the window was left open while later phases ran and their calls were counted twice; film.json work ended when the final render began"}
-{"t":"2026-09-29T22:55:27.525Z","phase":"6-film/render-final","ev":"start"}
-{"t":"2026-09-29T23:04:50.874Z","phase":"6-film/render-final","ev":"end"}
-{"t":"2026-09-29T23:04:50.921Z","phase":"5-site/lighthouse","ev":"start"}
-{"t":"2026-09-29T23:16:05.918Z","phase":"5-site/lighthouse","ev":"end"}
-{"t":"2026-09-29T23:16:05.968Z","phase":"5-site/perf-and-a11y-fixes","ev":"start"}
-{"t":"2026-09-29T23:22:05.021Z","phase":"5-site/perf-and-a11y-fixes","ev":"end"}
-{"t":"2026-09-29T23:22:05.067Z","phase":"7-portfolio/screencasts","ev":"start"}
-{"t":"2026-09-29T23:29:24.179Z","phase":"7-portfolio/screencasts","ev":"end"}
-{"t":"2026-09-29T23:29:24.229Z","phase":"7-portfolio/studio-case","ev":"start"}
-{"t":"2026-09-29T23:31:16.951Z","phase":"7-portfolio/studio-case","ev":"end"}
-{"t":"2026-09-29T23:31:17.004Z","phase":"7-portfolio/ailgen-case","ev":"start"}
-{"t":"2026-09-29T23:33:44.995Z","phase":"7-portfolio/ailgen-case","ev":"end"}
-{"t":"2026-09-29T23:33:45.052Z","phase":"8-deliver/report","ev":"start"}
-{"t":"2026-09-29T23:35:29.866Z","phase":"8-deliver/report","ev":"end"}
+{"t": "2026-09-29T19:33:29.159Z", "phase": "0-brief", "ev": "start", "note": "user: Eden Cosmetic, full chain, nothing skipped, upgrade further"}
+{"t": "2026-09-29T19:36:00.000Z", "phase": "0-brief", "ev": "end", "note": "situation read: Shopify store, lash/brow supplies"}
+{"t": "2026-09-29T19:36:00.000Z", "phase": "0-tooling", "ev": "start", "note": "robots honoured by crawlers, shopify-catalog, chain checker + template (crawl ran in background)"}
+{"t": "2026-09-29T19:42:22.000Z", "phase": "0-tooling", "ev": "end"}
+{"t": "2026-09-29T19:42:22.000Z", "phase": "1-intake", "ev": "start", "note": "read the whole intake, catalog, SEO inventory; facts sheet"}
+{"t": "2026-09-29T19:50:00.000Z", "phase": "1-intake", "ev": "end", "note": "retro: crawl (88 pages), crawler fixes (h5, br lines, docs), catalog + 71 images, home photos"}
+{"t": "2026-09-29T19:50:00.000Z", "phase": "2-brand/fonts", "ev": "start", "note": "retro from file times: Frank Ruhl Libre + Assistant + Cinzel, 18 faces"}
+{"t": "2026-09-29T19:50:31.000Z", "phase": "2-brand/fonts", "ev": "end"}
+{"t": "2026-09-29T19:50:31.000Z", "phase": "2-brand/logo-vector", "ev": "start", "note": "retro: logo traced from the real PNG (cv2), ring/monogram/lotus parts"}
+{"t": "2026-09-29T19:53:04.000Z", "phase": "2-brand/logo-vector", "ev": "end"}
+{"t": "2026-09-29T19:53:04.000Z", "phase": "2-brand/icon-family", "ev": "start", "note": "retro: 24 icons with the curl in each"}
+{"t": "2026-09-29T19:53:58.000Z", "phase": "2-brand/icon-family", "ev": "end"}
+{"t": "2026-09-29T19:53:58.000Z", "phase": "1-intake", "ev": "start", "note": "facts sheet, media labels, seo brief (second window)"}
+{"t": "2026-09-29T19:59:53.231Z", "phase": "1-intake", "ev": "end", "note": "facts sheet, media labels, seo brief written"}
+{"t": "2026-09-29T19:59:53.284Z", "phase": "2-brand/palette-board", "ev": "start", "note": "brand.json, contrast, favicon set, logo PNGs, board"}
+{"t": "2026-09-29T20:02:38.195Z", "phase": "2-brand/palette-board", "ev": "end"}
+{"t": "2026-09-29T20:02:38.244Z", "phase": "3-mascot/mascot-def", "ev": "start", "note": "לוטי: born from ring + lotus"}
+{"t": "2026-09-29T20:05:41.747Z", "phase": "3-mascot/mascot-def", "ev": "end"}
+{"t": "2026-09-29T20:05:41.801Z", "phase": "4-blueprint", "ev": "start", "note": "blueprint: sections, proof tool, choreography, admin, agent"}
+{"t": "2026-09-29T20:06:48.351Z", "phase": "4-blueprint", "ev": "end"}
+{"t": "2026-09-29T20:06:48.415Z", "phase": "4b-seo/seo-pages-generalize", "ev": "start", "note": "seo-pages.mjs: theme tokens, strings, product/collection/brand types, Product+Offer JSON-LD"}
+{"t": "2026-09-29T20:10:10.873Z", "phase": "4b-seo/seo-pages-generalize", "ev": "end"}
+{"t": "2026-09-29T20:10:10.922Z", "phase": "5-site/site-source", "ev": "start", "note": "src/: head+css, body, data, app, lotti, live (admin, agent, leads, legal, a11y)"}
+{"t": "2026-09-29T20:34:02.671Z", "phase": "5-site/site-source", "ev": "end"}
+{"t": "2026-09-29T20:34:02.719Z", "phase": "4b-seo/seo-pages", "ev": "start", "note": "compose 93 pages, cards, plan, audit, verify"}
+{"t": "2026-09-29T20:38:24.211Z", "phase": "4b-seo/seo-pages", "ev": "end"}
+{"t": "2026-09-29T20:38:24.274Z", "phase": "6-film/film-json", "ev": "start", "note": "lift scene + curl motif in the engine, film.json, review frames"}
+{"t": "2026-09-29T22:55:20.000Z", "phase": "6-film/film-json", "ev": "end", "note": "end corrected: the window was left open while later phases ran and their calls were counted twice; film.json work ended when the final render began"}
+{"t": "2026-09-29T22:55:27.525Z", "phase": "6-film/render-final", "ev": "start"}
+{"t": "2026-09-29T23:04:50.874Z", "phase": "6-film/render-final", "ev": "end"}
+{"t": "2026-09-29T23:04:50.921Z", "phase": "5-site/lighthouse", "ev": "start"}
+{"t": "2026-09-29T23:16:05.918Z", "phase": "5-site/lighthouse", "ev": "end"}
+{"t": "2026-09-29T23:16:05.968Z", "phase": "5-site/perf-and-a11y-fixes", "ev": "start"}
+{"t": "2026-09-29T23:22:05.021Z", "phase": "5-site/perf-and-a11y-fixes", "ev": "end"}
+{"t": "2026-09-29T23:22:05.067Z", "phase": "7-portfolio/screencasts", "ev": "start"}
+{"t": "2026-09-29T23:29:24.179Z", "phase": "7-portfolio/screencasts", "ev": "end"}
+{"t": "2026-09-29T23:29:24.229Z", "phase": "7-portfolio/studio-case", "ev": "start"}
+{"t": "2026-09-29T23:31:16.951Z", "phase": "7-portfolio/studio-case", "ev": "end"}
+{"t": "2026-09-29T23:31:17.004Z", "phase": "7-portfolio/ailgen-case", "ev": "start"}
+{"t": "2026-09-29T23:33:44.995Z", "phase": "7-portfolio/ailgen-case", "ev": "end"}
+{"t": "2026-09-29T23:33:45.052Z", "phase": "8-deliver/report", "ev": "start"}
+{"t": "2026-09-29T23:35:29.866Z", "phase": "8-deliver/report", "ev": "end"}
+{"t": "2026-09-30T08:19:11.156Z", "phase": "9-nextlevel/research-copy-site", "ev": "start"}
+{"t": "2026-09-30T08:50:03.800Z", "phase": "9-nextlevel/research-copy-site", "ev": "end", "note": "one window: situation read, AI-infrastructure and brand research, copy harvest and lint tools, cutouts, hero, brand shelf, brand and product pages (marks set late, so not split)"}
+{"t": "2026-09-30T08:50:04.015Z", "phase": "9-nextlevel/visual-docs-qa-publish", "ev": "start"}
+{"t": "2026-09-30T09:27:24.171Z", "phase": "9-nextlevel/visual-docs-qa-publish", "ev": "end", "note": "one window: visual system (concepts, imagegen, image-review, videogen, cutouts wiring), Lotti tour and inner-page guide, autonomy loop, four references and the skill, content gate to 0/0, QA 82/82, Lighthouse and performance fixes, SEO gates, live publish"}
+{"t":"2026-09-30T09:27:24.242Z","phase":"9-nextlevel/report","ev":"start"}
+{"t":"2026-09-30T09:28:25.842Z","phase":"9-nextlevel/report","ev":"end"}

@@ -1,0 +1,89 @@
+{
+ "in": "projects/edencosmetic/qa/copy/strings.json",
+ "at": "2026-09-30T09:26:18.201Z",
+ "strings": 1087,
+ "count": {
+  "high": 0,
+  "medium": 0,
+  "low": 5
+ },
+ "byRule": {
+  "space-punct": 5
+ },
+ "findings": [
+  {
+   "rule": "space-punct",
+   "sev": "low",
+   "hit": " ,",
+   "t": "מדניות הפרטיות: רכישה באתר מותנת מגיל 18 ומעלה , המחזיקים כדין בכרטיס אשראי ישראלי (מקומי או בינלאומי( תקף. ההשתתפות מותנית בהרשמה לאתר ומסירת פרטים אישיים מלאים, נכונים ומדויקים, הכוללים שם, מס' זהות , כתובת, מס' טלפון ",
+   "kind": "text",
+   "where": "main#main > article > p",
+   "pages": [
+    "/policies/privacy-policy/",
+    "/policies/terms-of-service/"
+   ],
+   "pageCount": 2,
+   "visible": true,
+   "why": "space before punctuation, or none after a comma"
+  },
+  {
+   "rule": "space-punct",
+   "sev": "low",
+   "hit": " ,",
+   "t": "* עדן קוסמטיקס שומרת לעצמה את הזכות, לפי שיקול דעתה הבלעדי, שלא לספק מוצר מסוים, במידה והמוצר אזל במלאי. במקרה כזה ניצור קשר עם הלקוח ונציע לו ביטול העסקה ללא דמי ביטול , או לחילופין, יוצע לו מוצר חלופי אחר.",
+   "kind": "text",
+   "where": "main#main > article > p",
+   "pages": [
+    "/policies/privacy-policy/",
+    "/policies/terms-of-service/"
+   ],
+   "pageCount": 2,
+   "visible": true,
+   "why": "space before punctuation, or none after a comma"
+  },
+  {
+   "rule": "space-punct",
+   "sev": "low",
+   "hit": " ,",
+   "t": "במידה שהלקוח מבקש לשנות את הכתובת לאספקה , ובכפוף לאישור בקשה זו ע\"י עדן קוסמטיקס , ייספרו ימי העבודה מיום אישור בקשת שינוי הכתובת.",
+   "kind": "text",
+   "where": "main#main > article > p",
+   "pages": [
+    "/policies/shipping-policy/",
+    "/policies/terms-of-service/"
+   ],
+   "pageCount": 2,
+   "visible": true,
+   "why": "space before punctuation, or none after a comma"
+  },
+  {
+   "rule": "space-punct",
+   "sev": "low",
+   "hit": " ,",
+   "t": "במידה וגורמים ו/או אירועים שאינם בשליטת בעלי האתר ו/או מפעיליו יעכבו /או ימנעו את קיום מכירת המוצרים, מכל סוג שהוא, באופן מלא או באופן חלקי, ובכל דרך שהיא , ו/או את אספקת המוצרים שפורסמו באתר במועדים שנקבעו, ו/או יפגעו ת",
+   "kind": "text",
+   "where": "main#main > article > p",
+   "pages": [
+    "/policies/shipping-policy/",
+    "/policies/terms-of-service/"
+   ],
+   "pageCount": 2,
+   "visible": true,
+   "why": "space before punctuation, or none after a comma"
+  },
+  {
+   "rule": "space-punct",
+   "sev": "low",
+   "hit": " ,",
+   "t": "* כל לקוח/ה אשר מבצע/ת פעולה באתר מצהיר/ה כי הנו מודע/ת לתקנון האתר ולכללי ההשתתפות באתר ומקבלם. , וכי לא תהא לו ו/או למי מטעמו כל טענה ו/או תביעה כנגד בעלי האתר ו/או מפעיליו ו/או מי מטעמם מלבד טענות הקשורות בהפרת התחייב",
+   "kind": "text",
+   "where": "main#main > article > p",
+   "pages": [
+    "/policies/terms-of-service/"
+   ],
+   "pageCount": 1,
+   "visible": true,
+   "why": "space before punctuation, or none after a comma"
+  }
+ ]
+}
