@@ -1,0 +1,96 @@
+# AILGEN - publish the site to the world.
+#
+# This workflow is the ONLY thing that puts bytes on the public internet, and it
+# uploads a declared manifest rather than the repository. That is deliberate.
+#
+# Measured reason: serving the branch root would publish opencode.json, AGENTS.md,
+# memory/ and tools/ as indexable URLs. The repository is already public, so
+# nothing new would leak - but GitHub Pages is crawled by search engines in a way
+# a repository is not, and the intent here is "my website", not "my agent's notes".
+#
+# The manifest is publish.manifest.json at the repository root - the same file
+# `node tools/publish.mjs plan` reads locally, so a dry run and this build cannot
+# disagree. One source of truth, because a manifest kept in two places is a
+# manifest that will be wrong in one of them.
+
+name: pages
+
+on:
+  push:
+    branches: ["claude/cool-fermat-us543u", "main"]
+    paths-ignore:
+      - "**/*.md"
+      - ".opencode/**"
+      - ".claude/**"
+      - "tools/**"
+      - "scripts/**"
+      - "memory/**"
+      - "campaigns/**"
+  workflow_dispatch:
+  # `node tools/publish.mjs sync` triggers this explicitly for a rebuild.
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never two deployments writing the same Pages slot. A publish that races itself
+# produces a half-updated site, which is worse than a failed one.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: assemble the publish set from the manifest
+        run: |
+          set -euo pipefail
+          mkdir -p _site
+          node -e '
+            const fs=require("fs"), path=require("path");
+            const m=JSON.parse(fs.readFileSync("publish.manifest.json","utf8"));
+            const entries=[m.entry,...(m.files||[]),...(m.directories||[])].filter(Boolean);
+            let files=0, bytes=0;
+            for (const e of entries) {
+              if (!fs.existsSync(e)) { console.log("  skip (missing): "+e); continue; }
+              const copy=(s,d)=>{ for(const f of fs.readdirSync(s,{withFileTypes:true})){
+                const a=path.join(s,f.name), b=path.join(d,f.name);
+                if(f.name==="node_modules"||f.name===".git") continue;
+                if(f.isDirectory()) copy(a,b);
+                else { fs.copyFileSync(a,b); files++; bytes+=fs.statSync(a).size; }
+              }};
+              if (fs.statSync(e).isDirectory()) { copy(e, path.join("_site",e)); console.log("  dir  "+e); }
+              else { fs.copyFileSync(e, path.join("_site",e)); files++; bytes+=fs.statSync(e).size; console.log("  file "+e); }
+            }
+            console.log(`\n  ${files} files, ${(bytes/1048576).toFixed(1)} MB`);
+          '
+          # The manifest is a decision, not a guarantee. Refuse the build rather
+          # than publish the agent's own configuration as a public URL.
+          if grep -rIlE '(^|/)(opencode\.jsonc?|AGENTS\.md|memory/|tools/)' _site 2>/dev/null; then
+            echo "::error::the assembled site contains workstation files. Refusing to publish."
+            exit 1
+          fi
+          echo "  blocklist clear"
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

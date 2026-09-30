@@ -1,0 +1,24 @@
+{
+  "$comment": "THE single source of truth for what AILGEN publishes. Read by two independent consumers: `node tools/publish.mjs plan` in the workstation, and .github/workflows/pages.yml in CI. One file, so a dry run and the actual build cannot disagree - a manifest that exists twice is a manifest that will be wrong in one of them.",
+
+  "entry": "index.html",
+
+  "directories": [
+    "assets",
+    "data",
+    "brand",
+    "studio",
+    "switching-tv",
+    "vermeil",
+    "edencosmetic",
+    "talorkaradi"
+  ],
+
+  "files": [],
+
+  "$measured": "Not guessed. Every internal href and src in index.html was extracted and counted: assets 19, data 131, brand 8, studio 7, switching-tv 1, vermeil 1. campaigns had ZERO references from the homepage and projects ZERO - so they are working material. campaigns is 179 MB of campaign sources; projects is 35 MB and contains browser render output under _eyes/. Neither is a page anyone can reach.",
+
+  "$excluded": "campaigns, projects, tools, scripts, memory, .opencode, .claude, .githooks, AGENTS.md, CLAUDE.md, opencode.json, package.json, package-lock.json. The workstation repository AILGENOPENCHAMBER stays private and is never published at all.",
+
+  "$blocklist": "publish.mjs applies a second, independent blocklist on top of this manifest. A mistake in both is required to leak anything, because the failure mode - publishing the agent's own notes as a public URL - is not recoverable by deleting a file later."
+}
