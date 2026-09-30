@@ -29,3 +29,7 @@ projects/*/visual/.refcache/
 projects/*/visual/.graded/
 projects/*/visual/probe.json
 projects/*/visual/free/out/*.png
+
+# build output - 111 MB of assembled site, never committed
+_surfaces/
+_site/
