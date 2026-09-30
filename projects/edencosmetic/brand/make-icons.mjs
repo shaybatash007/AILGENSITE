@@ -4,9 +4,10 @@
 //   node make-icons.mjs  →  ../img/i-<name>.svg (ink + rose, for light grounds)
 //                           ../img/i-<name>-white.svg (white + blush, for the film and dark grounds)
 //                           icons.json (name → { ink, curl } path data, used to build the site's inline sprite)
+import { fileURLToPath } from 'url';
 import fs from 'fs';
 import path from 'path';
-const HERE = path.dirname(new URL(import.meta.url).pathname), OUT = path.join(HERE, '..', 'img');
+const HERE = path.dirname(fileURLToPath(import.meta.url)), OUT = path.join(HERE, '..', 'img');
 fs.mkdirSync(OUT, { recursive: true });
 const INK = '#241A18', ROSE = '#964F58', WHITE = '#FFFFFF', BLUSH = '#E9B8B2';
 

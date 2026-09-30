@@ -96,7 +96,7 @@ for (const f of REFS) if (!fs.existsSync(f)) { console.error('no such reference:
 function refData(f, max) {
   // Cloudflare wants each reference under 512×512; the others take the file as a data URI (a JPEG copy keeps requests small)
   const out = path.join(VIS, '.refcache', hash(f + max) + '.jpg'); fs.mkdirSync(path.dirname(out), { recursive: true });
-  if (!fs.existsSync(out)) { const r = spawnSync('python3', ['-c', `import sys\nfrom PIL import Image\nim=Image.open(sys.argv[1]).convert('RGB'); im.thumbnail((int(sys.argv[3]),int(sys.argv[3]))); im.save(sys.argv[2],quality=90)`, f, out, String(max)]); if (r.status) throw new Error(r.stderr.toString()); }
+  if (!fs.existsSync(out)) { const r = spawnSync((process.env.PYTHON || (process.platform === 'win32' ? 'python' : 'python3')), ['-c', `import sys\nfrom PIL import Image\nim=Image.open(sys.argv[1]).convert('RGB'); im.thumbnail((int(sys.argv[3]),int(sys.argv[3]))); im.save(sys.argv[2],quality=90)`, f, out, String(max)]); if (r.status) throw new Error(r.stderr.toString()); }
   return fs.readFileSync(out);
 }
 

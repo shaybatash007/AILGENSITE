@@ -5,10 +5,11 @@
 //   edencosmetic/img/p/t/<id>.jpg (360) grid thumbnails
 //   projects/edencosmetic/site-src/catalog-map.json   the same items with category and brand, for the SEO composer
 // Nothing is invented: category and brand are read from the product title and the store's own type; text is the store's text.
+import { fileURLToPath } from 'url';
 import fs from 'fs';
 import path from 'path';
 import { spawnSync } from 'child_process';
-const HERE = path.dirname(new URL(import.meta.url).pathname), PROJ = path.join(HERE, '..'), ROOT = path.join(PROJ, '..', '..'), SITE = path.join(ROOT, 'edencosmetic');
+const HERE = path.dirname(fileURLToPath(import.meta.url)), PROJ = path.join(HERE, '..'), ROOT = path.join(PROJ, '..', '..'), SITE = path.join(ROOT, 'edencosmetic');
 const cat = JSON.parse(fs.readFileSync(path.join(PROJ, 'catalog/catalog.json'), 'utf8'));
 
 const BRANDS = [['My lamination', /my ?lamination|מיי למינ/i], ['NIKK MOLE', /nikk ?mol|ניק מול/i], ['THUYA', /thuya|טויה/i], ['ZOLA', /zola|זולה/i], ['RefectoCil', /refectocil|רפקטוסיל/i], ['Kodi', /kodi|קודי/i], ['Stalex', /stalex|סטאלקס/i]];
@@ -58,7 +59,7 @@ let made = 0;
 for (const it of items) {
   const s = path.join(PROJ, 'catalog/img', `${it.i}-1.jpg`); if (!fs.existsSync(s)) { console.warn('no image', it.h); continue; }
   const dst720 = path.join(SITE, 'img/p', `${it.i}-1.jpg`);
-  if (!fs.existsSync(dst720)) { const r = spawnSync('python3', ['-c', py, s, path.join(SITE, 'img/p')]); if (r.status) { console.error(r.stderr.toString()); process.exit(1); } made++; }
+  if (!fs.existsSync(dst720)) { const r = spawnSync((process.env.PYTHON || (process.platform === 'win32' ? 'python' : 'python3')), ['-c', py, s, path.join(SITE, 'img/p')]); if (r.status) { console.error(r.stderr.toString()); process.exit(1); } made++; }
   it.img = `${it.i}-1`;
 }
 const CAT = { snap: '2026-09-29', freeShip: 499, origin: cat.source, currency: 'ILS', kinds: Object.fromEntries(KINDS.map(([k, l]) => [k, l])), items: items.map(({ tags, type, ...x }) => x), cols };

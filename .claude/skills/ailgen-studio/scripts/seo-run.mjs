@@ -12,13 +12,14 @@
 // Steps: old-site audit → compose → social cards → compose again → pages + 404 → build → plan (url-map, _redirects,
 // sitemap, robots, _headers, llms.txt, launch.md) → serve like production → audit the new build (gate) → verify every old URL.
 // Writes projects/<slug>/seo/RUN.md. Exit code 1 when a gate fails, so a deploy script can rely on it.
+import { fileURLToPath } from 'url';
 import fs from 'fs';
 import path from 'path';
 import { spawn } from 'child_process';
 import { parseArgs, repoRoot } from './lib.mjs';
 import { startServer } from './seo-serve.mjs';
 
-const a = parseArgs(), ROOT = repoRoot(), HERE = path.dirname(new URL(import.meta.url).pathname);
+const a = parseArgs(), ROOT = repoRoot(), HERE = path.dirname(fileURLToPath(import.meta.url));
 if (!a.project) { console.error('usage: node seo-run.mjs --project projects/<slug> [--launch] [--refresh-old]'); process.exit(2); }
 const PROJ = path.resolve(ROOT, a.project), SEO = path.join(PROJ, 'seo');
 const cfg = JSON.parse(fs.readFileSync(path.join(SEO, 'seo.config.json'), 'utf8'));

@@ -7,12 +7,13 @@
 // text in a file, a link in links.json, closed meter phases, a clean git tree), and joins the time and cost of the meter
 // phase named on the element (`phase` or `phase/element` sub-phases from meter.mjs). Writes CHAIN.md and chain-report.json.
 // A missing element is never silent: it is listed, and the exit code is 1, so the delivery step cannot pass with a gap.
+import { fileURLToPath } from 'url';
 import fs from 'fs';
 import path from 'path';
 import { spawnSync } from 'child_process';
 import { parseArgs, repoRoot, writeJSON } from './lib.mjs';
 
-const a = parseArgs(), ROOT = repoRoot(), HERE = path.dirname(new URL(import.meta.url).pathname);
+const a = parseArgs(), ROOT = repoRoot(), HERE = path.dirname(fileURLToPath(import.meta.url));
 if (!a.project) { console.error('usage: node chain.mjs --project projects/<slug> [--init] [--soft]'); process.exit(2); }
 const PROJ = path.resolve(ROOT, a.project), slug = path.basename(PROJ), file = path.join(PROJ, 'chain.json');
 if (a.init) { fs.copyFileSync(path.join(HERE, '../templates/chain.json'), file); console.log('chain.json created: set the flags, then run again without --init'); process.exit(0); }

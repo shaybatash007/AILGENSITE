@@ -64,7 +64,7 @@ if (a.apply) {
     // colours from its packaging photos, and a real cutout of its first product
     const imgs = nb.products.map(p => path.join(CAT, 'img', `${p.id}-1.jpg`)).filter(f => fs.existsSync(f));
     let look = { field: '#F3EEEB', ink: '#241A18', accent: '#6F574B', soft: '#F7F2EF', type: 'caps-light', motif: 'measured', note: 'measured automatically; review' };
-    if (imgs.length) { const r = spawnSync('python3', ['-c', `
+    if (imgs.length) { const r = spawnSync((process.env.PYTHON || (process.platform === 'win32' ? 'python' : 'python3')), ['-c', `
 import sys, json, numpy as np
 from PIL import Image
 px = []
@@ -76,7 +76,7 @@ acc = a[s.argsort()[-max(1, len(a) // 10):]].mean(0) if len(a) > 10 else a.mean(
 h = lambda c: '#%02X%02X%02X' % tuple(int(max(0, min(255, v))) for v in c)
 print(json.dumps({'accent': h(acc * .8), 'soft': h(acc * .08 + 255 * .92), 'field': h(acc * .12 + 255 * .88)}))`, ...imgs], { encoding: 'utf8' }); try { Object.assign(look, JSON.parse(r.stdout)); } catch { /* keep neutral */ } }
     let cut = null;
-    if (imgs[0] && CFG.cutouts) { const out = path.join(R(CFG.cutouts.dir), `${key}.webp`); const r = spawnSync('python3', [S('cutout.py'), '--in', imgs[0], '--out', out, '--id', key, '--manifest', R(CFG.cutouts.manifest), '--max', '760'], { encoding: 'utf8' }); if (r.status === 0) cut = key; }
+    if (imgs[0] && CFG.cutouts) { const out = path.join(R(CFG.cutouts.dir), `${key}.webp`); const r = spawnSync((process.env.PYTHON || (process.platform === 'win32' ? 'python' : 'python3')), [S('cutout.py'), '--in', imgs[0], '--out', out, '--id', key, '--manifest', R(CFG.cutouts.manifest), '--max', '760'], { encoding: 'utf8' }); if (r.status === 0) cut = key; }
     REG.brands.push({ key, name: nb.name, match: [nb.name], status: 'draft', origin: null, about: { he: null, src: null, note: `found by evolve.mjs on ${today}: verify the origin and a one-line description on the brand's official site, then set status to verified` }, look, cut: cut || REG.house.cut });
     done.push(`מותג חדש נוסף כטיוטה: ${nb.name} (${nHe(nb.products.length)}). צבעים נמדדו מהאריזה${cut ? ', נחתך מוצר אמיתי לפאנל' : ''}.`);
     needs.push(`לאמת את ${nb.name}: ארץ מוצא ומשפט אחד מהאתר הרשמי של המותג (brands.json), ואז status: verified. עד אז הפאנל מציג רק עובדות מהחנות.`);

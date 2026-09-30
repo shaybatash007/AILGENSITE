@@ -1,18 +1,20 @@
 // Render reel.html frame by frame and encode with ffmpeg.
 //   node render.mjs --w 1080 --h 1920 --out ../video/reel.mp4 [--audio work/track.wav] [--jobs 3]
 //   node render.mjs --w 1080 --h 1920 --frames 1.2,3.7,5 --dir work/review     (stills for review)
+import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
 import { spawn } from 'child_process';
 import http from 'http';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
-const require = createRequire('/opt/node22/lib/node_modules/');
-const { chromium } = require('playwright');
+const require = createRequire(import.meta.url);
+let pwMod; try { pwMod = require('playwright'); } catch { pwMod = createRequire('/opt/node22/lib/node_modules/')('playwright'); }
+const { chromium } = pwMod;
 
 const args = Object.fromEntries(process.argv.slice(2).reduce((a, v, i, arr) => (v.startsWith('--') && a.push([v.slice(2), arr[i + 1]]), a), []));
 const W = +(args.w || 1080), H = +(args.h || 1920), FPS = 30;
-const ROOT = path.dirname(new URL(import.meta.url).pathname);
+const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.jpg': 'image/jpeg', '.png': 'image/png', '.svg': 'image/svg+xml', '.woff2': 'font/woff2' };
 const server = http.createServer((req, res) => {
   const p = path.join(ROOT, decodeURIComponent(req.url.split('?')[0]));

@@ -21,6 +21,7 @@
  *   node tools/eyes.mjs --url <u> --viewport mobile   # one size
  */
 
+import { fileURLToPath } from 'url';
 import { chromium } from "playwright";
 import { PNG } from "pngjs";
 import pixelmatch from "pixelmatch";
@@ -804,7 +805,7 @@ export async function eyes(opts = {}) {
 export { pageAudit, initScript, VIEWPORTS };
 
 const isMain = process.argv[1] &&
-  path.resolve(process.argv[1]) === path.resolve(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1"));
+  path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url).replace(/^\/([A-Za-z]:)/, "$1"));
 if (isMain) {
   run().catch((e) => {
     console.error("eyes.mjs crashed: " + (e?.stack || e));

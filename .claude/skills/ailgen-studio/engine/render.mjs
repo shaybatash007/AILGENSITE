@@ -6,6 +6,7 @@
 //   node render.mjs --project projects/acme --stills                  every still in film.json -> out/stills/<name>.png
 //   node render.mjs --project projects/acme --frames 1.2,4,9.5        review frames -> out/review/
 //   options: --jobs 3  --crf 18  --scale .5 (quick preview)  --out file.mp4
+import { fileURLToPath } from 'url';
 import { loudnormFilter } from './loudness.mjs';
 import { spawn, spawnSync } from 'child_process';
 import http from 'http';
@@ -16,7 +17,7 @@ import { loadPlaywright, parseArgs, repoRoot } from '../scripts/lib.mjs';
 
 const args = parseArgs();
 if (!args.project) { console.error('usage: node render.mjs --project projects/<slug> [--w 1080 --h 1920] [--audio auto|file.wav] [--stills] [--frames 1,2]'); process.exit(2); }
-const HERE = path.dirname(new URL(import.meta.url).pathname);
+const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = repoRoot(path.resolve(args.project));
 const PROJ = path.resolve(args.project);
 const CFG = JSON.parse(fs.readFileSync(path.join(PROJ, 'film.json'), 'utf8'));
@@ -77,7 +78,7 @@ try {
     let audio = args.audio;
     if (audio === 'auto') {
       audio = path.join(OUT, 'soundtrack.wav');
-      const r = spawnSync('python3', [path.join(HERE, 'audio.py'), '--cues', path.join(OUT, 'cues.json'), '--film', path.join(PROJ, 'film.json'), '--out', audio], { stdio: 'inherit' });
+      const r = spawnSync((process.env.PYTHON || (process.platform === 'win32' ? 'python' : 'python3')), [path.join(HERE, 'audio.py'), '--cues', path.join(OUT, 'cues.json'), '--film', path.join(PROJ, 'film.json'), '--out', audio], { stdio: 'inherit' });
       if (r.status !== 0) throw new Error('audio.py failed');
     }
     const N = Math.round((+args.dur || META.DUR) * FPS), jobs = +(args.jobs || Math.max(1, Math.min(4, os.cpus().length - 1)));

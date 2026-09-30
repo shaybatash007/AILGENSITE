@@ -33,7 +33,9 @@
     "test:safe": "node tools/test-safe-exec.mjs",
     "check": "node tools/check-all.mjs",
     "icon": "node tools/make-icon.mjs",
-    "inspect": "node tools/inspect.mjs"
+    "inspect": "node tools/inspect.mjs",
+    "eden": "node .claude/skills/ailgen-studio/scripts/seo-serve.mjs edencosmetic --port 8131",
+    "eden:qa": "node .claude/skills/ailgen-studio/scripts/site-qa.mjs --url http://127.0.0.1:8131/ --out projects/edencosmetic/qa --scenario projects/edencosmetic/qa/scenario.mjs"
   },
   "devDependencies": {
     "@playwright/mcp": "^0.0.82",

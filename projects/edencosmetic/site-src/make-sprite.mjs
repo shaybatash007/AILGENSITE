@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 // Builds edencosmetic/src/2a-sprite.html: the inline SVG sprite (24 icons with the curl in the accent colour, the symbol, the full logo)
 // and edencosmetic/src/3b-lotti.js data (the mascot grid) from brand/ and mascot/.
+import { fileURLToPath } from 'url';
 import fs from 'fs';
 import path from 'path';
-const HERE = path.dirname(new URL(import.meta.url).pathname), PROJ = path.join(HERE, '..'), SITE = path.join(PROJ, '..', '..', 'edencosmetic');
+const HERE = path.dirname(fileURLToPath(import.meta.url)), PROJ = path.join(HERE, '..'), SITE = path.join(PROJ, '..', '..', 'edencosmetic');
 const icons = JSON.parse(fs.readFileSync(path.join(PROJ, 'brand/icons.json'), 'utf8'));
 const parts = JSON.parse(fs.readFileSync(path.join(PROJ, 'brand/symbol-parts.json'), 'utf8'));
 const full = fs.readFileSync(path.join(PROJ, 'brand/logo-full.svg'), 'utf8');

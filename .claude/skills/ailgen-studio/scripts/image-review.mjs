@@ -9,6 +9,7 @@
 // (not blank or flat), brand palette distance (mean ΔE of its dominant colours to the concept palette), no near-black or
 // neon clipping, and never a stub. The vision review then answers the rubric in references/12-visual-production.md
 // (relevance, taste, no product / logo / text / face / result, fits the page). The owner has the last word: --by owner.
+import { fileURLToPath } from 'url';
 import fs from 'fs';
 import path from 'path';
 import { spawnSync } from 'child_process';
@@ -19,7 +20,7 @@ const PROJ = path.resolve(ROOT, a.project), VIS = path.join(PROJ, 'visual'), CFG
 const walk = d => fs.existsSync(d) ? fs.readdirSync(d, { withFileTypes: true }).flatMap(e => e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)]) : [];
 const cands = (withVideo) => walk(path.join(VIS, 'candidates')).filter(f => (withVideo ? /\.(png|jpe?g|mp4)$/ : /\.(png|jpe?g)$/).test(f)).map(f => ({ file: f, meta: JSON.parse(fs.readFileSync(f.replace(/\.\w+$/, '.json'), 'utf8')) }));
 const save = (c) => fs.writeFileSync(c.file.replace(/\.\w+$/, '.json'), JSON.stringify(c.meta, null, 1));
-const py = (code, args) => { const r = spawnSync('python3', ['-c', code, ...args], { encoding: 'utf8' }); if (r.status) throw new Error(r.stderr.slice(-400)); return r.stdout; };
+const py = (code, args) => { const r = spawnSync((process.env.PYTHON || (process.platform === 'win32' ? 'python' : 'python3')), ['-c', code, ...args], { encoding: 'utf8' }); if (r.status) throw new Error(r.stderr.slice(-400)); return r.stdout; };
 
 const CHECK = `
 import sys, json, numpy as np
@@ -114,7 +115,7 @@ if (a.publish) {
     if (CFG.grade && CFG.grade.strength > 0 && CFG.palette) {
       const g = path.join(VIS, '.graded', path.basename(c.file).replace(/\.\w+$/, '.png')); fs.mkdirSync(path.dirname(g), { recursive: true });
       const pal = [...new Set([...(concept && concept.palette ? concept.palette : []), ...Object.values(CFG.palette)])].join(',');
-      const out = spawnSync('python3', [path.join(path.dirname(new URL(import.meta.url).pathname), 'grade.py'), '--in', c.file, '--out', g, '--palette', pal, '--strength', String(CFG.grade.strength)], { encoding: 'utf8' });
+      const out = spawnSync((process.env.PYTHON || (process.platform === 'win32' ? 'python' : 'python3')), [path.join(path.dirname(fileURLToPath(import.meta.url)), 'grade.py'), '--in', c.file, '--out', g, '--palette', pal, '--strength', String(CFG.grade.strength)], { encoding: 'utf8' });
       if (out.status) { console.error('grade failed:', out.stderr.slice(-300)); process.exit(1); }
       grade = JSON.parse(out.stdout.trim().split('\n').pop()); srcFile = g; console.log(`  graded ${path.basename(c.file)}: ΔE to palette ${grade.deltaE_before} → ${grade.deltaE_after}`);
     }

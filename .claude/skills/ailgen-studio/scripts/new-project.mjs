@@ -5,13 +5,14 @@
 //   node new-project.mjs --name "אור ים" [--type "מסעדת דגים"] --slug or-yam
 // Creates projects/<slug>/ with brief.md, brand.json, film.json (from templates), and for --url:
 // intake/ (texts, media, shots, contacts) plus a palette suggestion and brand.json pre-filled from the site.
+import { fileURLToPath } from 'url';
 import fs from 'fs';
 import path from 'path';
 import { spawnSync } from 'child_process';
 import { parseArgs, repoRoot, slugify, writeJSON } from './lib.mjs';
 
 const args = parseArgs();
-const HERE = path.dirname(new URL(import.meta.url).pathname);
+const HERE = path.dirname(fileURLToPath(import.meta.url));
 const TPL = path.join(HERE, '../templates');
 const ROOT = repoRoot();
 const mode = args.url ? 'url' : args.concept ? 'concept' : args.name ? 'name' : null;
@@ -45,7 +46,7 @@ if (mode === 'url') {
   const logos = site.media.filter(m => m.logo && m.file && !/\.svg$/.test(m.file)).map(m => path.join(intake, m.file));
   const shots = [path.join(intake, 'shots/home-desktop.png')].filter(fs.existsSync);
   if (logos.length || shots.length) {
-    const p = spawnSync('python3', [path.join(HERE, 'palette.py'), ...logos, ...shots, '--out', path.join(intake, 'palette.json')], { encoding: 'utf8' });
+    const p = spawnSync((process.env.PYTHON || (process.platform === 'win32' ? 'python' : 'python3')), [path.join(HERE, 'palette.py'), ...logos, ...shots, '--out', path.join(intake, 'palette.json')], { encoding: 'utf8' });
     if (p.status === 0) console.log('palette suggestion -> intake/palette.json');
   }
 }

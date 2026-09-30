@@ -5,10 +5,11 @@
 //   ../../edencosmetic/icon.svg + img/favicon-32.png, apple-touch-icon.png, icon-512.png   (favicon set, in the site)
 //   ../../edencosmetic/fonts/*                                                    (self-hosted type + fonts.css)
 //   brand.json                                                                    (concept, claim, signature, palette, contrast, type)
+import { fileURLToPath } from 'url';
 import fs from 'fs';
 import path from 'path';
 import { spawnSync } from 'child_process';
-const HERE = path.dirname(new URL(import.meta.url).pathname), PROJ = path.join(HERE, '..'), ROOT = path.join(PROJ, '..', '..');
+const HERE = path.dirname(fileURLToPath(import.meta.url)), PROJ = path.join(HERE, '..'), ROOT = path.join(PROJ, '..', '..');
 const SITE = path.join(ROOT, 'edencosmetic'), SHOT = path.join(ROOT, '.claude/skills/ailgen-studio/scripts/shot.mjs');
 fs.mkdirSync(path.join(SITE, 'img'), { recursive: true });
 

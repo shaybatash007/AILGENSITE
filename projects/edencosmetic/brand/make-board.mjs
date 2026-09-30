@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 // The brand board: logo, symbol at every size, clear space, the curl, palette with contrast, type, icons.
 //   node make-board.mjs → brand/board.html + brand/board.png (1600 px wide)
+import { fileURLToPath } from 'url';
 import fs from 'fs';
 import path from 'path';
 import { spawnSync } from 'child_process';
-const HERE = path.dirname(new URL(import.meta.url).pathname), PROJ = path.join(HERE, '..'), ROOT = path.join(PROJ, '..', '..');
+const HERE = path.dirname(fileURLToPath(import.meta.url)), PROJ = path.join(HERE, '..'), ROOT = path.join(PROJ, '..', '..');
 const bj = JSON.parse(fs.readFileSync(path.join(PROJ, 'brand.json'), 'utf8')), P = bj.palette, icons = JSON.parse(fs.readFileSync(path.join(HERE, 'icons.json'), 'utf8'));
 const parts = JSON.parse(fs.readFileSync(path.join(HERE, 'symbol-parts.json'), 'utf8'));
 const vb = parts.viewBox.join(' ');
