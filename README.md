@@ -37,6 +37,28 @@ python3 -m http.server 8000
 
 ואז לפתוח את http://localhost:8000. צריך שרת ולא פתיחה ישירה של הקובץ, כי האתרים טוענים JSON עם `fetch`.
 
+### אתר של לקוח (עדן קוסמטיקס) וכלי הסטודיו, על המחשב שלך
+
+אתר של לקוח משתמש בכתובות שמתחילות מהשורש (`/products/...`, `/brands/...`), ולכן מריצים אותו כשורש, עם שרת שמתנהג כמו האחסון (הפניות ו-404):
+
+```bash
+git pull origin claude/cool-fermat-us543u
+npm install                                  # פעם אחת
+npm run eden                                 # http://127.0.0.1:8131/
+```
+
+כלי הסטודיו (בדיקות, צילומי אזורים, Lighthouse, חיתוך מוצרים, סרטים) צריכים עוד שלושה דברים, פעם אחת:
+
+```bash
+npx playwright install chromium              # הדפדפן לבדיקות ולצילומים
+pip install numpy scipy pillow               # חיתוך מוצרים, פלטות, ציון צבע
+winget install ffmpeg                        # רק לסרטים (ב-Mac: brew install ffmpeg)
+```
+
+ואז, כשהאתר רץ: `npm run eden:qa` (בדיקת האתר המלאה). ב-Windows הכלים קוראים ל-`python`, ואפשר לכוון אחר עם משתנה `PYTHON`.
+מפתחות ליצירת תמונות (`CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN`, `FAL_KEY`) הם משתני סביבה, לא קבצים בריפו.
+במחשב המקומי, ה-hook של הריפו דורש שכל commit יתחיל ב-`[Model: ...]`. ה-commits מהענן נוצרו בלי ה-hook.
+
 ## העלאה לאוויר
 
 זה אתר סטטי, אז אפשר להעלות אותו כמו שהוא ל-GitHub Pages, ל-Netlify, ל-Vercel או ל-Cloudflare Pages.
