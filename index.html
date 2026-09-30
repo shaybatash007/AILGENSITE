@@ -680,35 +680,6 @@ html.pre .spirit{display:none}
 @media (min-width:761px){.mnav-a11y{display:none}}
 @media (max-width:760px){.a11y-btn{display:none}.a11y{left:16px;right:16px;width:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 16px)}}
 
-/* ===== AILGEN type system =====
-   The brand defines a seven-step scale. It was not in the stylesheet, so every
-   size was chosen locally: 11 distinct values, six of them between 14 and 19px,
-   which is not a hierarchy but a fog. These tokens are the scale, and the local
-   values are folded onto it. */
-:root{
-  --t-display: clamp(2.4rem, 6vw, 4.5rem);
-  --t-h1: 2.25rem; --t-h2: 1.55rem; --t-h3: 1.24rem;
-  --t-body: 1rem; --t-sm: .9rem; --t-meta: .8rem;
-
-  --lh-display: 1.02; --lh-heading: 1.15; --lh-body: 1.75; --lh-tight: 1.45;
-
-  /* Two families, per the brand. The display face is kept because the hero is
-     built on it and replacing it would be a redesign, not an upgrade; the four
-     others that were in play are folded into the stack. */
-  --sans: "Assistant","Rubik","Heebo","Segoe UI",Arial,sans-serif;
-}
-body{ font-family: var(--sans); line-height: var(--lh-body); -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
-
-/* Reading measure. Body copy in Hebrew needs a slightly longer line than Latin
-   to feel balanced, because the letterforms carry more horizontal detail, but
-   not the 1180px the hero uses - past roughly 34em the eye loses the start of
-   the next line. */
-/* Reading measure applies to running copy, not to display type. The first
-   version of this rule included .manifesto and turned a wide editorial
-   paragraph into a narrow column of five words per line - caught by rendering
-   the page and looking, which is the only reason it was caught at all. A
-   measure is for prose you read; it is wrong for type you look at. */
-.prose p, .sec-lede, .about p, p.lede{ max-width: 34em; }
 
 /* Hebrew sits differently in a heading than Latin does: it has no ascender or
    descender to hang on, so tight tracking that looks right in English turns the
@@ -720,6 +691,81 @@ h1,.display{ line-height: var(--lh-display); font-weight: 900; }
 h2{ line-height: var(--lh-heading); font-weight: 800; }
 h3{ line-height: var(--lh-heading); font-weight: 800; }
 p, li{ line-height: var(--lh-body); }
+
+/* ===== AILGEN type system and ship gates =====
+   Written from the brand skill, not from taste. The previous version of this
+   block was written without opening it and was wrong three ways the spec names
+   explicitly: positive heading tracking where the spec is -0.01em, an 18px body
+   on a 16px base, and a 34em measure where the ceiling is 70-80ch. */
+
+:root{
+  /* One modular scale. Base 16px, ratio 1.25. No off-scale sizes. */
+  --t-display: clamp(2.4rem, 6vw, 4.5rem);
+  --t-h1: 2.25rem; --t-h2: 1.55rem; --t-h3: 1.24rem;
+  --t-body: 1rem; --t-sm: .9rem; --t-meta: .8rem;
+
+  --lh-display: 1.1; --lh-heading: 1.2; --lh-body: 1.75; --lh-tight: 1.45;
+  --measure: 68ch;      /* the spec caps running copy at 70-80ch */
+  --focus: #FFD79A;
+
+  --sans: "Assistant","Rubik","Heebo","Segoe UI",Arial,sans-serif;
+}
+
+body{
+  font-family: var(--sans);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Headings tighten, they do not open up. Hebrew has no ascender to hang on, so
+   the spec's -0.01em is what keeps the words from fusing - it is not a licence to
+   invent the opposite. */
+h1,.display{ font-size: var(--t-display); line-height: var(--lh-display); font-weight: 900; letter-spacing: -.01em; }
+h2{ font-size: var(--t-h2); line-height: var(--lh-heading); font-weight: 800; letter-spacing: -.01em; }
+h3{ font-size: var(--t-h3); line-height: var(--lh-heading); font-weight: 800; letter-spacing: -.01em; }
+p, li{ line-height: var(--lh-body); }
+
+/* Running copy gets the measure. Display type does not - it is looked at, not
+   read, and a reading measure on it turns a wide editorial line into a column. */
+.prose p, .sec-lede, .about p, p.lede, .manifesto{ max-width: var(--measure); }
+
+/* GATE 1 - visible keyboard focus. Auditors flag its absence as critical. */
+:focus-visible{ outline:2px solid var(--focus); outline-offset:3px; border-radius:4px; }
+:focus:not(:focus-visible){ outline:none; }
+
+/* GATE 3 - skip to content, hidden until focused, first thing focusable. */
+.skip-link{
+  position:absolute; inset-inline-start:0; top:0; z-index:9999;
+  background:var(--paper); color:var(--navy-deep); font-weight:800;
+  padding:12px 20px; border-radius:0 0 10px 0; transform:translateY(-140%);
+  transition:transform .18s ease;
+}
+.skip-link:focus{ transform:none; }
+
+/* GATE - bidi isolation. The single most common RTL defect, and invisible in
+   source: a Latin run inside Hebrew prose reorders around a trailing neutral
+   character without this. */
+bdi, .ltr, code, kbd, samp, pre{ unicode-bidi: isolate; }
+[dir="ltr"]{ direction:ltr; unicode-bidi:isolate; }
+
+/* GATE - reduced motion, complete: animation, transition AND smooth scroll. */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important; animation-iteration-count:1!important;
+    transition-duration:.01ms!important; scroll-behavior:auto!important;
+  }
+}
+
+/* Motion budget: 150ms state, 200-300ms entrance, nothing over 500ms. The
+   entrance transitions were 1s, which is twice the ceiling. */
+.reveal{ transition:opacity .3s cubic-bezier(.2,.7,.2,1), transform .3s cubic-bezier(.2,.7,.2,1); }
+.manifesto .w{ transition:opacity .22s ease; }
+
+/* Grid: 330px minimum column, items aligned to start so a short card does not
+   inherit the dead space of a tall one. */
+.card-grid{ align-items:start; }
 </style>
 <script>
 (function(){var d=document.documentElement,rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -729,6 +775,7 @@ else d.classList.add('go');})();
 </script>
 </head>
 <body>
+<a class="skip-link" href="#main">דלג לתוכן הראשי</a>
 <div class="progress" aria-hidden="true"><i id="prog"></i></div>
 <div class="intro" id="intro" aria-hidden="true"><div class="imark" id="imark"><span class="iglow"></span><svg viewBox="0 0 96 100"><polygon points="0,100 38,0 58,0 96,100 75,100 48,29 21,100" pathLength="100"></polygon><rect x="40" y="67" width="16" height="16" fill="#FFB23E"></rect></svg></div><span class="istat">AILGEN</span></div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -759,7 +806,7 @@ else d.classList.add('go');})();
 <nav class="mnav" id="mnav" aria-label="תפריט נייד"><button class="burger x" id="mclose" type="button" aria-label="סגירה"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
   <a href="#caps">יכולות</a><a href="#work">עבודות</a><a href="#demo">הדגמה חיה</a><a href="#process">תהליך</a><a href="#about">אודות</a><a href="#faq">שאלות</a><a href="#contact" style="color:var(--amber)">לשיחת אפיון</a><button type="button" class="mnav-a11y" id="mA11y">נגישות</button></nav>
 
-<main id="top">
+<main id="main" id="top">
 <section class="hero" aria-label="פתיחה">
   <canvas id="heroCanvas" aria-hidden="true"></canvas>
   <div class="wrap hero-grid">
