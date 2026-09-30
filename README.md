@@ -59,12 +59,44 @@ winget install ffmpeg                        # רק לסרטים (ב-Mac: brew i
 מפתחות ליצירת תמונות (`CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN`, `FAL_KEY`) הם משתני סביבה, לא קבצים בריפו.
 במחשב המקומי, ה-hook של הריפו דורש שכל commit יתחיל ב-`[Model: ...]`. ה-commits מהענן נוצרו בלי ה-hook.
 
-## העלאה לאוויר
+## העלאה לאוויר: המתג
 
-זה אתר סטטי, אז אפשר להעלות אותו כמו שהוא ל-GitHub Pages, ל-Netlify, ל-Vercel או ל-Cloudflare Pages.
-ב-GitHub Pages: Settings ← Pages ← Deploy from a branch ← לבחור את הענף ואת התיקייה `/ (root)`.
+האתר מתפרסם דרך מתג אחד: **פתוח** או **סגור**. המתג לא מופיע באתר עצמו.
+אפשר ללחוץ עליו בשלוש דרכים, וכולן מפעילות אותו workflow.
 
-הקישורים בין האתרים יחסיים: כפתור "לאתר החדש" מוביל ל-`switching-tv/`, "לאתר החי" ל-`vermeil/`, והקרדיט ב-VERMEIL חוזר לאתר הראשי.
+| איפה | איך |
+|---|---|
+| GitHub (גם באפליקציה בטלפון) | Actions ← **pages** ← Run workflow ← לבחור `on` או `off`. רק מי שיש לו הרשאת כתיבה לריפו רואה את הכפתור. |
+| המחשב שלך | `npm run site:on`, `npm run site:off`, ו-`npm run site:status` כדי לראות מה כל כתובת עונה עכשיו. |
+| שיחה עם Claude | לבקש להדליק או לסגור את האתר. |
+
+המצב נשמר ב-`site.state.json`, כך שדחיפה מאוחרת לא מבטלת לחיצה. כל עוד המתג סגור, כל פרסום שולח את דף הסגירה.
+
+**פתוח:** כל משטח (`surfaces.json`) עולה לכתובת משלו, בשורש הכתובת. בגלל זה כל הקישורים עובדים:
+
+| משטח | כתובת |
+|---|---|
+| האתר של AILGEN | https://ailgen.pages.dev |
+| עדן קוסמטיקס | https://ailgen-edencosmetic.pages.dev |
+| קבוצת טלאור כראדי | https://ailgen-talorkaradi.pages.dev |
+
+- לפני כל פרסום, `tools/link-audit.mjs` בודק כל קישור בכל עמוד, כשכל משטח משורת מהשורש שלו. אם יש קישור שבור, שום דבר לא עולה.
+- ההעתק ב-GitHub Pages הופך להפניה לכתובות החדשות, עם אותו נתיב.
+
+**סגור:**
+- כל כתובת ב-Cloudflare עונה 503 (לא זמין זמנית), מציגה דף סגירה קצר, וחסומה לאינדוקס.
+- ב-GitHub Pages מוצג אותו דף, עם noindex.
+- הפרויקטים והשמות נשארים שלך, ולכן כשפותחים שוב חוזרות אותן כתובות.
+
+**הצעד היחיד שרק בעל החשבון יכול לעשות:** חשבון Cloudflare חינמי וטוקן.
+1. להירשם ב-https://dash.cloudflare.com/sign-up. אם כבר נפתח חשבון בשביל ה-AI, משתמשים בו.
+2. ליצור טוקן: My Profile ← API Tokens ← Create Token ← Custom token. הרשאה: Account ← Cloudflare Pages ← Edit.
+3. להוסיף בריפו ב-GitHub: Settings ← Secrets and variables ← Actions שני סודות: `CLOUDFLARE_API_TOKEN` (הטוקן) ו-`CLOUDFLARE_ACCOUNT_ID` (מופיע בדף הבית של החשבון, בצד ימין).
+4. ללחוץ על המתג `on`. ה-workflow יוצר את שלושת הפרויקטים ומעלה אותם.
+
+עד שהסודות קיימים, האתר ממשיך לעלות ל-GitHub Pages כמו קודם, והמתג עובד גם שם.
+
+**דומיין אמיתי:** קונים דומיין, מחברים אותו לפרויקט ב-Cloudflare (Custom domains), וממלאים `hostCustom` ו-`"mode": "custom"` ב-`surfaces.json`. שום קישור לא משתנה.
 
 ## מה עובד מחוץ ל-Claude
 

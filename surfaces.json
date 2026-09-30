@@ -1,11 +1,8 @@
 {
   "$comment": "WHERE EACH SURFACE LIVES. This one file is the answer to 'which domain is the site on'. Changing the site from a free host to a real domain is an edit to this file and nothing else - no HTML, no build script, no link. That is the whole design goal, and it exists because 139 pages carry root-absolute links that only resolve when a surface is served at the root of its own hostname.",
-
   "$why": "Measured, not assumed. 96 pages in edencosmetic and 43 in talorkaradi reference /icon.svg and /products/... . The files those names resolve to live inside each microsite's own directory, so the links are CORRECT and the DEPLOYMENT is wrong. Rewriting the links would bake whatever host they are on into the markup, and all 139 would break again on the next move. A hostname per surface fixes them without touching a single line of the site.",
-
   "mode": "free-host",
   "$modeValues": "'free-host' = Cloudflare Pages *.pages.dev, free forever, no domain to buy. 'custom' = a domain you own. Nothing else in this repository branches on the difference.",
-
   "cloudflare": {
     "$comment": "Pages needs a Cloudflare account, which an agent cannot create. This is the ONLY step between 'the code is ready' and 'the site is on a free domain'. Create the account, then: wrangler login, or set CLOUDFLARE_API_TOKEN. Everything below works either way.",
     "accountId": null,
@@ -16,17 +13,29 @@
       "talorkaradi": "ailgen-talorkaradi"
     }
   },
-
   "surfaces": [
     {
       "name": "ailgen",
       "role": "The studio's own site. AILGEN, what it does, the offer.",
       "dir": ".",
-      "include": ["index.html", "assets", "data", "brand", "studio", "switching-tv", "vermeil"],
+      "include": [
+        "index.html",
+        "assets",
+        "data",
+        "brand",
+        "studio",
+        "switching-tv",
+        "vermeil"
+      ],
       "hostFree": "ailgen.pages.dev",
       "hostCustom": null,
       "$hostCustom": "set to 'ailgen.example.com' once the domain exists. Nothing else changes.",
-      "githubPagesPath": "AILGENSITE"
+      "githubPagesPath": "AILGENSITE",
+      "exclude": [
+        "studio/src",
+        "studio/build.sh"
+      ],
+      "label": "AILGEN"
     },
     {
       "name": "edencosmetic",
@@ -36,7 +45,12 @@
       "hostFree": "ailgen-edencosmetic.pages.dev",
       "hostCustom": null,
       "githubPagesPath": "AILGENSITE/edencosmetic",
-      "$note": "githubPagesPath is the INTERIM path on the published repository, used only by --base-href so the 96 root-absolute links resolve while there is no hostname yet. It disappears on its own once hostCustom is set: build-surfaces only injects when hostCustom is null."
+      "$note": "githubPagesPath is the INTERIM path on the published repository, used only by --base-href so the 96 root-absolute links resolve while there is no hostname yet. It disappears on its own once hostCustom is set: build-surfaces only injects when hostCustom is null.",
+      "exclude": [
+        "src",
+        "build.sh"
+      ],
+      "label": "עדן קוסמטיקס"
     },
     {
       "name": "talorkaradi",
@@ -45,9 +59,14 @@
       "include": null,
       "hostFree": "ailgen-talorkaradi.pages.dev",
       "hostCustom": null,
-      "githubPagesPath": "AILGENSITE/talorkaradi"
+      "githubPagesPath": "AILGENSITE/talorkaradi",
+      "exclude": [
+        "src",
+        "build.sh"
+      ],
+      "label": "קבוצת טלאור כראדי"
     }
   ],
-
-  "$interim": "Until a hostname exists, edencosmetic and talorkaradi are published on GitHub Pages at a path, and their root-absolute links 404. tools/link-audit.mjs counts those as 'root-assumed' and exits 0, because they are not defects - they are correct links waiting for the layout to catch up. The audit becomes a real failure the moment a hostname is attached, which is exactly when it should."
+  "$interim": "Until a hostname exists, edencosmetic and talorkaradi are published on GitHub Pages at a path, and their root-absolute links 404. tools/link-audit.mjs counts those as 'root-assumed' and exits 0, because they are not defects - they are correct links waiting for the layout to catch up. The audit becomes a real failure the moment a hostname is attached, which is exactly when it should.",
+  "$exclude": "Build inputs that live beside a surface but are not pages of it (the concatenated src/ fragments and build.sh). Published, their relative links would be dead links: link-audit found 43 of them and nothing else."
 }

@@ -69,6 +69,7 @@ for (const s of cfg.surfaces) {
   fs.mkdirSync(out, { recursive: true });
 
   const include = s.include || ["."];
+  const excluded = new Set(s.exclude || []);
   let files = 0, bytes = 0, html = 0, injected = 0;
   const copied = [];
 
@@ -77,6 +78,8 @@ for (const s of cfg.surfaces) {
     for (const e of fs.readdirSync(from, { withFileTypes: true })) {
       if (e.name === "node_modules" || e.name === ".git" || e.name === "_surfaces") continue;
       const a = path.join(from, e.name), b = path.join(to, e.name);
+      /* build inputs beside the surface (src/ fragments, build.sh) are not pages: surfaces.json "exclude" */
+      if (excluded.has(path.relative(src, a).replace(/\\/g, "/"))) continue;
       if (e.isDirectory()) { copyInto(a, b); continue; }
       if (NEVER_PUBLIC.some((re) => re.test(path.relative(root, a).replace(/\\/g, "/")))) continue;
       fs.mkdirSync(path.dirname(b), { recursive: true });

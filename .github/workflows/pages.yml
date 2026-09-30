@@ -12,6 +12,11 @@
 # `node tools/publish.mjs plan` reads locally, so a dry run and this build cannot
 # disagree. One source of truth, because a manifest kept in two places is a
 # manifest that will be wrong in one of them.
+#
+# THE PUBLISH SWITCH. Actions -> pages -> Run workflow -> on / off. The state is kept in site.state.json, so a
+# later push never undoes a press (tools/site-switch.mjs explains every case). On: each surface goes to its own
+# Cloudflare Pages address, where every link resolves, and only after tools/link-audit.mjs passes; without
+# Cloudflare secrets yet, GitHub Pages keeps the whole site as before. Off: every address shows a closed page.
 
 name: pages
 
@@ -27,10 +32,16 @@ on:
       - "memory/**"
       - "campaigns/**"
   workflow_dispatch:
-  # `node tools/publish.mjs sync` triggers this explicitly for a rebuild.
+    # `node tools/publish.mjs sync` triggers this explicitly for a rebuild; `npm run site:on / site:off` presses the switch.
+    inputs:
+      action:
+        description: "on: the site is public · off: every address shows a closed page · redeploy: publish again, as the switch already says"
+        type: choice
+        options: ["redeploy", "on", "off"]
+        default: "redeploy"
 
 permissions:
-  contents: read
+  contents: write   # the switch records its state in site.state.json
   pages: write
   id-token: write
 
@@ -43,19 +54,47 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
 
-      - name: assemble the publish set from the manifest
-        # This is the same file the workstation runs locally before pushing. The
+      - name: the switch - on or off
+        id: switch
+        env:
+          ACTION: ${{ github.event.inputs.action }}
+          ACTOR: ${{ github.actor }}
+        run: node tools/site-switch.mjs ci
+
+      - name: record the new state (a later push follows it)
+        if: steps.switch.outputs.changed == 'true'
+        run: |
+          git config user.name "site switch"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site.state.json
+          git commit -m "site: ${{ steps.switch.outputs.state }} (the switch, pressed by ${{ github.actor }})"
+          git pull --rebase origin "${{ github.ref_name }}"
+          git push origin "HEAD:${{ github.ref_name }}"
+
+      - name: build each surface and check every link (nothing ships with a broken one)
+        if: steps.switch.outputs.state == 'on'
+        run: node tools/build-surfaces.mjs && node tools/link-audit.mjs
+
+      - name: Cloudflare Pages - each surface at the root of its own address
+        if: env.CLOUDFLARE_API_TOKEN != '' && env.CLOUDFLARE_ACCOUNT_ID != ''
+        run: node tools/site-switch.mjs cloudflare
+
+      - name: the GitHub Pages copy (the whole site, a forward to the new addresses, or the closed page)
+        # This is the same assembly the workstation runs locally before pushing. The
         # first version had this logic inline here and it failed on the first run
         # with ENOENT, because nothing on a GitHub runner had ever executed it
         # before it shipped. Inline-in-workflow is code nobody can test.
-        run: node tools/assemble-site.mjs _site
+        run: node tools/site-switch.mjs gh-pages _site
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

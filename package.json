@@ -35,7 +35,11 @@
     "icon": "node tools/make-icon.mjs",
     "inspect": "node tools/inspect.mjs",
     "eden": "node .claude/skills/ailgen-studio/scripts/seo-serve.mjs edencosmetic --port 8131",
-    "eden:qa": "node .claude/skills/ailgen-studio/scripts/site-qa.mjs --url http://127.0.0.1:8131/ --out projects/edencosmetic/qa --scenario projects/edencosmetic/qa/scenario.mjs"
+    "eden:qa": "node .claude/skills/ailgen-studio/scripts/site-qa.mjs --url http://127.0.0.1:8131/ --out projects/edencosmetic/qa --scenario projects/edencosmetic/qa/scenario.mjs",
+    "site:status": "node tools/site-switch.mjs status",
+    "site:on": "node tools/site-switch.mjs on",
+    "site:off": "node tools/site-switch.mjs off",
+    "site:check": "node tools/build-surfaces.mjs && node tools/link-audit.mjs"
   },
   "devDependencies": {
     "@playwright/mcp": "^0.0.82",

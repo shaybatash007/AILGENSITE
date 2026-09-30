@@ -1,0 +1,6 @@
+{
+  "$comment": "The publish switch (tools/site-switch.mjs). on: the site is public on its addresses. off: every address shows a closed page. Change it with the switch, not by hand.",
+  "state": "on",
+  "changedAt": "2026-09-30T21:50:00.000Z",
+  "by": "initial: the site was already public on GitHub Pages"
+}
