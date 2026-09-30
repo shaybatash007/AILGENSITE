@@ -60,7 +60,7 @@ const closedHtml = label => `<!doctype html>
 <html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><title>${label} · האתר אינו זמין כרגע</title>
 <style>:root{color-scheme:light dark}body{margin:0;min-height:100svh;display:grid;place-items:center;background:#F8F4F0;color:#1E1A18;font:400 1.0625rem/1.6 system-ui,"Segoe UI",Arial,sans-serif}
-@media (prefers-color-scheme:dark){body{background:#151211;color:#F3ECE6}}main{padding:24px;text-align:center}.m{letter-spacing:.2em;font-size:.8125rem;opacity:.6;margin:0 0 14px}
+@media (prefers-color-scheme:dark){body{background:#151211;color:#F3ECE6}}main{padding:24px;text-align:center}.m{font-size:.875rem;font-weight:600;opacity:.6;margin:0 0 14px}
 h1{font-size:clamp(1.6rem,4vw,2.3rem);font-weight:700;margin:0 0 8px}p{margin:0;opacity:.8}</style></head>
 <body><main><p class="m">${label}</p><h1>האתר אינו זמין כרגע</h1><p>נחזור בקרוב.</p></main></body></html>
 `;
