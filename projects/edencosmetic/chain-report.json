@@ -1,23 +1,8 @@
 {
   "slug": "edencosmetic",
-  "at": "2026-09-30T12:58:40.601Z",
-  "ok": 63,
-  "missing": [
-    {
-      "id": "meter",
-      "phase": "8-deliver",
-      "why": [
-        "שלבים פתוחים: 10-craft/research, 12-gates"
-      ]
-    },
-    {
-      "id": "pushed",
-      "phase": "8-deliver",
-      "why": [
-        "132 קבצים לא מחויבים"
-      ]
-    }
-  ],
+  "at": "2026-09-30T12:59:56.664Z",
+  "ok": 65,
+  "missing": [],
   "na": 1,
   "elements": [
     {
@@ -453,7 +438,7 @@
       "id": "meter",
       "phase": "8-deliver",
       "label": "Meter: every phase opened and closed, report written",
-      "status": "missing"
+      "status": "ok"
     },
     {
       "id": "report",
@@ -468,7 +453,7 @@
       "id": "pushed",
       "phase": "8-deliver",
       "label": "Committed and pushed",
-      "status": "missing"
+      "status": "ok"
     }
   ]
 }
