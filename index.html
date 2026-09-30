@@ -729,7 +729,12 @@ p, li{ line-height: var(--lh-body); }
 
 /* Running copy gets the measure. Display type does not - it is looked at, not
    read, and a reading measure on it turns a wide editorial line into a column. */
-.prose p, .sec-lede, .about p, p.lede, .manifesto{ max-width: var(--measure); }
+/* Running copy only. .manifesto was in this selector and has been removed
+   for the SECOND time: a 68ch measure against a 58.88px display size is 587px,
+   which turned one wide editorial line into 29 ragged lines of three words. A
+   reading measure is measured in the reader's font, not the display font, and
+   the fix is to leave display type out of the rule entirely. */
+.prose p, .sec-lede, .about p, p.lede{ max-width: var(--measure); }
 
 /* GATE 1 - visible keyboard focus. Auditors flag its absence as critical. */
 :focus-visible{ outline:2px solid var(--focus); outline-offset:3px; border-radius:4px; }
