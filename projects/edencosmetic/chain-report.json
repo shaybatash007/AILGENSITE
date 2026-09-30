@@ -1,16 +1,8 @@
 {
   "slug": "edencosmetic",
-  "at": "2026-09-30T16:11:41.736Z",
-  "ok": 65,
-  "missing": [
-    {
-      "id": "pushed",
-      "phase": "8-deliver",
-      "why": [
-        "56 קבצים לא מחויבים"
-      ]
-    }
-  ],
+  "at": "2026-09-30T16:11:56.510Z",
+  "ok": 66,
+  "missing": [],
   "na": 1,
   "elements": [
     {
@@ -467,7 +459,7 @@
       "id": "pushed",
       "phase": "8-deliver",
       "label": "Committed and pushed",
-      "status": "missing"
+      "status": "ok"
     }
   ]
 }

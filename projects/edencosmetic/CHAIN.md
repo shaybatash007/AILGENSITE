@@ -1,10 +1,8 @@
 # בדיקת השרשרת: edencosmetic
 
-2026-09-30 16:11 · 67 אלמנטים · **65 קיימים** · **1 חסרים** · 1 לא רלוונטיים
+2026-09-30 16:11 · 67 אלמנטים · **66 קיימים** · 0 חסרים · 1 לא רלוונטיים
 
-## חסרים (חוסמים מסירה)
-
-- **Committed and pushed** (8-deliver): 56 קבצים לא מחויבים
+כל אלמנט בשרשרת קיים, עם ראיה.
 
 ## כל האלמנטים, עם זמן ועלות
 
@@ -78,7 +76,7 @@
 | 8-deliver | Autonomy: the loop's first report | קיים | — | — |
 | 8-deliver | Meter: every phase opened and closed, report written | קיים | — | — |
 | 8-deliver | Report to the owner in Hebrew (report.md) with links and what only they can supply | קיים | 1.7 דק׳ (מדוד) | $0.89 |
-| 8-deliver | Committed and pushed | **חסר** | — | — |
+| 8-deliver | Committed and pushed | קיים | — | — |
 
 ## סיכום לפי שלב
 
@@ -93,4 +91,4 @@
 | 5-site | 21 | 21 | 41.1 דק׳ | $17.80 |
 | 6-film | 8 | 8 | 146.3 דק׳ | $9.62 |
 | 7-portfolio | 5 | 5 | 11.7 דק׳ | $6.88 |
-| 8-deliver | 5 | 4 | 1.7 דק׳ | $0.89 |
+| 8-deliver | 5 | 5 | 1.7 דק׳ | $0.89 |
