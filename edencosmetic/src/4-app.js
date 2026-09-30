@@ -5,8 +5,10 @@ const enc=encodeURI;
 const pUrl=x=>'/products/'+enc(x.h)+'/', cUrl=h=>'/collections/'+enc(h)+'/';
 const thumb=x=>'img/p/t/'+x.img+'.jpg', big=x=>'img/p/'+x.img+'.jpg';
 const title=x=>x.dt||x.t;
+/* the shop stage: a real cutout when one exists (CUTS: 0 cut, 1 cut of a white product, 2 photo taken in a setting), otherwise the store photo */
+const cutOf=x=>CUTS[x.img]===0||CUTS[x.img]===1?'img/cut/p/'+x.img.replace(/-\d+$/,'')+'-320.webp':'';
 const cheap=a=>a.slice().sort((p,q)=>p.p-q.p);
-const cutW=(t,n)=>t.length<=n?t:t.slice(0,n).replace(/\s+\S*$/,'')+'…';
+
 const waHref=t=>'https://wa.me/'+C.wa+'?text='+encodeURIComponent(t);
 const FREE=CAT.freeShip;
 const shipLine=(sum)=>sum<=0?'משלוח חינם בהזמנה מעל <b>'+money(FREE)+'</b>.':sum>=FREE?'<b>המשלוח חינם</b>: ההזמנה מעל '+money(FREE)+'.':'עוד <b>'+money(FREE-sum)+'</b> למשלוח חינם.';
@@ -39,13 +41,11 @@ function renderFaq(){
 const COVER={'הרמת-ריסים-וגבות':'thuya-kit','דבקים-סיליקונים':'pads-fox','מוצרים-נלווים':'nikk-tweezers'};
 const COLORDER=['הרמת-ריסים-וגבות','דבקים-סיליקונים','מוצרים-נלווים','קורסים-והשתלמויות'];
 function renderCats(){
- const cols=COLORDER.map(h=>CAT.cols.find(c=>c.h===h)).filter(Boolean);
- $('#catsList').innerHTML=cols.map(c=>{const soon=!c.n, cv=COVER[c.h];
-  return '<li><a class="cat'+(soon?' soon':'')+'" href="'+cUrl(c.h)+'" data-col="'+esc(c.h)+'"><span class="im">'+(cv?'<img src="img/cut/'+cv+'-380.webp" alt="" width="190" height="190" loading="lazy" decoding="async">':'<svg aria-hidden="true"><use href="#i-course"/></svg>')+'</span><span class="tx2"><b>'+esc(c.t)+'</b><span>'+(soon?'רשימת המתנה לקורס הבא':bdi(c.n)+' מוצרים')+'</span><span class="go">'+(soon?'להצטרפות לרשימה':'לקולקציה')+' <svg aria-hidden="true"><use href="#i-arrow"/></svg></span></span></a></li>';}).join('');
+ const cols=COLORDER.map(h=>CAT.cols.find(c=>c.h===h)).filter(c=>c&&c.n);
+ $('#catsList').innerHTML=cols.map((c,i)=>{const cv=COVER[c.h];
+  return '<li><a class="cat" href="'+cUrl(c.h)+'" data-col="'+esc(c.h)+'"><span class="no lat">'+String(i+1).padStart(2,'0')+'</span><b>'+esc(c.t)+'</b><span class="n">'+bdi(c.n)+' מוצרים</span>'+(cv?'<span class="pv"><img src="img/cut/'+cv+'-380.webp" alt="" width="190" height="190" loading="lazy" decoding="async"></span>':'')+'<svg class="ar" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>';}).join('');
  $$('#catsList a').forEach(a=>a.addEventListener('click',e=>{
-  const h=a.dataset.col, c=CAT.cols.find(c=>c.h===h);
-  if(!c.n){e.preventDefault(); location.hash='#courses'; $('#courses').scrollIntoView({behavior:reduce()?'auto':'smooth'}); return;}
-  if(LIVE){e.preventDefault(); F.col=h; F.n=24; renderShop(); $('#shop').scrollIntoView({behavior:reduce()?'auto':'smooth'});}
+  if(LIVE){e.preventDefault(); F.col=a.dataset.col; F.n=24; renderShop(); $('#shop').scrollIntoView({behavior:reduce()?'auto':'smooth'});}
  }));
 }
 
@@ -64,10 +64,10 @@ function filtered(){
  return a;
 }
 function card(x){
- const out=!x.a, bk=brandOfItem(x);
- return '<li><article class="pc"'+(bk?' style="--pa:'+bk.look.accent+'"':'')+'><button class="ph2" type="button" data-qv="'+x.i+'" aria-label="מבט מהיר: '+esc(title(x))+(out?', אזל':x.c?', מבצע':'')+'"><img src="'+thumb(x)+'" alt="'+esc(title(x))+'" width="360" height="360" loading="lazy" decoding="async">'+(out?'<span class="tagg out">אזל</span>':x.c?'<span class="tagg">מבצע</span>':'')+'</button>'
- +'<div class="bd"><p class="br">'+esc(x.b)+'</p><h3><a href="'+pUrl(x)+'" data-qv="'+x.i+'">'+esc(title(x))+'</a></h3><div class="row"><span class="pr">'+bdi(money(x.p))+(x.c?'<s>'+bdi(money(x.c))+'</s>':'')+'</span>'
- +(out?'<button class="add alt" type="button" data-notify="'+x.i+'">עדכנו אותי</button>':'<button class="add" type="button" data-add="'+x.i+'"><svg aria-hidden="true"><use href="#i-cart"/></svg>הוספה</button>')+'</div></div></article></li>';
+ const out=!x.a, bk=brandOfItem(x), cu=cutOf(x), ctx=CUTS[x.img]===2;
+ return '<li><article class="pc"'+(bk?' style="--pa:'+bk.look.accent+'"':'')+'><button class="ph2'+(cu?' is-cut':ctx?' is-ctx':' is-photo')+'" type="button" data-qv="'+x.i+'" aria-label="מבט מהיר: '+esc(title(x))+(out?', אזל':x.c?', מבצע':'')+'">'+(cu?'<img src="'+cu+'" alt="'+esc(title(x))+'" width="320" height="320" loading="lazy" decoding="async">':'<img src="'+thumb(x)+'" alt="'+esc(title(x))+'" width="360" height="360" loading="lazy" decoding="async">')+(out?'<span class="tagg out">אזל</span>':x.c?'<span class="tagg">מבצע</span>':'')+'</button>'
+ +'<div class="bd"><p class="br'+(bk?'':' house')+'">'+(bk?'<i aria-hidden="true"></i>'+esc(bk.short):'הבחירה של עדן')+'</p><h3><a href="'+pUrl(x)+'" data-qv="'+x.i+'">'+esc(title(x))+'</a></h3><div class="row"><span class="pr">'+bdi(money(x.p))+(x.c?'<s>'+bdi(money(x.c))+'</s>':'')+'</span>'
+ +(out?'<button class="add alt" type="button" data-notify="'+x.i+'">עדכנו אותי</button>':'<button class="add" type="button" data-add="'+x.i+'" aria-label="הוספה לסל: '+esc(title(x))+'"><i aria-hidden="true"></i></button>')+'</div></div></article></li>';
 }
 function renderKinds(){
  const counts={}; ITEMS.forEach(x=>counts[x.k]=(counts[x.k]||0)+1);
@@ -86,7 +86,7 @@ function renderShop(){
 function shopUI(){
  renderKinds();
  const brands=[...new Set(ITEMS.map(x=>x.b).filter(Boolean))].sort();
- $('#brand').innerHTML='<option value="">הכול</option>'+brands.map(b=>'<option>'+esc(b)+'</option>').join('');
+ $('#brand').innerHTML='<option value="">כל המותגים</option>'+brands.map(b=>'<option>'+esc(b)+'</option>').join('');
  $('#q').addEventListener('input',e=>{F.q=e.target.value;F.n=24;renderShop();});
  $('#brand').addEventListener('change',e=>{F.brand=e.target.value;F.n=24;renderShop();});
  $('#sort').addEventListener('change',e=>{F.sort=e.target.value;renderShop();});
@@ -122,16 +122,19 @@ function brandPanel(b,house){
 function renderBrands(){
  const order=BRANDS.list.slice().sort((a,b)=>b.ids.length-a.ids.length);
  $('#brandList').innerHTML=order.map(b=>brandPanel(b)).join('')+brandPanel(BRANDS.house,true);
- $('#brandLine').innerHTML=order.map(b=>'<li><a class="bt" data-type="'+esc(b.look.type)+'" href="'+(LIVE?'#brands':bUrl(b))+'" style="--bc:'+b.look.accent+'">'+esc(b.short)+'</a></li>').join('');
+ $('#brandLine').innerHTML=order.map(b=>'<li><a href="'+(LIVE?'#brands':bUrl(b))+'" style="--bc:'+b.look.accent+'"><span class="bt" data-type="'+esc(b.look.type)+'">'+esc(b.short)+'</span></a></li>').join('');
  if(LIVE)$$('#brandList a[data-bk]').forEach(a=>a.addEventListener('click',e=>{const b=BRANDS.list.find(x=>x.key===a.dataset.bk); if(!b)return; e.preventDefault(); F.brand=brandItems(b)[0].b; F.kind='';F.col='';F.n=24; $('#brand').value=F.brand; renderShop(); $('#shop').scrollIntoView({behavior:reduce()?'auto':'smooth'});}));
 }
 /* the hero ticket: the kit builder's answer for the most common question (lash lift, starting out), computed from the catalog */
 function heroTicket(){
  const cats=KIT.lash.start, rows=cats.map(c=>{const o=cheap(ITEMS.filter(c.f)); return o.find(x=>x.a);}).filter(Boolean);
  const sum=rows.reduce((s,x)=>s+x.p,0);
- $('#tkIm').innerHTML=rows.slice(0,5).map(x=>'<img src="'+thumb(x)+'" alt="" width="46" height="46" loading="lazy">').join('');
+ $('#tkIm').innerHTML=rows.slice(0,5).map(x=>{const cu=cutOf(x); return '<img src="'+(cu||thumb(x))+'" alt="" width="40" height="40" loading="lazy"'+(cu?'':' class="ph"')+'>';}).join('');
  $('#tkTot').innerHTML=bdi(money(sum)); $('#tkN').innerHTML=bdi(rows.length)+' מוצרים · '+(sum>=FREE?'משלוח חינם':'עוד '+bdi(money(FREE-sum))+' למשלוח חינם');
  requestAnimationFrame(()=>{$('#tkPg').style.width=pct(sum)+'%';});
+ // the points on the flat lay: name and today's price from the catalog; in the live preview they open the quick view
+ $$('#stage .spot').forEach(a=>{const x=BYH.get(a.dataset.h); if(!x){a.remove();return;} a.querySelector('.sp-l').innerHTML=esc(a.querySelector('.sp-l').textContent)+' · '+bdi(money(x.p));
+  if(LIVE)a.addEventListener('click',e=>{e.preventDefault(); openQV(x);});});
 }
 
 
@@ -238,8 +241,9 @@ function kitText(){const rs=kitSel().filter(r=>r.on&&r.x.a); return 'שלום ע
 function renderKit(){
  const rs=kitSel();
  $('#kList').innerHTML=rs.length?rs.map(({c,x,on})=>{
-  const opts=kitOpts(c);
-  return '<li class="krow'+(on&&x.a?'':' off')+'" data-c="'+c.k+'"><input class="ck" type="checkbox" '+(on&&x.a?'checked':'')+(x.a?'':' disabled')+' aria-label="כלול: '+esc(c.t)+'"><img src="'+thumb(x)+'" alt="" width="76" height="76" loading="lazy"><div class="nm"><span class="cat2">'+esc(c.t)+'</span>'+(opts.length>1?'<select aria-label="בחירה אחרת ב'+esc(c.t)+'">'+opts.map(o=>'<option value="'+o.i+'"'+(o.i===x.i?' selected':'')+'>'+esc(cutW(title(o),56))+' · '+money(o.p)+(o.a?'':' (אזל)')+'</option>').join('')+'</select>':'<b>'+esc(title(x))+'</b>')+(x.a?'':'<span class="out">אזל בחנות</span>')+'</div><span class="pr">'+bdi(x.a?money(x.p):'—')+'</span></li>';
+  const opts=kitOpts(c), cu=cutOf(x);
+  return '<li class="krow'+(on&&x.a?'':' off')+'" data-c="'+c.k+'"><input class="ck" type="checkbox" '+(on&&x.a?'checked':'')+(x.a?'':' disabled')+' aria-label="כלול: '+esc(c.t)+'"><span class="kim'+(cu?'':' ph')+'"><img src="'+(cu||thumb(x))+'" alt="" width="76" height="76" loading="lazy"></span><div class="nm"><span class="cat2">'+esc(c.t)+'</span><b>'+esc(title(x))+'</b>'+(x.a?'':'<span class="out">אזל בחנות</span>')
+   +(opts.length>1?'<label class="swap"><span>החלפה · '+bdi(opts.length)+' אפשרויות</span><select aria-label="בחירה אחרת ב'+esc(c.t)+'">'+opts.map(o=>'<option value="'+o.i+'"'+(o.i===x.i?' selected':'')+'>'+esc(title(o))+' · '+money(o.p)+(o.a?'':' (אזל)')+'</option>').join('')+'</select></label>':'')+'</div><span class="pr">'+bdi(x.a?money(x.p):'—')+'</span></li>';
  }).join(''):'<li class="krow empty">אין מוצרים לקטגוריה הזו כרגע.</li>';
  const sum=kitSum(); $('#kTot').innerHTML=bdi(money(sum)); $('#kPg').style.width=pct(sum)+'%'; $('#kShip').innerHTML=shipLine(sum);
  const has=rs.some(r=>r.on&&r.x.a); $('#kCart').disabled=!has; $('#kWa').setAttribute('aria-disabled',String(!has)); $('#kWa').href=waHref(kitText());

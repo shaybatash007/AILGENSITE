@@ -1,8 +1,8 @@
 {
  "url": "http://127.0.0.1:8131/",
- "at": "2026-09-30T09:19:32.649Z",
+ "at": "2026-09-30T12:53:30.014Z",
  "ok": true,
- "passed": 82,
+ "passed": 87,
  "failed": 0,
  "checks": [
   {
@@ -113,7 +113,7 @@
   {
    "name": "kit: tint lists a tint and an oxidant (חמצן)",
    "ok": true,
-   "note": "צבעצבע לגבות – NIKK MOLE חום · ₪45צבע לריסים – NIKK MOLE כחול שחור · ₪45My lamination צבע לגבות / ריסים בתוספת קרטין – ש"
+   "note": "צבעצבע לגבות – NIKK MOLE חוםהחלפה · 9 אפשרויותצבע לגבות – NIKK MOLE חום · ₪45צבע לריסים – NIKK MOLE כחול שחור · ₪45My la"
   },
   {
    "name": "kit: the default oxidant is in stock and of the tint's brand",
@@ -297,6 +297,31 @@
   },
   {
    "name": "legal: the accessibility statement opens and names the coordinator",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "design: no letter-spacing on Hebrew text (kicker, footer headings, kit steps)",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "design: every shop product sits on the same stage (a real cutout or the store photo, never a stretched frame)",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "design: kit rows show the full product name (no clipped select text)",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "design: the flat lay points name a real product and its price",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "design: the footer has one link per legal text",
    "ok": true,
    "note": ""
   },

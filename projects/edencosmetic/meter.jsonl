@@ -46,3 +46,9 @@
 {"t": "2026-09-30T09:27:24.171Z", "phase": "9-nextlevel/visual-docs-qa-publish", "ev": "end", "note": "one window: visual system (concepts, imagegen, image-review, videogen, cutouts wiring), Lotti tour and inner-page guide, autonomy loop, four references and the skill, content gate to 0/0, QA 82/82, Lighthouse and performance fixes, SEO gates, live publish"}
 {"t":"2026-09-30T09:27:24.242Z","phase":"9-nextlevel/report","ev":"start"}
 {"t":"2026-09-30T09:28:25.842Z","phase":"9-nextlevel/report","ev":"end"}
+{"t":"2026-09-30T09:41:59.503Z","phase":"10-craft/research","ev":"start"}
+{"t":"2026-09-30T09:46:34.914Z","phase":"11-critique","ev":"start"}
+{"t":"2026-09-30T12:49:08.797Z","phase":"11-critique","ev":"end"}
+{"t":"2026-09-30T12:49:08.856Z","phase":"12-gates","ev":"start"}
+{"t":"2026-09-30T09:46:34.000Z","phase":"10-craft/research","ev":"end","note":"closed at the moment the critique phase opened; the vendor-neutral tooling that followed is measured under 11 and 12"}
+{"t":"2026-09-30T12:59:03.089Z","phase":"12-gates","ev":"end"}

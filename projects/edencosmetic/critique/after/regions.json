@@ -1,0 +1,170 @@
+[
+ {
+  "id": "bar",
+  "label": "desktop",
+  "w": 1440,
+  "h": 38,
+  "file": "projects/edencosmetic/critique/after/desktop-bar.png"
+ },
+ {
+  "id": "hdr",
+  "label": "desktop",
+  "w": 1440,
+  "h": 75,
+  "file": "projects/edencosmetic/critique/after/desktop-hdr.png"
+ },
+ {
+  "id": "top",
+  "label": "desktop",
+  "w": 1440,
+  "h": 760,
+  "file": "projects/edencosmetic/critique/after/desktop-top.png"
+ },
+ {
+  "id": "cats",
+  "label": "desktop",
+  "w": 1440,
+  "h": 703,
+  "file": "projects/edencosmetic/critique/after/desktop-cats.png"
+ },
+ {
+  "id": "kit",
+  "label": "desktop",
+  "w": 1440,
+  "h": 1049,
+  "file": "projects/edencosmetic/critique/after/desktop-kit.png"
+ },
+ {
+  "id": "brands",
+  "label": "desktop",
+  "w": 1440,
+  "h": 1123,
+  "file": "projects/edencosmetic/critique/after/desktop-brands.png"
+ },
+ {
+  "id": "shop",
+  "label": "desktop",
+  "w": 1440,
+  "h": 3186,
+  "file": "projects/edencosmetic/critique/after/desktop-shop.png"
+ },
+ {
+  "id": "about",
+  "label": "desktop",
+  "w": 1440,
+  "h": 1000,
+  "file": "projects/edencosmetic/critique/after/desktop-about.png"
+ },
+ {
+  "id": "courses",
+  "label": "desktop",
+  "w": 1440,
+  "h": 601,
+  "file": "projects/edencosmetic/critique/after/desktop-courses.png"
+ },
+ {
+  "id": "prep",
+  "label": "desktop",
+  "w": 1440,
+  "h": 1323,
+  "file": "projects/edencosmetic/critique/after/desktop-prep.png"
+ },
+ {
+  "id": "contact",
+  "label": "desktop",
+  "w": 1440,
+  "h": 745,
+  "file": "projects/edencosmetic/critique/after/desktop-contact.png"
+ },
+ {
+  "id": "ft",
+  "label": "desktop",
+  "w": 1440,
+  "h": 629,
+  "file": "projects/edencosmetic/critique/after/desktop-ft.png"
+ },
+ {
+  "id": "bar",
+  "label": "mobile",
+  "w": 390,
+  "h": 38,
+  "file": "projects/edencosmetic/critique/after/mobile-bar.png"
+ },
+ {
+  "id": "hdr",
+  "label": "mobile",
+  "w": 390,
+  "h": 75,
+  "file": "projects/edencosmetic/critique/after/mobile-hdr.png"
+ },
+ {
+  "id": "top",
+  "label": "mobile",
+  "w": 390,
+  "h": 1094,
+  "file": "projects/edencosmetic/critique/after/mobile-top.png"
+ },
+ {
+  "id": "cats",
+  "label": "mobile",
+  "w": 390,
+  "h": 580,
+  "file": "projects/edencosmetic/critique/after/mobile-cats.png"
+ },
+ {
+  "id": "kit",
+  "label": "mobile",
+  "w": 390,
+  "h": 2110,
+  "file": "projects/edencosmetic/critique/after/mobile-kit.png"
+ },
+ {
+  "id": "brands",
+  "label": "mobile",
+  "w": 390,
+  "h": 679,
+  "file": "projects/edencosmetic/critique/after/mobile-brands.png"
+ },
+ {
+  "id": "shop",
+  "label": "mobile",
+  "w": 390,
+  "h": 4443,
+  "file": "projects/edencosmetic/critique/after/mobile-shop.png"
+ },
+ {
+  "id": "about",
+  "label": "mobile",
+  "w": 390,
+  "h": 1534,
+  "file": "projects/edencosmetic/critique/after/mobile-about.png"
+ },
+ {
+  "id": "courses",
+  "label": "mobile",
+  "w": 390,
+  "h": 1009,
+  "file": "projects/edencosmetic/critique/after/mobile-courses.png"
+ },
+ {
+  "id": "prep",
+  "label": "mobile",
+  "w": 390,
+  "h": 1530,
+  "file": "projects/edencosmetic/critique/after/mobile-prep.png"
+ },
+ {
+  "id": "contact",
+  "label": "mobile",
+  "w": 390,
+  "h": 1162,
+  "file": "projects/edencosmetic/critique/after/mobile-contact.png"
+ },
+ {
+  "id": "ft",
+  "label": "mobile",
+  "w": 390,
+  "h": 1539,
+  "file": "projects/edencosmetic/critique/after/mobile-ft.png"
+ }
+]

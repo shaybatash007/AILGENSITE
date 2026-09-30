@@ -24,3 +24,6 @@ projects/_eyes/scratch/
 *.sqlite
 *.sqlite3# a store catalog snapshot keeps its JSON; the images live in the site that uses them
 projects/*/catalog/img/
+projects/*/visual/.refcache/
+projects/*/visual/.graded/
+projects/*/visual/probe.json

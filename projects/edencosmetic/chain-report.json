@@ -1,8 +1,23 @@
 {
   "slug": "edencosmetic",
-  "at": "2026-09-30T09:28:57.003Z",
-  "ok": 62,
-  "missing": [],
+  "at": "2026-09-30T12:58:40.601Z",
+  "ok": 63,
+  "missing": [
+    {
+      "id": "meter",
+      "phase": "8-deliver",
+      "why": [
+        "שלבים פתוחים: 10-craft/research, 12-gates"
+      ]
+    },
+    {
+      "id": "pushed",
+      "phase": "8-deliver",
+      "why": [
+        "132 קבצים לא מחויבים"
+      ]
+    }
+  ],
   "na": 1,
   "elements": [
     {
@@ -405,6 +420,24 @@
       "status": "na"
     },
     {
+      "id": "visual-plan",
+      "phase": "5-site",
+      "label": "Visual asset plan: every placement, model and why, counts, cost, what the owner provides (visual/plan.md)",
+      "status": "ok"
+    },
+    {
+      "id": "design-critique",
+      "phase": "5-site",
+      "label": "Design critique: every region scored before and after, alternatives weighed (critique/critique.md)",
+      "status": "ok"
+    },
+    {
+      "id": "design-critique-shots",
+      "phase": "5-site",
+      "label": "Design critique shots: every region alone, desktop and phone, after the rebuild",
+      "status": "ok"
+    },
+    {
       "id": "evolve",
       "phase": "8-deliver",
       "label": "Autonomy: evolve.json and a baseline catalog snapshot",
@@ -420,7 +453,7 @@
       "id": "meter",
       "phase": "8-deliver",
       "label": "Meter: every phase opened and closed, report written",
-      "status": "ok"
+      "status": "missing"
     },
     {
       "id": "report",
@@ -435,7 +468,7 @@
       "id": "pushed",
       "phase": "8-deliver",
       "label": "Committed and pushed",
-      "status": "ok"
+      "status": "missing"
     }
   ]
 }

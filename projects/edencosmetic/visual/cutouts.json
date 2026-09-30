@@ -240,6 +240,1186 @@
    "psnr": 40.1,
    "pixelsKept": true,
    "review": "ok"
+  },
+  "p-8479070290091": {
+   "id": "p-8479070290091",
+   "src": "projects/edencosmetic/catalog/img/8479070290091-1.jpg",
+   "out": "edencosmetic/img/cut/p/8479070290091.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.386,
+   "suitable": true,
+   "size": [
+    560,
+    539
+   ],
+   "bytes": 46710,
+   "psnr": 37.5,
+   "pixelsKept": true,
+   "softEdge": 0.144,
+   "whiteOnWhite": false
+  },
+  "p-8479554338987": {
+   "id": "p-8479554338987",
+   "src": "projects/edencosmetic/catalog/img/8479554338987-1.jpg",
+   "out": "edencosmetic/img/cut/p/8479554338987.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.325,
+   "suitable": true,
+   "size": [
+    459,
+    560
+   ],
+   "bytes": 41216,
+   "psnr": 40.7,
+   "pixelsKept": true,
+   "softEdge": 0.27,
+   "whiteOnWhite": false
+  },
+  "p-8479555780779": {
+   "id": "p-8479555780779",
+   "src": "projects/edencosmetic/catalog/img/8479555780779-1.jpg",
+   "out": "edencosmetic/img/cut/p/8479555780779.webp",
+   "borderBackground": 0.945,
+   "objectShare": 0.363,
+   "suitable": true,
+   "size": [
+    444,
+    560
+   ],
+   "bytes": 41038,
+   "psnr": 40.6,
+   "pixelsKept": true,
+   "softEdge": 0.248,
+   "whiteOnWhite": false
+  },
+  "p-8479556894891": {
+   "id": "p-8479556894891",
+   "src": "projects/edencosmetic/catalog/img/8479556894891-1.jpg",
+   "out": "edencosmetic/img/cut/p/8479556894891.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.256,
+   "suitable": true,
+   "size": [
+    212,
+    560
+   ],
+   "bytes": 28262,
+   "psnr": 38.6,
+   "pixelsKept": true,
+   "softEdge": 0.0,
+   "whiteOnWhite": false
+  },
+  "p-8479559844011": {
+   "id": "p-8479559844011",
+   "src": "projects/edencosmetic/catalog/img/8479559844011-1.jpg",
+   "out": "edencosmetic/img/cut/p/8479559844011.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.317,
+   "suitable": true,
+   "size": [
+    560,
+    560
+   ],
+   "bytes": 62002,
+   "psnr": 37.5,
+   "pixelsKept": true,
+   "softEdge": 0.18,
+   "whiteOnWhite": false
+  },
+  "p-8479560695979": {
+   "id": "p-8479560695979",
+   "src": "projects/edencosmetic/catalog/img/8479560695979-1.jpg",
+   "out": "edencosmetic/img/cut/p/8479560695979.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.265,
+   "suitable": true,
+   "size": [
+    535,
+    536
+   ],
+   "bytes": 43530,
+   "psnr": 37.8,
+   "pixelsKept": true,
+   "softEdge": 0.078,
+   "whiteOnWhite": false
+  },
+  "p-8479568789675": {
+   "id": "p-8479568789675",
+   "src": "projects/edencosmetic/catalog/img/8479568789675-1.jpg",
+   "out": "edencosmetic/img/cut/p/8479568789675.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.081,
+   "suitable": true,
+   "size": [
+    99,
+    560
+   ],
+   "bytes": 7532,
+   "psnr": 42.0,
+   "pixelsKept": true,
+   "softEdge": 0.026,
+   "whiteOnWhite": false
+  },
+  "p-8479575113899": {
+   "id": "p-8479575113899",
+   "src": "projects/edencosmetic/catalog/img/8479575113899-1.jpg",
+   "out": "edencosmetic/img/cut/p/8479575113899.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.134,
+   "suitable": true,
+   "size": [
+    196,
+    560
+   ],
+   "bytes": 19940,
+   "psnr": 38.9,
+   "pixelsKept": true,
+   "softEdge": 0.304,
+   "whiteOnWhite": false
+  },
+  "p-8479577800875": {
+   "id": "p-8479577800875",
+   "src": "projects/edencosmetic/catalog/img/8479577800875-1.jpg",
+   "out": "edencosmetic/img/cut/p/8479577800875.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.044,
+   "suitable": true,
+   "size": [
+    66,
+    560
+   ],
+   "bytes": 7198,
+   "psnr": 38.0,
+   "pixelsKept": true,
+   "softEdge": 0.063,
+   "whiteOnWhite": false
+  },
+  "p-8480517718187": {
+   "id": "p-8480517718187",
+   "src": "projects/edencosmetic/catalog/img/8480517718187-1.jpg",
+   "out": "edencosmetic/img/cut/p/8480517718187.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.191,
+   "suitable": true,
+   "size": [
+    245,
+    560
+   ],
+   "bytes": 26802,
+   "psnr": 39.9,
+   "pixelsKept": true,
+   "softEdge": 0.382,
+   "whiteOnWhite": false
+  },
+  "p-8480518439083": {
+   "id": "p-8480518439083",
+   "src": "projects/edencosmetic/catalog/img/8480518439083-1.jpg",
+   "out": "edencosmetic/img/cut/p/8480518439083.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.218,
+   "suitable": true,
+   "size": [
+    242,
+    560
+   ],
+   "bytes": 27962,
+   "psnr": 38.4,
+   "pixelsKept": true,
+   "softEdge": 0.327,
+   "whiteOnWhite": false
+  },
+  "p-8480518897835": {
+   "id": "p-8480518897835",
+   "src": "projects/edencosmetic/catalog/img/8480518897835-1.jpg",
+   "out": "edencosmetic/img/cut/p/8480518897835.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.199,
+   "suitable": true,
+   "size": [
+    243,
+    560
+   ],
+   "bytes": 25436,
+   "psnr": 41.3,
+   "pixelsKept": true,
+   "softEdge": 0.341,
+   "whiteOnWhite": false
+  },
+  "p-8480524828843": {
+   "id": "p-8480524828843",
+   "src": "projects/edencosmetic/catalog/img/8480524828843-1.jpg",
+   "out": "edencosmetic/img/cut/p/8480524828843.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.097,
+   "suitable": true,
+   "size": [
+    165,
+    560
+   ],
+   "bytes": 11830,
+   "psnr": 42.2,
+   "pixelsKept": true,
+   "softEdge": 0.104,
+   "whiteOnWhite": false
+  },
+  "p-8480545898667": {
+   "id": "p-8480545898667",
+   "src": "projects/edencosmetic/catalog/img/8480545898667-1.jpg",
+   "out": "edencosmetic/img/cut/p/8480545898667.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.371,
+   "suitable": true,
+   "size": [
+    560,
+    507
+   ],
+   "bytes": 51774,
+   "psnr": 38.0,
+   "pixelsKept": true,
+   "softEdge": 0.0,
+   "whiteOnWhite": false
+  },
+  "p-8480547143851": {
+   "id": "p-8480547143851",
+   "src": "projects/edencosmetic/catalog/img/8480547143851-1.jpg",
+   "out": "edencosmetic/img/cut/p/8480547143851.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.376,
+   "suitable": true,
+   "size": [
+    560,
+    507
+   ],
+   "bytes": 49222,
+   "psnr": 37.8,
+   "pixelsKept": true,
+   "softEdge": 0.0,
+   "whiteOnWhite": false
+  },
+  "p-8480548651179": {
+   "id": "p-8480548651179",
+   "src": "projects/edencosmetic/catalog/img/8480548651179-1.jpg",
+   "out": "edencosmetic/img/cut/p/8480548651179.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.183,
+   "suitable": true,
+   "size": [
+    412,
+    560
+   ],
+   "bytes": 36046,
+   "psnr": 39.6,
+   "pixelsKept": true,
+   "softEdge": 0.0,
+   "whiteOnWhite": false
+  },
+  "p-8480550781099": {
+   "id": "p-8480550781099",
+   "src": "projects/edencosmetic/catalog/img/8480550781099-1.jpg",
+   "out": "edencosmetic/img/cut/p/8480550781099.webp",
+   "borderBackground": 0.0,
+   "objectShare": 1.0,
+   "suitable": false,
+   "why": "the photo does not sit on a clean light background (or the product fills the frame)"
+  },
+  "p-8480686047403": {
+   "id": "p-8480686047403",
+   "src": "projects/edencosmetic/catalog/img/8480686047403-1.jpg",
+   "out": "edencosmetic/img/cut/p/8480686047403.webp",
+   "borderBackground": 0.0,
+   "objectShare": 1.0,
+   "suitable": false,
+   "why": "the photo does not sit on a clean light background (or the product fills the frame)"
+  },
+  "p-8480702070955": {
+   "id": "p-8480702070955",
+   "src": "projects/edencosmetic/catalog/img/8480702070955-1.jpg",
+   "out": "edencosmetic/img/cut/p/8480702070955.webp",
+   "borderBackground": 0.0,
+   "objectShare": 1.0,
+   "suitable": false,
+   "why": "the photo does not sit on a clean light background (or the product fills the frame)"
+  },
+  "p-8480706953387": {
+   "id": "p-8480706953387",
+   "src": "projects/edencosmetic/catalog/img/8480706953387-1.jpg",
+   "out": "edencosmetic/img/cut/p/8480706953387.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.313,
+   "suitable": true,
+   "size": [
+    560,
+    498
+   ],
+   "bytes": 50196,
+   "psnr": 41.2,
+   "pixelsKept": true,
+   "softEdge": 0.499,
+   "whiteOnWhite": true
+  },
+  "p-8481486831787": {
+   "id": "p-8481486831787",
+   "src": "projects/edencosmetic/catalog/img/8481486831787-1.jpg",
+   "out": "edencosmetic/img/cut/p/8481486831787.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.224,
+   "suitable": true,
+   "size": [
+    522,
+    531
+   ],
+   "bytes": 35404,
+   "psnr": 40.7,
+   "pixelsKept": true,
+   "softEdge": 0.099,
+   "whiteOnWhite": false
+  },
+  "p-8481503412395": {
+   "id": "p-8481503412395",
+   "src": "projects/edencosmetic/catalog/img/8481503412395-1.jpg",
+   "out": "edencosmetic/img/cut/p/8481503412395.webp",
+   "borderBackground": 0.686,
+   "objectShare": 0.298,
+   "suitable": true,
+   "size": [
+    560,
+    382
+   ],
+   "bytes": 41218,
+   "psnr": 40.3,
+   "pixelsKept": true,
+   "softEdge": 0.127,
+   "whiteOnWhite": false
+  },
+  "p-8481514848427": {
+   "id": "p-8481514848427",
+   "src": "projects/edencosmetic/catalog/img/8481514848427-1.jpg",
+   "out": "edencosmetic/img/cut/p/8481514848427.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.192,
+   "suitable": true,
+   "size": [
+    560,
+    284
+   ],
+   "bytes": 24422,
+   "psnr": 40.8,
+   "pixelsKept": true,
+   "softEdge": 0.015,
+   "whiteOnWhite": false
+  },
+  "p-8481525301419": {
+   "id": "p-8481525301419",
+   "src": "projects/edencosmetic/catalog/img/8481525301419-1.jpg",
+   "out": "edencosmetic/img/cut/p/8481525301419.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.301,
+   "suitable": true,
+   "size": [
+    479,
+    560
+   ],
+   "bytes": 22078,
+   "psnr": 43.8,
+   "pixelsKept": true,
+   "softEdge": 0.124,
+   "whiteOnWhite": false
+  },
+  "p-8481534476459": {
+   "id": "p-8481534476459",
+   "src": "projects/edencosmetic/catalog/img/8481534476459-1.jpg",
+   "out": "edencosmetic/img/cut/p/8481534476459.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.291,
+   "suitable": true,
+   "size": [
+    412,
+    560
+   ],
+   "bytes": 21704,
+   "psnr": 43.9,
+   "pixelsKept": true,
+   "softEdge": 0.21,
+   "whiteOnWhite": false
+  },
+  "p-8481559969963": {
+   "id": "p-8481559969963",
+   "src": "projects/edencosmetic/catalog/img/8481559969963-1.jpg",
+   "out": "edencosmetic/img/cut/p/8481559969963.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.24,
+   "suitable": true,
+   "size": [
+    560,
+    480
+   ],
+   "bytes": 27728,
+   "psnr": 42.8,
+   "pixelsKept": true,
+   "softEdge": 0.525,
+   "whiteOnWhite": true
+  },
+  "p-8481575501995": {
+   "id": "p-8481575501995",
+   "src": "projects/edencosmetic/catalog/img/8481575501995-1.jpg",
+   "out": "edencosmetic/img/cut/p/8481575501995.webp",
+   "borderBackground": 0.889,
+   "objectShare": 0.08,
+   "suitable": true,
+   "size": [
+    381,
+    560
+   ],
+   "bytes": 28480,
+   "psnr": 38.4,
+   "pixelsKept": true,
+   "softEdge": 0.126,
+   "whiteOnWhite": false
+  },
+  "p-8481619968171": {
+   "id": "p-8481619968171",
+   "src": "projects/edencosmetic/catalog/img/8481619968171-1.jpg",
+   "out": "edencosmetic/img/cut/p/8481619968171.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.342,
+   "suitable": true,
+   "size": [
+    381,
+    560
+   ],
+   "bytes": 58122,
+   "psnr": 40.4,
+   "pixelsKept": true,
+   "softEdge": 0.225,
+   "whiteOnWhite": false
+  },
+  "p-8481620099243": {
+   "id": "p-8481620099243",
+   "src": "projects/edencosmetic/catalog/img/8481620099243-1.jpg",
+   "out": "edencosmetic/img/cut/p/8481620099243.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.329,
+   "suitable": true,
+   "size": [
+    403,
+    560
+   ],
+   "bytes": 38916,
+   "psnr": 42.8,
+   "pixelsKept": true,
+   "softEdge": 0.063,
+   "whiteOnWhite": false
+  },
+  "p-8481621541035": {
+   "id": "p-8481621541035",
+   "src": "projects/edencosmetic/catalog/img/8481621541035-1.jpg",
+   "out": "edencosmetic/img/cut/p/8481621541035.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.124,
+   "suitable": true,
+   "size": [
+    241,
+    560
+   ],
+   "bytes": 22436,
+   "psnr": 36.4,
+   "pixelsKept": true,
+   "softEdge": 0.325,
+   "whiteOnWhite": false
+  },
+  "p-8481622032555": {
+   "id": "p-8481622032555",
+   "src": "projects/edencosmetic/catalog/img/8481622032555-1.jpg",
+   "out": "edencosmetic/img/cut/p/8481622032555.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.098,
+   "suitable": true,
+   "size": [
+    254,
+    560
+   ],
+   "bytes": 28182,
+   "psnr": 37.1,
+   "pixelsKept": true,
+   "softEdge": 0.222,
+   "whiteOnWhite": false
+  },
+  "p-8481622687915": {
+   "id": "p-8481622687915",
+   "src": "projects/edencosmetic/catalog/img/8481622687915-1.jpg",
+   "out": "edencosmetic/img/cut/p/8481622687915.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.31,
+   "suitable": true,
+   "size": [
+    560,
+    477
+   ],
+   "bytes": 30128,
+   "psnr": 43.5,
+   "pixelsKept": true,
+   "softEdge": 0.85,
+   "whiteOnWhite": true
+  },
+  "p-8481624719531": {
+   "id": "p-8481624719531",
+   "src": "projects/edencosmetic/catalog/img/8481624719531-1.jpg",
+   "out": "edencosmetic/img/cut/p/8481624719531.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.193,
+   "suitable": true,
+   "size": [
+    400,
+    472
+   ],
+   "bytes": 15278,
+   "psnr": 42.6,
+   "pixelsKept": true,
+   "softEdge": 0.022,
+   "whiteOnWhite": false
+  },
+  "p-8481630585003": {
+   "id": "p-8481630585003",
+   "src": "projects/edencosmetic/catalog/img/8481630585003-1.jpg",
+   "out": "edencosmetic/img/cut/p/8481630585003.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.367,
+   "suitable": true,
+   "size": [
+    491,
+    560
+   ],
+   "bytes": 47692,
+   "psnr": 40.1,
+   "pixelsKept": true,
+   "softEdge": 0.048,
+   "whiteOnWhite": false
+  },
+  "p-8481633173675": {
+   "id": "p-8481633173675",
+   "src": "projects/edencosmetic/catalog/img/8481633173675-1.jpg",
+   "out": "edencosmetic/img/cut/p/8481633173675.webp",
+   "borderBackground": 0.0,
+   "objectShare": 1.0,
+   "suitable": false,
+   "why": "the photo does not sit on a clean light background (or the product fills the frame)"
+  },
+  "p-8481667154091": {
+   "id": "p-8481667154091",
+   "src": "projects/edencosmetic/catalog/img/8481667154091-1.jpg",
+   "out": "edencosmetic/img/cut/p/8481667154091.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.204,
+   "suitable": true,
+   "size": [
+    507,
+    560
+   ],
+   "bytes": 37474,
+   "psnr": 39.3,
+   "pixelsKept": true,
+   "softEdge": 0.0,
+   "whiteOnWhite": false
+  },
+  "p-8481668006059": {
+   "id": "p-8481668006059",
+   "src": "projects/edencosmetic/catalog/img/8481668006059-1.jpg",
+   "out": "edencosmetic/img/cut/p/8481668006059.webp",
+   "borderBackground": 0.926,
+   "objectShare": 0.403,
+   "suitable": true,
+   "size": [
+    560,
+    437
+   ],
+   "bytes": 47216,
+   "psnr": 38.9,
+   "pixelsKept": true,
+   "softEdge": 0.08,
+   "whiteOnWhite": false
+  },
+  "p-8481668726955": {
+   "id": "p-8481668726955",
+   "src": "projects/edencosmetic/catalog/img/8481668726955-1.jpg",
+   "out": "edencosmetic/img/cut/p/8481668726955.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.209,
+   "suitable": true,
+   "size": [
+    560,
+    544
+   ],
+   "bytes": 75114,
+   "psnr": 38.3,
+   "pixelsKept": true,
+   "softEdge": 0.34,
+   "whiteOnWhite": false
+  },
+  "p-8490977067179": {
+   "id": "p-8490977067179",
+   "src": "projects/edencosmetic/catalog/img/8490977067179-1.jpg",
+   "out": "edencosmetic/img/cut/p/8490977067179.webp",
+   "borderBackground": 0.0,
+   "objectShare": 0.993,
+   "suitable": false,
+   "why": "the photo does not sit on a clean light background (or the product fills the frame)"
+  },
+  "p-8491091656875": {
+   "id": "p-8491091656875",
+   "src": "projects/edencosmetic/catalog/img/8491091656875-1.jpg",
+   "out": "edencosmetic/img/cut/p/8491091656875.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.11,
+   "suitable": true,
+   "size": [
+    560,
+    419
+   ],
+   "bytes": 14538,
+   "psnr": 43.1,
+   "pixelsKept": true,
+   "softEdge": 0.0,
+   "whiteOnWhite": false
+  },
+  "p-8493833224363": {
+   "id": "p-8493833224363",
+   "src": "projects/edencosmetic/catalog/img/8493833224363-1.jpg",
+   "out": "edencosmetic/img/cut/p/8493833224363.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.115,
+   "suitable": true,
+   "size": [
+    236,
+    560
+   ],
+   "bytes": 16750,
+   "psnr": 36.8,
+   "pixelsKept": true,
+   "softEdge": 0.009,
+   "whiteOnWhite": false
+  },
+  "p-8636048736427": {
+   "id": "p-8636048736427",
+   "src": "projects/edencosmetic/catalog/img/8636048736427-1.jpg",
+   "out": "edencosmetic/img/cut/p/8636048736427.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.241,
+   "suitable": true,
+   "size": [
+    184,
+    540
+   ],
+   "bytes": 14202,
+   "psnr": 41.3,
+   "pixelsKept": true,
+   "softEdge": 0.062,
+   "whiteOnWhite": false
+  },
+  "p-8640474644651": {
+   "id": "p-8640474644651",
+   "src": "projects/edencosmetic/catalog/img/8640474644651-1.jpg",
+   "out": "edencosmetic/img/cut/p/8640474644651.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.179,
+   "suitable": true,
+   "size": [
+    191,
+    560
+   ],
+   "bytes": 20764,
+   "psnr": 37.9,
+   "pixelsKept": true,
+   "softEdge": 0.305,
+   "whiteOnWhite": false
+  },
+  "p-8640484802731": {
+   "id": "p-8640484802731",
+   "src": "projects/edencosmetic/catalog/img/8640484802731-1.jpg",
+   "out": "edencosmetic/img/cut/p/8640484802731.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.158,
+   "suitable": true,
+   "size": [
+    175,
+    560
+   ],
+   "bytes": 26158,
+   "psnr": 32.7,
+   "pixelsKept": true,
+   "softEdge": 0.002,
+   "whiteOnWhite": false
+  },
+  "p-8640508592299": {
+   "id": "p-8640508592299",
+   "src": "projects/edencosmetic/catalog/img/8640508592299-1.jpg",
+   "out": "edencosmetic/img/cut/p/8640508592299.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.143,
+   "suitable": true,
+   "size": [
+    179,
+    560
+   ],
+   "bytes": 27282,
+   "psnr": 34.1,
+   "pixelsKept": true,
+   "softEdge": 0.0,
+   "whiteOnWhite": false
+  },
+  "p-8640515801259": {
+   "id": "p-8640515801259",
+   "src": "projects/edencosmetic/catalog/img/8640515801259-1.jpg",
+   "out": "edencosmetic/img/cut/p/8640515801259.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.047,
+   "suitable": true,
+   "size": [
+    67,
+    560
+   ],
+   "bytes": 6654,
+   "psnr": 41.6,
+   "pixelsKept": true,
+   "softEdge": 0.024,
+   "whiteOnWhite": false
+  },
+  "p-8640522027179": {
+   "id": "p-8640522027179",
+   "src": "projects/edencosmetic/catalog/img/8640522027179-1.jpg",
+   "out": "edencosmetic/img/cut/p/8640522027179.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.047,
+   "suitable": true,
+   "size": [
+    67,
+    560
+   ],
+   "bytes": 7494,
+   "psnr": 39.3,
+   "pixelsKept": true,
+   "softEdge": 0.0,
+   "whiteOnWhite": false
+  },
+  "p-8640530022571": {
+   "id": "p-8640530022571",
+   "src": "projects/edencosmetic/catalog/img/8640530022571-1.jpg",
+   "out": "edencosmetic/img/cut/p/8640530022571.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.044,
+   "suitable": true,
+   "size": [
+    67,
+    560
+   ],
+   "bytes": 7568,
+   "psnr": 41.3,
+   "pixelsKept": true,
+   "softEdge": 0.015,
+   "whiteOnWhite": false
+  },
+  "p-8640535134379": {
+   "id": "p-8640535134379",
+   "src": "projects/edencosmetic/catalog/img/8640535134379-1.jpg",
+   "out": "edencosmetic/img/cut/p/8640535134379.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.044,
+   "suitable": true,
+   "size": [
+    67,
+    560
+   ],
+   "bytes": 7640,
+   "psnr": 39.1,
+   "pixelsKept": true,
+   "softEdge": 0.0,
+   "whiteOnWhite": false
+  },
+  "p-8640544604331": {
+   "id": "p-8640544604331",
+   "src": "projects/edencosmetic/catalog/img/8640544604331-1.jpg",
+   "out": "edencosmetic/img/cut/p/8640544604331.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.17,
+   "suitable": true,
+   "size": [
+    560,
+    194
+   ],
+   "bytes": 18388,
+   "psnr": 31.6,
+   "pixelsKept": false,
+   "softEdge": 0.0,
+   "whiteOnWhite": false
+  },
+  "p-8640558301355": {
+   "id": "p-8640558301355",
+   "src": "projects/edencosmetic/catalog/img/8640558301355-1.jpg",
+   "out": "edencosmetic/img/cut/p/8640558301355.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.174,
+   "suitable": true,
+   "size": [
+    560,
+    194
+   ],
+   "bytes": 18358,
+   "psnr": 31.7,
+   "pixelsKept": false,
+   "softEdge": 0.041,
+   "whiteOnWhite": false
+  },
+  "p-8730706215083": {
+   "id": "p-8730706215083",
+   "src": "projects/edencosmetic/catalog/img/8730706215083-1.jpg",
+   "out": "edencosmetic/img/cut/p/8730706215083.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.335,
+   "suitable": true,
+   "size": [
+    560,
+    359
+   ],
+   "bytes": 43106,
+   "psnr": 41.0,
+   "pixelsKept": true,
+   "softEdge": 0.877,
+   "whiteOnWhite": true
+  },
+  "p-8730707493035": {
+   "id": "p-8730707493035",
+   "src": "projects/edencosmetic/catalog/img/8730707493035-1.jpg",
+   "out": "edencosmetic/img/cut/p/8730707493035.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.127,
+   "suitable": true,
+   "size": [
+    472,
+    560
+   ],
+   "bytes": 17162,
+   "psnr": 41.1,
+   "pixelsKept": true,
+   "softEdge": 0.644,
+   "whiteOnWhite": true
+  },
+  "p-8730714013867": {
+   "id": "p-8730714013867",
+   "src": "projects/edencosmetic/catalog/img/8730714013867-1.jpg",
+   "out": "edencosmetic/img/cut/p/8730714013867.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.124,
+   "suitable": true,
+   "size": [
+    473,
+    560
+   ],
+   "bytes": 17078,
+   "psnr": 41.0,
+   "pixelsKept": true,
+   "softEdge": 0.675,
+   "whiteOnWhite": true
+  },
+  "p-8730718568619": {
+   "id": "p-8730718568619",
+   "src": "projects/edencosmetic/catalog/img/8730718568619-1.jpg",
+   "out": "edencosmetic/img/cut/p/8730718568619.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.128,
+   "suitable": true,
+   "size": [
+    465,
+    560
+   ],
+   "bytes": 17546,
+   "psnr": 40.6,
+   "pixelsKept": true,
+   "softEdge": 0.595,
+   "whiteOnWhite": true
+  },
+  "p-8730719125675": {
+   "id": "p-8730719125675",
+   "src": "projects/edencosmetic/catalog/img/8730719125675-1.jpg",
+   "out": "edencosmetic/img/cut/p/8730719125675.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.377,
+   "suitable": true,
+   "size": [
+    398,
+    560
+   ],
+   "bytes": 32704,
+   "psnr": 42.4,
+   "pixelsKept": true,
+   "softEdge": 0.402,
+   "whiteOnWhite": false
+  },
+  "p-8730719387819": {
+   "id": "p-8730719387819",
+   "src": "projects/edencosmetic/catalog/img/8730719387819-1.jpg",
+   "out": "edencosmetic/img/cut/p/8730719387819.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.4,
+   "suitable": true,
+   "size": [
+    394,
+    560
+   ],
+   "bytes": 32276,
+   "psnr": 42.5,
+   "pixelsKept": true,
+   "softEdge": 0.464,
+   "whiteOnWhite": true
+  },
+  "p-8730719617195": {
+   "id": "p-8730719617195",
+   "src": "projects/edencosmetic/catalog/img/8730719617195-1.jpg",
+   "out": "edencosmetic/img/cut/p/8730719617195.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.313,
+   "suitable": true,
+   "size": [
+    387,
+    560
+   ],
+   "bytes": 29220,
+   "psnr": 42.5,
+   "pixelsKept": true,
+   "softEdge": 0.414,
+   "whiteOnWhite": false
+  },
+  "p-8730721452203": {
+   "id": "p-8730721452203",
+   "src": "projects/edencosmetic/catalog/img/8730721452203-1.jpg",
+   "out": "edencosmetic/img/cut/p/8730721452203.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.35,
+   "suitable": true,
+   "size": [
+    504,
+    344
+   ],
+   "bytes": 18042,
+   "psnr": 43.8,
+   "pixelsKept": true,
+   "softEdge": 0.975,
+   "whiteOnWhite": true
+  },
+  "p-8730721714347": {
+   "id": "p-8730721714347",
+   "src": "projects/edencosmetic/catalog/img/8730721714347-1.jpg",
+   "out": "edencosmetic/img/cut/p/8730721714347.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.114,
+   "suitable": true,
+   "size": [
+    560,
+    232
+   ],
+   "bytes": 15670,
+   "psnr": 38.8,
+   "pixelsKept": true,
+   "softEdge": 0.435,
+   "whiteOnWhite": false
+  },
+  "p-8730722173099": {
+   "id": "p-8730722173099",
+   "src": "projects/edencosmetic/catalog/img/8730722173099-1.jpg",
+   "out": "edencosmetic/img/cut/p/8730722173099.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.335,
+   "suitable": true,
+   "size": [
+    471,
+    560
+   ],
+   "bytes": 38718,
+   "psnr": 41.3,
+   "pixelsKept": true,
+   "softEdge": 0.778,
+   "whiteOnWhite": true
+  },
+  "p-8730724597931": {
+   "id": "p-8730724597931",
+   "src": "projects/edencosmetic/catalog/img/8730724597931-1.jpg",
+   "out": "edencosmetic/img/cut/p/8730724597931.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.363,
+   "suitable": true,
+   "size": [
+    560,
+    367
+   ],
+   "bytes": 22078,
+   "psnr": 42.5,
+   "pixelsKept": true,
+   "softEdge": 0.394,
+   "whiteOnWhite": false
+  },
+  "p-8734650466475": {
+   "id": "p-8734650466475",
+   "src": "projects/edencosmetic/catalog/img/8734650466475-1.jpg",
+   "out": "edencosmetic/img/cut/p/8734650466475.webp",
+   "borderBackground": 0.817,
+   "objectShare": 0.362,
+   "suitable": true,
+   "size": [
+    560,
+    265
+   ],
+   "bytes": 13952,
+   "psnr": 43.0,
+   "pixelsKept": true,
+   "softEdge": 0.772,
+   "whiteOnWhite": true
+  },
+  "p-8735419302059": {
+   "id": "p-8735419302059",
+   "src": "projects/edencosmetic/catalog/img/8735419302059-1.jpg",
+   "out": "edencosmetic/img/cut/p/8735419302059.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.27,
+   "suitable": true,
+   "size": [
+    363,
+    560
+   ],
+   "bytes": 21374,
+   "psnr": 41.3,
+   "pixelsKept": true,
+   "softEdge": 0.427,
+   "whiteOnWhite": false
+  },
+  "p-8735715557547": {
+   "id": "p-8735715557547",
+   "src": "projects/edencosmetic/catalog/img/8735715557547-1.jpg",
+   "out": "edencosmetic/img/cut/p/8735715557547.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.31,
+   "suitable": true,
+   "size": [
+    284,
+    560
+   ],
+   "bytes": 21508,
+   "psnr": 41.5,
+   "pixelsKept": true,
+   "softEdge": 0.507,
+   "whiteOnWhite": true
+  },
+  "p-8735729483947": {
+   "id": "p-8735729483947",
+   "src": "projects/edencosmetic/catalog/img/8735729483947-1.jpg",
+   "out": "edencosmetic/img/cut/p/8735729483947.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.11,
+   "suitable": true,
+   "size": [
+    139,
+    560
+   ],
+   "bytes": 13106,
+   "psnr": 41.0,
+   "pixelsKept": true,
+   "softEdge": 0.365,
+   "whiteOnWhite": false
+  },
+  "p-8735741411499": {
+   "id": "p-8735741411499",
+   "src": "projects/edencosmetic/catalog/img/8735741411499-1.jpg",
+   "out": "edencosmetic/img/cut/p/8735741411499.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.309,
+   "suitable": true,
+   "size": [
+    284,
+    560
+   ],
+   "bytes": 21186,
+   "psnr": 41.8,
+   "pixelsKept": true,
+   "softEdge": 0.472,
+   "whiteOnWhite": true
+  },
+  "p-8735746785451": {
+   "id": "p-8735746785451",
+   "src": "projects/edencosmetic/catalog/img/8735746785451-1.jpg",
+   "out": "edencosmetic/img/cut/p/8735746785451.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.196,
+   "suitable": true,
+   "size": [
+    196,
+    560
+   ],
+   "bytes": 15496,
+   "psnr": 42.5,
+   "pixelsKept": true,
+   "softEdge": 0.85,
+   "whiteOnWhite": true
+  },
+  "p-8735762579627": {
+   "id": "p-8735762579627",
+   "src": "projects/edencosmetic/catalog/img/8735762579627-1.jpg",
+   "out": "edencosmetic/img/cut/p/8735762579627.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.156,
+   "suitable": true,
+   "size": [
+    170,
+    560
+   ],
+   "bytes": 14942,
+   "psnr": 41.9,
+   "pixelsKept": true,
+   "softEdge": 0.582,
+   "whiteOnWhite": true
+  },
+  "p-8778855645355": {
+   "id": "p-8778855645355",
+   "src": "projects/edencosmetic/catalog/img/8778855645355-1.jpg",
+   "out": "edencosmetic/img/cut/p/8778855645355.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.045,
+   "suitable": true,
+   "size": [
+    70,
+    560
+   ],
+   "bytes": 8890,
+   "psnr": 37.0,
+   "pixelsKept": true,
+   "softEdge": 0.0,
+   "whiteOnWhite": false
+  },
+  "p-8778860462251": {
+   "id": "p-8778860462251",
+   "src": "projects/edencosmetic/catalog/img/8778860462251-1.jpg",
+   "out": "edencosmetic/img/cut/p/8778860462251.webp",
+   "borderBackground": 1.0,
+   "objectShare": 0.066,
+   "suitable": true,
+   "size": [
+    68,
+    560
+   ],
+   "bytes": 8366,
+   "psnr": 39.5,
+   "pixelsKept": true,
+   "softEdge": 0.0,
+   "whiteOnWhite": false
+  },
+  "pads-pair": {
+   "id": "pads-pair",
+   "src": "edencosmetic/img/cut/pads-fox.webp",
+   "out": "edencosmetic/img/cut/pads-pair.webp",
+   "crop": "one row (one pair, one size) of the pads-fox cutout; pixels unchanged",
+   "suitable": true,
+   "size": [
+    720,
+    158
+   ],
+   "pixelsKept": true,
+   "review": "ok"
   }
  },
  "_doc": "Real product cutouts (scripts/cutout.py): only an alpha channel is added; psnr compares the product pixels with the store photo. review = a person or the vision pass looked at each cutout on a light and a dark background."

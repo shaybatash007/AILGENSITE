@@ -63,7 +63,7 @@ if (a.sheet) {
   const out = path.join(VIS, 'review'); fs.mkdirSync(out, { recursive: true });
   const by = {}; for (const c of cands()) (by[c.meta.concept + (c.meta.brand ? '-' + c.meta.brand : '')] ||= []).push(c);
   for (const [k, list] of Object.entries(by)) {
-    const files = list.map(c => c.file), labels = list.map(c => `${c.meta.ratio} ${path.basename(c.file).slice(-8)} ${c.meta.checks ? (c.meta.checks.pass ? 'ok' : 'FAIL') : ''}`);
+    const files = list.map(c => c.file), labels = list.map(c => `${c.meta.ratio} ${String(c.meta.model || '').replace(/^.*\//, '').slice(0, 22)} ${path.basename(c.file).slice(-6)} ${c.meta.checks ? (c.meta.checks.pass ? 'ok' : 'FAIL') : ''}`);
     py(`
 import sys, json
 from PIL import Image, ImageDraw
@@ -101,9 +101,23 @@ if (a.publish) {
   if (!a.site) { console.error('--publish needs --site <folder>'); process.exit(2); }
   const SITE = path.resolve(ROOT, a.site), OUT = path.join(SITE, 'img/v'); fs.mkdirSync(OUT, { recursive: true });
   const manFile = path.join(OUT, 'manifest.json'), man = fs.existsSync(manFile) ? JSON.parse(fs.readFileSync(manFile, 'utf8')) : { images: {}, videos: {} };
-  const picks = cands().filter(c => c.meta.status === 'approved' && c.meta.pick);
+  const picks = cands().filter(c => c.meta.status === 'approved' && c.meta.pick).filter(c => {
+    // an approval never overrides the automatic checks: a stub or a failed check is not published (--allow-test for pipeline tests only)
+    const ok = c.meta.provider !== 'stub' && (!c.meta.checks || c.meta.checks.pass);
+    if (!ok && !a['allow-test']) console.log('  skipped (stub or failed checks):', path.relative(ROOT, c.file));
+    return ok || a['allow-test'];
+  });
   for (const c of picks) {
     const key = c.meta.concept + (c.meta.brand ? '-' + c.meta.brand : ''), r = c.meta.ratio.replace(':', 'x'), concept = CFG.concepts.find(x => x.id === c.meta.concept);
+    // the brand grade (scripts/grade.py): a gentle pull toward the concept palette, measured; plates only, never product pixels
+    let srcFile = c.file, grade = null;
+    if (CFG.grade && CFG.grade.strength > 0 && CFG.palette) {
+      const g = path.join(VIS, '.graded', path.basename(c.file).replace(/\.\w+$/, '.png')); fs.mkdirSync(path.dirname(g), { recursive: true });
+      const pal = [...new Set([...(concept && concept.palette ? concept.palette : []), ...Object.values(CFG.palette)])].join(',');
+      const out = spawnSync('python3', [path.join(path.dirname(new URL(import.meta.url).pathname), 'grade.py'), '--in', c.file, '--out', g, '--palette', pal, '--strength', String(CFG.grade.strength)], { encoding: 'utf8' });
+      if (out.status) { console.error('grade failed:', out.stderr.slice(-300)); process.exit(1); }
+      grade = JSON.parse(out.stdout.trim().split('\n').pop()); srcFile = g; console.log(`  graded ${path.basename(c.file)}: ΔE to palette ${grade.deltaE_before} → ${grade.deltaE_after}`);
+    }
     const sizes = JSON.parse(py(`
 import sys, json
 from PIL import Image
@@ -113,9 +127,9 @@ for w in (640, 1280, 1920):
     if w > im.size[0] and w != 640: continue
     im2 = im.copy(); im2.thumbnail((w, 10000), Image.LANCZOS)
     p = f"{out}/{base}-{w}.webp"; im2.save(p, 'WEBP', quality=82, method=6); res.append({'w': im2.size[0], 'h': im2.size[1], 'src': p})
-print(json.dumps(res))`, [c.file, OUT, `${key}-${r}`]));
+print(json.dumps(res))`, [srcFile, OUT, `${key}-${r}`]));
     (man.images[key] ||= {})[c.meta.ratio] = { srcset: sizes.map(s => ({ src: 'img/v/' + path.basename(s.src), w: s.w })), w: sizes[sizes.length - 1].w, h: sizes[sizes.length - 1].h,
-      label: concept ? concept.label : null, provenance: { provider: c.meta.provider, model: c.meta.model, at: c.meta.at, synthid: !!c.meta.synthid, promptHash: c.meta.promptHash, review: c.meta.review } };
+      label: concept ? concept.label : null, provenance: { provider: c.meta.provider, model: c.meta.model, at: c.meta.at, synthid: !!c.meta.synthid, promptHash: c.meta.promptHash, review: c.meta.review, grade: grade && { strength: grade.strength, deltaE: [grade.deltaE_before, grade.deltaE_after] } } };
     console.log('published', key, c.meta.ratio, sizes.map(s => s.w).join('/'));
   }
   man.updated = new Date().toISOString(); man.disclosure = CFG.disclosure || null;

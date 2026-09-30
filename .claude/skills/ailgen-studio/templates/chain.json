@@ -691,6 +691,33 @@
    }
   },
   {
+   "id": "visual-plan",
+   "phase": "5-site",
+   "label": "Visual asset plan: every placement, model and why, counts, cost, what the owner provides (visual/plan.md)",
+   "check": {
+    "file": "projects/{slug}/visual/plan.md",
+    "min": 1500
+   }
+  },
+  {
+   "id": "design-critique",
+   "phase": "5-site",
+   "label": "Design critique: every region scored before and after, alternatives weighed (critique/critique.md)",
+   "check": {
+    "file": "projects/{slug}/critique/critique.md",
+    "min": 2000
+   }
+  },
+  {
+   "id": "design-critique-shots",
+   "phase": "5-site",
+   "label": "Design critique shots: every region alone, desktop and phone, after the rebuild",
+   "check": {
+    "glob": "projects/{slug}/critique/after/*.png",
+    "min": 16
+   }
+  },
+  {
    "id": "evolve",
    "phase": "8-deliver",
    "label": "Autonomy: evolve.json and a baseline catalog snapshot",

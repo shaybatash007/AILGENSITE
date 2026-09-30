@@ -19,13 +19,37 @@
   "stock clichés: flowers scattered on marble, fanned makeup brushes, spa stones, candles, champagne, gold glitter"
  ],
  "routing": {
-  "draft": "gemini-3.1-flash-image",
-  "final": "gemini-3-pro-image",
-  "alt": "gpt-image-2",
-  "video": "veo-3.1-generate-preview",
-  "videoDraft": "veo-3.1-fast-generate-preview"
+  "_why": "Vendor-neutral (references/12-visual-production.md, 'Choosing a model'). Drafts on Cloudflare's free daily allocation (FLUX.2 [klein] 4B, Apache 2.0). Finals through one fal.ai key: Nano Banana Pro for photographic light and material, FLUX.2 [pro] for colour-exact fields and wide textures (priced per megapixel, takes reference images), Seedream 4.5 as a third opinion. Gemini and OpenAI stay as fallbacks with their own keys. Video only from an approved still: Veo 3.1 Fast for drafts, Veo 3.1 for the final, Kling 3.0 Pro as the second opinion on motion.",
+  "draft": [
+   "cloudflare:@cf/black-forest-labs/flux-2-klein-4b",
+   "fal:fal-ai/flux-2-pro",
+   "gemini:gemini-3.1-flash-image"
+  ],
+  "final": [
+   "fal:fal-ai/nano-banana-pro",
+   "gemini:gemini-3-pro-image",
+   "fal:fal-ai/flux-2-pro",
+   "openai:gpt-image-2"
+  ],
+  "bakeoff": [
+   "fal:fal-ai/nano-banana-pro",
+   "fal:fal-ai/flux-2-pro",
+   "fal:fal-ai/bytedance/seedream/v4.5/text-to-image",
+   "cloudflare:@cf/black-forest-labs/flux-2-klein-4b",
+   "gemini:gemini-3-pro-image",
+   "openai:gpt-image-2"
+  ],
+  "video": [
+   "fal:fal-ai/veo3.1/fast/image-to-video",
+   "fal:fal-ai/kling-video/v3/pro/image-to-video",
+   "gemini:veo-3.1-fast-generate-preview"
+  ],
+  "videoFinal": [
+   "fal:fal-ai/veo3.1/image-to-video",
+   "gemini:veo-3.1-generate-preview"
+  ]
  },
- "budgetUsd": 30,
+ "budgetUsd": 20,
  "concepts": [
   {
    "id": "atelier",
@@ -35,7 +59,7 @@
    "placements": [
     {
      "where": "home hero stage (behind the product cutouts)",
-     "ratio": "4:5",
+     "ratio": "1:1",
      "treatment": "photo plate under real cutouts; video V2 on desktop"
     },
     {
@@ -50,7 +74,7 @@
    "prompt": "Top-down editorial photograph of an empty warm travertine stone surface in blush-cream tones, from #F4E9E2 to #DFC7BA. Late-afternoon window light from the upper right casts long, soft diagonal shadows of window mullions and the blurred silhouette of a lotus leaf and petals across the lower left third. Fine natural stone pores, a faint linen texture at one edge, a gentle tonal gradient. Medium-format still-life photography, overhead, 50mm, f/8, soft and even. The surface is completely empty. The centre stays open and calm, ready for objects to be placed later.",
    "avoid": "objects, products, bottles, tubes, jars, boxes, tools, flowers, petals on the surface, people, hands, text, logos, watermark, glitter, marble veins, heavy vignette",
    "ratios": [
-    "4:5",
+    "1:1",
     "16:9",
     "9:16"
    ],
@@ -63,6 +87,15 @@
     "ratio": "16:9",
     "seconds": 8,
     "use": "desktop hero plate, muted, plays when visible, poster on mobile and with reduced motion"
+   },
+   "route": {
+    "final": [
+     "fal:fal-ai/nano-banana-pro",
+     "gemini:gemini-3-pro-image",
+     "fal:fal-ai/flux-2-pro",
+     "openai:gpt-image-2"
+    ],
+    "why": "the hero surface is about light on satin and stone: the most photographic model wins it; FLUX.2 [pro] is the bake-off rival"
    }
   },
   {
@@ -97,6 +130,15 @@
     "ratio": "16:9",
     "seconds": 8,
     "use": "the band, muted, plays once when it enters the view, then rests on the curl"
+   },
+   "route": {
+    "final": [
+     "fal:fal-ai/flux-2-pro",
+     "fal:fal-ai/nano-banana-pro",
+     "gemini:gemini-3-pro-image",
+     "openai:gpt-image-2"
+    ],
+    "why": "a wide abstract texture at 21:9: FLUX.2 [pro] is priced per megapixel and holds a strict palette"
    }
   },
   {
@@ -122,7 +164,16 @@
    ],
    "candidates": 4,
    "size": "2K",
-   "label": "תמונת אווירה"
+   "label": "תמונת אווירה",
+   "route": {
+    "final": [
+     "fal:fal-ai/nano-banana-pro",
+     "gemini:gemini-3-pro-image",
+     "fal:fal-ai/flux-2-pro",
+     "openai:gpt-image-2"
+    ],
+    "why": "gloved hands at work read as documentary: a real photo from Eden replaces it; generated only as the labelled fallback"
+   }
   },
   {
    "id": "field",
@@ -156,7 +207,17 @@
    ],
    "candidates": 2,
    "size": "1K",
-   "label": null
+   "label": null,
+   "route": {
+    "final": [
+     "fal:fal-ai/flux-2-pro",
+     "fal:fal-ai/nano-banana-pro",
+     "gemini:gemini-3-pro-image",
+     "openai:gpt-image-2"
+    ],
+    "why": "seven brand fields must match measured packaging colours: FLUX.2 [pro] with a colour-swatch reference (visual/refs/field-<brand>.png)",
+    "refs": "visual/refs/field-{brand}.png"
+   }
   },
   {
    "id": "lotus",
@@ -185,7 +246,17 @@
    ],
    "candidates": 3,
    "size": "2K",
-   "label": null
+   "label": null,
+   "route": {
+    "final": [
+     "fal:fal-ai/bytedance/seedream/v4.5/text-to-image",
+     "fal:fal-ai/nano-banana-pro",
+     "gemini:gemini-3-pro-image",
+     "fal:fal-ai/flux-2-pro",
+     "openai:gpt-image-2"
+    ],
+    "why": "a soft botanical texture for the About background: Seedream 4.5 is strong on delicate organic detail and costs $0.04"
+   }
   }
  ],
  "disclosure": "חלק מתמונות האווירה באתר נוצרו בעזרת בינה מלאכותית. תמונות המוצרים הן הצילומים של המוצרים עצמם.",
@@ -194,5 +265,9 @@
   "text": "generated letters are wrong or invented; all words on the site are set in type",
   "people": "a generated face can pass as Eden, a client or a student; results must be real photos of real work",
   "cliches": "they make any beauty site look like every other one"
+ },
+ "grade": {
+  "_why": "Every approved plate is graded toward the concept palette on publish (scripts/grade.py): a gentle Lab statistics transfer, reported as ΔE to the palette before and after. Never applied to products or to anything with product pixels.",
+  "strength": 0.35
  }
 }

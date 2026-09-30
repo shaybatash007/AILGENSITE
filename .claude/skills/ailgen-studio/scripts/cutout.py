@@ -9,6 +9,9 @@ fill); enclosed white parts of the product stay opaque. The edge gets a short al
 inside the product mask, the decoded output is compared with the source (PSNR). Lossy compression alone keeps it above 32 dB;
 a repainted or regenerated product falls far below (typically under 25 dB). Photos that do not sit on a clean light background are reported as unsuitable
 and are not cut (they stay as square photos on the site).
+White-on-white: a white product on a white background can lose its white faces to the fill. The report's softEdge is the share
+of the band just inside the cut edge that is itself near-white; above 0.45 the cutout is marked whiteOnWhite and may be shown
+only on a white stage (where a lost white face renders as the same white), never on a coloured or dark field.
 """
 import argparse, json, os, sys
 import numpy as np
@@ -75,7 +78,10 @@ ref = np.asarray(ref).astype(np.float32)
 core = dec[:, :, 3] > 250
 mse = float(((dec[:, :, :3][core] - ref[core]) ** 2).mean()) if core.any() else 0.0
 psnr = 99.0 if mse == 0 else 10 * np.log10(255 ** 2 / mse)
-report.update({'suitable': True, 'size': list(out.size), 'bytes': os.path.getsize(a.out), 'psnr': round(float(psnr), 1), 'pixelsKept': bool(psnr >= 32)})
+band = ndimage.binary_erosion(obj, iterations=3) & ~ndimage.binary_erosion(obj, iterations=5)
+soft = float((dist[band] < 2 * a.tol).mean()) if band.any() else 0.0
+out.resize((max(1, round(out.size[0] * 320 / max(out.size))), max(1, round(out.size[1] * 320 / max(out.size)))), Image.LANCZOS).save(a.out.replace('.webp', '-320.webp'), 'WEBP', quality=a.q, method=6) if a.out.endswith('.webp') and max(out.size) > 320 else None
+report.update({'suitable': True, 'softEdge': round(soft, 3), 'whiteOnWhite': soft > 0.45, 'size': list(out.size), 'bytes': os.path.getsize(a.out), 'psnr': round(float(psnr), 1), 'pixelsKept': bool(psnr >= 32)})
 print(json.dumps(report, ensure_ascii=False))
 if a.manifest:
     os.makedirs(os.path.dirname(os.path.abspath(a.manifest)), exist_ok=True)

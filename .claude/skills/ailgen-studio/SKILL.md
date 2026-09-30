@@ -149,10 +149,20 @@ voice errors; then read the harvest against the rubric. No word on a page says w
 
 ### 5c · Visual system → `references/12-visual-production.md`
 At most five generated concepts, each with a job, placements and a never-list (`visual/concepts.json`); product pixels never
-generated (real cutouts, `cutout.py`); `imagegen.mjs` (Gemini 3 Pro Image for finals, 3.1 Flash Image for drafts, gpt-image-2
-optional), `image-review.mjs` (automatic checks, contact sheets, verdicts, publish), `videogen.mjs` (Veo 3.1 from an approved still).
-The site renders a slot only when an approved asset exists, and is complete without any.
+generated (real cutouts on one stage, `cutout.py`); vendor-neutral routes per job (`provider:model`, the first keyed route runs):
+free drafts on Cloudflare Workers AI, finals through one fal.ai key (Nano Banana Pro, FLUX.2 [pro], Seedream 4.5), Gemini and
+OpenAI as keyed fallbacks, a `--bakeoff` before any series; `image-review.mjs` (checks, sheets labelled by model, verdicts,
+publish with the brand grade `grade.py`), `videogen.mjs` (Veo 3.1 or Kling 3.0 from an approved still). Write the asset plan
+(`visual/plan.md`: every placement, model and why, counts, cost, what the owner provides). The site renders a slot only when an
+approved asset exists, and is complete without any.
 - **Gate**: every published asset approved with a reason; cutouts keep their pixels; the budget cap held; the disclosure line shown when generated images are.
+
+### 5d · Design critique → `references/16-design-critique.md`
+The first draft is never kept by default. `regions.mjs` shoots every region alone (desktop and phone, inner page types too);
+score each on six axes (hierarchy, typography, composition, imagery, detail, distinctiveness), weigh two alternatives for every
+region under 9, rebuild, reshoot, rescore, and lock each decision into the QA scenario. Output: `critique/critique.md` with
+before/after scores and shots.
+- **Gate**: every region ≥ 9 on every axis in the after pass; the critique's checks are in `qa/scenario.mjs` and pass.
 
 ### 6 · Launch campaign → `references/06-video-campaign.md`
 Fill `film.json` from the brand kit and the real content (hook · reveal · stat · gallery · quote · cards · cta),
@@ -225,9 +235,11 @@ Set up `evolve.json` and take the baseline snapshot, so new products, prices, st
 | `scripts/copy-harvest.mjs` | Every visitor string on every page and in every state (with a project states module), plus script literals |
 | `scripts/copy-lint.mjs` | The content gate: internal, developer, placeholder, stale-date, filler, language-leak, voice and typography rules |
 | `scripts/cutout.py` | Real product cutouts: alpha only, pixels proven kept (PSNR), unsuitable photos refused |
-| `scripts/imagegen.mjs` | Generated candidates per concept: Gemini (default), OpenAI (optional), stub (pipeline tests); probe, dry run, budget, ledger |
+| `scripts/imagegen.mjs` | Generated candidates per concept on vendor-neutral routes (Cloudflare free drafts, fal, Gemini, OpenAI, stub); probe, bake-off, references, dry run, budget, ledger |
+| `scripts/grade.py` | Brand colour grade for approved plates (Lab transfer, ΔE before/after); colour-swatch references |
+| `scripts/regions.mjs` | Design critique shots: every region alone, desktop and phone, before and after |
 | `scripts/image-review.mjs` | Automatic checks, review sheets, verdicts (Claude or owner), publish approved picks with provenance |
-| `scripts/videogen.mjs` | Veo 3.1 image-to-video from an approved still; muted web versions and poster to the manifest |
+| `scripts/videogen.mjs` | Image-to-video from an approved still (Veo 3.1 or Kling 3.0 via fal, Veo via Gemini); muted web versions and poster to the manifest |
 | `scripts/evolve.mjs` | The autonomy loop: catalog diff, draft brands, updates, gates and a report of what needs a person |
 | `scripts/shot.mjs` | Screenshot a local file or URL (boards, icon sheets, transparent logos) |
 | `scripts/site-qa.mjs` | Site gate: console, overflow at 390 px, reduced motion, keyboard, plus a scenario of real interactions |

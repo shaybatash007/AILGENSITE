@@ -89,7 +89,15 @@ export default async function (pg, T) {
   await pg.keyboard.press('Escape');
   // legal dialogs
   await pg.click('footer [data-legal=privacy]'); await pg.waitForTimeout(500); const lg = await txt('#lgTxt'); T.check('legal: the privacy text opens with the owner\'s contact and no draft wording', /עדן קוסמטיקס/.test(lg) && /Edencosmetics29@gmail\.com/.test(lg) && !/טיוטה|האתר החדש/.test(lg), lg.slice(0, 60)); await pg.keyboard.press('Escape');
-  await pg.click('footer [data-legal=a11y]'); await pg.waitForTimeout(500); T.check('legal: the accessibility statement opens and names the coordinator', /עדן נחמני/.test(await txt('#lgTxt'))); await pg.keyboard.press('Escape');
+  await pg.click('#a11yBtn'); await pg.click('#a11y [data-legal=a11y]'); await pg.waitForTimeout(500); T.check('legal: the accessibility statement opens and names the coordinator', /עדן נחמני/.test(await txt('#lgTxt'))); await pg.keyboard.press('Escape');
+
+  // ---- the design pass (references/16-design-critique.md): promises that must hold after every change
+  const spaced = await pg.evaluate(() => ['.kick', '.ft h2', '.krow .cat2', '.bp .or'].flatMap(q => [...document.querySelectorAll(q)].filter(e => /[\u0590-\u05FF]/.test(e.textContent) && parseFloat(getComputedStyle(e).letterSpacing || 0) > 0.5).map(e => q + ' "' + e.textContent.trim().slice(0, 24) + '" ' + getComputedStyle(e).letterSpacing)));
+  T.check('design: no letter-spacing on Hebrew text (kicker, footer headings, kit steps)', !spaced.length, spaced.join(' | '));
+  T.check('design: every shop product sits on the same stage (a real cutout or the store photo, never a stretched frame)', await pg.evaluate(() => [...document.querySelectorAll('#grid .ph2')].every(b => /is-(cut|photo|ctx)/.test(b.className))));
+  T.check('design: kit rows show the full product name (no clipped select text)', await pg.evaluate(() => [...document.querySelectorAll('#kList .krow .nm b')].every(b => b.textContent.length > 8)));
+  T.check('design: the flat lay points name a real product and its price', await pg.evaluate(() => { const s = [...document.querySelectorAll('#stage .spot')]; return s.length >= 3 && s.every(a => /₪\d/.test(a.textContent)); }));
+  T.check('design: the footer has one link per legal text', await pg.evaluate(() => [...document.querySelectorAll('footer [data-legal=a11y]')].length === 0 && [...document.querySelectorAll('footer [data-legal=privacy]')].length === 1));
 
   // ---- owner-only console stays hidden
   T.check('admin: the owner console button is hidden from visitors', (await pg.$eval('#admBtn', e => getComputedStyle(e).display)) === 'none');

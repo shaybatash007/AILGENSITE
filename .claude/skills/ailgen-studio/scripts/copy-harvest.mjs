@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Content quality, step 1: harvest every piece of text a visitor can meet, on every page and in every state.
 //   node copy-harvest.mjs --site <folder> --out projects/<slug>/qa/copy [--states projects/<slug>/qa/copy-states.mjs] [--pages home|all] [--js "src/3-data.js,src/4*.js"]
+// Script text meant for a model or a machine (an agent prompt, a tool schema) is fenced with /* copy-skip:start */ … /* copy-skip:end */.
 // What counts as text: visible text, hidden-but-reachable text (closed dialogs, collapsed details, drawers, noscript),
 // alt, aria-label, title, placeholder, the document title, meta description and share titles, and the Hebrew string
 // literals in the site's scripts (tips, errors and answers that only appear after an interaction).
@@ -82,7 +83,8 @@ if (a.js) {
   const rx = { test: f => rxs.some(r => r.test(f)) };
   const walk = d => fs.readdirSync(d, { withFileTypes: true }).flatMap(e => e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)]);
   for (const f of walk(SITE).filter(f => rx.test(path.relative(SITE, f)))) {
-    const src = fs.readFileSync(f, 'utf8');
+    // a region between /* copy-skip:start */ and /* copy-skip:end */ holds text for a model or a machine (an agent prompt, a tool schema), not for visitors
+    const src = fs.readFileSync(f, 'utf8').replace(/\/\*\s*copy-skip:start[\s\S]*?copy-skip:end\s*\*\//g, m => m.replace(/[^\n]/g, ' '));
     for (const m of src.matchAll(/(['"`])((?:\\.|(?!\1).)*?[֐-׿](?:\\.|(?!\1).)*?)\1/g)) {
       // a literal that holds code or markup (a mis-paired quote, an attribute) is not visitor text: the rendered harvest covers those
       if (/'\s*\+|\+\s*'|\)\s*\+|\b(esc|bdi|money|title|cutW)\(|=>|\.test\(|[\w-]+="|<\/?[a-z]|\?\s*'/.test(m[2])) continue;

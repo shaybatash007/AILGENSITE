@@ -11,6 +11,6 @@
   "build": "sh edencosmetic/build.sh"
  },
  "gates": {
-  "copy": "node .claude/skills/ailgen-studio/scripts/copy-harvest.mjs --site edencosmetic --out projects/edencosmetic/qa/copy --states projects/edencosmetic/qa/copy-states.mjs --js \"src/3-data.js,src/4-app.js,src/4b-lotti.js\" && node .claude/skills/ailgen-studio/scripts/copy-lint.mjs --in projects/edencosmetic/qa/copy/strings.json --rules projects/edencosmetic/copy-rules.json --gate"
+  "copy": "node .claude/skills/ailgen-studio/scripts/copy-harvest.mjs --site edencosmetic --out projects/edencosmetic/qa/copy --states projects/edencosmetic/qa/copy-states.mjs --js \"src/3-data.js,src/4-app.js,src/4b-lotti.js,src/5-live.js\" && node .claude/skills/ailgen-studio/scripts/copy-lint.mjs --in projects/edencosmetic/qa/copy/strings.json --rules projects/edencosmetic/copy-rules.json --gate"
  }
 }

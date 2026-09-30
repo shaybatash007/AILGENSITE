@@ -22,6 +22,7 @@ function openAgent(o){
  if(o){lastFocus=document.activeElement; setTimeout(()=>ain.focus(),40);} else if(lastFocus&&lastFocus.focus)lastFocus.focus({preventScroll:true});
 }
 const range=(k)=>{const a=ITEMS.filter(x=>x.k===k); return a.length?{n:a.length,min:Math.min(...a.map(x=>x.p)),max:Math.max(...a.map(x=>x.p)),out:a.filter(x=>!x.a).length}:{n:0,min:0,max:0,out:0};};
+/* copy-skip:start · the agent's instructions and tool schema are read by the model, not by visitors */
 function advPrompt(){
  const list=ITEMS.map(x=>title(x)+' | '+money(x.p)+' | '+(x.a?'במלאי':'אזל')+(x.b?' | '+x.b:'')).join('\n');
  const faq=C.faq.map(([q,a])=>'ש: '+q+' ת: '+a).join('\n');
@@ -31,6 +32,7 @@ function advPrompt(){
 }
 const leadTool={name:'create_lead',description:'שומר פנייה של מבקרת שביקשה שיחזרו אליה. לקרוא רק כשיש שם וטלפון.',inputSchema:{type:'object',properties:{name:{type:'string'},phone:{type:'string'},need:{type:'string',description:'תקציר הצורך'}},required:['name','phone']},
  async execute(i){try{await saveLead({name:String(i.name).slice(0,80),phone:String(i.phone).slice(0,30),svc:'שאלה',msg:String(i.need||'').slice(0,600),spec:'',source:'ai'});return{ok:true};}catch(e){return{ok:false,reason:'השמירה אינה זמינה כרגע'};}}};
+/* copy-skip:end */
 const FALLBACK=[
  [/משלוח|שליח|מתי מגיע|אספקה|כמה ימים/,()=>'האספקה באמצעות חברת שליחויות: 4–5 ימי עסקים לבית או לעסק, וליישובים מרוחקים עד 2 ימי עסקים נוספים (לא כולל יום ההזמנה, שישי, שבת וערבי חג). משלוח חינם בהזמנה מעל '+money(FREE)+'.'],
  [/חינם|499|מע"?מ/,()=>'משלוח חינם בהזמנה מעל '+money(FREE)+'. המחירים כוללים מע"מ ואינם כוללים משלוח, שמתווסף בקופה כשההזמנה מתחת לסכום.'],

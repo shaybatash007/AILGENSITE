@@ -30,13 +30,14 @@ a site without passing automatic checks and a review. The system is the same for
 | Step | Command | Gate |
 |---|---|---|
 | Product cutouts | `python3 cutout.py --in photo.jpg --out img/cut/x.webp --manifest visual/cutouts.json` | pixels kept (PSNR); look at every cutout on a light and a dark background |
-| Check the key | `node imagegen.mjs --project projects/<slug> --probe` | the routed models are listed |
+| Check the keys | `node imagegen.mjs --project projects/<slug> --probe` | every route shows ✓ or the missing key |
+| Bake-off | `node imagegen.mjs --project … --concept atelier --bakeoff` | one sheet, one image per model; the winner goes into `route.final` |
 | See the requests | `node imagegen.mjs --project … --concept all --dry` | prompts read right; cost estimate within budget |
 | Generate | `node imagegen.mjs --project … --concept atelier --tier draft` then `--tier final` | budget cap (concepts.json `budgetUsd`), ledger.jsonl |
 | Check | `node image-review.mjs --project … --check` | ratio ±2%, not flat, palette ΔE ≤ 28, no neon, never a stub |
 | Review | `node image-review.mjs --project … --sheet` → look at `visual/review/*.jpg` | the rubric below, verdict per file |
 | Approve | `node image-review.mjs --project … --verdict <file> approve --why "…" --pick [--by owner]` | only passing candidates can be approved |
-| Publish | `node image-review.mjs --project … --publish --site <folder>` | WebP 640/1280/1920 + manifest with provenance |
+| Publish | `node image-review.mjs --project … --publish --site <folder>` | graded to the palette (grade.py, ΔE before/after), WebP 640/1280/1920 + manifest with provenance |
 | Video | `node videogen.mjs --project … --concept atelier` (from an approved still), `image-review.mjs --frames`, `--verdict`, `videogen.mjs --publish` | starts from a reviewed still; muted web versions + poster |
 
 `--provider stub` renders a code-drawn plate locally to test the whole chain without a key; the checks refuse to approve it.
@@ -46,37 +47,56 @@ other; no product, packaging, logo, letters, face, eye or result, even blurred; 
 geometry, melted edges, repeated textures); light, palette and grain match the site; it leaves room for what sits on it
 (the text, the cutouts); it survives a crop to every ratio it is used in.
 
-## Research and routing (checked 2026-09-30)
+## Choosing a model: vendor-neutral routing (checked 2026-09-30)
 
-| Job | Choice | Why | Price (per unit) |
+No provider is the default by habit. Every job names an ordered route of `provider:model` in `concepts.json`
+(`routing.draft`, `routing.final`, `routing.bakeoff`, `routing.video`, `routing.videoFinal`, and per concept `route.final`
+with a one-line `why`); the first route whose key is present runs. Changing a model is one line of data, never code.
+
+| Job | Route (in order) | Why | Price |
 |---|---|---|---|
-| Final stills | **Gemini 3 Pro Image** (`gemini-3-pro-image`, "Nano Banana Pro") | best photographic quality and prompt adherence in the Gemini API, 1K/2K/4K, custom ratios, multi-turn edits, SynthID | ≈ $0.134 (1K–2K), $0.24 (4K); batch −50% |
-| Drafts and variations | **Gemini 3.1 Flash Image** (`gemini-3.1-flash-image`, "Nano Banana 2") | fast, cheap, all the ratios the site needs (incl. 21:9), up to 10 object references | ≈ $0.045–0.10 by size |
-| A second opinion | **OpenAI gpt-image-2** (optional, `--provider openai`) | strong editing with masks and 2K/4K output; useful when a concept stalls | ≈ $0.06 (medium) – $0.22 (high, 1024²) |
-| Video | **Veo 3.1** (`veo-3.1-generate-preview`; `-fast-` for drafts, `-lite-` exists) | image-to-video from an approved still, first/last frame, 9:16 and 16:9, 1080p at 8 s, SynthID | $0.40/s (fast $0.10–0.12/s, lite $0.05–0.08/s) |
+| Drafts (prompt and composition calibration) | `cloudflare:@cf/black-forest-labs/flux-2-klein-4b` → `fal:fal-ai/flux-2-pro` → `gemini:gemini-3.1-flash-image` | Workers AI gives 10,000 neurons a day free: ≈ 95 klein images a day; Apache 2.0 weights; takes up to 4 references (each < 512²) | free within the daily allocation, then ≈ $0.0012 per 1 MP |
+| Photographic finals (light, material, surfaces) | `fal:fal-ai/nano-banana-pro` → `gemini:gemini-3-pro-image` → `fal:fal-ai/flux-2-pro` → `openai:gpt-image-2` | Nano Banana Pro is Google's Gemini 3 Pro Image, reached through the same fal key as every other model | $0.15 (fal) / $0.134 (Gemini API); 4K $0.30 / $0.24 |
+| Colour-exact fields, wide textures | `fal:fal-ai/flux-2-pro` (with a colour-swatch reference, `grade.py --swatch`) | per-megapixel pricing suits 21:9; holds a strict palette; `/edit` takes reference images | $0.03 first MP + $0.015 per extra MP (references count as MP) |
+| Soft organic textures | `fal:fal-ai/bytedance/seedream/v4.5/text-to-image` | delicate detail, cheapest good final | $0.04 |
+| Bake-off (before any series) | Nano Banana Pro · FLUX.2 [pro] · Seedream 4.5 (+ klein, Gemini, OpenAI when keyed) | the same brief, one image each, one review sheet labelled by model | ≈ $0.25 |
+| Video drafts | `fal:fal-ai/veo3.1/fast/image-to-video` → `fal:fal-ai/kling-video/v3/pro/image-to-video` → `gemini:veo-3.1-fast-generate-preview` | image-to-video from an approved still; audio off (the site's videos are muted) | $0.10/s · $0.112/s · $0.12/s |
+| Video finals | `fal:fal-ai/veo3.1/image-to-video` → `gemini:veo-3.1-generate-preview` | Veo 3.1 at 1080p, 8 s; SynthID | $0.20/s without audio (fal) / $0.40/s (Gemini API) |
 
-Evaluated and not chosen as defaults: FLUX.2 (Black Forest Labs; excellent photorealism, per-megapixel pricing, a strong
-alternative through fal.ai or BFL's API), Imagen 4 (no longer listed on the Gemini API pricing page), Kling 3.0 and Runway
-Gen-4.5 (good video at lower cost per second, another account and key), Sora 2 (strong physics, higher cost). MCP servers
-for media generation exist (Google's genmedia MCP for Vertex AI, fal and Replicate MCPs); scripts were chosen instead
-because they run the same in a session, in a scheduled routine and in CI, and they log cost and provenance per file.
+Checked and not routed: Adobe Firefly (commercially indemnified, but the API is enterprise-only), Midjourney (no official
+API, so no place in an automated pipeline), Hailuo's free tier (watermarked, no commercial rights), Kling's web credits (manual
+use only), FLUX.2 [klein] 9B and FLUX.2 [dev] weights (non-commercial licences), open video weights such as Wan 2.2 and
+LTX (they need a GPU; the cloud container has none). Input schemas were read from fal's OpenAPI for every routed fal model
+(`fal.ai/api/openapi/queue/openapi.json?endpoint_id=<model>`); Workers AI takes multipart `prompt`, `width`, `height`,
+`input_image_0..3`.
 
-Free tiers: the Gemini API no longer serves image or video generation on the free tier (image output needs billing
-enabled), so there is no professional free path for these models. One Google key with billing covers stills and video.
-Rate limits depend on the account's tier; the scripts wait and retry four times (2–16 s) on 429/5xx and then stop.
+Sources: developers.cloudflare.com/workers-ai/platform/pricing, developers.cloudflare.com/changelog/2026-01-15-flux-2-klein-4b-workers-ai,
+fal.ai/docs/model-apis/model-endpoints/queue, the fal model pages (fal-ai/nano-banana-pro, fal-ai/flux-2-pro, fal-ai/veo3.1,
+fal-ai/kling-video/v3), ai.google.dev/gemini-api/docs/pricing.
 
-Sources: ai.google.dev/gemini-api/docs/pricing, …/image-generation, …/veo, …/interactions (the `interactions` endpoint is the
-new default; `generateContent`, used here, "remains fully supported"); OpenAI and third-party price summaries for gpt-image-2
-(April 2026 release); buildmvpfast.com, openrouter.ai and modelslab.com price comparisons (July–September 2026).
+**Brand grade.** On publish every approved plate goes through `grade.py`: a gentle Lab statistics transfer toward the concept
+palette (strength 0.35 by default, `concepts.json` → `grade`), reported as the median ΔE to the palette before and after and
+stored in the manifest's provenance. Never on product photos, cutouts or anything with product pixels.
+
+**References.** `--ref a.png,b.png` sends composition, light or colour references (Gemini: inline parts; fal: the model's
+`/edit` variant with `image_urls`; Cloudflare: `input_image_N`). A reference is never a product to repaint or a person to copy.
+
+**Publishing guard.** An approval never overrides the automatic checks: a stub or a candidate that failed a check is not
+published (`--allow-test` exists only for pipeline tests).
 
 ## Cost of a site
 
-Eden, as planned: 4 concepts × 2–3 ratios × 4 drafts on Flash (≈ $4) + finals on Pro (≈ $5) + brand fields 7 × 2 × 2 on
-Flash (≈ $3) + two 8-second videos on Veo 3.1 (≈ $6.40) ≈ **$20**, under the $30 cap in concepts.json.
+Eden, as planned (`projects/edencosmetic/visual/plan.md`): bake-off $0.25 + hero plate 12 candidates on Nano Banana Pro $1.80
++ curl band 12 on FLUX.2 [pro] $0.72 + 7 brand fields × 2 ratios × 2 on FLUX.2 [pro] with swatches $1.05 + lotus 6 on
+Seedream $0.24 + craft fallback 8 $1.20 (zero with Eden's own photos) + two 8-second videos with one draft ≈ $3.20
+≈ **$8.50, about $12 with retries**, under the $20 cap. Drafts before each series run free on Cloudflare. Products: no
+generated pixels (real cutouts on one stage); the mascot: drawn in code; share cards: code from real photos.
 
 ## What the owner provides
 
-- `GEMINI_API_KEY`: a Google AI Studio key on a project with billing enabled (images and video). Added as an environment
-  variable of the cloud environment (never pasted into a chat). Optional: `OPENAI_API_KEY` for the second opinion.
-- A monthly budget ceiling (the scripts' cap follows it).
-- Approval of the picks (`--by owner`) for anything shown with a person in it.
+- `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` (Workers AI permission): free drafts.
+- `FAL_KEY`: one key for the routed finals and videos; $15–20 of prepaid credit covers a site with margin.
+- Optional: `GEMINI_API_KEY` (billing enabled), `OPENAI_API_KEY`. Keys are environment variables of the cloud environment,
+  never pasted into a chat or committed.
+- Real photographs (a shot list per project): they beat any generated plate where a picture could be read as documentary.
+- A budget ceiling (the scripts' cap follows it) and approval of the picks (`--by owner`) for anything with a person in it.

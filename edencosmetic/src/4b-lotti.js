@@ -49,7 +49,9 @@ const LOT=(()=>{
   }
   // manners: the greeting waits until the visitor has left the first screen (it never covers the headline or the products)
   const hello=()=>{ if(base==='shabbat')say('שבת שלום. אפשר לבנות סל, וההזמנות נפתחות בצאת השבת.',{key:'hello',force:true}); else say(C.lottiHello||'היי, אני לוטי. אם תרצי, אבנה איתך ערכה או אעשה סיור קצר במותגים.',{key:'hello',state:'happy',force:true}); };
-  const top=$('#top'); if(top&&'IntersectionObserver' in window){ const io=new IntersectionObserver(es=>{ if(!es[0].isIntersecting){ io.disconnect(); setTimeout(hello,700); } },{threshold:.15}); io.observe(top); } else setTimeout(hello,1300);
+  const top=$('#top'); if(top&&'IntersectionObserver' in window){ const io=new IntersectionObserver(es=>{ if(!es[0].isIntersecting){ io.disconnect(); setTimeout(hello,700); } },{threshold:.15}); io.observe(top);
+   // she steps in once the first screen has been read, and steps back when the visitor returns to it
+   new IntersectionObserver(es=>document.documentElement.classList.toggle('past',es[0].intersectionRatio<.55),{threshold:[0,.55,1]}).observe(top); } else { document.documentElement.classList.add('past'); setTimeout(hello,1300); }
   blink(); idle();
  }
  function menuOpen(o){ menu.hidden=!o; btn.setAttribute('aria-expanded',String(o)); if(o){bub.hidden=true; menu.querySelector('button').focus();} }

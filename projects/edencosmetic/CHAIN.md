@@ -1,8 +1,11 @@
 # בדיקת השרשרת: edencosmetic
 
-2026-09-30 09:28 · 63 אלמנטים · **62 קיימים** · 0 חסרים · 1 לא רלוונטיים
+2026-09-30 12:58 · 66 אלמנטים · **63 קיימים** · **2 חסרים** · 1 לא רלוונטיים
 
-כל אלמנט בשרשרת קיים, עם ראיה.
+## חסרים (חוסמים מסירה)
+
+- **Meter: every phase opened and closed, report written** (8-deliver): שלבים פתוחים: 10-craft/research, 12-gates
+- **Committed and pushed** (8-deliver): 132 קבצים לא מחויבים
 
 ## כל האלמנטים, עם זמן ועלות
 
@@ -68,11 +71,14 @@
 | 5-site | Real product cutouts with pixels proven kept (cutouts.json) | קיים | — | — |
 | 5-site | Visual system: at most five concepts, each with a job, placements and a never-list | קיים | — | — |
 | 5-site | Approved generated visuals published with provenance (needs the image key) | לא רלוונטי | — | — |
+| 5-site | Visual asset plan: every placement, model and why, counts, cost, what the owner provides (visual/plan.md) | קיים | — | — |
+| 5-site | Design critique: every region scored before and after, alternatives weighed (critique/critique.md) | קיים | — | — |
+| 5-site | Design critique shots: every region alone, desktop and phone, after the rebuild | קיים | — | — |
 | 8-deliver | Autonomy: evolve.json and a baseline catalog snapshot | קיים | — | — |
 | 8-deliver | Autonomy: the loop's first report | קיים | — | — |
-| 8-deliver | Meter: every phase opened and closed, report written | קיים | — | — |
+| 8-deliver | Meter: every phase opened and closed, report written | **חסר** | — | — |
 | 8-deliver | Report to the owner in Hebrew (report.md) with links and what only they can supply | קיים | 1.7 דק׳ (מדוד) | $0.89 |
-| 8-deliver | Committed and pushed | קיים | — | — |
+| 8-deliver | Committed and pushed | **חסר** | — | — |
 
 ## סיכום לפי שלב
 
@@ -84,7 +90,7 @@
 | 3-mascot | 3 | 3 | 3.1 דק׳ | $1.40 |
 | 4-blueprint | 1 | 1 | 1.1 דק׳ | $0.34 |
 | 4b-seo | 6 | 6 | 7.7 דק׳ | $5.05 |
-| 5-site | 17 | 17 | 41.1 דק׳ | $17.80 |
+| 5-site | 20 | 20 | 41.1 דק׳ | $17.80 |
 | 6-film | 8 | 8 | 146.3 דק׳ | $9.62 |
 | 7-portfolio | 5 | 5 | 11.7 דק׳ | $6.88 |
-| 8-deliver | 5 | 5 | 1.7 דק׳ | $0.89 |
+| 8-deliver | 5 | 3 | 1.7 דק׳ | $0.89 |

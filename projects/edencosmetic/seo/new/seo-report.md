@@ -1,25 +1,26 @@
-# בדיקת SEO: http://127.0.0.1:45275
+# בדיקת SEO: http://127.0.0.1:43835
 
-נסרק ב-2026-09-30 09:21 · 94 עמודים · מפת אתר: 94 כתובות · קישורים פנימיים: 2747 (מתוכן העמודים: 847, ב-94 עמודים) · עמודים יתומים: 0
+נסרק ב-2026-09-30 10:16 · 94 עמודים · מפת אתר: 94 כתובות · קישורים פנימיים: 2747 (מתוכן העמודים: 851, ב-94 עמודים) · עמודים יתומים: 0
 
-חומרה: **0 גבוהה**, 6 בינונית, 138 נמוכה. ממוצע מילים: 337 ב-HTML הראשוני, 345 אחרי JavaScript.
+חומרה: **0 גבוהה**, 7 בינונית, 138 נמוכה. ממוצע מילים: 337 ב-HTML הראשוני, 347 אחרי JavaScript.
 
 ## האתר
 - robots.txt: 200 · Sitemap: https://edencosmetic.co.il/sitemap.xml
-- מפות אתר: http://127.0.0.1:45275/sitemap.xml
+- מפות אתר: http://127.0.0.1:43835/sitemap.xml
 - http → https: לא נבדק · www: לא נבדק
 - כתובת לא קיימת מחזירה: 404 · HSTS: אין
 
 ## ממצאים
 
-### חומרה בינונית (6)
-- **js-heavy-content** (1): רק 712 מתוך 1519 מילים קיימות ב-HTML הראשוני.
+### חומרה בינונית (7)
+- **js-heavy-content** (1): רק 738 מתוך 1636 מילים קיימות ב-HTML הראשוני.
   - /
-- **no-contextual-inbound** (4): מקושר רק מתפריטים ומהתחתית, לא מתוך תוכן של עמוד אחר. קישור מתוכן שווה יותר.
+- **no-contextual-inbound** (5): מקושר רק מתפריטים ומהתחתית, לא מתוך תוכן של עמוד אחר. קישור מתוכן שווה יותר.
   - /blogs/news/: מקושר רק מתפריטים ומהתחתית, לא מתוך תוכן של עמוד אחר. קישור מתוכן שווה יותר.
   - /collections/הנבחרת-שלנו/: מקושר רק מתפריטים ומהתחתית, לא מתוך תוכן של עמוד אחר. קישור מתוכן שווה יותר.
   - /collections/כל-המוצרים/: מקושר רק מתפריטים ומהתחתית, לא מתוך תוכן של עמוד אחר. קישור מתוכן שווה יותר.
-  - /pages/הצהרת-נגישות/: מקושר רק מתפריטים ומהתחתית, לא מתוך תוכן של עמוד אחר. קישור מתוכן שווה יותר.
+  - /collections/קורסים-והשתלמויות/: מקושר רק מתפריטים ומהתחתית, לא מתוך תוכן של עמוד אחר. קישור מתוכן שווה יותר.
+  - ועוד 1
 - **title-short** (1): title קצר מדי (23 תווים): "פרטי קשר | עדן קוסמטיקס".
   - /policies/contact-information/
 
@@ -44,7 +45,7 @@
 
 | כתובת | title | h1 | מילים (HTML / אחרי JS) | נכנסים | מתוכן | יוצאים | מתוכן | עומק | JSON-LD |
 |---|---|---|---|---|---|---|---|---|---|
-| / | 44 | 1 | 712 / 1519 | 93 | 93 | 93 | 39 | 0 | Organization, Store, VideoObject, WebSite, WebPage, FAQPage, ItemList |
+| / | 44 | 1 | 738 / 1636 | 93 | 93 | 93 | 43 | 0 | Organization, Store, VideoObject, WebSite, WebPage, FAQPage, ItemList |
 | /blogs/news/ | 31 | 1 | 204 / 204 | 93 | 0 | 22 | 4 | 1 | Organization, CollectionPage, BreadcrumbList |
 | /brands/my-lamination/ | 46 | 1 | 332 / 332 | 93 | 24 | 40 | 24 | 1 | Organization, CollectionPage, BreadcrumbList |
 | /brands/nikk-mole/ | 42 | 1 | 260 / 260 | 93 | 17 | 34 | 18 | 1 | Organization, CollectionPage, BreadcrumbList |
@@ -56,7 +57,7 @@
 | /collections/הרמת-ריסים-וגבות/ | 43 | 1 | 394 / 394 | 93 | 6 | 52 | 33 | 1 | Organization, CollectionPage, BreadcrumbList |
 | /collections/כל-המוצרים/ | 37 | 1 | 751 / 751 | 93 | 0 | 93 | 74 | 1 | Organization, CollectionPage, BreadcrumbList |
 | /collections/מוצרים-נלווים/ | 40 | 1 | 521 / 521 | 93 | 1 | 68 | 49 | 1 | Organization, CollectionPage, BreadcrumbList |
-| /collections/קורסים-והשתלמויות/ | 50 | 1 | 135 / 135 | 93 | 1 | 22 | 1 | 1 | Organization, CollectionPage, BreadcrumbList |
+| /collections/קורסים-והשתלמויות/ | 50 | 1 | 135 / 135 | 93 | 0 | 22 | 1 | 1 | Organization, CollectionPage, BreadcrumbList |
 | /guides/סיליקונים-להרמת-ריסים-מידות/ | 53 | 1 | 586 / 586 | 93 | 1 | 34 | 19 | 1 | Organization, Article, BreadcrumbList |
 | /guides/ערכה-להרמת-ריסים-וגבות/ | 61 | 1 | 487 / 487 | 93 | 1 | 28 | 13 | 1 | Organization, Article, BreadcrumbList |
 | /guides/צבע-לריסים-וגבות-מה-יש-בחנות/ | 57 | 1 | 503 / 503 | 93 | 1 | 34 | 17 | 1 | Organization, Article, BreadcrumbList |
@@ -89,7 +90,7 @@
 | /products/zola-פינצטה-מקצועית-זוויתית-1/ | 53 | 1 | 302 / 302 | 35 | 34 | 27 | 7 | 1 | Organization, Product, BreadcrumbList |
 | /products/בייביבראש-50-יחידות-ורוד/ | 41 | 1 | 267 / 267 | 3 | 2 | 27 | 6 | 1 | Organization, Product, BreadcrumbList |
 | /products/גליל-ניילון-נצמד/ | 31 | 1 | 253 / 253 | 3 | 2 | 27 | 7 | 1 | Organization, Product, BreadcrumbList |
-| /products/דבק-בלאם-פורמולה-חדשה-להרמת-ריסים-של-ח | 53 | 1 | 339 / 339 | 6 | 5 | 27 | 8 | 1 | Organization, Product, BreadcrumbList |
+| /products/דבק-בלאם-פורמולה-חדשה-להרמת-ריסים-של-ח | 53 | 1 | 339 / 339 | 6 | 6 | 27 | 8 | 1 | Organization, Product, BreadcrumbList |
 | /products/דבק-בלאם-פורמולה-חדשה-להרמת-ריסים-של-ח | 53 | 1 | 347 / 347 | 4 | 3 | 27 | 8 | 1 | Organization, Product, BreadcrumbList |
 | /products/דבק-קודי/ | 35 | 1 | 290 / 290 | 3 | 3 | 27 | 6 | 1 | Organization, Product, BreadcrumbList |
 | /products/זוג-סיליקונים-לתיקונים-הסרות/ | 59 | 1 | 290 / 290 | 16 | 16 | 27 | 7 | 1 | Organization, Product, BreadcrumbList |
@@ -131,7 +132,7 @@
 | /products/צבע-thuya-ריסים-וגבות-bluish-black/ | 51 | 1 | 337 / 337 | 13 | 12 | 27 | 7 | 1 | Organization, Product, BreadcrumbList |
 | /products/צבע-thuya-ריסים-וגבות-brown/ | 44 | 1 | 358 / 358 | 5 | 4 | 27 | 7 | 1 | Organization, Product, BreadcrumbList |
 | /products/צבע-thuya-ריסים-וגבות-deep-black/ | 49 | 1 | 347 / 347 | 5 | 4 | 27 | 7 | 1 | Organization, Product, BreadcrumbList |
-| /products/צבע-לגבות-nikk-mole-חום/ | 40 | 1 | 270 / 270 | 15 | 14 | 27 | 7 | 1 | Organization, Product, BreadcrumbList |
+| /products/צבע-לגבות-nikk-mole-חום/ | 40 | 1 | 270 / 270 | 15 | 15 | 27 | 7 | 1 | Organization, Product, BreadcrumbList |
 | /products/צבע-לגבות-וריסים-nikk-mole-כחול-שחור/ | 47 | 1 | 270 / 270 | 15 | 14 | 27 | 7 | 1 | Organization, Product, BreadcrumbList |
 | /products/צבע-לגבות-ריסים-refectocil-מס-2/ | 49 | 1 | 312 / 312 | 5 | 4 | 27 | 7 | 1 | Organization, Product, BreadcrumbList |
 | /products/צבע-לגבות-ריסים-refectocil-מס-3/ | 49 | 1 | 311 / 311 | 5 | 4 | 27 | 7 | 1 | Organization, Product, BreadcrumbList |
