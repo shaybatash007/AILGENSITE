@@ -47,6 +47,26 @@ other; no product, packaging, logo, letters, face, eye or result, even blurred; 
 geometry, melted edges, repeated textures); light, palette and grain match the site; it leaves room for what sits on it
 (the text, the cutouts); it survives a crop to every ratio it is used in.
 
+## The free layer (before any key, and the brief for the paid one)
+
+Every concept is first built as a code-native plate with free tools, in the same composition, palette, light and ratio as its
+brief. It is not a mood board: it runs in the site's own slots, it is what the site shows until a paid asset is approved,
+and it becomes the composition reference (`--ref`) for the paid drafts, so the paid layer changes the material and never the
+decisions.
+
+| Need | Free tool | How |
+|---|---|---|
+| Surfaces, light, shadow play, material fields | WebGL2 fragment shaders | `projects/<slug>/visual/free/*.html` exposing `window.frame(t, w, h)`; `scripts/glrender.mjs --still WxH[,WxH]` |
+| A hero object in 3D (ribbon, fabric, glass) | Three.js (MIT) from jsDelivr, physically based materials (sheen for satin) | the same page contract; `glrender.mjs --film WxH --seconds 8` renders a draft film (H.264, muted, poster) |
+| Product cutouts the flood fill cannot cut (white on white, glass, products shot in a setting) | rembg (MIT) + BiRefNet (MIT) on the CPU | `scripts/matte.py`: the model decides alpha only; RGB is the store photo, proven by PSNR ≥ 32 dB |
+| Marks and motifs | the brand's own vector marks | drawn large and soft (Eden's lotus field) |
+| Free AI drafts | Cloudflare Workers AI daily allocation (FLUX.2 [klein] 4B) | needs only a free account token; see the routing below |
+
+Checked and not used: anonymous free image APIs (Pollinations now answers only one small model without payment, and its
+terms do not suit client work); Hugging Face serverless inference (needs a token, a few cents of free credit a month);
+open-weight diffusion or video models locally (no GPU in the cloud container; CPU generation of a 4B model is minutes per
+image). Headless Chromium renders WebGL through SwiftShader, so every machine gets identical pixels, just slower than a GPU.
+
 ## Choosing a model: vendor-neutral routing (checked 2026-09-30)
 
 No provider is the default by habit. Every job names an ordered route of `provider:model` in `concepts.json`

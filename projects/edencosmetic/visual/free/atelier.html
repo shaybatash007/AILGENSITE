@@ -1,0 +1,91 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Atelier surface</title>
+<!-- Eden · concept 1 "atelier", the free layer: honed cream stone under morning window light, with the soft shadow of a
+     lotus leaf from outside the frame. Drawn in code (WebGL2). The paid route replaces it with a photograph of the same
+     brief (visual/concepts.json); until then this plate carries the hero, and its animation is the free draft of video V2. -->
+<style>html,body{margin:0;background:#EAD8CD;overflow:hidden}canvas{display:block}</style>
+<canvas id="c"></canvas>
+<script>
+const P = Object.assign({ light: [0.78, 0.18], warm: 1.0, leaf: 1.0, ratio: 1 }, window.PARAMS || {});
+const c = document.getElementById('c'), gl = c.getContext('webgl2', { preserveDrawingBuffer: true, antialias: false });
+const vs = `#version 300 es
+in vec2 p; out vec2 uv; void main(){ uv = p * .5 + .5; gl_Position = vec4(p, 0., 1.); }`;
+const fs = `#version 300 es
+precision highp float;
+in vec2 uv; out vec4 o;
+uniform vec2 R; uniform float T; uniform vec2 L; uniform float LEAF;
+// hash and value noise
+float h(vec2 p){ p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y); }
+float n(vec2 p){ vec2 i = floor(p), f = fract(p); vec2 u = f * f * (3. - 2. * f);
+  return mix(mix(h(i), h(i + vec2(1, 0)), u.x), mix(h(i + vec2(0, 1)), h(i + vec2(1, 1)), u.x), u.y); }
+float fbm(vec2 p){ float s = 0., a = .5; for (int i = 0; i < 6; i++) { s += a * n(p); p = p * 2.03 + 17.1; a *= .5; } return s; }
+// a leaf: an almond shape with a pointed tip, as a signed distance (negative inside)
+float leaf(vec2 p, vec2 c, float ang, float len, float wid){
+  p -= c; float s = sin(ang), co = cos(ang); p = mat2(co, -s, s, co) * p;
+  float x = clamp(p.x / len, -1., 1.); float w = wid * (1. - x * x) * (1. - .25 * x);
+  return max(abs(p.y) - w, abs(p.x) - len);
+}
+float seg(vec2 p, vec2 a, vec2 b){ vec2 pa = p - a, ba = b - a; float t = clamp(dot(pa, ba) / dot(ba, ba), 0., 1.); return length(pa - ba * t); }
+vec3 srgb(vec3 c){ return pow(c, vec3(1. / 2.2)); } vec3 lin(vec3 c){ return pow(c, vec3(2.2)); }
+void main(){
+  vec2 q = uv; q.y = 1. - q.y;                       // y down, like the page
+  float ar = R.x / R.y; vec2 p = vec2(q.x * ar, q.y); // aspect-true coordinates
+  // honed limestone: a warm cream with a slow mineral cloud and a fine grain
+  vec3 paper = lin(vec3(0.957, 0.914, 0.886)), blush = lin(vec3(0.918, 0.835, 0.792)), petal = lin(vec3(0.874, 0.776, 0.729));
+  float cloud = fbm(p * 2.2 + 3.), vein = smoothstep(.62, .78, fbm(p * vec2(1.1, 4.) + vec2(9., 2.))) * .35;
+  vec3 col = mix(paper, blush, .35 + .45 * cloud);
+  col = mix(col, petal, vein * .25);
+  col *= 1. + (n(p * 420.) - .5) * .03 + (n(p * 110.) - .5) * .025 - smoothstep(.93, .99, n(p * 160.)) * .06;  // grain and the tiny pits of limestone
+  // light falls off from the window at the upper right, cooler and dimmer toward the lower left
+  vec2 lp = vec2((L.x - T * .006) * ar, L.y + T * .0035);   // the window light drifts slowly across the stone (video V2) float d = length((p - lp) * vec2(.8, 1.));
+  float fall = exp(-d * d * 1.25);
+  col *= mix(.74, 1.06, fall);
+  // the window: two tall panes projected on the stone (skewed), with a sharp near edge and mullion shadows
+  vec2 w = p - vec2(lp.x - .62, lp.y - .16); w = mat2(1., -.30, .16, 1.) * w;
+  float pane = smoothstep(.0, .025, w.x) * smoothstep(1.12, 1.08, w.x) * smoothstep(-.01, .02, w.y) * smoothstep(1.02, .95, w.y);
+  float mull = 1. - .75 * smoothstep(.02, .006, abs(w.x - .56)) - .6 * smoothstep(.017, .005, abs(w.y - .48));
+  float pg = smoothstep(-.1, 1.2, (w.x * .6 + (1. - w.y) * .7));
+  col += lin(vec3(1., .976, .95)) * pane * max(mull, 0.) * (.12 + .14 * pg) * (.55 + .45 * fall);
+  // lotus pads on long stems, just outside the frame at the upper left: round leaves with a notch, crisp near the stems
+  float sway = sin(T * .55) * .035 + sin(T * 1.3 + 1.) * .01;
+  vec2 lo = vec2(-.10 + sway * .5, -.04);
+  float sh = 1e3;
+  vec3 pads[3] = vec3[3](vec3(.30, .30, .165), vec3(.08, .66, .125), vec3(.60, .63, .10));
+  float notch[3] = float[3](2.2, -.4, 1.2);
+  for (int k = 0; k < 3; k++) {
+    vec2 c = lo + pads[k].xy + vec2(sway * float(k + 1) * .4, 0.);
+    float r = pads[k].z; vec2 v = p - c; float lv = length(v), dd = lv - r;
+    // the slit of a lotus pad: a narrow wedge from the centre to the rim
+    float da = atan(v.y, v.x) - notch[k]; da = abs(mod(da + 3.1416, 6.2832) - 3.1416);
+    float slit = da * lv - .004 - lv * .045;
+    if (lv < r) dd = max(dd, -slit);
+    sh = min(sh, dd);
+    // the stem: a gentle curve from the pad's centre out of the frame at the upper left
+    vec2 a0 = c, a2 = lo + vec2(-.45, -.35 + float(k) * .12), a1 = mix(a0, a2, .5) + vec2(.06, -.08);
+    sh = min(sh, min(seg(p, a0, a1), seg(p, a1, a2)) - .0038);
+  }
+  // a closed bud on its own stem
+  vec2 bc = lo + vec2(.62, .22) + vec2(sway * .9, 0.); vec2 bv = (p - bc) * vec2(1., .72);
+  sh = min(sh, length(bv) - .055 + max(0., -bv.y) * .35);
+  sh = min(sh, seg(p, bc + vec2(0., .06), lo + vec2(-.3, .55)) - .0035);
+  float soft = .006 + .055 * length(p - lo - vec2(.2, .3));  // penumbra widens away from the plant
+  float shadow = 1. - smoothstep(-soft, soft, sh);
+  col *= 1. - shadow * .24 * LEAF * (.5 + .5 * fall);
+  col = mix(col, col * lin(vec3(.94, .86, .84)), shadow * .45 * LEAF);   // shadow tint: cocoa, not grey
+  // a quiet vignette and film grain that moves with time
+  vec2 vq = q - .5; col *= 1. - dot(vq, vq) * .22;
+  col += (h(q * R + fract(T * 7.13) * 91.) - .5) * .012;
+  // filmic shoulder, then sRGB
+  col = col / (1. + col * .08);
+  o = vec4(srgb(max(col, 0.)), 1.);
+}`;
+function sh(type, src){ const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; }
+const pr = gl.createProgram(); gl.attachShader(pr, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(pr); gl.useProgram(pr);
+const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+const loc = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+const U = k => gl.getUniformLocation(pr, k);
+window.frame = (t, w, h) => { if (c.width !== w || c.height !== h) { c.width = w; c.height = h; } gl.viewport(0, 0, w, h);
+  gl.uniform2f(U('R'), w, h); gl.uniform1f(U('T'), t); gl.uniform2f(U('L'), P.light[0], P.light[1]); gl.uniform1f(U('LEAF'), P.leaf);
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); gl.finish(); return new Promise(r => requestAnimationFrame(() => requestAnimationFrame(() => r()))); };
+</script>

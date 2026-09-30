@@ -1,0 +1,58 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>The curl</title>
+<!-- Eden · concept 2 "curl", the free layer: a dusty-rose satin ribbon lying on the atelier stone lifts at one end into a
+     curl and holds, the way a lash lift lifts a lash. Three.js (MIT), physically based satin (sheen), soft window light.
+     The paid route films the same brief as video V1; this real-time scene is its free draft and can run on the site itself. -->
+<style>html,body{margin:0;background:#EFDFD6;overflow:hidden}canvas{display:block}</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+const P = Object.assign({ color: '#C27A7C', floor: '#EFDDD3', curlFrom: 1.0, curlFor: 4.6, bend: 3.1 }, window.PARAMS || {});
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+renderer.outputColorSpace = THREE.SRGBColorSpace; renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.VSMShadowMap;
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene(); scene.background = new THREE.Color(P.floor); scene.fog = new THREE.Fog(P.floor, 6, 26);   // no horizon: the stone fades into the room
+const pm = new THREE.PMREMGenerator(renderer); scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture; scene.environmentIntensity = 0.55;
+const cam = new THREE.PerspectiveCamera(24, 21 / 9, 0.5, 40);
+// the stone: a large plane that catches the soft shadow; it yields in the depth test (polygon offset), so the ribbon lying on it never z-fights
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(600, 600), new THREE.MeshStandardMaterial({ color: P.floor, roughness: 0.92, polygonOffset: true, polygonOffsetFactor: 2, polygonOffsetUnits: 4 }));
+floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
+// window light from the upper right, warm; a cool fill from the room
+const key = new THREE.DirectionalLight(0xfff1e6, 3.1); key.position.set(3.5, 4.2, 2.2); key.castShadow = true;
+key.shadow.mapSize.set(2048, 2048); key.shadow.bias = -0.0006; key.shadow.normalBias = 0.03; key.shadow.radius = 9; key.shadow.blurSamples = 16; Object.assign(key.shadow.camera, { left: -5, right: 5, top: 5, bottom: -5 });
+scene.add(key); scene.add(new THREE.HemisphereLight(0xfff6f0, 0xcfb2a6, 0.35));
+const rim = new THREE.DirectionalLight(0xffe2d6, 1.2); rim.position.set(-4, 2.5, -3); scene.add(rim);   // a rim that lets the sheen read
+// the ribbon: a strip along a centre line; the far end lifts into a curl of radius r by angle phi
+const N = 480, M = 12, W = 0.5, L = 6.4, flat = 3.4;
+const geo = new THREE.BufferGeometry(), pos = new Float32Array((N + 1) * (M + 1) * 3), idx = [];
+for (let i = 0; i < N; i++) for (let j = 0; j < M; j++) { const a = i * (M + 1) + j, b = a + M + 1; idx.push(a, b, a + 1, b, b + 1, a + 1); }
+geo.setIndex(idx); geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+const mat = new THREE.MeshPhysicalMaterial({ color: P.color, roughness: 0.48, sheen: 1, sheenRoughness: 0.34, sheenColor: new THREE.Color('#FFE6DE'), clearcoat: 0.12, clearcoatRoughness: 0.45, side: THREE.DoubleSide });
+const ribbon = new THREE.Mesh(geo, mat); ribbon.castShadow = true; ribbon.receiveShadow = true; scene.add(ribbon);
+function shape(k) {
+  // k: 0 lies flat, 1 lifted. Past the flat part the curvature grows toward the tip (an Euler spiral), the shape of a
+  // lifted lash: a long gentle rise that tightens into a curl at the end. The centre line is integrated step by step.
+  let x = 2.8, y = 0.012, th = 0; const ds = L / N;
+  for (let i = 0; i <= N; i++) {
+    const s = i * ds;
+    if (i > 0) { const u = Math.max(0, s - flat) / (L - flat), kap = k * P.bend * Math.pow(u, 1.6) * 1.9; th += kap * ds; x -= Math.cos(th) * ds; y += Math.sin(th) * ds; }
+    const wave = Math.sin(s * 1.5) * 0.06 + Math.sin(s * 2.9 + 1.2) * 0.02;       // the satin never lies perfectly straight
+    const taper = 1 - Math.pow(Math.max(0, (s - L + 1.1) / 1.1), 2) * 0.18;
+    for (let j = 0; j <= M; j++) { const z = (j / M - 0.5) * W * taper, o = ((i * (M + 1)) + j) * 3;
+      pos[o] = x; pos[o + 1] = y + Math.abs(z) * 0.03 * Math.sin(th); pos[o + 2] = z + wave; }
+  }
+  geo.attributes.position.needsUpdate = true; geo.computeVertexNormals(); geo.computeBoundingSphere();
+}
+const ease = x => { x = Math.min(1, Math.max(0, x)); return x * x * x * (x * (x * 6 - 15) + 10); }; // smootherstep: it starts slowly and settles without a bounce
+window.frame = (t, w, h) => {
+  if (renderer.domElement.width !== w || renderer.domElement.height !== h) { renderer.setPixelRatio(1); renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); }   // resizing clears the buffer: only when the size changes
+  const d = 0.35 * Math.min(1, t / 8);                                        // a slow push in
+  cam.position.set(0.5, 1.9 - d * 0.25, 5.6 - d); cam.lookAt(-0.3, 0.45, 0);
+  shape(ease((t - P.curlFrom) / P.curlFor));
+  renderer.render(scene, cam);
+  return new Promise(r => requestAnimationFrame(() => requestAnimationFrame(() => r())));   // two frames: the capture sees a composited canvas
+};
+</script>

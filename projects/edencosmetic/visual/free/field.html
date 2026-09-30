@@ -1,0 +1,73 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Brand field</title>
+<!-- Eden · concept 4 "field", the free layer: each brand's own material, in the colours measured from its packaging
+     (brands.json → look). The accent material fills the upper part (behind the product cutout), the field colour holds the
+     lower part (behind the text, so contrast is kept). One shader, one motif per brand. The paid route photographs the same
+     brief with FLUX.2 [pro] and a colour-swatch reference. -->
+<style>html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}</style>
+<canvas id="c"></canvas>
+<script>
+const P = Object.assign({ field: '#1F1A1C', accent: '#C10C08', motif: 'lacquer' }, window.PARAMS || {});
+const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16) / 255);
+const MOTIF = { lacquer: 0, 'matte-white': 1, heritage: 2, gel: 3, graphic: 4, graphite: 5, steel: 6, house: 7 }[P.motif] ?? 0;
+const c = document.getElementById('c'), gl = c.getContext('webgl2', { preserveDrawingBuffer: true });
+const vs = `#version 300 es
+in vec2 p; out vec2 uv; void main(){ uv = p * .5 + .5; gl_Position = vec4(p, 0., 1.); }`;
+const fs = `#version 300 es
+precision highp float; in vec2 uv; out vec4 o;
+uniform vec2 R; uniform vec3 F, A; uniform int M; uniform float T;
+float h(vec2 p){ p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y); }
+float n(vec2 p){ vec2 i = floor(p), f = fract(p); vec2 u = f * f * (3. - 2. * f); return mix(mix(h(i), h(i + vec2(1, 0)), u.x), mix(h(i + vec2(0, 1)), h(i + vec2(1, 1)), u.x), u.y); }
+float fbm(vec2 p){ float s = 0., a = .5; for (int i = 0; i < 5; i++) { s += a * n(p); p = p * 2.02 + 7.3; a *= .5; } return s; }
+vec3 lin(vec3 c){ return pow(c, vec3(2.2)); } vec3 srgb(vec3 c){ return pow(c, vec3(1. / 2.2)); }
+float lum(vec3 c){ return dot(c, vec3(.2126, .7152, .0722)); }
+void main(){
+  vec2 q = vec2(uv.x, 1. - uv.y); float ar = R.x / R.y; vec2 p = vec2(q.x * ar, q.y);
+  vec3 f = lin(F), a = lin(A); bool darkField = lum(f) < .2;
+  // the seam: the accent plane meets the field at a soft diagonal, a little above the middle
+  float seamY = .5 - (q.x - .5) * .28 + sin(q.x * 3.1) * .015;
+  float top = smoothstep(seamY + .006, seamY - .006, q.y);
+  // light from the upper right
+  float L = exp(-pow(length((q - vec2(.86, .08)) * vec2(1.1, 1.4)), 2.) * 1.6);
+  // the field below: matte paper with a fine tooth
+  vec3 fieldC = f * (.9 + .16 * L) * (1. + (n(p * 260.) - .5) * (darkField ? .06 : .025) + (fbm(p * 5.) - .5) * .05);
+  // the accent above, by motif
+  vec3 acc = a; float spec = 0.;
+  if (M == 0) {        // lacquer: deep gloss, a long soft reflection band
+    float band = exp(-pow((q.x * .8 + q.y * .9 - .62) / .035, 2.)); spec = band * .7 + pow(L, 4.) * .08; acc = a * (.62 + .22 * L) * (1. - .25 * q.x);
+  } else if (M == 1) { // matte white: two white planes, a soft shadow fold, clinical and quiet
+    float fold = smoothstep(.0, .25, abs(q.x - .58)); acc = mix(a, lin(vec3(.96)), .88) * (.86 + .14 * fold) * (.9 + .12 * L);
+  } else if (M == 2) { // heritage: warm brown with a leather-soft grain
+    acc = a * (.7 + .45 * L) * (1. + (fbm(p * 40.) - .5) * .18); spec = L * .12;
+  } else if (M == 3) { // gel: translucent pink with round soft highlights
+    acc = mix(a, lin(vec3(1., .75, .85)), .35) * (.8 + .3 * L);
+    for (int i = 0; i < 7; i++) { vec2 cp = vec2(h(vec2(float(i), 1.)) * ar, h(vec2(float(i), 7.)) * .45); float r = .02 + h(vec2(float(i), 3.)) * .05;
+      spec += smoothstep(r, r * .2, length(p - cp)) * .06 + smoothstep(r * .35, 0., length(p - cp - vec2(r * .3, -r * .3))) * .28; }
+  } else if (M == 4) { // graphic: black with a hard magenta light slash
+    float slash = smoothstep(.05, .0, abs(q.x * .9 - q.y * .6 - .38)); acc = mix(f * 1.4, a, slash * .9 + L * .15); spec = slash * .25;
+  } else if (M == 5) { // graphite: brushed aluminium
+    float br = fbm(vec2(p.x * 1.5, p.y * 160.)); acc = mix(a, lin(vec3(.86)), .45) * (.75 + .3 * br + .35 * L); spec = pow(L, 3.) * .3;
+  } else if (M == 6) { // steel: baby pink with a polished steel edge
+    float edge = exp(-pow((q.y - seamY + .03) / .012, 2.)); acc = mix(a, lin(vec3(.98, .9, .9)), .55) * (.8 + .25 * L); spec = edge * .8 + L * .1;
+  } else {             // house: blush paper
+    acc = mix(a, f, .6) * (.9 + .15 * L);
+  }
+  acc += vec3(1., .96, .94) * spec;
+  vec3 col = mix(fieldC, acc, top);
+  // the seam catches the light: a thin bright edge, then a soft contact shadow on the field
+  col += vec3(1., .95, .92) * exp(-pow((q.y - seamY) / .0035, 2.)) * (darkField ? .25 : .12);
+  col *= 1. - exp(-max(q.y - seamY, 0.) / .02) * (1. - top) * .18;
+  col *= 1. - dot(q - .5, q - .5) * .25;
+  col += (h(q * R) - .5) * .01;
+  o = vec4(srgb(max(col / (1. + col * .05), 0.)), 1.);
+}`;
+function sh(t, s){ const x = gl.createShader(t); gl.shaderSource(x, s); gl.compileShader(x); if (!gl.getShaderParameter(x, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(x)); return x; }
+const pr = gl.createProgram(); gl.attachShader(pr, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(pr); gl.useProgram(pr);
+gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+const loc = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+const U = k => gl.getUniformLocation(pr, k);
+window.frame = (t, w, h) => { if (c.width !== w || c.height !== h) { c.width = w; c.height = h; } gl.viewport(0, 0, w, h);
+  gl.uniform2f(U('R'), w, h); gl.uniform3fv(U('F'), hex(P.field)); gl.uniform3fv(U('A'), hex(P.accent)); gl.uniform1i(U('M'), MOTIF); gl.uniform1f(U('T'), t);
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); gl.finish(); return new Promise(r => requestAnimationFrame(() => requestAnimationFrame(() => r()))); };
+</script>

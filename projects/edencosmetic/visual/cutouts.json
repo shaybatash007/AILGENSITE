@@ -517,45 +517,86 @@
    "id": "p-8480550781099",
    "src": "projects/edencosmetic/catalog/img/8480550781099-1.jpg",
    "out": "edencosmetic/img/cut/p/8480550781099.webp",
-   "borderBackground": 0.0,
-   "objectShare": 1.0,
-   "suitable": false,
-   "why": "the photo does not sit on a clean light background (or the product fills the frame)"
+   "method": "birefnet",
+   "model": "birefnet-general",
+   "suitable": true,
+   "size": [
+    560,
+    543
+   ],
+   "bytes": 72950,
+   "psnr": 36.9,
+   "pixelsKept": true,
+   "whiteOnWhite": false,
+   "review": "ok: checked on light and dark, nothing but the product kept",
+   "replaces": {
+    "suitable": false,
+    "why": "the photo does not sit on a clean light background (or the product fills the frame)"
+   }
   },
   "p-8480686047403": {
    "id": "p-8480686047403",
    "src": "projects/edencosmetic/catalog/img/8480686047403-1.jpg",
    "out": "edencosmetic/img/cut/p/8480686047403.webp",
-   "borderBackground": 0.0,
-   "objectShare": 1.0,
-   "suitable": false,
-   "why": "the photo does not sit on a clean light background (or the product fills the frame)"
+   "method": "birefnet",
+   "model": "birefnet-general",
+   "suitable": true,
+   "size": [
+    523,
+    560
+   ],
+   "bytes": 85586,
+   "psnr": 38.3,
+   "pixelsKept": true,
+   "whiteOnWhite": false,
+   "review": "ok: checked on light and dark, nothing but the product kept",
+   "replaces": {
+    "suitable": false,
+    "why": "the photo does not sit on a clean light background (or the product fills the frame)"
+   }
   },
   "p-8480702070955": {
    "id": "p-8480702070955",
    "src": "projects/edencosmetic/catalog/img/8480702070955-1.jpg",
    "out": "edencosmetic/img/cut/p/8480702070955.webp",
-   "borderBackground": 0.0,
-   "objectShare": 1.0,
-   "suitable": false,
-   "why": "the photo does not sit on a clean light background (or the product fills the frame)"
+   "method": "birefnet",
+   "model": "birefnet-general",
+   "suitable": true,
+   "size": [
+    528,
+    560
+   ],
+   "bytes": 67464,
+   "psnr": 38.4,
+   "pixelsKept": true,
+   "whiteOnWhite": false,
+   "review": "ok: checked on light and dark, nothing but the product kept",
+   "replaces": {
+    "suitable": false,
+    "why": "the photo does not sit on a clean light background (or the product fills the frame)"
+   }
   },
   "p-8480706953387": {
    "id": "p-8480706953387",
    "src": "projects/edencosmetic/catalog/img/8480706953387-1.jpg",
    "out": "edencosmetic/img/cut/p/8480706953387.webp",
-   "borderBackground": 1.0,
-   "objectShare": 0.313,
+   "method": "birefnet",
+   "model": "birefnet-general",
    "suitable": true,
    "size": [
     560,
-    498
+    433
    ],
-   "bytes": 50196,
-   "psnr": 41.2,
+   "bytes": 54508,
+   "psnr": 41.5,
    "pixelsKept": true,
-   "softEdge": 0.499,
-   "whiteOnWhite": true
+   "whiteOnWhite": false,
+   "review": "ok: checked on light and dark, nothing but the product kept",
+   "replaces": {
+    "suitable": true,
+    "whiteOnWhite": true,
+    "psnr": 41.2
+   }
   },
   "p-8481486831787": {
    "id": "p-8481486831787",
@@ -646,18 +687,23 @@
    "id": "p-8481559969963",
    "src": "projects/edencosmetic/catalog/img/8481559969963-1.jpg",
    "out": "edencosmetic/img/cut/p/8481559969963.webp",
-   "borderBackground": 1.0,
-   "objectShare": 0.24,
+   "method": "birefnet",
+   "model": "birefnet-general",
    "suitable": true,
    "size": [
     560,
-    480
+    496
    ],
-   "bytes": 27728,
-   "psnr": 42.8,
+   "bytes": 34062,
+   "psnr": 39.2,
    "pixelsKept": true,
-   "softEdge": 0.525,
-   "whiteOnWhite": true
+   "whiteOnWhite": false,
+   "review": "ok: checked on light and dark, nothing but the product kept",
+   "replaces": {
+    "suitable": true,
+    "whiteOnWhite": true,
+    "psnr": 42.8
+   }
   },
   "p-8481575501995": {
    "id": "p-8481575501995",
@@ -748,18 +794,23 @@
    "id": "p-8481622687915",
    "src": "projects/edencosmetic/catalog/img/8481622687915-1.jpg",
    "out": "edencosmetic/img/cut/p/8481622687915.webp",
-   "borderBackground": 1.0,
-   "objectShare": 0.31,
+   "method": "birefnet",
+   "model": "birefnet-general",
    "suitable": true,
    "size": [
     560,
-    477
+    473
    ],
-   "bytes": 30128,
-   "psnr": 43.5,
+   "bytes": 22386,
+   "psnr": 43.7,
    "pixelsKept": true,
-   "softEdge": 0.85,
-   "whiteOnWhite": true
+   "whiteOnWhite": false,
+   "review": "ok: checked on light and dark, nothing but the product kept",
+   "replaces": {
+    "suitable": true,
+    "whiteOnWhite": true,
+    "psnr": 43.5
+   }
   },
   "p-8481624719531": {
    "id": "p-8481624719531",
@@ -799,10 +850,22 @@
    "id": "p-8481633173675",
    "src": "projects/edencosmetic/catalog/img/8481633173675-1.jpg",
    "out": "edencosmetic/img/cut/p/8481633173675.webp",
-   "borderBackground": 0.0,
-   "objectShare": 1.0,
-   "suitable": false,
-   "why": "the photo does not sit on a clean light background (or the product fills the frame)"
+   "method": "birefnet",
+   "model": "birefnet-general",
+   "suitable": true,
+   "size": [
+    560,
+    515
+   ],
+   "bytes": 90332,
+   "psnr": 38.2,
+   "pixelsKept": true,
+   "whiteOnWhite": false,
+   "review": "ok: checked on light and dark, nothing but the product kept",
+   "replaces": {
+    "suitable": false,
+    "why": "the photo does not sit on a clean light background (or the product fills the frame)"
+   }
   },
   "p-8481667154091": {
    "id": "p-8481667154091",
@@ -859,10 +922,22 @@
    "id": "p-8490977067179",
    "src": "projects/edencosmetic/catalog/img/8490977067179-1.jpg",
    "out": "edencosmetic/img/cut/p/8490977067179.webp",
-   "borderBackground": 0.0,
-   "objectShare": 0.993,
-   "suitable": false,
-   "why": "the photo does not sit on a clean light background (or the product fills the frame)"
+   "method": "birefnet",
+   "model": "birefnet-general",
+   "suitable": true,
+   "size": [
+    560,
+    555
+   ],
+   "bytes": 43640,
+   "psnr": 41.4,
+   "pixelsKept": true,
+   "whiteOnWhite": false,
+   "review": "ok: checked on light and dark, nothing but the product kept",
+   "replaces": {
+    "suitable": false,
+    "why": "the photo does not sit on a clean light background (or the product fills the frame)"
+   }
   },
   "p-8491091656875": {
    "id": "p-8491091656875",
@@ -1038,103 +1113,133 @@
    "id": "p-8640544604331",
    "src": "projects/edencosmetic/catalog/img/8640544604331-1.jpg",
    "out": "edencosmetic/img/cut/p/8640544604331.webp",
-   "borderBackground": 1.0,
-   "objectShare": 0.17,
+   "method": "birefnet",
+   "model": "birefnet-general",
    "suitable": true,
    "size": [
     560,
-    194
+    193
    ],
-   "bytes": 18388,
-   "psnr": 31.6,
-   "pixelsKept": false,
-   "softEdge": 0.0,
-   "whiteOnWhite": false
+   "bytes": 61434,
+   "psnr": 43.8,
+   "pixelsKept": true,
+   "whiteOnWhite": false,
+   "review": "ok: checked on light and dark, nothing but the product kept",
+   "replaces": {
+    "suitable": true,
+    "whiteOnWhite": false,
+    "psnr": 31.6
+   }
   },
   "p-8640558301355": {
    "id": "p-8640558301355",
    "src": "projects/edencosmetic/catalog/img/8640558301355-1.jpg",
    "out": "edencosmetic/img/cut/p/8640558301355.webp",
-   "borderBackground": 1.0,
-   "objectShare": 0.174,
+   "method": "birefnet",
+   "model": "birefnet-general",
    "suitable": true,
    "size": [
     560,
-    194
+    193
    ],
-   "bytes": 18358,
-   "psnr": 31.7,
-   "pixelsKept": false,
-   "softEdge": 0.041,
-   "whiteOnWhite": false
+   "bytes": 61118,
+   "psnr": 44.2,
+   "pixelsKept": true,
+   "whiteOnWhite": false,
+   "review": "ok: checked on light and dark, nothing but the product kept",
+   "replaces": {
+    "suitable": true,
+    "whiteOnWhite": false,
+    "psnr": 31.7
+   }
   },
   "p-8730706215083": {
    "id": "p-8730706215083",
    "src": "projects/edencosmetic/catalog/img/8730706215083-1.jpg",
    "out": "edencosmetic/img/cut/p/8730706215083.webp",
-   "borderBackground": 1.0,
-   "objectShare": 0.335,
+   "method": "birefnet",
+   "model": "birefnet-general",
    "suitable": true,
    "size": [
     560,
-    359
+    372
    ],
-   "bytes": 43106,
-   "psnr": 41.0,
+   "bytes": 36254,
+   "psnr": 43.2,
    "pixelsKept": true,
-   "softEdge": 0.877,
-   "whiteOnWhite": true
+   "whiteOnWhite": false,
+   "review": "ok: checked on light and dark, nothing but the product kept",
+   "replaces": {
+    "suitable": true,
+    "whiteOnWhite": true,
+    "psnr": 41.0
+   }
   },
   "p-8730707493035": {
    "id": "p-8730707493035",
    "src": "projects/edencosmetic/catalog/img/8730707493035-1.jpg",
    "out": "edencosmetic/img/cut/p/8730707493035.webp",
-   "borderBackground": 1.0,
-   "objectShare": 0.127,
+   "method": "birefnet",
+   "model": "birefnet-general",
    "suitable": true,
    "size": [
-    472,
+    405,
     560
    ],
-   "bytes": 17162,
-   "psnr": 41.1,
+   "bytes": 15326,
+   "psnr": 46.5,
    "pixelsKept": true,
-   "softEdge": 0.644,
-   "whiteOnWhite": true
+   "whiteOnWhite": false,
+   "review": "ok: checked on light and dark, nothing but the product kept",
+   "replaces": {
+    "suitable": true,
+    "whiteOnWhite": true,
+    "psnr": 41.1
+   }
   },
   "p-8730714013867": {
    "id": "p-8730714013867",
    "src": "projects/edencosmetic/catalog/img/8730714013867-1.jpg",
    "out": "edencosmetic/img/cut/p/8730714013867.webp",
-   "borderBackground": 1.0,
-   "objectShare": 0.124,
+   "method": "birefnet",
+   "model": "birefnet-general",
    "suitable": true,
    "size": [
-    473,
+    406,
     560
    ],
-   "bytes": 17078,
-   "psnr": 41.0,
+   "bytes": 16164,
+   "psnr": 46.4,
    "pixelsKept": true,
-   "softEdge": 0.675,
-   "whiteOnWhite": true
+   "whiteOnWhite": false,
+   "review": "ok: checked on light and dark, nothing but the product kept",
+   "replaces": {
+    "suitable": true,
+    "whiteOnWhite": true,
+    "psnr": 41.0
+   }
   },
   "p-8730718568619": {
    "id": "p-8730718568619",
    "src": "projects/edencosmetic/catalog/img/8730718568619-1.jpg",
    "out": "edencosmetic/img/cut/p/8730718568619.webp",
-   "borderBackground": 1.0,
-   "objectShare": 0.128,
+   "method": "birefnet",
+   "model": "birefnet-general",
    "suitable": true,
    "size": [
-    465,
+    406,
     560
    ],
-   "bytes": 17546,
-   "psnr": 40.6,
+   "bytes": 15282,
+   "psnr": 46.1,
    "pixelsKept": true,
-   "softEdge": 0.595,
-   "whiteOnWhite": true
+   "whiteOnWhite": false,
+   "review": "ok: checked on light and dark, nothing but the product kept",
+   "replaces": {
+    "suitable": true,
+    "whiteOnWhite": true,
+    "psnr": 40.6
+   }
   },
   "p-8730719125675": {
    "id": "p-8730719125675",
@@ -1157,18 +1262,23 @@
    "id": "p-8730719387819",
    "src": "projects/edencosmetic/catalog/img/8730719387819-1.jpg",
    "out": "edencosmetic/img/cut/p/8730719387819.webp",
-   "borderBackground": 1.0,
-   "objectShare": 0.4,
+   "method": "birefnet",
+   "model": "birefnet-general",
    "suitable": true,
    "size": [
     394,
     560
    ],
-   "bytes": 32276,
-   "psnr": 42.5,
+   "bytes": 33178,
+   "psnr": 42.2,
    "pixelsKept": true,
-   "softEdge": 0.464,
-   "whiteOnWhite": true
+   "whiteOnWhite": false,
+   "review": "ok: checked on light and dark, nothing but the product kept",
+   "replaces": {
+    "suitable": true,
+    "whiteOnWhite": true,
+    "psnr": 42.5
+   }
   },
   "p-8730719617195": {
    "id": "p-8730719617195",
@@ -1191,18 +1301,23 @@
    "id": "p-8730721452203",
    "src": "projects/edencosmetic/catalog/img/8730721452203-1.jpg",
    "out": "edencosmetic/img/cut/p/8730721452203.webp",
-   "borderBackground": 1.0,
-   "objectShare": 0.35,
+   "method": "birefnet",
+   "model": "birefnet-general",
    "suitable": true,
    "size": [
-    504,
-    344
+    507,
+    345
    ],
-   "bytes": 18042,
-   "psnr": 43.8,
+   "bytes": 21182,
+   "psnr": 44.2,
    "pixelsKept": true,
-   "softEdge": 0.975,
-   "whiteOnWhite": true
+   "whiteOnWhite": false,
+   "review": "ok: checked on light and dark, nothing but the product kept",
+   "replaces": {
+    "suitable": true,
+    "whiteOnWhite": true,
+    "psnr": 43.8
+   }
   },
   "p-8730721714347": {
    "id": "p-8730721714347",
@@ -1225,18 +1340,23 @@
    "id": "p-8730722173099",
    "src": "projects/edencosmetic/catalog/img/8730722173099-1.jpg",
    "out": "edencosmetic/img/cut/p/8730722173099.webp",
-   "borderBackground": 1.0,
-   "objectShare": 0.335,
+   "method": "birefnet",
+   "model": "birefnet-general",
    "suitable": true,
    "size": [
     471,
     560
    ],
-   "bytes": 38718,
-   "psnr": 41.3,
+   "bytes": 36240,
+   "psnr": 42.1,
    "pixelsKept": true,
-   "softEdge": 0.778,
-   "whiteOnWhite": true
+   "whiteOnWhite": false,
+   "review": "ok: checked on light and dark, nothing but the product kept",
+   "replaces": {
+    "suitable": true,
+    "whiteOnWhite": true,
+    "psnr": 41.3
+   }
   },
   "p-8730724597931": {
    "id": "p-8730724597931",
@@ -1259,18 +1379,23 @@
    "id": "p-8734650466475",
    "src": "projects/edencosmetic/catalog/img/8734650466475-1.jpg",
    "out": "edencosmetic/img/cut/p/8734650466475.webp",
-   "borderBackground": 0.817,
-   "objectShare": 0.362,
+   "method": "birefnet",
+   "model": "birefnet-general",
    "suitable": true,
    "size": [
     560,
-    265
+    266
    ],
-   "bytes": 13952,
-   "psnr": 43.0,
+   "bytes": 16580,
+   "psnr": 42.9,
    "pixelsKept": true,
-   "softEdge": 0.772,
-   "whiteOnWhite": true
+   "whiteOnWhite": false,
+   "review": "ok: checked on light and dark, nothing but the product kept",
+   "replaces": {
+    "suitable": true,
+    "whiteOnWhite": true,
+    "psnr": 43.0
+   }
   },
   "p-8735419302059": {
    "id": "p-8735419302059",
@@ -1293,18 +1418,23 @@
    "id": "p-8735715557547",
    "src": "projects/edencosmetic/catalog/img/8735715557547-1.jpg",
    "out": "edencosmetic/img/cut/p/8735715557547.webp",
-   "borderBackground": 1.0,
-   "objectShare": 0.31,
+   "method": "birefnet",
+   "model": "birefnet-general",
    "suitable": true,
    "size": [
-    284,
+    285,
     560
    ],
-   "bytes": 21508,
-   "psnr": 41.5,
+   "bytes": 22086,
+   "psnr": 42.1,
    "pixelsKept": true,
-   "softEdge": 0.507,
-   "whiteOnWhite": true
+   "whiteOnWhite": false,
+   "review": "ok: checked on light and dark, nothing but the product kept",
+   "replaces": {
+    "suitable": true,
+    "whiteOnWhite": true,
+    "psnr": 41.5
+   }
   },
   "p-8735729483947": {
    "id": "p-8735729483947",
@@ -1327,52 +1457,67 @@
    "id": "p-8735741411499",
    "src": "projects/edencosmetic/catalog/img/8735741411499-1.jpg",
    "out": "edencosmetic/img/cut/p/8735741411499.webp",
-   "borderBackground": 1.0,
-   "objectShare": 0.309,
+   "method": "birefnet",
+   "model": "birefnet-general",
    "suitable": true,
    "size": [
-    284,
+    285,
     560
    ],
-   "bytes": 21186,
-   "psnr": 41.8,
+   "bytes": 22114,
+   "psnr": 42.2,
    "pixelsKept": true,
-   "softEdge": 0.472,
-   "whiteOnWhite": true
+   "whiteOnWhite": false,
+   "review": "ok: checked on light and dark, nothing but the product kept",
+   "replaces": {
+    "suitable": true,
+    "whiteOnWhite": true,
+    "psnr": 41.8
+   }
   },
   "p-8735746785451": {
    "id": "p-8735746785451",
    "src": "projects/edencosmetic/catalog/img/8735746785451-1.jpg",
    "out": "edencosmetic/img/cut/p/8735746785451.webp",
-   "borderBackground": 1.0,
-   "objectShare": 0.196,
+   "method": "birefnet",
+   "model": "birefnet-general",
    "suitable": true,
    "size": [
-    196,
+    139,
     560
    ],
-   "bytes": 15496,
-   "psnr": 42.5,
+   "bytes": 12760,
+   "psnr": 42.8,
    "pixelsKept": true,
-   "softEdge": 0.85,
-   "whiteOnWhite": true
+   "whiteOnWhite": false,
+   "review": "ok: checked on light and dark, nothing but the product kept",
+   "replaces": {
+    "suitable": true,
+    "whiteOnWhite": true,
+    "psnr": 42.5
+   }
   },
   "p-8735762579627": {
    "id": "p-8735762579627",
    "src": "projects/edencosmetic/catalog/img/8735762579627-1.jpg",
    "out": "edencosmetic/img/cut/p/8735762579627.webp",
-   "borderBackground": 1.0,
-   "objectShare": 0.156,
+   "method": "birefnet",
+   "model": "birefnet-general",
    "suitable": true,
    "size": [
     170,
     560
    ],
-   "bytes": 14942,
-   "psnr": 41.9,
+   "bytes": 12426,
+   "psnr": 43.8,
    "pixelsKept": true,
-   "softEdge": 0.582,
-   "whiteOnWhite": true
+   "whiteOnWhite": false,
+   "review": "ok: checked on light and dark, nothing but the product kept",
+   "replaces": {
+    "suitable": true,
+    "whiteOnWhite": true,
+    "psnr": 41.9
+   }
   },
   "p-8778855645355": {
    "id": "p-8778855645355",

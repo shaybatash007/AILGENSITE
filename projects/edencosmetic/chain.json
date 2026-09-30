@@ -694,6 +694,15 @@
    }
   },
   {
+   "id": "visual-free-layer",
+   "phase": "5-site",
+   "label": "The free layer: every concept built as a code-native plate or scene in its brief's composition (visual/free/)",
+   "check": {
+    "glob": "projects/{slug}/visual/free/*.html",
+    "min": 3
+   }
+  },
+  {
    "id": "visual-plan",
    "phase": "5-site",
    "label": "Visual asset plan: every placement, model and why, counts, cost, what the owner provides (visual/plan.md)",

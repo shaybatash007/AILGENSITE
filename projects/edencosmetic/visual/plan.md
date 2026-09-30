@@ -1,6 +1,6 @@
 # עדן קוסמטיקס · תוכנית הנכסים הוויזואליים
 
-30.9.2026. ההגדרות בקובץ `visual/concepts.json`, הכלים ב-`imagegen.mjs`, `videogen.mjs`, `image-review.mjs` ו-`grade.py`.
+30.9.2026. הכיוון החזותי, מקום אחר מקום: https://claude.ai/artifact/6CTuE3rqAuFB1yQCPCDY1j (השכבה החינמית ב-`visual/free/`). ההגדרות בקובץ `visual/concepts.json`, הכלים ב-`imagegen.mjs`, `videogen.mjs`, `image-review.mjs` ו-`grade.py`.
 
 ## למה לא רק גוגל
 

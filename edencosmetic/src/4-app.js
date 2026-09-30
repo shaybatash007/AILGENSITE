@@ -145,7 +145,7 @@ function applyVisuals(){
  const vid=(v,cls)=>'<video class="'+(cls||'')+'" muted playsinline preload="none" poster="'+v.poster+'"><source src="'+(v.src[1920]||v.src[1280])+'" type="video/mp4"></video>';
  const playWhenSeen=el=>{ if(!el)return; const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ el.play().catch(()=>{}); io.disconnect(); } }),{threshold:.4}); io.observe(el); };
  let used=0;
- const at=I.atelier&&(I.atelier['4:5']||I.atelier['16:9']);
+ const at=I.atelier&&(I.atelier['1:1']||I.atelier['4:5']||I.atelier['16:9']);   // the stage is square
  if(at){ const pl=$('#stage .plate'); pl.classList.add('gen'); pl.insertAdjacentHTML('afterbegin',pic(at,'(max-width:980px) 90vw, 560px')); used++;
   if(V.atelier&&big&&!calm){ pl.insertAdjacentHTML('afterbegin',vid(V.atelier,'plv')); playWhenSeen($('.plv',pl)); } }
  const cu=I.curl&&(I.curl['21:9']||I.curl['16:9']);

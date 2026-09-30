@@ -1,0 +1,244 @@
+<title>הכיוון של עדן קוסמטיקס</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Frank+Ruhl+Libre:wght@500;700;900&display=swap">
+<style>
+/* layout: an editorial reading column that widens into full-bleed plates; the site's own palette and type, so the direction is read in its own voice */
+:root{
+ --paper:#F8EFEA;--surface:#FFFFFF;--blush:#F0D3C3;--rose:#BF7F7F;--accent:#964F58;--ink:#241A18;--mute:#6B5A54;--line:#E6D3C9;--soft:#F3E2D9;--free:#2B7049;--paid:#8F5C0E;
+ --display:'Frank Ruhl Libre','Times New Roman',serif;--body:'Assistant',system-ui,Arial,sans-serif;
+ color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#1B1311;--surface:#261B18;--blush:#33241F;--rose:#D89DA0;--accent:#E9B8B2;--ink:#F6EAE3;--mute:#C9B3AA;--line:#40302A;--soft:#2A1E1B;--free:#7BD0A0;--paid:#E7B96A;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#1B1311;--surface:#261B18;--blush:#33241F;--rose:#D89DA0;--accent:#E9B8B2;--ink:#F6EAE3;--mute:#C9B3AA;--line:#40302A;--soft:#2A1E1B;--free:#7BD0A0;--paid:#E7B96A;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:400 1.0625rem/1.7 var(--body);direction:rtl;padding-inline:clamp(16px,4vw,48px);padding-block:0 72px;-webkit-font-smoothing:antialiased}
+.w{max-width:1120px;margin-inline:auto}.col{max-width:720px}
+h1,h2,h3{font-family:var(--display);line-height:1.08;margin:0;letter-spacing:-.015em;text-wrap:balance}
+p{margin:0 0 1em;text-wrap:pretty}
+img,video{max-width:100%;display:block;height:auto}
+.lat{direction:ltr;unicode-bidi:isolate}
+/* header */
+.top{padding-block:clamp(36px,6vw,72px) 28px;display:grid;gap:18px}
+.kick{font-weight:700;color:var(--accent);font-size:.9375rem;margin:0}
+h1{font-size:clamp(2.4rem,6vw,4.6rem);font-weight:900}
+h1 .sig{position:relative;white-space:nowrap}h1 .sig svg{position:absolute;inset-inline:-3% -8%;bottom:-.22em;width:112%;height:.4em;overflow:visible}h1 .sig path{fill:none;stroke:var(--accent);stroke-width:4;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.lede{font-size:clamp(1.12rem,1.6vw,1.3rem);color:var(--mute);max-width:44ch;margin:6px 0 0}
+.plate{margin:18px 0 0;border-radius:28px;overflow:hidden;box-shadow:0 34px 60px -40px rgba(60,30,24,.6)}
+.cap{font-size:.875rem;color:var(--mute);margin:10px 2px 0}
+/* sections */
+section{padding-block:clamp(40px,6vw,76px) 0;display:grid;gap:22px}
+.sh{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,400px);gap:10px 48px;align-items:end;padding-top:18px;border-top:1px solid var(--line)}
+.sh h2{font-size:clamp(1.9rem,3.6vw,2.8rem)}.sh p{margin:0;color:var(--mute)}
+@media (max-width:760px){.sh{grid-template-columns:1fr}}
+/* truths → decisions */
+.truths{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.truths li{display:grid;grid-template-columns:minmax(0,1fr) 28px minmax(0,1.25fr);gap:18px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--line)}
+.truths b{font:700 1.2rem/1.3 var(--display)}.truths .ar{color:var(--accent);font-size:1.3rem;text-align:center}.truths span{color:var(--ink)}
+@media (max-width:760px){.truths li{grid-template-columns:1fr}.truths .ar{display:none}.truths span{color:var(--mute)}}
+/* the three layers */
+.layers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.layer{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px 18px 16px;display:grid;gap:8px;align-content:start}
+.layer h3{font-size:1.3rem}.layer p{margin:0;color:var(--mute);font-size:.975rem}
+.tag{justify-self:start;font-size:.78rem;font-weight:700;padding:3px 10px;border-radius:999px;border:1px solid currentColor}
+.t-now{color:var(--mute)}.t-free{color:var(--free)}.t-paid{color:var(--paid)}
+@media (max-width:860px){.layers{grid-template-columns:1fr}}
+/* a placement board */
+.board{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(18px,3vw,36px);align-items:start;padding-top:8px}
+.board.flip{grid-template-columns:minmax(0,1fr) minmax(0,1.35fr)}.board.flip .media{order:2}
+.media{display:grid;gap:10px}.media img,.media video{border-radius:18px;box-shadow:0 22px 40px -32px rgba(60,30,24,.55);background:var(--soft)}
+.facts{display:grid;gap:14px;align-content:start;min-width:0}
+.facts h3{font-size:clamp(1.5rem,2.4vw,2rem)}.facts .where{color:var(--accent);font-weight:700;margin:0;font-size:.9375rem}
+.row{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:baseline}.row p{margin:0}
+.spec{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-block:1px solid var(--line);margin-top:4px}
+.spec div{padding:10px 0;display:grid;gap:2px}.spec div+div{border-inline-start:1px solid var(--line);padding-inline-start:12px}
+.spec small{color:var(--mute);font-size:.8rem}.spec b{font:700 1.05rem var(--display);font-variant-numeric:tabular-nums}
+@media (max-width:860px){.board,.board.flip{grid-template-columns:1fr}.board.flip .media{order:0}}
+/* before / after */
+.ba{display:grid;gap:10px}.ba .sw{display:inline-flex;justify-self:start;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--surface)}
+.ba .sw button{font:600 .9375rem var(--body);border:0;background:transparent;color:var(--ink);padding:7px 16px;border-radius:999px;cursor:pointer;min-height:40px}
+.ba .sw button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ba .sw button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.ba figure{margin:0;display:grid}.ba figure>img{grid-area:1/1;border-radius:18px;transition:opacity .45s}
+.ba figure>img.b{opacity:0}.ba.on figure>img.b{opacity:1}.ba.on figure>img.a{opacity:0}
+.fields{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}.fields figure{margin:0;display:grid;gap:6px}.fields img{border-radius:12px;aspect-ratio:320/380;object-fit:cover}
+.fields figcaption{font-size:.78rem;color:var(--mute);text-align:center}
+@media (max-width:760px){.fields{grid-template-columns:repeat(4,minmax(0,1fr))}}
+/* tables */
+.tw{overflow-x:auto;border-top:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:.975rem}
+th,td{text-align:start;padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--mute);font-size:.875rem}td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.total td{font-weight:700;border-bottom:0}
+.need{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:n}
+.need li{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:baseline;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.need li::before{counter-increment:n;content:counter(n);font:700 1.4rem var(--display);color:var(--accent)}
+.need b{display:block}.need span{color:var(--mute)}
+code{font-family:ui-monospace,Menlo,monospace;font-size:.86em;background:var(--soft);padding:1px 6px;border-radius:6px;direction:ltr;unicode-bidi:isolate}
+.rule{border-inline-start:3px solid var(--accent);padding:4px 16px;margin:0;font:600 clamp(1.15rem,2vw,1.4rem)/1.45 var(--display);max-width:52ch}
+.brief{border-top:1px solid var(--line);padding-top:8px}.brief summary{cursor:pointer;font-weight:700;color:var(--accent);min-height:40px;display:flex;align-items:center}.brief p{direction:ltr;text-align:left;font-size:.875rem;color:var(--mute);margin:.4em 0;line-height:1.55}.brief b{color:var(--ink)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="w">
+<header class="top">
+ <p class="kick">עדן קוסמטיקס · כיוון ויזואלי · 30.9.2026</p>
+ <h1>האטלייה של מי שמרימה <span class="sig">ריסים<svg viewBox="0 0 230 30" preserveAspectRatio="none" aria-hidden="true"><path d="M226 23 H84 Q30 23 10 3"/></svg></span></h1>
+ <p class="lede">אור בוקר על אבן, סאטן בצבע ורד מאובק, והעיקול של ריס מורם, שחוזר באתר כמו חתימה. הכול כבר בנוי בכלים חינמיים. ה-API בתשלום מחליף את השכבה המצוירת בצילום, בלי לשנות אף החלטה.</p>
+ <figure class="plate" style="margin-inline:0"><img src="a/hero-free.webp" width="1400" height="740" alt="המסך הראשון של האתר עם המשטח החדש: אור חלון וצללי עלי לוטוס מאחורי המוצרים האמיתיים"></figure>
+ <p class="cap">המסך הראשון עם השכבה החינמית: משטח אבן, אור חלון וצללי עלי לוטוס, מתחת למוצרים האמיתיים של החנות.</p>
+</header>
+
+<section aria-labelledby="s1">
+ <div class="sh"><h2 id="s1">מה הבנתי על עדן</h2><p>כל החלטה עיצובית נגזרת מעובדה על העסק. בלי העובדה, אין החלטה.</p></div>
+ <ul class="truths">
+  <li><b>עדן מטפלת ומדריכה, לא רק מוכרת</b><i class="ar" aria-hidden="true">←</i><span>האתר נראה כמו שולחן העבודה של מקצוענית: משטח אבן, אור חלון, כלים מסודרים. לא חנות קוסמטיקה נוצצת.</span></li>
+  <li><b>הרמת ריסים היא תנועה של עיקול</b><i class="ar" aria-hidden="true">←</i><span>העיקול הוא החתימה: נכתב פעם אחת מתחת ל"ריסים", וחוזר כסרט סאטן שמתרומם ונעצר.</span></li>
+  <li><b>בלוגו EC פורח לוטוס</b><i class="ar" aria-hidden="true">←</i><span>הלוטוס הוא הצל שנופל על המשטח, והרקע השקט של האזור שלה.</span></li>
+  <li><b>שבעה מותגים, לכל אחד אריזה חזקה</b><i class="ar" aria-hidden="true">←</i><span>לכל מותג עולם חומר משלו, בצבעים שנמדדו מהאריזה: לכה אדומה ל-THUYA, מגנטה על שחור ל-NIKK MOLE, ג׳ל ורוד ל-ZOLA.</span></li>
+  <li><b>"שיטה ברורה, טבעית ופרקטית" (במילים שלה)</b><i class="ar" aria-hidden="true">←</i><span>חומרים טבעיים ואור טבעי. מספרים שנקראים במבט: מחיר ערכה, משלוח חינם, ימי אספקה. בלי נצנצים ובלי שיש מבריק.</span></li>
+  <li><b>המוצרים הם האמת של החנות</b><i class="ar" aria-hidden="true">←</i><span>פיקסלים של מוצר לא נוצרים לעולם. כל מוצר הוא הצילום של החנות, חתוך ומוצב על אותה במה.</span></li>
+ </ul>
+</section>
+
+<section aria-labelledby="s2">
+ <div class="sh"><h2 id="s2">שלוש שכבות, אותן החלטות</h2><p>הקומפוזיציה, הפלטה, קנה המידה והמקומות באתר נקבעים עכשיו. ה-API מחליף רק את החומר.</p></div>
+ <div class="layers">
+  <div class="layer"><span class="tag t-now">באוויר עכשיו</span><h3>הבסיס</h3><p>מבנה, טיפוגרפיה, 64 חיתוכי מוצר על במה אחידה, נקודות קנייה, קבלה, בונה ערכה, מדף מותגים וצבעי האריזות.</p></div>
+  <div class="layer"><span class="tag t-free">חינם · נבנה היום</span><h3>השכבה המצוירת</h3><p>משטח ואור ב-WebGL, סרט סאטן בתלת-ממד (Three.js), שדות חומר לשבעה מותגים, לוטוס מהלוגו, שני סרטי טיוטה, וחיתוך מוצרים עם בינה מלאכותית פתוחה (BiRefNet) לכל 71 המוצרים.</p></div>
+  <div class="layer"><span class="tag t-paid">בתשלום · כשה-API מחובר</span><h3>השכבה הצילומית</h3><p>אותם בריפים כצילום: Nano Banana Pro למשטח, FLUX.2 [pro] לסרט ולשדות, Seedream ללוטוס, ו-Veo 3.1 או Kling 3.0 לסרטונים. נכנסים לאותם מקומות בדיוק.</p></div>
+ </div>
+ <p class="rule">כלל שלא משתנה בשום שכבה: תמונה שנוצרה לא מראה מוצר, לוגו, טקסט, פנים או "תוצאה". היא רק החומר שהמוצר האמיתי עומד עליו.</p>
+</section>
+
+<section aria-labelledby="s3">
+ <div class="sh"><h2 id="s3">מקום אחר מקום</h2><p>כל מקום: מה יש עכשיו, מה השכבה החינמית עושה, ומה בדיוק ישתנה כשה-API מחובר.</p></div>
+
+ <div class="board">
+  <div class="media ba" id="ba1">
+   <div class="sw" role="group" aria-label="השוואה"><button type="button" aria-pressed="true" data-v="a">עכשיו</button><button type="button" aria-pressed="false" data-v="b">עם השכבה החינמית</button></div>
+   <figure><img class="a" src="a/hero-now.webp" width="1400" height="740" alt="המסך הראשון כפי שהוא באוויר"><img class="b" src="a/hero-free.webp" width="1400" height="740" alt="המסך הראשון עם משטח האבן ואור החלון"></figure>
+  </div>
+  <div class="facts">
+   <p class="where">1 · המסך הראשון, מתחת למוצרים</p>
+   <h3>המשטח</h3>
+   <div class="row"><span class="tag t-free">חינם</span><p>אבן גיר חלבית, שתי שמשות של חלון מהצד הימני העליון, וצללים של עלי לוטוס עם החריץ שלהם. בשולחן העבודה האור נודד לאט (הסרט למטה).</p></div>
+   <div class="row"><span class="tag t-paid">בתשלום</span><p>צילום של אותו בריף: טרוורטין אמיתי עם נקבוביות, אור ששוקע בחומר, צל עם עומק. Nano Banana Pro נבחר כי הוא הכי צילומי באור ובחומר, ו-FLUX.2 [pro] מתחרה בו בהשוואה.</p></div>
+   <div class="spec"><div><small>יחסים</small><b class="lat">1:1 · 16:9 · 9:16</b></div><div><small>מועמדים</small><b>12, נבחרים 3</b></div><div><small>עלות</small><b class="lat">$1.80</b></div></div>
+   <details class="brief"><summary>הבריף שיישלח למודל</summary><p class="lat">Top-down editorial photograph of an empty warm travertine stone surface in blush-cream tones, from #F4E9E2 to #DFC7BA. Late-afternoon window light from the upper right casts long, soft diagonal shadows of window mullions and the blurred silhouette of a lotus leaf and petals across the lower left third. Fine natural stone pores, a faint linen texture at one edge, a gentle tonal gradient. Medium-format still-life photography, overhead, 50mm, f/8, soft and even. The surface is completely empty. The centre stays open and calm, ready for objects to be placed later.</p><p class="lat"><b>Video:</b> Locked-off overhead camera over the same empty stone surface. The window light drifts very slowly across it and the soft lotus-leaf shadow sways gently, as in a light breeze. Nothing enters the frame. Calm, continuous, no cuts.</p><p class="lat"><b>Never:</b> objects, products, bottles, tubes, jars, boxes, tools, flowers, petals on the surface, people, hands, text, logos, watermark, glitter, marble veins, heavy vignette</p></details>
+  </div>
+ </div>
+
+ <div class="board flip">
+  <div class="media"><img src="a/band-free.webp" width="1400" height="399" alt="פס רחב בין בונה הערכה למדף המותגים: סרט סאטן ורוד שמתעקל בקצהו"></div>
+  <div class="facts">
+   <p class="where">2 · הפס בין בונה הערכה למדף המותגים</p>
+   <h3>העיקול</h3>
+   <div class="row"><span class="tag t-free">חינם</span><p>סרט סאטן בתלת-ממד (Three.js) עם ברק סאטן אמיתי. העיקול מתהדק לכיוון הקצה, כמו ריס אחרי הרמה.</p></div>
+   <div class="row"><span class="tag t-paid">בתשלום</span><p>צילום מאקרו של משי אמיתי, ובסרטון V1 הסרט מתרומם ונעצר. FLUX.2 [pro] לתמונה (מחיר לפי פיקסל ברוחב 21:9), ו-Kling 3.0 או Veo 3.1 Fast לסרטון.</p></div>
+   <div class="spec"><div><small>יחסים</small><b class="lat">21:9 · 9:16</b></div><div><small>מועמדים</small><b>12, נבחרים 3</b></div><div><small>עלות</small><b class="lat">$0.72 + $0.90</b></div></div>
+   <details class="brief"><summary>הבריף שיישלח למודל</summary><p class="lat">Macro studio photograph of a single narrow ribbon of dusty-rose silk satin, #BF7F7F to #964F58, lying straight across a cream background (#F8EFEA); toward one end it lifts into a soft, elegant upward curl, like an eyelash after a lift. Soft diffused light, a gentle sheen along the satin, extremely shallow depth of field, creamy background blur. Minimal and sculptural, with wide negative space on both sides.</p><p class="lat"><b>Video:</b> The satin ribbon lies straight, then slowly lifts at one end into a soft curl and holds there. Static camera, slow and graceful, one continuous motion, no cuts.</p><p class="lat"><b>Never:</b> eyes, eyelashes, faces, text, logos, several ribbons, bows, knots, gift wrapping, glitter, jewellery</p></details>
+  </div>
+ </div>
+
+ <div class="board">
+  <div class="media ba" id="ba2">
+   <div class="sw" role="group" aria-label="השוואה"><button type="button" aria-pressed="true" data-v="a">עכשיו</button><button type="button" aria-pressed="false" data-v="b">עם השכבה החינמית</button></div>
+   <figure><img class="a" src="a/brands-now.webp" width="1400" height="1093" alt="מדף המותגים כפי שהוא באוויר"><img class="b" src="a/brands-free.webp" width="1400" height="1093" alt="מדף המותגים עם שדה חומר לכל מותג"></figure>
+  </div>
+  <div class="facts">
+   <p class="where">3 · מדף המותגים ועמודי המותג</p>
+   <h3>שדה החומר של כל מותג</h3>
+   <div class="row"><span class="tag t-free">חינם</span><p>שיידר אחד עם מוטיב לכל מותג, בצבעים שנמדדו מהאריזה. החומר ממלא את החלק העליון, מאחורי המוצר. צבע השדה נשאר מאחורי הטקסט, כדי שהקריאות לא תיפגע.</p></div>
+   <div class="row"><span class="tag t-paid">בתשלום</span><p>FLUX.2 [pro] עם קובץ ייחוס של צבעי המותג, ואחריו ציון צבע ל-ΔE מוגדר. מותג חדש בחנות מקבל שדה לבד, דרך לולאת האוטונומיה.</p></div>
+   <div class="spec"><div><small>מותגים</small><b>7 × 2 יחסים</b></div><div><small>מועמדים</small><b>28, נבחרים 14</b></div><div><small>עלות</small><b class="lat">$1.05</b></div></div>
+   <details class="brief"><summary>הבריף שיישלח למודל</summary><p class="lat">Abstract studio photograph, a material study: glossy red lacquer plane (#C10C08) meeting matte charcoal paper (#1F1A1C) at a soft angle, a thin brushed-silver edge between them. Soft studio light, shallow depth, generous empty space on one side for a product to be placed later.</p><p class="lat"><b>Never:</b> text, logos, letters, packaging, products, bottles, tubes, jars, boxes, people, hands, faces</p></details>
+  </div>
+ </div>
+ <div class="fields" aria-label="שבעת שדות החומר">
+  <figure><img src="a/field-thuya.webp" width="320" height="380" alt="THUYA: לכה אדומה על נייר פחם"><figcaption class="lat">THUYA</figcaption></figure>
+  <figure><img src="a/field-nikk-mole.webp" width="320" height="380" alt="NIKK MOLE: אור מגנטה על שחור"><figcaption class="lat">NIKK MOLE</figcaption></figure>
+  <figure><img src="a/field-zola.webp" width="320" height="380" alt="ZOLA: ג'ל ורוד"><figcaption class="lat">ZOLA</figcaption></figure>
+  <figure><img src="a/field-my-lamination.webp" width="320" height="380" alt="My lamination: לבן קליני"><figcaption class="lat">My lamination</figcaption></figure>
+  <figure><img src="a/field-refectocil.webp" width="320" height="380" alt="RefectoCil: חום עמוק"><figcaption class="lat">RefectoCil</figcaption></figure>
+  <figure><img src="a/field-kodi.webp" width="320" height="380" alt="Kodi: אלומיניום מוברש"><figcaption class="lat">Kodi</figcaption></figure>
+  <figure><img src="a/field-staleks.webp" width="320" height="380" alt="Staleks: ורוד עם קצה פלדה"><figcaption class="lat">Staleks</figcaption></figure>
+ </div>
+
+ <div class="board flip">
+  <div class="media"><img src="a/lotus.webp" width="1200" height="675" alt="הלוטוס מהלוגו של עדן, גדול ומחוץ למיקוד, על נייר בגוון סומק"></div>
+  <div class="facts">
+   <p class="where">4 · הרקע של האזור "עדן"</p>
+   <h3>הלוטוס</h3>
+   <div class="row"><span class="tag t-free">חינם</span><p>הלוטוס מהלוגו שלה, גדול ורך, מאחורי הביוגרפיה והציטוט, בשקיפות של 28%.</p></div>
+   <div class="row"><span class="tag t-paid">בתשלום</span><p>לוטוס אמיתי על מים בשחר, קטן בשליש התחתון, עם אוויר מעליו. Seedream 4.5 חזק בפרטים אורגניים עדינים, ב-$0.04 לתמונה.</p></div>
+   <div class="spec"><div><small>יחסים</small><b class="lat">16:9 · 1:1</b></div><div><small>מועמדים</small><b>6, נבחרים 2</b></div><div><small>עלות</small><b class="lat">$0.24</b></div></div>
+   <details class="brief"><summary>הבריף שיישלח למודל</summary><p class="lat">Soft-focus fine-art photograph of a single pale blush lotus flower floating on still water at dawn, light mist, warm cream light, muted palette of #F8EFEA, #F0D3C3 and #BF7F7F, the flower small in the lower third with calm open space above.</p><p class="lat"><b>Never:</b> several flowers, frogs, people, text, logos, saturated pink, dark water, lily pads covering the frame</p></details>
+  </div>
+ </div>
+
+ <div class="board">
+  <div class="media"><img src="a/matte.webp" width="1400" height="560" alt="מוצרים לבנים ומוצרים שצולמו בסביבה, לפני ואחרי חיתוך עם BiRefNet"></div>
+  <div class="facts">
+   <p class="where">5 · החנות: 71 מוצרים על במה אחת</p>
+   <h3>המוצרים</h3>
+   <div class="row"><span class="tag t-free">חינם</span><p>BiRefNet (רישיון MIT) מחליט רק על השקיפות. הצבעים של המוצר הם הצילום של החנות, והכלי מוכיח את זה בכל קובץ (PSNR). כך גם הקופסאות הלבנות, הסרט הדביק והסיליקונים שצולמו על היד נחתכים נקי.</p></div>
+   <div class="row"><span class="tag t-paid">בתשלום</span><p>כלום. מוצר שנוצר הוא מוצר מומצא. גם הווידאו של המוצרים נשאר בקוד: ריחוף, צל ונקודות קנייה.</p></div>
+   <div class="spec"><div><small>חיתוכים</small><b id="mcount">71 מתוך 71</b></div><div><small>וידאו מיוצר</small><b>0</b></div><div><small>עלות</small><b class="lat">$0</b></div></div>
+  </div>
+ </div>
+
+ <div class="board flip">
+  <div class="media"><img src="a/hero-free-m.webp" width="520" height="1460" alt="המסך הראשון בנייד עם המשטח החדש" style="max-width:300px;justify-self:center"></div>
+  <div class="facts">
+   <p class="where">6 · לוטי ואזור הקורסים</p>
+   <h3>מה שלא נוצר</h3>
+   <div class="row"><span class="tag t-now">בקוד</span><p><b>לוטי</b> מצוירת בקוד מרשת הפיקסלים של הלוגו. מחולל תמונות היה מייצר כל פעם לוטי קצת אחרת, וזה שובר את הדמות. תנוחות ומצבים חדשים נוספים בקוד, בחינם.</p></div>
+   <div class="row"><span class="tag t-paid">עדיף אמת</span><p><b>אזור הקורסים</b> מחכה לתמונה אמיתית של ידיים בעבודה. רק אם אין, נוצרת תמונת אווירה (Nano Banana Pro), והיא מסומנת כך באתר.</p></div>
+  </div>
+ </div>
+</section>
+
+<section aria-labelledby="s4">
+ <div class="sh"><h2 id="s4">הסרטים</h2><p>שני סרטי הטיוטה נבנו בחינם, כל אחד 8 שניות, מושתק ובלי חיתוכים. כשה-API מחובר, הם הופכים לבריף של הסרטונים המצולמים.</p></div>
+ <div class="board">
+  <div class="media"><video src="a/v1.mp4" poster="a/v1-poster.webp" controls muted playsinline preload="metadata" aria-label="V1: סרט סאטן שמתרומם ונעצר"></video></div>
+  <div class="facts"><p class="where">V1 · הפס הרחב</p><h3>הסרט מתרומם</h3><p>שוכב ישר, מתעקל בקצה ונעצר, בלי קפיצה. באתר הוא מתנגן פעם אחת כשנכנס למסך, ונעצר על העיקול. בנייד ובמצב "הפחתת תנועה" מוצגת רק התמונה.</p><div class="spec"><div><small>טיוטה</small><b>Three.js, חינם</b></div><div><small>בתשלום</small><b class="lat">Kling 3.0</b></div><div><small>עלות</small><b class="lat">$0.90</b></div></div></div>
+ </div>
+ <div class="board flip">
+  <div class="media"><video src="a/v2.mp4" poster="a/v2-poster.webp" controls muted playsinline preload="metadata" aria-label="V2: אור חלון שנודד על המשטח"></video></div>
+  <div class="facts"><p class="where">V2 · מאחורי המוצרים במסך הראשון</p><h3>האור נודד</h3><p>המצלמה נעולה מעל המשטח, האור זז לאט, והצל של הלוטוס מתנודד כמו ברוח. שום דבר לא נכנס לפריים. בשולחן העבודה בלבד.</p><div class="spec"><div><small>טיוטה</small><b>WebGL, חינם</b></div><div><small>בתשלום</small><b class="lat">Veo 3.1</b></div><div><small>עלות</small><b class="lat">$2.40</b></div></div></div>
+ </div>
+</section>
+
+<section aria-labelledby="s5">
+ <div class="sh"><h2 id="s5">מה קורה ברגע שה-API מחובר</h2><p>הסדר קבוע, וכל שלב נסגר בבדיקה. שום קובץ לא עולה לאתר בלי אישור עם נימוק.</p></div>
+ <div class="tw"><table>
+  <thead><tr><th>שלב</th><th>מה קורה</th><th>כלי</th><th>עלות</th></tr></thead>
+  <tbody>
+   <tr><td>1</td><td>בדיקת המפתחות: איזה מסלול זמין</td><td><code>imagegen --probe</code></td><td class="n">$0</td></tr>
+   <tr><td>2</td><td>טיוטות לכיול הניסוח וההרכב, 10–20 לכל קונספט, עם השכבה החינמית כקובץ ייחוס להרכב</td><td class="lat">Cloudflare · FLUX.2 [klein]</td><td class="n">$0</td></tr>
+   <tr><td>3</td><td>השוואת שלושה דגמים על אותו בריף, בגיליון אחד</td><td><code>--bakeoff</code></td><td class="n">$0.25</td></tr>
+   <tr><td>4</td><td>תמונות סופיות לחמשת הקונספטים</td><td class="lat">fal: Nano Banana Pro · FLUX.2 [pro] · Seedream</td><td class="n">≈ $5</td></tr>
+   <tr><td>5</td><td>בדיקות אוטומטיות, סקירה, אישור עם נימוק, ציון צבע לפלטה</td><td><code>image-review</code> · <code>grade.py</code></td><td class="n">$0</td></tr>
+   <tr><td>6</td><td>שני סרטונים מהתמונות שאושרו: טיוטה, ואז גרסה סופית</td><td class="lat">Veo 3.1 · Kling 3.0</td><td class="n">≈ $3.30</td></tr>
+   <tr><td>7</td><td>פרסום לאותם מקומות, בדיקת האתר, Lighthouse, העלאה לאוויר</td><td><code>--publish</code> · <code>site-qa</code></td><td class="n">$0</td></tr>
+   <tr class="total"><td></td><td>סה"כ, עם מרווח לניסיונות חוזרים</td><td></td><td class="n">≈ $12 (תקרה $20)</td></tr>
+  </tbody>
+ </table></div>
+</section>
+
+<section aria-labelledby="s6">
+ <div class="sh"><h2 id="s6">מה צריך ממך</h2><p>המפתחות נכנסים כמשתני סביבה בהגדרות הסביבה, לא בצ'אט.</p></div>
+ <ol class="need">
+  <li><div><b>Cloudflare (חינם)</b><span><code>CLOUDFLARE_ACCOUNT_ID</code> ו-<code>CLOUDFLARE_API_TOKEN</code> עם הרשאת Workers AI. פותח טיוטות אמיתיות בחינם, מיד.</span></div></li>
+  <li><div><b>fal.ai</b><span><code>FAL_KEY</code>, עם טעינה של $15–20. פותח את התמונות הסופיות ואת שני הסרטונים.</span></div></li>
+  <li><div><b>שש עד עשר תמונות מעדן</b><span>ידיים בכפפות בזמן הרמה (באישור הלקוחה), שולחן העבודה מלמעלה, שתי תמונות שלה, אריזת הזמנה, הסטודיו בנתיבות.</span></div></li>
+ </ol>
+</section>
+</div>
+
+<script>
+document.querySelectorAll('.ba').forEach(ba => {
+  const bs = ba.querySelectorAll('.sw button');
+  bs.forEach(b => b.addEventListener('click', () => { const on = b.dataset.v === 'b'; ba.classList.toggle('on', on); bs.forEach(x => x.setAttribute('aria-pressed', String(x === b))); }));
+});
+</script>

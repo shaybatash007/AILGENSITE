@@ -52,3 +52,5 @@
 {"t":"2026-09-30T12:49:08.856Z","phase":"12-gates","ev":"start"}
 {"t":"2026-09-30T09:46:34.000Z","phase":"10-craft/research","ev":"end","note":"closed at the moment the critique phase opened; the vendor-neutral tooling that followed is measured under 11 and 12"}
 {"t":"2026-09-30T12:59:03.089Z","phase":"12-gates","ev":"end"}
+{"t":"2026-09-30T15:26:03.191Z","phase":"13-direction","ev":"start"}
+{"t":"2026-09-30T16:11:38.663Z","phase":"13-direction","ev":"end"}

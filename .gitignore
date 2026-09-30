@@ -28,3 +28,4 @@ projects/*/catalog/img/
 projects/*/visual/.refcache/
 projects/*/visual/.graded/
 projects/*/visual/probe.json
+projects/*/visual/free/out/*.png

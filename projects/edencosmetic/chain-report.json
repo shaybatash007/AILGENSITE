@@ -1,8 +1,16 @@
 {
   "slug": "edencosmetic",
-  "at": "2026-09-30T12:59:56.664Z",
+  "at": "2026-09-30T16:11:41.736Z",
   "ok": 65,
-  "missing": [],
+  "missing": [
+    {
+      "id": "pushed",
+      "phase": "8-deliver",
+      "why": [
+        "56 קבצים לא מחויבים"
+      ]
+    }
+  ],
   "na": 1,
   "elements": [
     {
@@ -405,6 +413,12 @@
       "status": "na"
     },
     {
+      "id": "visual-free-layer",
+      "phase": "5-site",
+      "label": "The free layer: every concept built as a code-native plate or scene in its brief's composition (visual/free/)",
+      "status": "ok"
+    },
+    {
       "id": "visual-plan",
       "phase": "5-site",
       "label": "Visual asset plan: every placement, model and why, counts, cost, what the owner provides (visual/plan.md)",
@@ -453,7 +467,7 @@
       "id": "pushed",
       "phase": "8-deliver",
       "label": "Committed and pushed",
-      "status": "ok"
+      "status": "missing"
     }
   ]
 }
