@@ -1,19 +1,19 @@
-# בדיקת SEO: http://127.0.0.1:43835
+# בדיקת SEO: http://127.0.0.1:38805
 
-נסרק ב-2026-09-30 10:16 · 94 עמודים · מפת אתר: 94 כתובות · קישורים פנימיים: 2747 (מתוכן העמודים: 851, ב-94 עמודים) · עמודים יתומים: 0
+נסרק ב-2026-09-30 21:01 · 94 עמודים · מפת אתר: 94 כתובות · קישורים פנימיים: 2747 (מתוכן העמודים: 852, ב-94 עמודים) · עמודים יתומים: 0
 
-חומרה: **0 גבוהה**, 7 בינונית, 138 נמוכה. ממוצע מילים: 337 ב-HTML הראשוני, 347 אחרי JavaScript.
+חומרה: **0 גבוהה**, 7 בינונית, 138 נמוכה. ממוצע מילים: 337 ב-HTML הראשוני, 348 אחרי JavaScript.
 
 ## האתר
 - robots.txt: 200 · Sitemap: https://edencosmetic.co.il/sitemap.xml
-- מפות אתר: http://127.0.0.1:43835/sitemap.xml
+- מפות אתר: http://127.0.0.1:38805/sitemap.xml
 - http → https: לא נבדק · www: לא נבדק
 - כתובת לא קיימת מחזירה: 404 · HSTS: אין
 
 ## ממצאים
 
 ### חומרה בינונית (7)
-- **js-heavy-content** (1): רק 738 מתוך 1636 מילים קיימות ב-HTML הראשוני.
+- **js-heavy-content** (1): רק 775 מתוך 1742 מילים קיימות ב-HTML הראשוני.
   - /
 - **no-contextual-inbound** (5): מקושר רק מתפריטים ומהתחתית, לא מתוך תוכן של עמוד אחר. קישור מתוכן שווה יותר.
   - /blogs/news/: מקושר רק מתפריטים ומהתחתית, לא מתוך תוכן של עמוד אחר. קישור מתוכן שווה יותר.
@@ -45,7 +45,7 @@
 
 | כתובת | title | h1 | מילים (HTML / אחרי JS) | נכנסים | מתוכן | יוצאים | מתוכן | עומק | JSON-LD |
 |---|---|---|---|---|---|---|---|---|---|
-| / | 44 | 1 | 738 / 1636 | 93 | 93 | 93 | 43 | 0 | Organization, Store, VideoObject, WebSite, WebPage, FAQPage, ItemList |
+| / | 44 | 1 | 775 / 1742 | 93 | 93 | 93 | 44 | 0 | Organization, Store, VideoObject, WebSite, WebPage, FAQPage, ItemList |
 | /blogs/news/ | 31 | 1 | 204 / 204 | 93 | 0 | 22 | 4 | 1 | Organization, CollectionPage, BreadcrumbList |
 | /brands/my-lamination/ | 46 | 1 | 332 / 332 | 93 | 24 | 40 | 24 | 1 | Organization, CollectionPage, BreadcrumbList |
 | /brands/nikk-mole/ | 42 | 1 | 260 / 260 | 93 | 17 | 34 | 18 | 1 | Organization, CollectionPage, BreadcrumbList |

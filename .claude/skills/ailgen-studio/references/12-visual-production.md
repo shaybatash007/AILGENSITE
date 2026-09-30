@@ -62,6 +62,24 @@ decisions.
 | Marks and motifs | the brand's own vector marks | drawn large and soft (Eden's lotus field) |
 | Free AI drafts | Cloudflare Workers AI daily allocation (FLUX.2 [klein] 4B) | needs only a free account token; see the routing below |
 
+### Live on the site, not beside it
+
+A direction page with mockups is not delivery: the owner judges the live site, and a layer that sits on a separate page
+reads as "nothing changed" (Eden, round 4). The free layer ships into the site itself, as real-time code, in the slots its
+briefs name, and the paid assets later replace its material in the same places.
+
+| Slot | Live, free | Guardrails that keep the page fast and honest |
+|---|---|---|
+| First screen | One WebGL2 scene (`src/4c-atelier.js`): the surface is computed once per size into a texture; the foliage shadow is drawn at a third of the resolution (soft by nature); the products are uploaded as a texture array **from the images the page already chose** (srcset, no second download) and composited after tone mapping at full light, so their pixels stay the store's; they cast their own shadows, and the pointer moves the sun | starts after `load` and idle; shaders compile with `KHR_parallel_shader_compile` and no synchronous status query; a software renderer (SwiftShader, llvmpipe) gets no live scene; a watchdog lowers the resolution, then freezes a still; paused off screen and in a hidden tab; reduced motion draws one frame; the still plate is tiny and low-entropy (under 0.05 bits per pixel) so it never becomes the LCP |
+| Signature scene | A pinned scroll section drawn in Canvas 2D (`src/4d-lift.js`): the business's own process as a state machine per stage (Eden: a closed eye whose lashes go through the treatment), with the store's words and the products for each stage from the same filters as the proof tool | eased with real elapsed time (capped), so a slow frame never slows the story; images load when the section enters; a rail of stages; a focused control brings its stage; no pin and one final drawing with reduced motion; the mascot steps aside while it is on screen |
+| Brand shelves | Material fields rendered with `glrender.mjs` once, as small WebP, set as each card's background when the shelf comes near | a paid field (`.bf`) replaces it in place |
+| Page-wide motion | `src/4e-motion.js`: headings rise word by word behind their line, cards tilt with a glare, a collection's product follows the pointer, a sentence fills with ink as it is read | pointer effects only with a fine pointer; nothing moves with reduced motion; every floating layer is clipped by its section (a float outside the page scrolls an RTL page sideways) |
+
+Measure before and after with `lighthouse.mjs --launch`: Eden's first cut of this layer took mobile performance from 92 to
+52 (a GPU scene started during load, a background plate became the LCP); the guardrails above brought it back to 89 to 91.
+Film the result with `scripts/film-site.mjs` (a virtual clock: the page's time, rAF and every CSS animation advance one frame
+per capture, so the footage is smooth even where the machine renders WebGL on the CPU).
+
 Checked and not used: anonymous free image APIs (Pollinations now answers only one small model without payment, and its
 terms do not suit client work); Hugging Face serverless inference (needs a token, a few cents of free credit a month);
 open-weight diffusion or video models locally (no GPU in the cloud container; CPU generation of a 4B model is minutes per

@@ -120,7 +120,22 @@ export default async function (pg, T) {
   await pg.evaluate(() => scrollTo(0, 0)); await pg.waitForTimeout(400);
   const hero = await pg.evaluate(() => { const r = s => document.querySelector(s)?.getBoundingClientRect(); const h1 = r('h1'), cta = r('#heroKit'); return { h1: h1 && h1.bottom <= innerHeight, cta: cta && cta.bottom <= innerHeight, cuts: [...document.querySelectorAll('#stage .cut')].filter(i => i.complete && i.naturalWidth > 0).length, ticket: (document.querySelector('#tkTot')?.textContent || '').replace(/[^\d]/g, '') }; });
   T.check('first screen: headline and the kit action are inside the first viewport', hero.h1 && hero.cta, JSON.stringify(hero));
-  T.check('first screen: five real product cutouts are loaded on the stage', hero.cuts === 5, hero.cuts);
+  T.check('first screen: six real product cutouts are loaded on the flat lay', hero.cuts === 6, hero.cuts);
+  // ---- round 5: the live layer is part of the page, never a separate mockup
+  await pg.waitForTimeout(1500);
+  const atl = await pg.evaluate(() => ({ mode: document.querySelector('#top').dataset.atl || '', canvas: !!document.querySelector('#top > canvas.atl'), gl: document.querySelector('#top').classList.contains('gl'), plate: getComputedStyle(document.querySelector('#top > .plate')).backgroundImage }));
+  // with a GPU the atelier is drawn live; a renderer without one (this headless check) keeps the still plate and does no GPU work
+  T.check('first screen: the atelier is live on a GPU, the still plate without one', /atelier-(1600|900)\.webp/.test(atl.plate) && ((atl.mode === 'live' || atl.mode === 'still') ? atl.canvas && atl.gl : atl.mode === 'soft' && !atl.canvas), JSON.stringify(atl));
+  const lift = await pg.evaluate(() => { const s = [...document.querySelectorAll('#lfSteps .lf-s')]; return { n: s.length, withProducts: s.filter(li => li.querySelectorAll('.lf-p').length).length, rail: document.querySelectorAll('#lfRail button').length, mode: document.getElementById('lift').className }; });
+  T.check('lift: seven stages, each with products from the store, and a rail to jump between them', lift.n === 7 && lift.withProducts === 7 && lift.rail === 7, JSON.stringify(lift));
+  await pg.evaluate(() => { const s = document.getElementById('lift'); scrollTo(0, s.offsetTop + (s.offsetHeight - innerHeight) * (5.6 / 7)); }); await pg.waitForTimeout(900);
+  const onStage = await pg.evaluate(() => { const on = document.querySelector('#lfSteps .lf-s.on'); return on ? on.querySelector('h3').textContent : ''; });
+  T.check('lift: scrolling brings the matching stage (step 3 near the end)', onStage === 'שלב 3', onStage);
+  await pg.click('#lfSteps .lf-s.on .lf-p'); await pg.waitForTimeout(400);
+  T.check('lift: a product of the stage opens its quick view', await pg.$eval('#qv', e => e.open));
+  await pg.keyboard.press('Escape'); await pg.waitForTimeout(300);
+  const fields = await pg.$$eval('#brandList .bp', b => b.map(x => getComputedStyle(x).backgroundImage).filter(v => /img\/field\//.test(v)).length);
+  T.check('brands: every card sits on its own material field', fields === 8, fields);
   const kitDefault = await pg.evaluate(() => KIT.lash.start.map(c => cheap(ITEMS.filter(c.f)).find(x => x.a)).filter(Boolean).reduce((s, x) => s + x.p, 0));
   T.check('first screen: the kit card equals the kit builder\'s lash/start default', +hero.ticket === kitDefault, hero.ticket + ' vs ' + kitDefault);
   const shelf = await pg.$$eval('#brandList .bp', b => b.map(x => ({ k: x.dataset.bk, bg: getComputedStyle(x).backgroundColor, href: x.getAttribute('href') })));

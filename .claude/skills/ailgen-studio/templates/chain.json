@@ -727,6 +727,16 @@
    }
   },
   {
+   "id": "visual-live-layer",
+   "phase": "5-site",
+   "label": "The free layer is live on the site, not beside it: a GPU first screen, a signature scroll scene, brand materials, page-wide motion, each with its guardrails (reference 12)",
+   "check": {
+    "file": "{site}/index.html",
+    "contains": "<canvas",
+    "min": 1000
+   }
+  },
+  {
    "id": "evolve",
    "phase": "8-deliver",
    "label": "Autonomy: evolve.json and a baseline catalog snapshot",
@@ -743,6 +753,17 @@
     "json": "projects/{slug}/evolve/last.json",
     "path": "log",
     "minLength": 0
+   }
+  },
+  {
+   "id": "site-film",
+   "phase": "7-portfolio",
+   "label": "The site filmed in motion on a virtual clock: a shot list and the film (scripts/film-site.mjs)",
+   "check": {
+    "files": [
+     "projects/{slug}/qa/film-shots.mjs",
+     "projects/{slug}/out/site-film.mp4"
+    ]
    }
   },
   {

@@ -54,3 +54,5 @@
 {"t":"2026-09-30T12:59:03.089Z","phase":"12-gates","ev":"end"}
 {"t":"2026-09-30T15:26:03.191Z","phase":"13-direction","ev":"start"}
 {"t":"2026-09-30T16:11:38.663Z","phase":"13-direction","ev":"end"}
+{"t":"2026-09-30T20:07:22.562Z","phase":"14-live-visual","ev":"start"}
+{"t":"2026-09-30T21:20:42.391Z","phase":"14-live-visual","ev":"end"}

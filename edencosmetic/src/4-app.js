@@ -114,7 +114,7 @@ function brandPanel(b,house){
  const list=house?b.ids.map(i=>BYID.get(i)).filter(Boolean):brandItems(b), lo=Math.min(...list.map(x=>x.p)), hi=Math.max(...list.map(x=>x.p)), inS=list.filter(x=>x.a).length;
  const kinds=[...new Set(list.map(x=>x.k))].map(k=>CAT.kinds[k]).slice(0,4), L=b.look, d=dark(L.field);
  const name=house?'הבחירה של עדן':b.short, href=house?cUrl('דבקים-סיליקונים'):(LIVE?'#shop':bUrl(b));
- return '<li><a class="bp'+(d?' dark':'')+'" href="'+href+'" data-bk="'+esc(house?'':b.key)+'" style="--bf:'+L.field+';--bi:'+L.ink+';--ba:'+L.accent+'"><span class="im"><img src="'+b.cut.replace('.webp','-380.webp')+'" alt="" width="190" height="190" loading="lazy" decoding="async"></span><span class="tx"><b class="nm bt" data-type="'+esc(L.type)+'">'+esc(name)+'</b>'
+ return '<li><a class="bp'+(d?' dark':'')+'" href="'+href+'" data-bk="'+esc(house?'':b.key)+'" style="--bf:'+L.field+';--bi:'+L.ink+';--ba:'+L.accent+'" data-field="img/field/'+(house?'house':b.key)+'.webp"><span class="im"><img src="'+b.cut.replace('.webp','-380.webp')+'" alt="" width="190" height="190" loading="lazy" decoding="async"></span><span class="tx"><b class="nm bt" data-type="'+esc(L.type)+'">'+esc(name)+'</b>'
   +(house?'<span class="or">בלי שם מותג · נבחרו לחנות</span>':b.origin?'<span class="or">'+esc(b.origin)+'</span>':'')
   +'<span class="ln">'+(list.length===1?'מוצר אחד':bdi(list.length)+' מוצרים')+' · '+(lo===hi?bdi(money(lo)):bdi(money(lo))+' עד '+bdi(money(hi)))+' · '+(inS?bdi(inS)+' במלאי':list.length===1?'אזל כרגע':'אזלו כרגע')+'</span>'
   +'<ul class="kz">'+kinds.map(k=>'<li>'+esc(k)+'</li>').join('')+'</ul><span class="go">'+(house?'לסיליקונים ולכלים':b.page?'לעמוד המותג':'לעמוד המוצר')+'</span></span></a></li>';
@@ -122,6 +122,7 @@ function brandPanel(b,house){
 function renderBrands(){
  const order=BRANDS.list.slice().sort((a,b)=>b.ids.length-a.ids.length);
  $('#brandList').innerHTML=order.map(b=>brandPanel(b)).join('')+brandPanel(BRANDS.house,true);
+ const bl=$('#brandList'), fio=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)){ $$('.bp[data-field]',bl).forEach(a=>a.style.setProperty('--bimg','url('+a.dataset.field+')')); fio.disconnect(); } },{rootMargin:'700px 0px'}); fio.observe(bl);
  $('#brandLine').innerHTML=order.map(b=>'<li><a href="'+(LIVE?'#brands':bUrl(b))+'" style="--bc:'+b.look.accent+'"><span class="bt" data-type="'+esc(b.look.type)+'">'+esc(b.short)+'</span></a></li>').join('');
  if(LIVE)$$('#brandList a[data-bk]').forEach(a=>a.addEventListener('click',e=>{const b=BRANDS.list.find(x=>x.key===a.dataset.bk); if(!b)return; e.preventDefault(); F.brand=brandItems(b)[0].b; F.kind='';F.col='';F.n=24; $('#brand').value=F.brand; renderShop(); $('#shop').scrollIntoView({behavior:reduce()?'auto':'smooth'});}));
 }
@@ -145,8 +146,9 @@ function applyVisuals(){
  const vid=(v,cls)=>'<video class="'+(cls||'')+'" muted playsinline preload="none" poster="'+v.poster+'"><source src="'+(v.src[1920]||v.src[1280])+'" type="video/mp4"></video>';
  const playWhenSeen=el=>{ if(!el)return; const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ el.play().catch(()=>{}); io.disconnect(); } }),{threshold:.4}); io.observe(el); };
  let used=0;
- const at=I.atelier&&(I.atelier['1:1']||I.atelier['4:5']||I.atelier['16:9']);   // the stage is square
- if(at){ const pl=$('#stage .plate'); pl.classList.add('gen'); pl.insertAdjacentHTML('afterbegin',pic(at,'(max-width:980px) 90vw, 560px')); used++;
+ // the first screen is full bleed: a wide photograph on wide screens, a tall one on phones; it replaces the stone drawn live
+ const atW=I.atelier&&(I.atelier['16:9']||I.atelier['1:1']), atN=I.atelier&&(I.atelier['9:16']||I.atelier['4:5']||atW);
+ if(atW){ const pl=$('#top>.plate'); pl.classList.add('gen'); $('#top').classList.add('photo'); pl.insertAdjacentHTML('afterbegin',pic(big||!atN?atW:atN,'100vw')); used++;
   if(V.atelier&&big&&!calm){ pl.insertAdjacentHTML('afterbegin',vid(V.atelier,'plv')); playWhenSeen($('.plv',pl)); } }
  const cu=I.curl&&(I.curl['21:9']||I.curl['16:9']);
  if(cu){ $('#kit').insertAdjacentHTML('afterend','<div class="band" aria-hidden="true">'+(V.curl&&big&&!calm?vid(V.curl,'bv'):'')+pic(cu,'100vw')+'</div>'); playWhenSeen($('.band .bv')); used++; }

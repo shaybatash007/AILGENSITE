@@ -1,8 +1,8 @@
 {
  "url": "http://127.0.0.1:8131/",
- "at": "2026-09-30T16:06:50.052Z",
+ "at": "2026-09-30T21:18:11.278Z",
  "ok": true,
- "passed": 87,
+ "passed": 92,
  "failed": 0,
  "checks": [
   {
@@ -373,12 +373,37 @@
   {
    "name": "first screen: headline and the kit action are inside the first viewport",
    "ok": true,
-   "note": "{\"h1\":true,\"cta\":true,\"cuts\":5,\"ticket\":\"307\"}"
+   "note": "{\"h1\":true,\"cta\":true,\"cuts\":6,\"ticket\":\"307\"}"
   },
   {
-   "name": "first screen: five real product cutouts are loaded on the stage",
+   "name": "first screen: six real product cutouts are loaded on the flat lay",
    "ok": true,
-   "note": "5"
+   "note": "6"
+  },
+  {
+   "name": "first screen: the atelier is live on a GPU, the still plate without one",
+   "ok": true,
+   "note": "{\"mode\":\"soft\",\"canvas\":false,\"gl\":false,\"plate\":\"url(\\\"http://127.0.0.1:8131/img/atelier-1600.webp\\\")\"}"
+  },
+  {
+   "name": "lift: seven stages, each with products from the store, and a rail to jump between them",
+   "ok": true,
+   "note": "{\"n\":7,\"withProducts\":7,\"rail\":7,\"mode\":\"lift pin\"}"
+  },
+  {
+   "name": "lift: scrolling brings the matching stage (step 3 near the end)",
+   "ok": true,
+   "note": "שלב 3"
+  },
+  {
+   "name": "lift: a product of the stage opens its quick view",
+   "ok": true,
+   "note": ""
+  },
+  {
+   "name": "brands: every card sits on its own material field",
+   "ok": true,
+   "note": "8"
   },
   {
    "name": "first screen: the kit card equals the kit builder's lash/start default",

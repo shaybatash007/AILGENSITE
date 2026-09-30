@@ -153,7 +153,8 @@ generated (real cutouts on one stage, `cutout.py`); vendor-neutral routes per jo
 free drafts on Cloudflare Workers AI, finals through one fal.ai key (Nano Banana Pro, FLUX.2 [pro], Seedream 4.5), Gemini and
 OpenAI as keyed fallbacks, a `--bakeoff` before any series; `image-review.mjs` (checks, sheets labelled by model, verdicts,
 publish with the brand grade `grade.py`), `videogen.mjs` (Veo 3.1 or Kling 3.0 from an approved still). Build the free layer first (code-native plates and draft films in the same composition as each brief,
-`glrender.mjs`; AI matting for hard product photos, `matte.py`), then write the asset plan
+`glrender.mjs`; AI matting for hard product photos, `matte.py`) **and ship it into the live site** (a GPU first screen, a signature
+scroll scene, material fields, page-wide motion, each with its guardrails: reference 12, "Live on the site"), then write the asset plan
 (`visual/plan.md`: every placement, model and why, counts, cost, what the owner provides). The site renders a slot only when an
 approved asset exists, and is complete without any.
 - **Gate**: every published asset approved with a reason; cutouts keep their pixels; the budget cap held; the disclosure line shown when generated images are.
@@ -239,6 +240,7 @@ Set up `evolve.json` and take the baseline snapshot, so new products, prices, st
 | `scripts/imagegen.mjs` | Generated candidates per concept on vendor-neutral routes (Cloudflare free drafts, fal, Gemini, OpenAI, stub); probe, bake-off, references, dry run, budget, ledger |
 | `scripts/glrender.mjs` | The free visual layer: render WebGL shaders and Three.js scenes to stills and draft films (SwiftShader, identical on every machine) |
 | `scripts/matte.py` | AI matting for hard product photos (rembg + BiRefNet, MIT, CPU): alpha only, pixels proven kept |
+| `scripts/film-site.mjs` | Film a live site on a virtual clock: smooth 30 fps footage of WebGL, canvas and CSS motion from a shot list (scroll targets, pointer paths) |
 | `scripts/grade.py` | Brand colour grade for approved plates (Lab transfer, ΔE before/after); colour-swatch references |
 | `scripts/regions.mjs` | Design critique shots: every region alone, desktop and phone, before and after |
 | `scripts/image-review.mjs` | Automatic checks, review sheets, verdicts (Claude or owner), publish approved picks with provenance |

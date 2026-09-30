@@ -210,8 +210,10 @@ function adminUI(){
 }
 
 /* ================= init ================= */
+/* after load, when the main thread is idle: work that makes the page richer but is not needed for its first paint */
+const later=f=>{const go=()=>('requestIdleCallback' in window?requestIdleCallback(f,{timeout:1800}):setTimeout(f,300)); if(document.readyState==='complete')go(); else addEventListener('load',go,{once:true});};
 function init(){
- applyContent(); renderCourses(); renderCats(); shopUI(); heroTicket(); applyVisuals(); qvUI(); cartUI(); kitUI(); formUI(); legalUI(); agentUI(); a11yUI(); adminUI(); chrome();
+ applyContent(); renderCourses(); renderCats(); shopUI(); heroTicket(); applyVisuals(); LIFT.init(); MOTION.init(); later(()=>ATL.init()); qvUI(); cartUI(); kitUI(); formUI(); legalUI(); agentUI(); a11yUI(); adminUI(); chrome();
  $('#agentAv').innerHTML=''; entry(); LOT.tipsOnView();
  if(cl){
   cl.use('db').then(d=>{db=d; if(!db)return; db.doc('data/site').onSnapshot(s=>{ if(s.exists){ const d=s.data()||{}; C={...structuredClone(DEF),...d}; ['faq','story'].forEach(k=>{if(!Array.isArray(C[k])||!C[k].length)C[k]=structuredClone(DEF[k]);}); if(!$('#adm').classList.contains('open')){applyContent();renderCourses();} } },()=>{}); });
