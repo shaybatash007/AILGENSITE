@@ -7,9 +7,13 @@
 Run `bash .claude/skills/fastconfig/scripts/probe.sh --cf-account 9213747898b0eef6d720f037cb32bee4` for the current table
 (names and HTTP status only, never values). As of this date:
 
-- **Cloudflare**: a user token is injected by the environment for `api.cloudflare.com` (no variable in the shell). It reaches Workers
-  AI, Workers Scripts and Zones; **not** AI Gateway, Pages, KV, R2, D1 or Account Settings. The owner widens it in place
-  (fastconfig `references/cloudflare.md`, the value stays the same); then the agent creates gateways, Pages secrets and KV by API.
+- **Cloudflare**: a user token is injected by the environment for `api.cloudflare.com` (no variable in the shell). Widened by the
+  owner on 2026-10-01: Workers AI, AI Gateway, Pages, Workers Scripts, KV, D1, Account Settings and Zones all answer; R2 is not
+  enabled on the account yet (dashboard step, only if R2 is needed).
+- **AI Gateway `ailgen-lab`** created by the agent on 2026-10-01: Workers AI billing `unified`, authentication on (Worker bindings
+  are pre-authenticated), logs on, spend limits $10 per day and $100 per 30 days (sliding). Credit balance at creation: $0, card on
+  file, auto top-up off (`GET /accounts/{id}/ai-gateway/billing/credit-balance`).
+- **The lab from CI**: `.github/workflows/lab-run.yml` runs `cloud/lab/unified.mjs` with the `LAB_PASSCODE` repository secret.
 - **GitHub**: the Claude GitHub App reaches all 8 of the owner's repositories with push (`list_repos`); Actions secrets stay owner clicks.
 - **Not set**: `LAB_PASSCODE` (the lab's passcode for `cloud/lab/unified.mjs`), any provider key (`FAL_KEY`, `GEMINI_API_KEY`…).
 - **Network**: npm, PyPI, GitHub raw, Cloudflare, OpenAI, Anthropic, Google, fal and ElevenLabs hosts answer.

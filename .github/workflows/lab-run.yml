@@ -1,0 +1,88 @@
+# AILGEN Lab: run AI UNIFIED from CI, with the lab's passcode from this repository's secrets.
+#
+# The agent runs the lab from any session this way, even one whose environment has no LAB_PASSCODE: it dispatches this
+# workflow (GitHub MCP actions_run_trigger), reads the log, and takes the outputs from the run's artifact. Every model call still
+# goes through the lab's /api/run, so the lab's budget, its ledger and the gateway's spend limits apply as in the page; a paid run
+# is capped by max_usd. The passcode is masked by GitHub and never printed by cloud/lab/unified.mjs.
+#
+#   command  run | estimate | call | budget | flows | runs | templates | models
+#   target   a template id, a saved flow id, or a model id (for call)
+#   set      --set values, one per line: brief.text=..., frames.model=google/nano-banana-pro
+#   input    for call: the model's input as JSON
+name: lab run
+
+on:
+  workflow_dispatch:
+    inputs:
+      command:
+        description: "run, estimate, call, budget, flows, runs, templates or models"
+        type: choice
+        options: [estimate, run, call, budget, flows, runs, templates, models]
+        default: estimate
+      target:
+        description: "template id, saved flow id, or model id (call)"
+        type: string
+        default: "launch-film"
+      set:
+        description: "--set values, one per line (node.key=value)"
+        type: string
+        default: ""
+      input:
+        description: "call: the model input as JSON"
+        type: string
+        default: "{}"
+      max_usd:
+        description: "run: stop before passing this many dollars"
+        type: string
+        default: "2"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lab-run
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      LAB_PASSCODE: ${{ secrets.LAB_PASSCODE }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: ffmpeg (the composer)
+        if: inputs.command == 'run'
+        run: command -v ffmpeg || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
+
+      - name: lab
+        env:
+          COMMAND: ${{ inputs.command }}
+          TARGET: ${{ inputs.target }}
+          SETS: ${{ inputs.set }}
+          INPUT: ${{ inputs.input }}
+          MAX_USD: ${{ inputs.max_usd }}
+        run: |
+          [ -n "$LAB_PASSCODE" ] || { echo "::error::the LAB_PASSCODE secret is not set"; exit 1; }
+          args=("$COMMAND")
+          case "$COMMAND" in
+            run|estimate) args+=("$TARGET") ;;
+            call) args+=("$TARGET" "$INPUT" --yes) ;;
+          esac
+          while IFS= read -r line; do [ -n "$line" ] && args+=(--set "$line"); done <<< "$SETS"
+          if [ "$COMMAND" = run ]; then args+=(--yes --max-usd "$MAX_USD" --out "projects/_unified/out/ci-${{ github.run_id }}"); fi
+          node cloud/lab/unified.mjs "${args[@]}"
+
+      - name: outputs
+        if: always() && inputs.command == 'run'
+        uses: actions/upload-artifact@v4
+        with:
+          name: lab-run-${{ github.run_id }}
+          path: projects/_unified/out/
+          if-no-files-found: ignore
+          retention-days: 14

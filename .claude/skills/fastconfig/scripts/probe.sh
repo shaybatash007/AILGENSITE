@@ -50,6 +50,35 @@ elif [ "$m" = "ok" ]; then
       if [ "$m" = "ok" ]; then row "$name" "ok" ""; else row "$name" "no" "$c $m"; gap "cloudflare: $name"; fi
     done
   fi
+  if [ -n "$CF_ACC" ] && [ -n "$has_py" ]; then   # AI Gateway: the gateways, and the Unified Billing credit balance
+    curl -s -m 12 -o "$TMP" "${AUTH[@]}" "$CF/accounts/$CF_ACC/ai-gateway/gateways"
+    gws=$(python3 - "$TMP" <<'PY'
+import json,sys
+try: r=json.load(open(sys.argv[1])).get("result") or []
+except Exception: r=[]
+out=[]
+for g in r:
+    tags=[g.get("workers_ai_billing_mode") or "postpaid"]
+    if g.get("authentication"): tags.append("auth")
+    if (g.get("spend_limits") or {}).get("enabled"): tags.append("spend limits")
+    out.append("%s (%s)" % (g.get("id"), ", ".join(tags)))
+print(", ".join(out) or "none")
+PY
+); row "AI gateways" "" "$gws"
+    curl -s -m 12 -o "$TMP" "${AUTH[@]}" "$CF/accounts/$CF_ACC/ai-gateway/billing/credit-balance"
+    bal=$(python3 - "$TMP" <<'PY'
+import json,sys
+try:
+    j=json.load(open(sys.argv[1]))
+    if not j.get("success"): print("?"); sys.exit()
+    r=j["result"]; t=r.get("topup_config") or {}
+    print("$%s · card on file: %s · auto top-up: %s" % (r.get("balance",0), "yes" if r.get("has_default_payment_method") else "no", "on" if t.get("amount") else "off"))
+except Exception: print("?")
+PY
+)
+    row "AI Gateway credits" "" "$bal"
+    case "$bal" in '$0 '*|'$0.0 '*) gap "cloudflare: AI Gateway credits are \$0 (owner's top-up, references/cloudflare.md)";; esac
+  fi
   c=$(curl -s -m 12 -o "$TMP" -w "%{http_code}" "${AUTH[@]}" "$CF/zones?per_page=1"); m=$(jmsg "$TMP")
   if [ "$m" = "ok" ]; then n=$( [ -n "$has_py" ] && python3 -c 'import json,sys;print((json.load(open(sys.argv[1])).get("result_info") or {}).get("total_count","?"))' "$TMP"); row "Zones (domains)" "ok" "$n zone(s) visible"; else row "Zones (domains)" "no" "$c $m"; gap "cloudflare: Zone Read"; fi
 else row "token" "no" "$code $m"; gap "cloudflare: no working token (references/cloudflare.md)"; fi

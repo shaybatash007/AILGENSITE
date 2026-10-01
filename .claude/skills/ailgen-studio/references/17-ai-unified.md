@@ -65,6 +65,9 @@ node cloud/lab/unified.mjs call google/nano-banana-pro '{"prompt":"…"}' --yes 
 ```
 
 - **Access**: `LAB_PASSCODE` in the session's environment, set by the owner in the environment's settings and never pasted into a chat. `LAB_URL` points elsewhere. `--local` talks to `node cloud/dev.mjs serve lab --port 8791 --key test --mock-paid --mock-free`, which runs every flow with nothing spent.
+- **From CI, with no passcode in the session**: dispatch the `lab run` workflow (`.github/workflows/lab-run.yml`, GitHub MCP
+  `actions_run_trigger` with `command`, `target`, `set`, `input`, `max_usd`), read the job log, and take the outputs from the run's
+  artifact `lab-run-<run id>`. It reads `LAB_PASSCODE` from the repository's secrets.
 - **Nothing paid runs without `--yes`.**
   - The plan and its price print first.
   - The run stops at `--max-usd` (default 1.5 × the estimate).

@@ -54,6 +54,10 @@ needed for anything Cloudflare holds.
 - **Workers AI from the credits**: the gateway → **Settings** → **Workers AI Billing** → **Unified billing**.
 - **Spend limits**: per gateway, Settings → Spend limits (up to 20 rules; a 429 once reached). Claude can set these by API with AI
   Gateway Edit; an account-wide limit is in the Credits card once credits exist.
+- **By API (AI Gateway Edit)**: the balance is `GET /accounts/{id}/ai-gateway/billing/credit-balance` (balance, card on file, auto
+  top-up); a gateway is created with `POST /accounts/{id}/ai-gateway/gateways` and `workers_ai_billing_mode: "unified"`,
+  `authentication: true` (Worker bindings stay pre-authenticated) and `spend_limits: { enabled, rules: [{ id, limitType: "cost",
+  limit: <dollars>, window: <seconds>, technique: "sliding" }] }`. Claude does all of this; only the top-up is the owner's.
 - **Email alert on usage**: https://dash.cloudflare.com/?to=/:account/billing → Billable Usage → budget alert.
 
 ## Other deep links
