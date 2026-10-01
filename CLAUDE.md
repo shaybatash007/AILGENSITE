@@ -13,6 +13,10 @@ Multi-engine AI jobs (a film from a brief, a campaign, voice, music, comparisons
 ailgen-lab.pages.dev ("זרימות"). Run them with `node cloud/lab/unified.mjs` (`references/17-ai-unified.md`): price first, `--yes`
 with a `--max-usd` cap, the lab's budget and ledger on every call, flows and runs saved where the owner sees them.
 
+Anything only the owner can grant (a key, a token permission, an environment variable, network access, a connector, billing, a
+GitHub secret) goes through the `fastconfig` skill (`.claude/skills/fastconfig/`): probe first, do what the access allows, then one
+batched ask with exact links, and never a secret in the chat.
+
 Conventions:
 - Hebrew first, RTL. Every image's provenance is recorded in the project files; visitors see a label only in visitor language
   and only where an image could be read as documentary ("תמונת אווירה"). No production language on any page (preview, snapshot,

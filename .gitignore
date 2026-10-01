@@ -41,3 +41,6 @@ _deploy/
 
 # AILGEN Lab: the cached catalog pages
 cloud/lab/.cache/
+
+# packaged skills for upload (fastconfig.zip): built from .claude/skills, never committed
+dist/

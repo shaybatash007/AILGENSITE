@@ -2,6 +2,18 @@
 
 `AGENTS.md` holds the rules. Rotated, with "Enforced by" pointers: `ENVIRONMENT-ARCHIVE.md`.
 
+## Claude Code cloud environment: what a session can reach (fastconfig probe, 2026-10-01)
+
+Run `bash .claude/skills/fastconfig/scripts/probe.sh --cf-account 9213747898b0eef6d720f037cb32bee4` for the current table
+(names and HTTP status only, never values). As of this date:
+
+- **Cloudflare**: a user token is injected by the environment for `api.cloudflare.com` (no variable in the shell). It reaches Workers
+  AI, Workers Scripts and Zones; **not** AI Gateway, Pages, KV, R2, D1 or Account Settings. The owner widens it in place
+  (fastconfig `references/cloudflare.md`, the value stays the same); then the agent creates gateways, Pages secrets and KV by API.
+- **GitHub**: the Claude GitHub App reaches all 8 of the owner's repositories with push (`list_repos`); Actions secrets stay owner clicks.
+- **Not set**: `LAB_PASSCODE` (the lab's passcode for `cloud/lab/unified.mjs`), any provider key (`FAL_KEY`, `GEMINI_API_KEY`…).
+- **Network**: npm, PyPI, GitHub raw, Cloudflare, OpenAI, Anthropic, Google, fal and ElevenLabs hosts answer.
+
 ## Cloudflare: the deploy token has NO Workers KV permission (2026-10-01)
 
 Account `9213747898b0eef6d720f037cb32bee4`. The `CLOUDFLARE` repo secret reads Pages and **cannot
