@@ -1,0 +1,29 @@
+{
+ "$comment": "AILGEN Lab's paid models: every one is billed from the AI Gateway credits (Unified Billing) through the gateway in surfaces.json (LAB_GATEWAY). Ids, inputs and prices are from each model's page in the Cloudflare catalog (developers.cloudflare.com/ai/models/<id>/), checked 2026-10-01. The real cost of each call comes from the gateway's log; the numbers here are for the estimate shown before a run. Credits cost 5% more than their face value ($100 of credits = $105).",
+ "checked": "2026-10-01",
+ "creditFee": 0.05,
+ "groups": [
+  { "id": "text", "title": "טקסט", "models": [
+   { "id": "google/gemini-3.5-flash", "name": "Gemini 3.5 Flash", "fmt": "gemini", "price": { "in": 1.5, "out": 9 }, "note": "מהיר וזול, עברית טובה, הקשר של מיליון טוקנים" },
+   { "id": "anthropic/claude-sonnet-5", "name": "Claude Sonnet 5", "fmt": "anthropic", "price": { "in": 2, "out": 10 }, "note": "כתיבה, ניתוח ועבודה ארוכה" },
+   { "id": "openai/gpt-5.5", "name": "GPT-5.5", "fmt": "openai", "price": { "in": 5, "out": 30 }, "note": "המודל החזק של OpenAI כאן; היקר מבין השלושה" },
+   { "id": "@cf/moonshotai/kimi-k2.6", "name": "Kimi K2.6", "fmt": "openai", "price": { "in": 0.95, "out": 4 }, "note": "רץ ב-Workers AI; בחשבון בלי Workers Paid רק דרך הקרדיטים" },
+   { "id": "@cf/zai-org/glm-5.2", "name": "GLM-5.2", "fmt": "openai", "price": { "in": 1.4, "out": 4.4 }, "note": "רץ ב-Workers AI; בחשבון בלי Workers Paid רק דרך הקרדיטים" }
+  ]},
+  { "id": "image", "title": "תמונה", "models": [
+   { "id": "google/nano-banana-pro", "name": "Nano Banana Pro", "fmt": "nano-pro", "per": "image", "est": { "1K": 0.14, "2K": 0.14, "4K": 0.24 }, "price": { "in": 2, "out": 120 }, "note": "הכי צילומי באור ובחומר; לפי טוקנים, כ-$0.14 לתמונה ו-$0.24 ב-4K" },
+   { "id": "google/nano-banana-2", "name": "Nano Banana 2", "fmt": "nano-2", "per": "image", "est": { "1K": 0.07, "2K": 0.07, "4K": 0.12 }, "price": { "in": 0.5, "out": 60 }, "note": "חצי מחיר של Pro, איכות קרובה" },
+   { "id": "openai/gpt-image-2", "name": "GPT Image 2", "fmt": "gpt-image", "per": "image", "est": { "low": 0.01, "medium": 0.04, "high": 0.17 }, "price": { "in": 5, "out": 10, "outImage": 30 }, "note": "טוב בטקסט בתוך תמונה ובעריכה; המחיר לפי איכות" },
+   { "id": "black-forest-labs/flux-2-max", "name": "FLUX.2 [max]", "fmt": "flux-max", "per": "megapixel", "price": { "firstMp": 0.07, "nextMp": 0.03 }, "note": "צבע מדויק ומרקמים; $0.07 למגה-פיקסל הראשון" },
+   { "id": "bytedance/seedream-4.5", "name": "Seedream 4.5", "fmt": "seedream", "per": "image", "est": { "any": 0.04 }, "note": "$0.04 לתמונה, גם ב-4K" }
+  ]},
+  { "id": "video", "title": "וידאו", "models": [
+   { "id": "google/veo-3.1-fast", "name": "Veo 3.1 Fast", "fmt": "veo", "per": "second", "rate": { "720p": 0.08, "1080p": 0.10 }, "audio": 0.05, "note": "טיוטות וידאו; 8 שניות ב-720p בלי קול: $0.64" },
+   { "id": "google/veo-3.1", "name": "Veo 3.1", "fmt": "veo", "per": "second", "rate": { "720p": 0.2, "1080p": 0.2 }, "audio": 0.2, "note": "הגרסה הסופית; 8 שניות בלי קול: $1.60, עם קול: $3.20" },
+   { "id": "bytedance/seedance-2.0", "name": "Seedance 2.0", "fmt": "seedance", "per": "second", "rate": { "480p": 0.07, "720p": 0.15, "1080p": 0.37 }, "note": "4–12 שניות; דעה שנייה על תנועה" }
+  ]},
+  { "id": "voice", "title": "קול", "models": [
+   { "id": "elevenlabs/eleven-v3", "name": "ElevenLabs v3", "fmt": "eleven", "per": "char", "rate": 0.0001, "note": "הקראה; $0.0001 לתו (1,000 תווים: $0.10). עברית: לבדוק כאן, היצרן לא מפרט" }
+  ]}
+ ]
+}

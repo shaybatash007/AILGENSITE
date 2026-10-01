@@ -82,7 +82,15 @@
       "secrets": [
         "LAB_PASSCODE"
       ],
-      "$secrets": "Repository secrets copied to the Pages project on each deploy (tools/site-switch.mjs). LAB_PASSCODE: any password the owner chooses; until it exists the lab answers 423 and stays locked."
+      "$secrets": "Repository secrets copied to the Pages project on each deploy (tools/site-switch.mjs). LAB_PASSCODE: any password the owner chooses; until it exists the lab answers 423 and stays locked.",
+      "vars": {
+        "LAB_GATEWAY": "ailgen-lab",
+        "LAB_BUDGET_USD": "100"
+      },
+      "kv": [
+        "LEDGER"
+      ],
+      "$budget": "The lab's money: paid models (and free ones once the daily allocation is spent, when the owner allows it) go through the AI Gateway LAB_GATEWAY with Unified Billing, paid from prepaid credits. The KV namespace LEDGER records each call's cost (cloud/lab/ledger.js); LAB_BUDGET_USD is the starting budget, changed later from the lab."
     }
   ],
   "$interim": "Until a hostname exists, edencosmetic and talorkaradi are published on GitHub Pages at a path, and their root-absolute links 404. tools/link-audit.mjs counts those as 'root-assumed' and exits 0, because they are not defects - they are correct links waiting for the layout to catch up. The audit becomes a real failure the moment a hostname is attached, which is exactly when it should.",

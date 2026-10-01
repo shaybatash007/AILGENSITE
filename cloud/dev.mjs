@@ -21,7 +21,11 @@ const ACC = process.env.CLOUDFLARE_ACCOUNT_ID || cfg.cloudflare.accountId;
 
 let neurons = 0;
 const AI = {
-  async run(model, input) {
+  aiGatewayLogId: null,
+  gateway: () => ({ async getLog() { return null; } }),   // no gateway log here: the lab falls back to its estimate
+  async run(model, input, opts) {
+    // the credits path goes through an AI Gateway with Unified Billing; here only when DEV_GATEWAY_OK=1 says the gateway exists
+    if (opts && opts.gateway && !process.env.DEV_GATEWAY_OK) throw new Error(`gateway ${opts.gateway.id}: not reachable from the local runner (set DEV_GATEWAY_OK=1 once it exists)`);
     let init;
     if (input && input.multipart) init = { body: Buffer.from(await new Response(input.multipart.body).arrayBuffer()), headers: { 'content-type': input.multipart.contentType } };
     else init = { body: JSON.stringify(input), headers: { 'content-type': 'application/json' } };
@@ -34,7 +38,14 @@ const AI = {
     return j.result;
   },
 };
-const env = { AI, ...(flag('--key') ? { LAB_PASSCODE: flag('--key') } : {}) };
+// a KV namespace in memory, with metadata and prefix listing, so the lab's ledger runs here as it does on Cloudflare
+const kvStore = new Map();
+const LEDGER = {
+  async get(k, type) { const v = kvStore.get(k); return v == null ? null : type === 'json' ? JSON.parse(v.value) : v.value; },
+  async put(k, value, o = {}) { kvStore.set(k, { value: String(value), metadata: o.metadata }); },
+  async list({ prefix = '', limit = 1000 } = {}) { const keys = [...kvStore.keys()].filter(k => k.startsWith(prefix)).sort().slice(0, limit).map(name => ({ name, metadata: kvStore.get(name).metadata })); return { keys, list_complete: true }; },
+};
+const env = { AI, LEDGER, LAB_GATEWAY: 'ailgen-lab', LAB_BUDGET_USD: '100', ...(flag('--key') ? { LAB_PASSCODE: flag('--key') } : {}) };
 const fnDir = path.join(ROOT, s.functions, 'functions');
 
 async function dispatch(request) {

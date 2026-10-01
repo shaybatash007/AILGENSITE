@@ -17,13 +17,16 @@
  <div class="brand"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="22,80 44,20 56,20 78,80 66,80 50,37 34,80" fill="currentColor"/><rect x="45" y="58" width="10" height="10" fill="var(--amber)"/></svg><b>AILGEN</b><span>Lab</span></div>
  <p class="sub" id="plan">כל המודלים החינמיים של Cloudflare Workers AI</p>
  <div class="meta">
+  <label class="chip tog" title="כשהמכסה החינמית של היום נגמרת, המודלים החינמיים ממשיכים לרוץ על חשבון התקציב (כ-$0.011 לכל 1,000 נוירונים)"><input type="checkbox" id="fb"> להמשיך מהתקציב כשהחינם נגמר</label>
   <span class="chip" id="meter" title="נוירונים שהמודלים דיווחו בסשן הזה. המכסה החינמית: 10,000 ביום, מתאפסת בחצות UTC (02:00 או 03:00 בישראל)">0 נוירונים בסשן</span>
+  <button class="chip btnchip budget" id="budgetPill" type="button" title="התקציב של המעבדה">תקציב</button>
   <button class="chip btnchip" id="logout" type="button" hidden>יציאה</button>
  </div>
 </header>
 
 <div class="shell">
  <nav class="tabs" aria-label="סביבות עבודה" id="tabs">
+  <p class="navh">חינם</p>
   <button type="button" data-tab="text" aria-current="page"><i>01</i>טקסט</button>
   <button type="button" data-tab="compare"><i>02</i>השוואה</button>
   <button type="button" data-tab="image"><i>03</i>תמונה</button>
@@ -32,8 +35,12 @@
   <button type="button" data-tab="speech"><i>06</i>דיבור</button>
   <button type="button" data-tab="search"><i>07</i>חיפוש</button>
   <button type="button" data-tab="raw"><i>08</i>JSON חופשי</button>
-  <button type="button" data-tab="models"><i>09</i>מודלים</button>
-  <button type="button" data-tab="bench"><i>10</i>תוצאות</button>
+  <p class="navh">בתשלום</p>
+  <button type="button" data-tab="paid"><i>09</i>מודלים בתשלום</button>
+  <button type="button" data-tab="budget"><i>10</i>תקציב</button>
+  <p class="navh">ידע</p>
+  <button type="button" data-tab="models"><i>11</i>מודלים</button>
+  <button type="button" data-tab="bench"><i>12</i>תוצאות</button>
  </nav>
 
  <main id="main" tabindex="-1">
@@ -153,6 +160,36 @@
    <label>קלט (JSON)<textarea id="rIn" rows="8" class="mono" dir="ltr">{ "messages": [ { "role": "user", "content": "שלום" } ], "max_tokens": 200 }</textarea></label>
    <div class="actions"><button class="go" id="rGo" type="button">הרצה</button><button class="ghost" id="rEx" type="button">דוגמה לסוג המודל</button></div>
    <div id="rOut" class="outs"></div>
+  </section>
+
+  <!-- paid -->
+  <section class="pane" id="p-paid" aria-labelledby="h-paid" hidden>
+   <h1 id="h-paid">מודלים בתשלום</h1>
+   <p class="lead">המודלים המובילים, כולם מאותה יתרה: הקרדיטים של Cloudflare. לפני כל הרצה רואים כמה היא תעלה בערך, ואחריה את המחיר האמיתי מהיומן של Cloudflare.</p>
+   <div class="seg" id="pgSeg" role="tablist"></div>
+   <fieldset class="picks" id="pgPicks"><legend>מודלים</legend></fieldset>
+   <div id="pgForm"></div>
+   <div class="actions"><button class="go" id="pgGo" type="button">הרצה</button><span class="est" id="pgEst"></span></div>
+   <div id="pgOut" class="cols"></div>
+  </section>
+
+  <!-- budget -->
+  <section class="pane" id="p-budget" aria-labelledby="h-budget" hidden>
+   <h1 id="h-budget">תקציב</h1>
+   <p class="lead">כל הרצה בתשלום נרשמת כאן עם המחיר שלה. כשההוצאה מגיעה לתקציב, המעבדה עוצרת הרצות בתשלום.</p>
+   <div class="tiles" id="bgTiles"></div>
+   <div class="bar"><i id="bgBar"></i></div>
+   <div class="row3 bgset">
+    <label>התקציב (דולר)<input id="bgIn" type="number" min="0" step="1"></label>
+    <div class="actions" style="align-self:end"><button class="go" id="bgSave" type="button">שמירה</button><button class="ghost" id="bgReset" type="button">איפוס ההוצאה</button></div>
+    <p class="hint" id="bgMsg" role="status" style="align-self:end"></p>
+   </div>
+   <div class="split">
+    <div><h2>לפי מודל</h2><div class="scroll"><table class="tbl" id="bgModels"></table></div></div>
+    <div><h2>הרצות אחרונות</h2><div class="scroll"><table class="tbl" id="bgRecent"></table></div></div>
+   </div>
+   <h2 style="margin-top:28px">ההגדרה ב-Cloudflare</h2>
+   <ol class="setup" id="bgSetup"></ol>
   </section>
 
   <!-- models -->

@@ -94,17 +94,35 @@ function moved(dir) {
   fs.writeFileSync(path.join(dir, "index.html"), html); fs.writeFileSync(path.join(dir, "404.html"), html);
 }
 // a surface with server functions deploys from its cloud/<surface> folder: wrangler compiles functions/ there and reads the
-// wrangler.toml written here, which declares the Workers AI binding (env.AI) and points at the built static files
-function pagesConfig(s, dir) {
-  const fdir = path.join(root, s.functions);
+// wrangler.toml written here, which declares the Workers AI binding (env.AI), the surface's plain settings ("vars") and its
+// KV namespaces ("kv": created once, found by title afterwards), and points at the built static files
+async function kvNamespace(title) {
+  const base = `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/storage/kv/namespaces`;
+  const headers = { authorization: `Bearer ${process.env.CLOUDFLARE_API_TOKEN}`, "content-type": "application/json" };
+  const list = await fetch(`${base}?per_page=100`, { headers }).then(r => r.json()).catch(() => null);
+  if (!list || !list.success) return { error: list?.errors?.[0]?.message || "no answer" };
+  const hit = list.result.find(n => n.title === title); if (hit) return { id: hit.id };
+  const made = await fetch(base, { method: "POST", headers, body: JSON.stringify({ title }) }).then(r => r.json()).catch(() => null);
+  return made && made.success ? { id: made.result.id, created: true } : { error: made?.errors?.[0]?.message || "not created" };
+}
+async function pagesConfig(s, dir) {
+  const fdir = path.join(root, s.functions), name = project(s);
+  let extra = "";
+  const vars = Object.entries(s.vars || {});
+  if (vars.length) extra += "\n[vars]\n" + vars.map(([k, v]) => `${k} = ${JSON.stringify(String(v))}`).join("\n") + "\n";
+  for (const b of s.kv || []) {
+    const ns = await kvNamespace(`${name}-${b}`);
+    if (ns.id) { extra += `\n[[kv_namespaces]]\nbinding = "${b}"\nid = "${ns.id}"\n`; console.log(`  ${s.name}: KV ${b} ${ns.created ? "created" : "bound"}`); }
+    else console.log(`  ${s.name}: KV ${b} not bound (${ns.error}): the token needs Account · Workers KV Storage · Edit; the surface runs without it`);
+  }
   fs.writeFileSync(path.join(fdir, "wrangler.toml"), `# Written by tools/site-switch.mjs for each deploy; not committed. The binding is the only "key": no token reaches the page.
-name = "${project(s)}"
+name = "${name}"
 pages_build_output_dir = "${path.relative(fdir, dir).replace(/\\/g, "/")}"
 compatibility_date = "2025-09-01"
 
 [ai]
 binding = "AI"
-`);
+${extra}`);
   return fdir;
 }
 // the account ID comes from the environment or from surfaces.json (it is not a secret); the token only from a secret
@@ -137,7 +155,7 @@ if (cmd === "cloudflare") {
     // the project is created once; afterwards the create answers "already exists", which is fine
     run("npx", ["--yes", "wrangler@4", "pages", "project", "create", name, "--production-branch=main"], { stdio: "inherit" });
     // server functions (surfaces.json "functions") ship only while the site is on; closed, the 503 worker answers everything
-    const cwd = state === "on" && s.functions ? pagesConfig(s, dir) : root;
+    const cwd = state === "on" && s.functions ? await pagesConfig(s, dir) : root;
     for (const k of state === "on" ? s.secrets || [] : []) {
       if (!process.env[k]) { console.log(`  ${s.name}: no ${k} secret in the repository yet (its routes stay locked)`); continue; }
       const w = run("npx", ["--yes", "wrangler@4", "pages", "secret", "put", k, `--project-name=${name}`], { cwd, input: process.env[k], stdio: ["pipe", "inherit", "inherit"] });
