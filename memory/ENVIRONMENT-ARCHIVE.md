@@ -11,14 +11,33 @@ Rotated sections: "Shell traps (all hit on this machine)", "Ports, scratch, git"
 automation (added 2026-09-28)", the `npm run safe` bullet from "Non-blocking execution", and the
 long form of "The desktop shortcut is a migration casualty".
 
+## Rotation log
+
+- **2026-10-01** (Space Bunny Free): four more sections moved here out of a 6197-char active file
+  against a 2400-char budget — "Browser binaries are gated by WDAC", "Terminal and Hebrew",
+  "PowerShell 5.1 traps", and "Non-blocking execution". All four are enforced verbatim by
+  `AGENTS.md`; the last two were already duplicated below, and the pointers say so. The four
+  2026-10-01 sections (Cloudflare has no KV permission, the dirty clone, the missing commit guard,
+  PowerShell corrupting a shell-written file) stayed active: they are the facts that stop a repeat
+  of the unenforced-budget incident.
+
 ## Superseded by a stronger file
 
 - The rules now live in `AGENTS.md`: "Ports, scratch, git" is in "Repo conventions" and "Environment
   (Windows 11)"; the "Non-blocking execution" rules are in `AGENTS.md` under the same name, with
   seven numbered items; the `waitUntil: "networkidle"` trap is in `AGENTS.md` ("Browser eyes") and
   in the opencode upstream docs.
-- The forward-slash path fact is a decision, not just a machine fact: see `memory/DECISIONS.md`,
-  2026-09-29, "opencode's canonical path spelling is FORWARD slashes".
+- The four sections rotated on 2026-10-01 are enforced by: `AGENTS.md` "Environment (Windows 11)"
+  (Shell = PowerShell 5.1, no `&&`, `where` is an alias, long-running commands need a timeout, the
+  WDAC/playwright-MCP paragraph); `AGENTS.md` "Non-blocking execution (non-negotiable)", all eight
+  numbered rules; and `AGENTS.md` "Hebrew and RTL" plus `scripts/doctor.ps1`'s terminal check
+  (`BROKEN: legacy conhost … Fix: npm run he`) for the code-page-862 finding. The
+  PowerShell quoting traps are the same class as the 2026-10-01 "PowerShell corrupts a shell-written
+  file" fact, which stayed active.
+- The forward-slash path fact is a decision, not just a machine fact: see
+  `memory/DECISIONS-ARCHIVE.md`, 2026-09-29, "opencode's canonical path spelling is FORWARD
+  slashes" — both that decision and the rehearse-before-write rule it shares were rotated there on
+  2026-10-01.
 
 ---
 
@@ -129,4 +148,81 @@ Enforced by: `AGENTS.md` "Non-blocking execution (non-negotiable)", all seven nu
   `C:\mastercoding\AILGENSITE\scripts\launch-env.ps1`, which no longer existed, and the launcher
   failed silently. Regenerate it with `powershell -File scripts\make-shortcut.ps1` after ANY move.
   The script derives its target from `$PSScriptRoot`, so running the new copy is sufficient.
+
+---
+
+## Browser binaries are gated by WDAC (measured 2026-09-29)
+
+- A WDAC / AppLocker **Enterprise signing** policy (Policy ID
+  `0283ac0f-fff1-49ae-ada1-8a933130cad6`) **blocks**
+  `ms-playwright\chromium-1246\chrome-win64\chrome.exe`. Evidence: the
+  `Microsoft-Windows-CodeIntegrity/Operational` log, event 3077. Node reports only
+  `spawn UNKNOWN`, which is why the MCP "failed to launch" with no visible cause.
+- What works, each verified by a real navigation **and** screenshot: Playwright's
+  default `chromium.launch()` (it resolves to the headless shell), the headless
+  shell explicitly, and the system `msedge.exe`. The MCP is therefore configured
+  `--browser msedge --headless`; `--browser chromium` forces the blocked binary.
+  A config change binds only after an opencode **restart**, so a fix cannot be
+  verified inside the session that makes it. `tools/eyes.mjs` was never affected.
+
+Enforced by: `AGENTS.md` "Environment (Windows 11)", the final bullet — the WDAC policy, the
+unhelpful `spawn UNKNOWN`, the `--browser msedge --headless` configuration, and the fact that the
+MCP only rebinds on an opencode restart. The `playwright` library is unaffected and is the reliable
+path from an agent.
+
+---
+
+## Terminal and Hebrew
+
+- Bash tool = legacy conhost: `Host=ConsoleHost`, `WT_SESSION` empty, code page **862** (Hebrew DOS
+  codepage, not UTF-8); `wt.exe` is installed. The TUI implements no Unicode bidi and no setting
+  changes that, so read Hebrew via `npm run web` (127.0.0.1:4096) or write it to files.
+
+Enforced by: `AGENTS.md` "Hebrew and RTL — the honest state of things" (the TUI paints each terminal
+cell itself and implements no bidi algorithm; use the browser interface) and the live terminal
+check in `scripts/doctor.ps1`, which prints `BROKEN: legacy conhost (Host=ConsoleHost, no
+WT_SESSION) does no Unicode bidi. Hebrew renders left-to-right. Fix: npm run he`.
+
+---
+
+## PowerShell 5.1 traps (all hit on this machine)
+
+- A backtick fence inside a double-quoted string is an escape sequence and breaks the parser - use
+  single quotes for markdown fences.
+- `'$1' + "2026-..."` inside `-replace` is read by .NET as *group 12026* and vanishes - use
+  `${1}` or a capture-free pattern. `"... of $head: history"` parses as drive-qualified `$head:`.
+- Native-command stderr renders as error records under `2>&1`, so a successful command can print
+  red. Verify by content, not by colour.
+
+Enforced by: `AGENTS.md` "Environment (Windows 11)" (Shell is Windows PowerShell 5.1, `&&` does not
+work, prefer full cmdlet names) plus rule 7 in "Non-blocking execution"; and the *current*
+`memory/ENVIRONMENT.md` section "PowerShell 5.1 will silently corrupt a shell-written file
+(measured 2026-10-01)", which is the same bug class in its most expensive form. Note the emphasis
+character here is a plain hyphen; `scripts/doctor.ps1` additionally flags any U+FFFD in a memory
+file, which is how a mangled encoding gets caught.
+
+---
+
+## Non-blocking execution (hard-won, 2026-09-29) — condensed copy rotated 2026-10-01
+
+- The agent shell runner waits for the whole **process tree**, not the foreground command, and
+  freezes while any descendant lives. `detached` + fd stdio + `unref()` is NOT enough - measured.
+- **Only WMI works.** `Invoke-CimMethod Win32_Process Create` parents the process to the WMI host,
+  outside the runner's tree. Verified: 0.19s return, process keeps running. `tools/supervisor.mjs`.
+- `Start-Process npx.cmd -PassThru` returns the **cmd.exe wrapper**, not the server. Resolve the
+  real listener from `netstat -ano`; otherwise `-Stop` orphans the service while appearing to work.
+- `where` is an alias for `Where-Object` in PowerShell 5.1 - scan `$env:PATH` yourself. Never loop
+  on `Invoke-WebRequest -TimeoutSec`: it does not reliably abort a read in flight. Use
+  `net.connect` / `http.get` with `req.destroy()`.
+- Inline `node -e` is unusable here (6 failures): double-quoted strings get mangled by
+  `>`/`$_`/`$var`, single-quoted ones lose inner quotes. Always write a script file.
+- **opencode stores Windows paths with FORWARD slashes** - the backslashes in `opencode.db` came
+  from `tools/migrate-home.mjs`, not from opencode. See `memory/DECISIONS-ARCHIVE.md`, 2026-09-29.
+- Desktop shortcut `AILGEN-Dev-Suite.lnk` embeds the absolute repo path: after any move regenerate
+  it with `scripts/make-shortcut.ps1`, or the launcher fails silently.
+
+Enforced by: `AGENTS.md` "Non-blocking execution (non-negotiable)" — all eight numbered rules
+restate every bullet above, and rule 5 exists because of the `cmd.exe` wrapper finding. The
+longer "Non-blocking execution (hard-won, 2026-09-29) — full text" section above in this file is
+still the fullest form; nothing measured was lost in this rotation, only a duplicate copy.
 

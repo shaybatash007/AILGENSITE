@@ -1,81 +1,61 @@
 # SESSION — handoff note
 
-Last updated: 2026-09-29 | Space Bunny Free
+Last updated: 2026-10-01 | Space Bunny Free
 
 ## Goal reached
 
-The agent environment is hardened, and each claim was verified by running the thing:
-
-- `memory/CORE.md` — the non-negotiable invariants, loaded by opencode core via `opencode.json`
-  `instructions`, so they survive compaction, trimming and plugin failure.
-- `.opencode/plugin/memory.ts` — bounded digest reads (SESSION keeps head **and** the machine-owned
-  block), a trust boundary on the injected block, and additive config floors with an opt-out.
-- `scripts/` — `doctor`, `resume` (truthful STALE/FRESH), `handoff`, `setup`, `he`,
-  `launch-env` / `make-shortcut`, `version-save` / `version-restore`.
-- `.githooks/commit-msg` — rejects an unstamped subject. It lives here, **not** in `pre-commit`,
-  because a pre-commit hook cannot see the subject it is about to write. Proven, then fixed.
-- `tools/` — `eyes`, `supervisor`, `safe-exec`, `canonicalize-paths`, `check-all`, `make-icon`,
-  and five test suites that are all currently green.
-- `.opencode/agent/` — `oracle`, `verifier`, `hebrew-qa`, `archivist`, all with no model pin.
-
-Detail and rationale: `memory/DECISIONS.md` and `memory/DECISIONS-ARCHIVE.md`.
+The AILGEN Lab (`ailgen-lab.pages.dev`) was to enforce a $100 budget over free and paid Workers AI
+models. It enforced nothing.
 
 ## Current state
 
-Everything is on disk and pushed; nothing is mid-edit. The block below is machine-generated — never
-hand-edit inside the markers.
+`site-switch.mjs` bound the budget ledger (KV namespace LEDGER) by LISTING namespaces and matching a
+title, so every deploy needed a token permission the repo lacks: it reads Pages but returns
+"Authentication error" for KV. It printed one line and shipped a lab with no LEDGER binding, so
+`gateBudget()` returned null and no paid call was ever checked. Confirmed in CI by `kv-probe.mjs`, the
+only place the write-only token exists.
 
-**`npm run check` is the one command that answers "is it working".** It probes both live services,
-the real database, the API, all four suites, the desktop shortcut, and what a browser actually
-renders. It currently exits 0 with one KNOWN item.
+Pushed to `origin/claude/cool-fermat-us543u` (749aa78 unless stated): `surfaces.json` gained
+`kvIds`, so a declared id binds with no API call; the pill and tab say "no tracking" — nothing stops an
+over-budget call; the gateway name rendered as the literal `${esc(b.gateway)}`, fixed. kv-probe now
+attempts the KV write even when the read is denied — Read and Edit are independent permissions, so it
+had reported an untested conclusion (0239e50). `npm run test:kv` (26 checks) is green; one asserts
+zero HTTP requests.
 
-**The repo moved to `%USERPROFILE%\projects\AILGENSITE`** and everything that referenced the old
-path is reconciled: the database spellings, the desktop shortcut, and the desktop icon. The move
-caused a real data loss — `tools/migrate-home.mjs` wrote backslashes where opencode writes forward
-slashes — and `tools/canonicalize-paths.mjs` then deleted 14 sessions, 675 messages and 2,825 parts
-before it was caught. All of it was restored additively and re-verified by ID set: 0 missing, 0
-orphans, `integrity_check` ok, shared rows byte-identical. The tool is disarmed and disarmed tools
-are tested by mutation, not by promise (`npm run test:mutate`).
-
-**Two "verifications" that were green while testing nothing** were found and fixed: the commit
-guard read the previous commit's subject, and `tools/test-hooks.sh` installed no hooks at all
-because it set a relative `core.hooksPath` after `cd`. A third: the DB fixture asserted row counts
-only, so a content wipe passed it while the tool printed success.
-
-**Still open, and it is the upstream client bug:** the web UI at :4096 renders "Nothing here yet"
-with an empty Projects list. The data is correct — `/api/session` returns every session and
-`/path` resolves the repo — but the client never binds a project. Driven with a real browser and a
-real click path, it even calls `/project/current` for the *parent* folder. The TUI is the working
-path. Do not attempt a sync; there is none. `npm run check` reports this as KNOWN, not FAIL.
+Do not re-derive: account 9213747898b0eef6d720f037cb32bee4; KV read AND write both "Authentication
+error"; no wrangler login, so Cloudflare is reachable only via CI. $100 of credits costs $105.
+`LAB_PASSCODE` is set; `/api` needs `x-lab-key`. The owner's `projects\AILGENSITE` clone is 46 behind
+and dirty, untouched; work is in `_ailgenlab`.
 
 ## Exact next command
 
 ```
-npm run check
+gh run list --repo shaybatash007/AILGENSITE --limit 3
 ```
+
+**OWNER ACTION, the blocker.** (a) dashboard -> Workers & Pages -> KV -> Create namespace
+`ailgen-lab-LEDGER`, copy its id, commit it into `surfaces.json` as `{ "kvIds": { "LEDGER": "<id>" } }`;
+or (b) add `Account · Workers KV Storage · Edit` to the token, then run the probe with create ticked.
+(a) grants nothing; prefer it. **Do NOT load credits until the ledger is bound** — no ceiling.
 
 ## Open questions
 
-- The homepage's 9 images carry no honesty label (מהשטח / הדמיה / קונספט), against this repo's own
-  rule, while `switching-tv/` honours it on 18 images. Awaiting a decision on the label policy.
-- The brand is transliterated into Hebrew in shipped copy: `Switching` -> `סוויצ׳ינג` (9 places) and
-  `WhatsApp` -> `וואטסאפ` (5, also with a wrong final letter form). **Left as-is on instruction** —
-  it may be the client's own chosen spelling. Fixing it is a content decision, not a bug fix.
-- `small_model` is pinned to `opencode/mimo-v2.6-flash-free`; if the free tier lapses, only title
-  generation degrades.
-- The playwright MCP is configured `--browser msedge --headless` because WDAC blocks the bundled
-  chrome.exe. It needs an opencode restart to bind. See `memory/ENVIRONMENT.md`.
+- $100 lifetime or monthly? No end date on the ledger, so monthly runs unbounded.
+- No credit loaded.
 
 <!-- ailgen:auto:start -->
-<!-- generated by .opencode/plugin/memory.ts — do not hand-edit inside these markers -->
+<!-- generated by scripts/handoff.ps1 + .opencode/plugin/memory.ts - do not hand-edit inside these markers -->
 
-- refreshed: 2026-09-29T10:11:45.518Z
-- model: opencode/space-bunny-free
-- branch: claude/cool-fermat-us543u @ no-commit
-- working tree: 2 changed
+- refreshed: 2026-10-01T17:11:49.1735347Z
+- model: Space Bunny Free
+- branch: claude/cool-fermat-us543u @ 0239e50
+- working tree: 5 changed
 
 ```
-M memory/SESSION.md
- M scripts/resume.ps1
+M memory/DECISIONS-ARCHIVE.md
+ M memory/DECISIONS.md
+ M memory/ENVIRONMENT-ARCHIVE.md
+ M memory/ENVIRONMENT.md
+ M memory/SESSION.md
 ```
 <!-- ailgen:auto:end -->

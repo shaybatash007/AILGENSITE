@@ -1,55 +1,56 @@
-# DECISIONS — architectural decisions that must not be re-litigated
+# DECISIONS — must not be re-litigated
 
-Append-only, newest last. Superseded or now-enforced entries were rotated to
-`memory/DECISIONS-ARCHIVE.md` on 2026-09-28/29, keeping their original stamps and an
-"Enforced by" pointer. 18 archived: read it before re-litigating an older subject. `/archive`.
+Append-only, newest last. Rotated: `memory/DECISIONS-ARCHIVE.md` (`/archive`).
 
 ---
 
-## [2026-09-29 | Space Bunny Free] Decision: opencode's canonical path spelling is FORWARD slashes, and the migration wrote them backwards
+## [2026-10-01 | Space Bunny Free] Decision: the lab's budget ledger is bound by a DECLARED namespace id, never by an API lookup
 
-Decision: the canonical form for a Windows path in `opencode.db` is `C:/Users/shayb/...`, not
-`C:\Users\shayb\...`. `tools/canonicalize-paths.mjs` normalises to forward slashes, and
-`tools/migrate-home.mjs` is the tool that introduced the wrong spelling.
+Decision: `surfaces.json` carries a new `kvIds` field per surface. `tools/site-switch.mjs` uses a
+declared id as-is and calls the KV API only when no id is declared.
 
-Why: measured on `opencode.db.bak_1790663969179`, the pre-migration database, which opencode itself
-had written over days: `project.worktree`, `project_directory.directory` and all 14 sessions were
-`C:/mastercoding/AILGENSITE`. The `Videos` session, also written by opencode, was
-`C:/Users/shayb/Videos`. Every session opencode created after the move is forward-slash too. The
-backslashes appeared only after `migrate-home.mjs` ran. The migration's intent was right and its
-spelling was wrong, so it rewrote 14 rows into a form opencode does not recognise, added a second
-`project_directory` row instead of updating the existing one, and left the Web UI with a project
-that resolved to no sessions. The premise of the first `canonicalize-paths.mjs` - "native Windows
-form means backslashes" - was the exact inverse of the truth.
+Why: the lab's $100 was not enforced, and the failure was silent by construction. Binding the
+LEDGER namespace by listing it and matching a title made every deploy depend on a token
+permission of `Account · Workers KV Storage · Edit`. The repository token has
+`Account · Cloudflare Pages · Edit` only, so the lookup returned `Authentication error`, the deploy
+printed one line and continued, and `gateBudget()` in `cloud/lab/functions/api/run.js` returned
+`null` because `hasLedger(env)` was false - meaning **no paid call was ever checked against the
+ceiling**. Measured, not assumed: `tools/kv-probe.mjs` run in CI (the only place the token
+exists) reports Pages reachable, then `NO · Authentication error` for the KV read AND the KV
+write, so the token carries no KV permission of any kind.
 
-Consequences: the correct repair is the reverse direction. After the fix, 15 sessions share one
-string (`C:/Users/shayb/projects/AILGENSITE`), the duplicate `project_directory` row is gone, and
-`GET /api/session?directory=C:/Users/shayb/projects/AILGENSITE` returns all 15. The Web UI still
-renders "Nothing here yet" - that is the client-side binding bug archived on 2026-09-28, and
-repairing the data did not fix it. Any tool that writes a path into this database must copy
-opencode's spelling, not Windows'.
+A KV namespace id is an identifier, not a secret - the same category as `cloudflare.accountId`,
+which `surfaces.json` already carries for the same reason, and it is already written into
+`cloud/lab/wrangler.toml` on every machine that deploys. Declaring it removes the dependency for
+good, and it is the stronger posture: a token that cannot create namespaces cannot silently delete
+them either. Widening the token instead would grant storage create-and-delete to a token whose
+entire job is uploading a site, so the deploy's failure message names the `surfaces.json` route
+first and says widening the token is deliberately not the suggestion.
 
-## [2026-09-29 | Space Bunny Free] Decision: a database tool rehearses on a copy and proves non-destruction before it opens the real file for writing
+Consequences: (a) `surfaces.json` has `kvIds: {}` and stays empty until a namespace exists - the
+API lookup is still the fallback and nothing regresses; (b) the fix is one dashboard action the
+owner must take (create `ailgen-lab-LEDGER`, copy its id), after which a single commit binds it;
+(c) `npm run test:kv` (26 checks) must stay green - `tools/test-kv-bind.mjs` asserts the real
+`pagesConfig` makes **zero** HTTP requests given a declared id, because that zero is the only
+property that removes the token dependency.
 
-Decision: `tools/canonicalize-paths.mjs` runs its exact transformation against a `VACUUM INTO` copy
-first, and refuses to touch the live file unless the copy produced the expected result. A
-row-count invariant runs over every table, and only a dedupe declared per table may lose a row.
+## [2026-10-01 | Space Bunny Free] Decision: the lab says "no tracking" when it cannot enforce, and a diagnostic never reports an untested conclusion
 
-Why: the first version of this tool destroyed 14 sessions, 675 messages and 2,825 parts. Its
-dedupe step was `DELETE FROM session WHERE directory = ? AND directory != ?` - the second predicate
-excludes exactly what the first one selects, so it was true for every row it matched and it deleted
-the entire non-canonical spelling. The `UPDATE` that followed matched zero rows and reported
-success. The run that was mid-write then started throwing `Failed query: insert into "part"`, which
-is how the loss was finally noticed, several sessions later. Three things would each have caught it
-and none were there: no rehearsal, no row-count assertion, and a dedupe predicate that was never
-executed against a fixture.
+Decision: without a ledger the budget pill reads `תקציב: אין מעקב` and the tab states plainly that
+nothing stops an over-budget call. Separately, `kv-probe` attempts the KV **write** whenever a
+create is requested, regardless of what the read returned.
 
-Consequences: the rehearsal is not optional decoration - it is what makes the live write safe to
-attempt, and it also caught a wrong `canon()` in the rewritten version, before it reached the real
-database. A 24-check fixture at `tools/test-canonicalize.mjs` (`npm run test:canon`) reproduces the
-live database's exact shape, including the duplicate `project_directory` row and a path-in-primary-key
-collision that must be refused. The general rule: a tool that writes to a store holding irreplaceable
-history gets a copy, an assertion, and a fixture, in that order. Recovery, when it is needed, is
-additive - `INSERT OR IGNORE` from a pre-deletion snapshot, which is how the 14 sessions were
-restored from `~/.local/share/opencode/backups/opencode-2026-09-29T06-47-55-166Z.db` — the opencode
-data directory, NOT the repo, which has no `backups/`.
+Why, both halves measured. (a) The interface implied a ceiling it could not enforce: with no
+ledger `pill()` was never called, so the button kept its placeholder text, and the budget tab
+promised the ledger would work "after step 5" - a step that does not exist in that document. A
+budget surface that under-reports its own enforcement is worse than no budget surface, because the
+user reads "$0.00 of $100" and concludes there is nothing to worry about. (b) Cloudflare grants
+Workers KV Storage `· Read` and `· Edit` independently, so "cannot list" is not evidence about
+"cannot create" - yet the probe exited on the failed read before ever trying the write, so it
+reported a conclusion it had not tested.
+
+Consequences: the general rule is that a diagnostic which cannot test something must say it did not
+test it, and a control surface must report the state of its own enforcement rather than the state
+it would like to have. Reading the rendered page also found a bug the source did not show: the
+gateway name appeared as the literal text `${esc(b.gateway)}`, because those setup strings are
+concatenated at runtime instead of interpolated as one template literal.
