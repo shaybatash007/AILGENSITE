@@ -7,7 +7,7 @@
 //   node imagegen.mjs --project projects/<slug> --concept field --ref a.png,b.png    reference images (composition, light, colour swatch)
 //   node imagegen.mjs ... --use fal:fal-ai/flux-2-pro                               one route, explicitly
 // Providers and their keys (environment variables, set in the environment settings, never in chat or code):
-//   cloudflare  CLOUDFLARE_API_TOKEN (+ the account ID, from the environment or surfaces.json)   Workers AI; 10,000 neurons a day free:
+//   cloudflare  CLOUDFLARE_API_TOKEN or an API credential for api.cloudflare.com (+ the account ID, from the environment or surfaces.json)   Workers AI; 10,000 neurons a day free:
 //               FLUX.2 [klein] 4B (~95 images a day), FLUX.2 [dev] (best free quality, ~2 a day), FLUX.2 [klein] 9B, FLUX.1 [schnell]
 //   fal         FAL_KEY                                        one key for Nano Banana Pro, FLUX.2 [pro], Seedream 4.5, Veo 3.1, Kling 3.0
 //   gemini      GEMINI_API_KEY (or GOOGLE_API_KEY)             Gemini 3 Pro Image / 3.1 Flash Image, Veo 3.1 (billing required)
@@ -22,19 +22,20 @@ import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 import { spawnSync } from 'child_process';
-import { parseArgs, repoRoot, ensureProxyEnv } from './lib.mjs';
+import { parseArgs, repoRoot, ensureProxyEnv, cloudflareAuth, cloudflareReach } from './lib.mjs';
 if (ensureProxyEnv()) process.exit(0);
 const a = parseArgs(), ROOT = repoRoot();
 if (!a.project) { console.error('usage: node imagegen.mjs --project projects/<slug> (--probe | --concept <id|all>) [--ratio r] [--n k] [--tier draft|final] [--bakeoff] [--use provider:model] [--ref a.png,b.png] [--brand key] [--dry]'); process.exit(2); }
 const PROJ = path.resolve(ROOT, a.project), VIS = path.join(PROJ, 'visual');
 const CFG = JSON.parse(fs.readFileSync(path.join(VIS, 'concepts.json'), 'utf8'));
 // the Cloudflare account ID is not a secret: it may come from surfaces.json at the repository root; the token only from the environment
+// (the variable, or a credential the environment adds to requests for api.cloudflare.com: lib.mjs cloudflareAuth)
 try { const sj = JSON.parse(fs.readFileSync(path.join(ROOT, 'surfaces.json'), 'utf8')); if (!process.env.CLOUDFLARE_ACCOUNT_ID && sj.cloudflare && sj.cloudflare.accountId) process.env.CLOUDFLARE_ACCOUNT_ID = sj.cloudflare.accountId; } catch (_) {}
 const env = process.env, has = {
-  cloudflare: !!((env.CLOUDFLARE_ACCOUNT_ID || env.CF_ACCOUNT_ID) && (env.CLOUDFLARE_API_TOKEN || env.CF_API_TOKEN)),
+  cloudflare: await cloudflareReach(env.CLOUDFLARE_ACCOUNT_ID || env.CF_ACCOUNT_ID),
   fal: !!(env.FAL_KEY || env.FAL_API_KEY), gemini: !!(env.GEMINI_API_KEY || env.GOOGLE_API_KEY), openai: !!env.OPENAI_API_KEY, stub: true,
 };
-const KEYVAR = { cloudflare: 'CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN', fal: 'FAL_KEY', gemini: 'GEMINI_API_KEY', openai: 'OPENAI_API_KEY' };
+const KEYVAR = { cloudflare: 'CLOUDFLARE_API_TOKEN, or an API credential for api.cloudflare.com in the environment settings', fal: 'FAL_KEY', gemini: 'GEMINI_API_KEY', openai: 'OPENAI_API_KEY' };
 const GL = 'https://generativelanguage.googleapis.com/v1beta';
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const hash = s => crypto.createHash('sha256').update(s).digest('hex').slice(0, 12);
@@ -111,8 +112,8 @@ if (a.probe) {
   console.log(rows.join('\n'));
   const out = { at: new Date().toISOString(), keys: Object.fromEntries(Object.entries(has).filter(([k]) => k !== 'stub')), models: {} };
   if (has.cloudflare) {
-    const acc = env.CLOUDFLARE_ACCOUNT_ID || env.CF_ACCOUNT_ID, tok = env.CLOUDFLARE_API_TOKEN || env.CF_API_TOKEN;
-    try { const j = await call(`https://api.cloudflare.com/client/v4/accounts/${acc}/ai/models/search?search=flux&per_page=50`, { headers: { authorization: `Bearer ${tok}` } }, 'cloudflare models'); out.models.cloudflare = (j.result || []).map(m => m.name); console.log('  cloudflare:', out.models.cloudflare.join(', ')); }
+    const acc = env.CLOUDFLARE_ACCOUNT_ID || env.CF_ACCOUNT_ID;
+    try { const j = await call(`https://api.cloudflare.com/client/v4/accounts/${acc}/ai/models/search?search=flux&per_page=50`, { headers: cloudflareAuth() }, 'cloudflare models'); out.models.cloudflare = (j.result || []).map(m => m.name); console.log('  cloudflare:', out.models.cloudflare.join(', ')); }
     catch (e) { console.log('  cloudflare:', e.message.split('\n')[0]); }
   }
   if (has.gemini) {
@@ -160,13 +161,13 @@ async function cloudflare(model, prompt, ratio) {
   if (/flux-1-schnell/.test(model)) {
     const body = { prompt, steps: 4 };
     if (a.dry) return { dry: { url, body } };
-    const j = await call(url, { method: 'POST', headers: { authorization: `Bearer ${env.CLOUDFLARE_API_TOKEN || env.CF_API_TOKEN}`, 'content-type': 'application/json' }, body: JSON.stringify(body) }, model);
+    const j = await call(url, { method: 'POST', headers: { ...cloudflareAuth(), 'content-type': 'application/json' }, body: JSON.stringify(body) }, model);
     const b64 = j.result && j.result.image; return b64 ? { bytes: Buffer.from(b64, 'base64'), mime: 'image/jpeg' } : { blocked: JSON.stringify(j.errors || j).slice(0, 200) };
   }
   const form = new FormData(); form.append('prompt', prompt); form.append('width', String(w)); form.append('height', String(h));
   REFS.slice(0, 4).forEach((f, i) => form.append('input_image_' + i, new Blob([refData(f, 511)], { type: 'image/jpeg' }), 'ref' + i + '.jpg'));
   if (a.dry) return { dry: { url, body: { multipart: { prompt: prompt.slice(0, 120) + '…', width: w, height: h, refs: REFS.map(f => path.basename(f)) } } } };
-  const j = await call(url, { method: 'POST', headers: { authorization: `Bearer ${env.CLOUDFLARE_API_TOKEN || env.CF_API_TOKEN}` }, body: form }, model);
+  const j = await call(url, { method: 'POST', headers: cloudflareAuth(), body: form }, model);
   const b64 = (j.result && j.result.image) || j.image; if (!b64) return { blocked: JSON.stringify(j.errors || j).slice(0, 200) };
   return { bytes: Buffer.from(b64, 'base64'), mime: 'image/png' };
 }

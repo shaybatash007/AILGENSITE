@@ -153,7 +153,7 @@ generated pixels (real cutouts on one stage); the mascot: drawn in code; share c
 
 ## What the owner provides
 
-- `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` (Workers AI permission): free drafts.
+- Cloudflare (Workers AI Read + Edit token): free drafts. Best stored as an API credential in the cloud environment's settings (type Bearer, allowed website `api.cloudflare.com`): the environment adds it to each request and the scripts never see it. `CLOUDFLARE_API_TOKEN` as a variable works too. The account ID comes from `surfaces.json`.
 - `FAL_KEY`: one key for the routed finals and videos; $15–20 of prepaid credit covers a site with margin.
 - Optional: `GEMINI_API_KEY` (billing enabled), `OPENAI_API_KEY`. Keys are environment variables of the cloud environment,
   never pasted into a chat or committed.

@@ -56,7 +56,7 @@ winget install ffmpeg                        # רק לסרטים (ב-Mac: brew i
 ```
 
 ואז, כשהאתר רץ: `npm run eden:qa` (בדיקת האתר המלאה). ב-Windows הכלים קוראים ל-`python`, ואפשר לכוון אחר עם משתנה `PYTHON`.
-מפתחות ליצירת תמונות (`CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN`, `FAL_KEY`) הם משתני סביבה, לא קבצים בריפו.
+מפתחות ליצירת תמונות הם הגדרות של סביבת הענן, לא קבצים בריפו. Cloudflare: טוקן Workers AI כ-API credential (סוג Bearer, אתר מורשה `api.cloudflare.com`), או המשתנה `CLOUDFLARE_API_TOKEN`. fal: המשתנה `FAL_KEY`.
 במחשב המקומי, ה-hook של הריפו דורש שכל commit יתחיל ב-`[Model: ...]`. ה-commits מהענן נוצרו בלי ה-hook.
 
 ## העלאה לאוויר: המתג

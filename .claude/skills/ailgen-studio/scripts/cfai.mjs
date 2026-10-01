@@ -9,28 +9,31 @@
 //   node cfai.mjs --run @cf/baai/bge-m3 --text "one|two|three"                                                  (embeddings; | splits)
 //   node cfai.mjs --run @cf/openai/whisper-large-v3-turbo --audio clip.mp3                                       (speech to text)
 //   node cfai.mjs --run <model> --json '{"any":"input"}' [--out file]                                           (any model, raw input)
-// Keys: CLOUDFLARE_API_TOKEN in the environment (a token with Workers AI Read + Edit; never in chat or code). The account
+// Keys: a token with Workers AI Read + Edit, never in chat or code: an API credential in the cloud environment's settings
+// (Bearer, allowed website api.cloudflare.com; the environment adds it to each request), or CLOUDFLARE_API_TOKEN. The account
 // ID is not a secret: CLOUDFLARE_ACCOUNT_ID, or cloudflare.accountId in surfaces.json at the repository root.
 // Cost: 10,000 neurons a day are free on every plan (they reset at 00:00 UTC); above that $0.011 per 1,000 neurons on Workers
 // Paid, and on the Free plan the calls fail until the reset. A 429 or 5xx waits and retries (2, 4, 8 s), then stops.
 // Cloudflare does not train models on what is sent (developers.cloudflare.com/workers-ai/platform/data-usage/).
 import fs from 'fs';
 import path from 'path';
-import { parseArgs, repoRoot, ensureProxyEnv } from './lib.mjs';
+import { parseArgs, repoRoot, ensureProxyEnv, cloudflareAuth } from './lib.mjs';
 if (ensureProxyEnv()) process.exit(0);
 const a = parseArgs(), ROOT = repoRoot(), env = process.env;
 try { const sj = JSON.parse(fs.readFileSync(path.join(ROOT, 'surfaces.json'), 'utf8')); if (!env.CLOUDFLARE_ACCOUNT_ID && sj.cloudflare?.accountId) env.CLOUDFLARE_ACCOUNT_ID = sj.cloudflare.accountId; } catch (_) {}
 const ACC = env.CLOUDFLARE_ACCOUNT_ID || env.CF_ACCOUNT_ID, TOK = env.CLOUDFLARE_API_TOKEN || env.CF_API_TOKEN;
 const API = `https://api.cloudflare.com/client/v4/accounts/${ACC}`;
-if (!TOK && !a.dry) { console.error('  no CLOUDFLARE_API_TOKEN in this environment: add it in the environment settings (a token with Workers AI Read + Edit), then start a new session'); process.exit(2); }
+const HELP = 'Cloudflare refused the request: add a token with Workers AI Read + Edit in the environment settings (API credential: Bearer, website api.cloudflare.com), then start a new session';
+process.on('uncaughtException', e => { console.error('  ' + (e && e.message || e)); process.exit(1); });
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 async function call(url, init = {}) {
   for (let i = 0; ; i++) {
-    const r = await fetch(url, { ...init, headers: { authorization: `Bearer ${TOK}`, ...(init.headers || {}) } });
+    const r = await fetch(url, { ...init, headers: { ...cloudflareAuth(), ...(init.headers || {}) } });
     if ((r.status === 429 || r.status >= 500) && i < 3) { await sleep(2000 * 2 ** i); continue; }
     const type = r.headers.get('content-type') || '';
     if (!type.includes('json')) { if (!r.ok) throw new Error(r.status + ' ' + (await r.text()).slice(0, 300)); return { binary: Buffer.from(await r.arrayBuffer()), type }; }
     const j = await r.json();
+    if (!TOK && (r.status === 401 || r.status === 403 || (j.errors || []).some(e => [1001, 9106, 9109, 10000].includes(e.code)))) throw new Error(HELP);
     if (!r.ok || j.success === false) throw new Error(r.status + ' ' + JSON.stringify(j.errors || j).slice(0, 400));
     return j;
   }

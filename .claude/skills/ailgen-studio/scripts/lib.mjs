@@ -70,6 +70,19 @@ export async function routeThroughNode(ctx) {
  * Parse `--key value` and `--flag` arguments. Positional arguments land in `_`.
  * @param {string[]} argv
  */
+/**
+ * Cloudflare's key reaches a script one of two ways: CLOUDFLARE_API_TOKEN in the environment, or an API credential
+ * stored in the cloud environment's settings for api.cloudflare.com, which the environment adds to each request itself
+ * (the script never sees it). Without the variable no Authorization header is sent, so the stored one is used.
+ */
+export const cloudflareAuth = () => { const t = process.env.CLOUDFLARE_API_TOKEN || process.env.CF_API_TOKEN; return t ? { authorization: `Bearer ${t}` } : {}; };
+/** Does the account answer Workers AI? With the variable set, assume yes; otherwise ask once (a free model listing). */
+export async function cloudflareReach(acc) {
+  if (!acc) return false;
+  if (process.env.CLOUDFLARE_API_TOKEN || process.env.CF_API_TOKEN) return true;
+  try { return (await fetch(`https://api.cloudflare.com/client/v4/accounts/${acc}/ai/models/search?per_page=1`, { signal: AbortSignal.timeout(10000) })).ok; } catch { return false; }
+}
+
 export function parseArgs(argv = process.argv.slice(2)) {
   const out = { _: [] };
   for (let i = 0; i < argv.length; i++) {
