@@ -99,6 +99,9 @@ export async function same(a, b) {
   return d === 0;
 }
 
+// why a route could not answer, in one word, so the owner can tell a spent daily allocation from a missing binding
+export const why = e => { const m = String((e && e.message) || e || ''); return /allocation|neurons|429/i.test(m) ? 'quota' : /5035|Workers Paid/i.test(m) ? 'paid-only' : 'model'; };
+
 export async function readJSON(request, maxBytes = 64000) {
   const t = await request.text();
   if (t.length > maxBytes) throw new Error('too large');
