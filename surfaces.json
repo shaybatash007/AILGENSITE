@@ -90,6 +90,8 @@
       "kv": [
         "LEDGER"
       ],
+      "kvIds": {},
+      "$kvIds": "A KV namespace id per binding, filled in once and committed. It is an identifier, not a secret - the same category as cloudflare.accountId above - and it is already written into cloud/lab/wrangler.toml on every machine that deploys. Declaring it here means tools/site-switch.mjs binds without calling the API, so the deploy needs no Workers KV Storage permission and cannot silently ship a lab with no budget ceiling. Measured reason: binding by lookup made every deploy depend on that permission, the repository token does not have it, and the deploy printed 'KV LEDGER not bound' while continuing - which left gateBudget() returning null and no paid call checked against the ceiling. Until an id is here the API lookup remains the fallback, and the deploy log names this field as the fix that does not involve the token.",
       "$budget": "The lab's money: paid models (and free ones once the daily allocation is spent, when the owner allows it) go through the AI Gateway LAB_GATEWAY with Unified Billing, paid from prepaid credits. The KV namespace LEDGER records each call's cost (cloud/lab/ledger.js); LAB_BUDGET_USD is the starting budget, changed later from the lab."
     }
   ],

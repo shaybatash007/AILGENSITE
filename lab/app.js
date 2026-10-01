@@ -28,10 +28,21 @@ async function call(model, input, kind, route) {
   return j;
 }
 const money = (v, d) => '$' + (+v || 0).toFixed(d ?? ((+v || 0) && (+v || 0) < 0.01 ? 4 : 2));
+// The pill is the only always-visible statement about the ceiling, so it must never imply
+// one that does not exist. Without the LEDGER namespace the server cannot know what was
+// spent, so "$0.00 of $100" would be a lie told by omission: the number would be right
+// and the meaning completely wrong. An unreadable ledger reads as "no ceiling", not "free".
 function pill(b) {
   BUDGET = b; const p = $('#budgetPill'), used = b.spent / (b.budget || 1);
   p.textContent = `${money(b.spent, 2)} מתוך ${money(b.budget, b.budget < 10 ? 2 : 0)}`;
   p.classList.toggle('warn', used >= .8 && used < 1); p.classList.toggle('out', used >= 1);
+}
+// no ledger -> the pill says so, in the same place it would otherwise show a number
+function pillOff(gateway) {
+  BUDGET = null; const p = $('#budgetPill');
+  p.textContent = 'תקציב: אין מעקב';
+  p.classList.add('warn'); p.classList.remove('out');
+  p.title = `היומן המרכזי (KV) לא מחובר, ולכן המעבדה לא יודעת כמה נגרע${gateway ? ` מ-${gateway}` : ''}. כל הרצה עדיין מדווחת את המחיר שלה, אבל אין עצירה בתקרה. הפרטים בטאב "תקציב".`;
 }
 $('#fb').checked = FALLBACK; $('#fb').onchange = e => { FALLBACK = e.target.checked; store.set('labFallback', FALLBACK ? '1' : '0'); };
 $('#budgetPill').onclick = () => { show('budget'); renderBudget(); };
@@ -376,24 +387,31 @@ async function budgetCall(body) {
 }
 async function renderBudget(quiet) {
   const b = await budgetCall(); if (!b) return;
-  if (b.ledger) pill({ budget: b.budget, spent: b.spent });
+  if (b.ledger) pill({ budget: b.budget, spent: b.spent }); else pillOff(b.gateway);
   if (quiet && $('#p-budget').hidden) return;
   const used = b.ledger ? b.spent / (b.budget || 1) : 0, cls = used >= 1 ? 'out' : used >= .8 ? 'warn' : '';
-  $('#bgTiles').innerHTML = b.ledger ? `<div><span>הוצאה</span><b>${money(b.spent, 2)}</b></div><div><span>נשאר</span><b>${money(Math.max(0, b.left), 2)}</b></div><div><span>תקציב</span><b>${money(b.budget, 0)}</b></div><div><span>הרצות בתשלום · חינם היום</span><b>${b.calls} · ${(b.freeToday || 0).toLocaleString('he-IL')}</b></div>` : `<div style="grid-column:1/-1"><span>היומן המרכזי עוד לא מחובר</span><b style="font-size:1.1rem">כל הרצה עדיין מציגה את המחיר שלה; הסיכום והעצירה בתקציב יפעלו אחרי שלב 5 למטה</b></div>`;
+  $('#bgTiles').innerHTML = b.ledger ? `<div><span>הוצאה</span><b>${money(b.spent, 2)}</b></div><div><span>נשאר</span><b>${money(Math.max(0, b.left), 2)}</b></div><div><span>תקציב</span><b>${money(b.budget, 0)}</b></div><div><span>הרצות בתשלום · חינם היום</span><b>${b.calls} · ${(b.freeToday || 0).toLocaleString('he-IL')}</b></div>` : `<div style="grid-column:1/-1"><span>אין מעקב אחרי התקציב</span><b style="font-size:1.05rem">היומן המרכזי (KV) לא מחובר, ולכן המערכת אינה יודעת כמה כבר נגרע ואין לה דרך לעצור הרצה שתחרוג מהתקציב. כל הרצה עדיין מציגה את המחיר האמיתי שלה — מה שחסר הוא הסכימה המצטברת, לא המחיר.</b></div>`;
   $('#bgBar').style.width = Math.min(100, used * 100) + '%'; $('#bgBar').className = cls;
   if (document.activeElement !== $('#bgIn')) $('#bgIn').value = b.budget;
   $('#bgModels').innerHTML = '<thead><tr><th>מודל</th><th>הרצות</th><th>עלות</th></tr></thead><tbody>' + ((b.byModel || []).map(m => `<tr><td class="m">${esc(short(m.model))}</td><td>${m.calls}</td><td class="n">${money(m.usd)}</td></tr>`).join('') || '<tr><td colspan="3">עוד אין הרצות בתשלום</td></tr>') + '</tbody>';
   $('#bgRecent').innerHTML = '<thead><tr><th>מתי</th><th>מודל</th><th>עלות</th><th>מקור</th></tr></thead><tbody>' + ((b.recent || []).map(c => `<tr><td>${new Date(c.at).toLocaleString('he-IL', { day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' })}</td><td class="m">${esc(short(c.model || ''))}</td><td class="n">${money(c.usd)}</td><td>${c.src === 'gateway' ? 'יומן' : 'הערכה'}</td></tr>`).join('') || '<tr><td colspan="4">עוד אין הרצות בתשלום</td></tr>') + '</tbody>';
   const D = 'https://dash.cloudflare.com/?to=/:account/ai/ai-gateway';
+  // The gateway name is interpolated here, so it must be escaped HERE. Building these
+  // strings with a template literal that already contains ${esc(...)} inside a literal
+  // HTML fragment works only when that fragment is itself interpolated - and these are
+  // concatenated at runtime, so the braces stayed visible as text on the page.
+  const gw = esc(b.gateway);
   $('#bgSetup').innerHTML = [
-    `ליצור Gateway בשם <bdi dir="ltr"><b>${esc(b.gateway)}</b></bdi>: <a href="${D}" target="_blank" rel="noopener">AI ← AI Gateway</a> ← Create Gateway, ובשדה <b>Workers AI Billing</b> לבחור <b>Unified billing</b>.`,
+    `ליצור Gateway בשם <bdi dir="ltr"><b>${gw}</b></bdi>: <a href="${D}" target="_blank" rel="noopener">AI ← AI Gateway</a> ← Create Gateway, ובשדה <b>Workers AI Billing</b> לבחור <b>Unified billing</b>.`,
     `לטעון קרדיטים: באותו עמוד, בכרטיס <b>Credits Available</b> ← Manage ← Top-up credits. ‏$100 של קרדיטים עולים $105 (עמלה של 5%). לא להפעיל Auto top-up, כדי ש-$100 יהיו תקרה אמיתית.`,
-    `תקרה בצד של Cloudflare: Credits Available ← Manage ← spend limit של $100 לחשבון. אפשר גם כלל ל-Gateway עצמו: ${esc(b.gateway)} ← Settings ← Spend limits (למשל $10 ליום).`,
+    `תקרה בצד של Cloudflare: Credits Available ← Manage ← spend limit של $100 לחשבון. אפשר גם כלל ל-Gateway עצמו: <bdi dir="ltr">${gw}</bdi> ← Settings ← Spend limits (למשל $10 ליום).`,
     `התקציב של המעבדה: השדה למעלה (ברירת המחדל $100). המעבדה עוצרת הרצה בתשלום שתעבור אותו.`,
-    `היומן המרכזי: ${b.ledger ? '<b class="ok">מחובר</b>' : '<b class="no">עוד לא מחובר</b>. ב-Cloudflare: My Profile ← API Tokens ← הטוקן של הפרסום ← Edit ← להוסיף הרשאה Account · <b>Workers KV Storage</b> · Edit ← Update. הערך של הטוקן לא משתנה, ובפרסום הבא היומן נוצר לבד.'}`,
+    b.ledger
+      ? `היומן המרכזי: <b class="ok">מחובר</b>. כל הרצה בתשלום נרשמת, והמעבדה עוצרת הרצה שתחרוג מהתקציב.`
+      : `היומן המרכזי: <b class="no">עוד לא מחובר</b> — וזו הסיבה שאין עצירה בתקרה. שתי דרכים, והראשונה עדיפה בהרבה:<br><b>א׳ (ללא טקנים):</b> ב-Cloudflare ← Workers &amp; Pages ← KV → צור namespace בשם <bdi dir="ltr">${gw}-LEDGER</bdi>, העתק את המזהה שלו, והוסף ל־<code>surfaces.json</code> בשדה <code>"kvIds"</code> תחת המעטפת <code>lab</code>:<br><code dir="ltr">{ "kvIds": { "LEDGER": "&lt;המזהה&gt;" } }</code><br>הפרסום הבא יקשור אותו. המזהה אינו סוד — הוא כבר נכתב בכל <code>wrangler.toml</code>.<br><b>ב׳ (עם הטוקן):</b> Actions ← <b>KV probe</b> ← Run workflow, וסמן את "create". דורש להוסיף לטוקן הפרסום את <code>Account · Workers KV Storage · Edit</code>.`,
   ].map(x => `<li>${x}</li>`).join('');
 }
-$('#bgSave').onclick = async () => { const b = await budgetCall({ set: +$('#bgIn').value }); $('#bgMsg').textContent = b && b.ledger ? 'נשמר.' : 'אי אפשר לשמור בלי היומן המרכזי (שלב 5).'; renderBudget(); };
+$('#bgSave').onclick = async () => { const b = await budgetCall({ set: +$('#bgIn').value }); $('#bgMsg').textContent = b && b.ledger ? 'נשמר.' : 'לא ניתן לשמור: אין היכן לשמור — היומן המרכזי עדיין לא מחובר (הוראות בתחתית הטאב).'; renderBudget(); };
 $('#bgReset').onclick = async () => { if (!confirm('לאפס את ההוצאה ולהתחיל ספירה חדשה? ההרצות הקודמות נשמרות כהיסטוריה.')) return; await budgetCall({ reset: true }); $('#bgMsg').textContent = 'ההוצאה אופסה.'; renderBudget(); };
 
 /* ---------- start ---------- */

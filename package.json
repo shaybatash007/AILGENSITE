@@ -43,7 +43,9 @@
     "cloud:context": "node cloud/context.mjs edencosmetic",
     "cloud:lotti": "node cloud/dev.mjs call edencosmetic api/lotti '{\"messages\":[{\"role\":\"user\",\"content\":\"מה כדאי למתחילה?\"}]}'",
     "lab:catalog": "node cloud/lab/catalog.mjs",
-    "lab:dev": "node cloud/dev.mjs serve lab --port 8791 --key test"
+    "lab:dev": "node cloud/dev.mjs serve lab --port 8791 --key test",
+    "lab:kv": "node tools/kv-probe.mjs",
+    "test:kv": "node tools/test-kv-declared.mjs && node tools/test-kv-bind.mjs"
   },
   "devDependencies": {
     "@playwright/mcp": "^0.0.82",

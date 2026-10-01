@@ -96,14 +96,21 @@ function moved(dir) {
 // a surface with server functions deploys from its cloud/<surface> folder: wrangler compiles functions/ there and reads the
 // wrangler.toml written here, which declares the Workers AI binding (env.AI), the surface's plain settings ("vars") and its
 // KV namespaces ("kv": created once, found by title afterwards), and points at the built static files
-async function kvNamespace(title) {
+// A KV namespace id is an identifier, not a secret - it is written into wrangler.toml on
+// every machine that deploys, and surfaces.json already carries the account id for the
+// same reason. A declared id is used as-is, so the deploy needs no KV permission; only
+// a surface with no declared id falls back to asking the API. Binding by lookup made
+// every deploy depend on Workers KV Storage · Edit, and a token without it silently
+// deployed the lab with no budget ceiling (see the header of this change).
+async function kvNamespace(title, declared) {
+  if (declared) return { id: declared, source: 'surfaces.json' };
   const base = `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/storage/kv/namespaces`;
   const headers = { authorization: `Bearer ${process.env.CLOUDFLARE_API_TOKEN}`, "content-type": "application/json" };
   const list = await fetch(`${base}?per_page=100`, { headers }).then(r => r.json()).catch(() => null);
   if (!list || !list.success) return { error: list?.errors?.[0]?.message || "no answer" };
-  const hit = list.result.find(n => n.title === title); if (hit) return { id: hit.id };
+  const hit = list.result.find(n => n.title === title); if (hit) return { id: hit.id, source: 'api' };
   const made = await fetch(base, { method: "POST", headers, body: JSON.stringify({ title }) }).then(r => r.json()).catch(() => null);
-  return made && made.success ? { id: made.result.id, created: true } : { error: made?.errors?.[0]?.message || "not created" };
+  return made && made.success ? { id: made.result.id, created: true, source: 'api' } : { error: made?.errors?.[0]?.message || "not created" };
 }
 async function pagesConfig(s, dir) {
   const fdir = path.join(root, s.functions), name = project(s);
@@ -111,9 +118,9 @@ async function pagesConfig(s, dir) {
   const vars = Object.entries(s.vars || {});
   if (vars.length) extra += "\n[vars]\n" + vars.map(([k, v]) => `${k} = ${JSON.stringify(String(v))}`).join("\n") + "\n";
   for (const b of s.kv || []) {
-    const ns = await kvNamespace(`${name}-${b}`);
-    if (ns.id) { extra += `\n[[kv_namespaces]]\nbinding = "${b}"\nid = "${ns.id}"\n`; console.log(`  ${s.name}: KV ${b} ${ns.created ? "created" : "bound"}`); }
-    else console.log(`  ${s.name}: KV ${b} not bound (${ns.error}): the token needs Account · Workers KV Storage · Edit; the surface runs without it`);
+    const ns = await kvNamespace(`${name}-${b}`, s.kvIds && s.kvIds[b]);
+    if (ns.id) { extra += `\n[[kv_namespaces]]\nbinding = "${b}"\nid = "${ns.id}"\n`; console.log(`  ${s.name}: KV ${b} ${ns.created ? "created" : "bound"}${ns.source ? ` (${ns.source})` : ""}`); }
+    else console.log(`  ${s.name}: KV ${b} NOT BOUND (${ns.error})\n      The surface is running WITHOUT its budget ceiling.\n      Fix, in order of preference:\n        1. add  "kvIds": { "${b}": "<namespace id>" }  to this surface in surfaces.json\n           (the id is in the Cloudflare dashboard: Workers & Pages -> KV -> this namespace)\n        2. or run  node tools/kv-probe.mjs  in CI (Actions -> KV probe) with "create" ticked\n      Widening the deploy token is deliberately NOT suggested: it can create and delete\n      storage, and its only job is uploading a site.`);
   }
   fs.writeFileSync(path.join(fdir, "wrangler.toml"), `# Written by tools/site-switch.mjs for each deploy; not committed. The binding is the only "key": no token reaches the page.
 name = "${name}"
