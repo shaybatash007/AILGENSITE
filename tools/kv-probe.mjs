@@ -20,11 +20,25 @@
 //
 // Exit codes: 0 healthy, 1 the token cannot reach the KV API, 2 a usage error.
 
-const API = process.env.CLOUDFLARE_ACCOUNT_ID
-  ? `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}`
-  : null;
+// The account id is an identifier, not a secret: surfaces.json carries it, and so
+// does every dashboard URL. The pages workflow reads it from there and passes it
+// in the environment; this script falls back to the file so that running it by
+// hand never depends on a repository secret that does not exist.
+function accountId() {
+  if (process.env.CLOUDFLARE_ACCOUNT_ID) return process.env.CLOUDFLARE_ACCOUNT_ID;
+  try {
+    const j = JSON.parse(fs.readFileSync(path.join(root, 'surfaces.json'), 'utf8'));
+    return j?.cloudflare?.accountId || null;
+  } catch { return null; }
+}
+const root = path.join(import.meta.dirname, '..');
+const ACC = accountId();
+const API = ACC ? `https://api.cloudflare.com/client/v4/accounts/${ACC}` : null;
 const TITLE = process.env.TITLE || 'ailgen-lab-LEDGER';
 const CREATE = process.env.CREATE === '1' || process.env.CREATE === 'true';
+
+import fs from 'node:fs';
+import path from 'node:path';
 
 const say = (...a) => console.log(...a);
 const rule = (t) => say(`\n── ${t} ${'─'.repeat(Math.max(0, 62 - t.length))}`);
@@ -47,15 +61,13 @@ function firstError(body) {
 
 async function main() {
   say('AILGEN · KV probe');
-  say(`  account   ${API ? API.split('/accounts/')[1] : '(CLOUDFLARE_ACCOUNT_ID is not set)'}`);
+  say(`  account   ${ACC || '(not found — set CLOUDFLARE_ACCOUNT_ID or check surfaces.json)'}`);
   say(`  token     ${process.env.CLOUDFLARE_API_TOKEN ? 'present in this job' : 'MISSING from this job'}`);
   say(`  namespace ${TITLE}`);
   say(`  mode      ${CREATE ? 'create if missing' : 'read only'}`);
 
   if (!API) {
-    say('\nFAIL · CLOUDFLARE_ACCOUNT_ID is not set on this repository.');
-    say('      surfaces.json carries the account id (it is an identifier, not a secret).');
-    say('      Either set the repository secret, or fall back to surfaces.json.');
+    say('\nFAIL · no account id. Set CLOUDFLARE_ACCOUNT_ID, or check cloudflare.accountId in surfaces.json.');
     process.exit(2);
   }
   if (!process.env.CLOUDFLARE_API_TOKEN) {
