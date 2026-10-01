@@ -1,0 +1,46 @@
+# One-time diagnostic: what can the deploy token actually reach?
+#
+# The lab's budget is enforced by a KV namespace (LEDGER). tools/site-switch.mjs
+# binds it at deploy time, and the last run reported:
+#
+#   lab: KV LEDGER not bound (Authentication error): the token needs
+#        Account · Workers KV Storage · Edit; the surface runs without it
+#
+# The token is a write-only repository secret, so the agent that maintains this
+# repository cannot see which permissions it has - only this job, which runs with
+# the secret already in its environment, can answer. It prints the answer and
+# nothing else: no secret is read, logged or forwarded. Run it from Actions ->
+# "KV probe" -> Run workflow, or with `gh workflow run kv-probe.yml`.
+#
+# It is safe to run: it only lists and reads. It creates nothing and deletes
+# nothing. The one write branch (create) is opt-in via the create input.
+
+name: KV probe
+
+on:
+  workflow_dispatch:
+    inputs:
+      create:
+        description: "Create the LEDGER namespace if it does not exist"
+        type: boolean
+        default: false
+      title:
+        description: "Namespace title (must match the surface name + binding)"
+        type: string
+        default: "ailgen-lab-LEDGER"
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE || secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - name: probe
+        env:
+          CREATE: ${{ inputs.create }}
+          TITLE: ${{ inputs.title }}
+        run: node tools/kv-probe.mjs
