@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Frank+Ruhl+Libre:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="unified/unified.css">
 </head>
 <body>
 <a class="skip" href="#main">לתוכן</a>
@@ -26,6 +27,8 @@
 
 <div class="shell">
  <nav class="tabs" aria-label="סביבות עבודה" id="tabs">
+  <p class="navh">AI UNIFIED</p>
+  <button type="button" data-tab="unified" class="ub"><i>✦</i>זרימות</button>
   <p class="navh">חינם</p>
   <button type="button" data-tab="text" aria-current="page"><i>01</i>טקסט</button>
   <button type="button" data-tab="compare"><i>02</i>השוואה</button>
@@ -178,6 +181,33 @@
    <div class="tray" id="pdTray" hidden><span id="pdTrayTxt"></span><button class="go" type="button" id="pdCmp">השוואה</button><button class="ghost" type="button" id="pdClear">ניקוי</button></div>
   </section>
 
+  <!-- AI UNIFIED -->
+  <section class="pane upane" id="p-unified" aria-labelledby="h-unified" hidden>
+   <div class="uhead">
+    <div class="utitle"><h1 id="h-unified"><span>AI</span> UNIFIED</h1><input id="uName" aria-label="שם הזרימה" placeholder="שם הזרימה" dir="auto"><span class="chip" id="uSaved"></span></div>
+    <div class="ubar" role="toolbar" aria-label="פעולות על הזרימה">
+     <button class="ghost sm" id="uNew" type="button">חדשה</button><button class="ghost sm" id="uTpl" type="button">תבניות</button><button class="ghost sm" id="uOpen" type="button">זרימות וריצות</button><button class="ghost sm" id="uSave" type="button">שמירה</button><button class="ghost sm" id="uJson" type="button">JSON</button>
+     <span class="usep" aria-hidden="true"></span>
+     <button class="ghost sm icon" id="uUndo" type="button" aria-label="ביטול" title="ביטול (Ctrl+Z)">↶</button><button class="ghost sm icon" id="uRedo" type="button" aria-label="חזרה" title="חזרה (Ctrl+Y)">↷</button><button class="ghost sm" id="uLayout" type="button">סידור</button>
+     <span class="ugrow"></span>
+     <span class="est" id="uEst" aria-live="polite"></span>
+     <label class="ucap" title="הריצה נעצרת לפני קריאה שתעבור את הסכום הזה">תקרה <span dir="ltr">$</span><input id="uCap" type="number" min="0" step="0.5" dir="ltr" aria-label="תקרת הוצאה לריצה בדולרים"></label>
+     <button class="go" id="uRun" type="button" title="הרצה (Ctrl+Enter)">הרצה</button><button class="ghost" id="uStop" type="button" hidden>עצירה</button>
+    </div>
+   </div>
+   <div class="ugrid">
+    <aside class="ulib" aria-label="ספריית צמתים"><input id="uLibQ" type="search" placeholder="חיפוש: מודל, כלי, יכולת" aria-label="חיפוש בספרייה"><div class="useg" id="uLibSeg"></div><div class="ulist" id="uLibList"></div></aside>
+    <div class="ucanvas" id="uCanvas" aria-label="לוח הזרימה">
+     <div class="uworld" id="uWorld"><svg class="uwires" id="uWires" aria-hidden="true"></svg><div id="uNodes"></div></div>
+     <div class="uempty" id="uEmpty" hidden><h2>מתחילים כאן</h2><p>בוחרים תבנית שמשלבת כמה מנועים לעבודה אחת, או גוררים צמתים מהספרייה ומחברים ביניהם.</p><div class="ustarts"></div></div>
+     <div class="uzoom"><button type="button" id="uZout" aria-label="הקטנה">−</button><span id="uZoom">100%</span><button type="button" id="uZin" aria-label="הגדלה">+</button><button type="button" id="uFit">התאמה</button></div>
+     <div class="umob"><button class="ghost sm" id="uLibBtn" type="button">+ צמתים</button><button class="ghost sm" id="uInspBtn" type="button">הגדרות</button></div>
+    </div>
+    <aside class="uinsp" id="uInsp" tabindex="-1" aria-label="הגדרות הצומת"></aside>
+   </div>
+   <div class="ulog"><button class="ulogt" id="uLogT" type="button"><span id="uStatus">מוכן</span><span class="hint">יומן ותוצאות</span></button><div class="ulogb"><ol id="uLogList"></ol><div class="uout" id="uOut"></div></div></div>
+  </section>
+
   <!-- budget -->
   <section class="pane" id="p-budget" aria-labelledby="h-budget" hidden>
    <h1 id="h-budget">תקציב</h1>
@@ -238,7 +268,7 @@
   <div class="vrow" id="pdVariant"></div>
   <form id="pdForm" class="pdform" novalidate></form>
   <details class="json" id="pdJsonBox"><summary>הבקשה המדויקת (JSON)</summary><textarea id="pdJson" class="mono" rows="10" dir="ltr" spellcheck="false"></textarea><p class="hint">אפשר לערוך כאן ישירות. אחרי עריכה, ההרצה שולחת את ה-JSON הזה במקום הטופס.</p><button class="ghost" type="button" id="pdJsonReset">חזרה לטופס</button></details>
-  <div class="actions sticky"><button class="go" id="pdGo" type="button">הרצה</button><span class="est" id="pdEst" aria-live="polite"></span></div>
+  <div class="actions sticky"><button class="go" id="pdSave" type="button" hidden>שמירה בצומת</button><button class="go" id="pdGo" type="button">הרצה</button><span class="est" id="pdEst" aria-live="polite"></span></div>
   <div class="breakdown" id="pdLines"></div>
   <div id="pdOut" class="outs"></div>
  </div>
@@ -252,6 +282,8 @@
  </div>
 </dialog>
 <script src="app.js"></script>
+<dialog class="sheet" id="uDlg" aria-labelledby="uDlgT"><form method="dialog" class="sheethead"><div><p class="prov">AI UNIFIED</p><h2 id="uDlgT"></h2></div><button class="x" value="close" aria-label="סגירה">✕</button></form><div class="sheetbody" id="uDlgB"></div></dialog>
 <script type="module" src="paid.js"></script>
+<script type="module" src="unified/ui.js"></script>
 </body>
 </html>

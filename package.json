@@ -45,7 +45,8 @@
     "lab:catalog": "node cloud/lab/catalog.mjs",
     "lab:paid": "node cloud/lab/catalog-paid.mjs",
     "lab:dev": "node cloud/dev.mjs serve lab --port 8791 --key test",
-    "lab:mock": "node cloud/dev.mjs serve lab --port 8791 --key test --mock-paid",
+    "lab:mock": "node cloud/dev.mjs serve lab --port 8791 --key test --mock-paid --mock-free",
+    "unified": "node cloud/lab/unified.mjs",
     "lab:kv": "node tools/kv-probe.mjs",
     "test:kv": "node tools/test-kv-declared.mjs && node tools/test-kv-bind.mjs"
   },

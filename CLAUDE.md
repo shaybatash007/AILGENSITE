@@ -9,6 +9,10 @@ mascot, a launch film, ads or a portfolio case, follow the `ailgen-studio` skill
 `.claude/skills/ailgen-studio/SKILL.md`. It uses the user's own skills (levelup, levelup2,
 skill-orchestrator), copied under `references/skills/`, and ships the tools under `scripts/` and `engine/`.
 
+Multi-engine AI jobs (a film from a brief, a campaign, voice, music, comparisons) are flows in AI UNIFIED, the lab's flow studio at
+ailgen-lab.pages.dev ("זרימות"). Run them with `node cloud/lab/unified.mjs` (`references/17-ai-unified.md`): price first, `--yes`
+with a `--max-usd` cap, the lab's budget and ledger on every call, flows and runs saved where the owner sees them.
+
 Conventions:
 - Hebrew first, RTL. Every image's provenance is recorded in the project files; visitors see a label only in visitor language
   and only where an image could be read as documentary ("תמונת אווירה"). No production language on any page (preview, snapshot,

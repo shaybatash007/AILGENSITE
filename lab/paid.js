@@ -3,6 +3,7 @@
    own input schema (lab/schemas/<slug>.json), the price is computed before the run from the same input (price.js, shared with
    the server), and the real cost comes back from the gateway's log. */
 import { estimate, label } from './price.js';
+import { variantsOf, vlabel, PRIORITY, field, bestVariant as bestOf, chatCaps as capsOf, chatParams, buildChat, exampleText as exText, briefInput, isChatShape } from './schema.js';
 
 const L = window.LAB, $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const esc = L.esc, store = { get(k) { try { return localStorage.getItem(k); } catch { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch {} } };
@@ -120,60 +121,6 @@ function tray() {
 $('#pdClear').onclick = () => { PICKED.clear(); $$('#pdTiers [data-cmp]').forEach(i => { i.checked = false; }); tray(); };
 ['#pdQ', '#pdProv', '#pdSort'].forEach(s => $(s).addEventListener('input', render));
 
-/* ---------- schemas: variants, fields, values ---------- */
-const deref = (d, root) => { let x = d || {}; for (let i = 0; i < 4 && x.$ref; i++) x = (root.$defs || root.definitions || {})[x.$ref.split('/').pop()] || {}; return x; };
-function variantsOf(s) {
-  const vs = (s.oneOf || s.anyOf || []).filter(v => v && v.properties);
-  return vs.length ? vs.map(v => ({ ...v, properties: { ...(s.properties || {}), ...v.properties }, required: [...new Set([...(s.required || []), ...(v.required || [])])] })) : [{ ...s, properties: s.properties || {}, required: s.required || [] }];
-}
-const MODE = { t2v: 'טקסט לווידאו', i2v: 'תמונה לווידאו', v2v: 'המשך של וידאו', r2v: 'וידאו מתמונות ייחוס', t2i: 'טקסט לתמונה', i2i: 'עריכת תמונה', edit: 'עריכה', generate: 'יצירה' };
-function vlabel(v, i) {
-  const c = Object.entries(v.properties).find(([, d]) => d && d.const !== undefined);
-  if (c) return MODE[c[1].const] || String(c[1].const);
-  if (v.title) return ({ Prompt: 'פרומפט אחד', Messages: 'שיחה (messages)' })[v.title] || v.title;
-  if (v.properties.messages) return 'שיחה (messages)';
-  if (v.properties.contents) return 'Gemini (contents)';
-  if (v.properties.input) return 'Responses (input)';
-  return 'אפשרות ' + (i + 1);
-}
-const MEDIA_KEY = /(^|_)(image|images|frame|frames|video|videos|audio|audios|file|mask|pose|person|garment|garments|keyframes|reference|references|start_video|audio_url|image_url|video_url)(_|$)/i;
-const LONG_KEY = /^(prompt|text|lyrics|negative_prompt|instructions?|input|system|voice_script|previous_text|next_text|instruction_prompt|description|style_prompt|script)$/;
-const GLOSS = {
-  prompt: 'תיאור', text: 'טקסט', input: 'קלט', lyrics: 'מילים', negative_prompt: 'מה לא להראות', aspect_ratio: 'יחס', ratio: 'יחס', size: 'גודל', image_size: 'גודל', width: 'רוחב', height: 'גובה',
-  resolution: 'רזולוציה', quality: 'איכות', duration: 'משך', seed: 'זרע אקראיות', n: 'כמה', num_images: 'כמה', max_images: 'עד כמה', image: 'תמונה', images: 'תמונות', image_input: 'תמונת קלט',
-  input_image: 'תמונת קלט', input_images: 'תמונות קלט', reference_images: 'תמונות ייחוס', last_frame_image: 'פריים אחרון', first_frame_image: 'פריים ראשון', start_image: 'תמונת פתיחה', end_image: 'תמונת סיום',
-  video: 'וידאו', audio: 'קול', audio_url: 'קובץ קול', file: 'קובץ', generate_audio: 'קול בווידאו', voice_id: 'קול', voice: 'קול', output_format: 'פורמט', format: 'פורמט', style: 'סגנון', language_code: 'שפה',
-  language: 'שפה', speed: 'מהירות', mode: 'מצב', draft: 'טיוטה', music_length_ms: 'אורך (מילישניות)', temperature: 'טמפרטורה', mask: 'מסכה', guidance: 'היצמדות לתיאור', steps: 'צעדים',
-  person_image: 'תמונת אדם', garment_images: 'בגדים', reference_video: 'וידאו ייחוס', start_video: 'וידאו להמשך', keyframes: 'פריימים', camera_fixed: 'מצלמה קבועה', watermark: 'סימן מים',
-  prompt_optimizer: 'שיפור התיאור', is_instrumental: 'בלי שירה', force_instrumental: 'בלי שירה', lyrics_optimizer: 'כתיבת מילים', speaker_labels: 'זיהוי דוברים', background: 'רקע', model_id: 'מודל',
-};
-const PRIORITY = ['mode', 'prompt', 'text', 'input', 'lyrics', 'image', 'images', 'image_input', 'input_image', 'input_images', 'person_image', 'garment_images', 'start_image', 'first_frame_image', 'keyframes',
-  'reference_images', 'last_frame_image', 'end_image', 'video', 'start_video', 'reference_video', 'audio', 'audio_url', 'file', 'voice_id', 'voice', 'aspect_ratio', 'ratio', 'size', 'image_size', 'resolution',
-  'quality', 'duration', 'music_length_ms', 'generate_audio', 'is_instrumental', 'n', 'num_images', 'max_images', 'negative_prompt', 'style', 'language_code', 'language', 'speaker_labels'];
-const mediaAccept = (k, desc, sector) => /video/i.test(k) ? 'video/*' : /audio|file|voice/i.test(k) || sector === 'listen' ? 'audio/*' : /image|frame|mask|pose|person|garment|keyframe|reference/i.test(k) ? 'image/*' : /data:video/.test(desc) ? 'video/*' : /data:audio/.test(desc) ? 'audio/*' : 'image/*';
-
-function field(k, d0, root, sector) {   // what kind of control a property needs
-  const d = deref(d0, root), alts = (d.anyOf || d.oneOf || []).map(x => deref(x, root)).filter(x => x && x.type !== 'null');
-  const desc = [d.description, ...alts.map(a => a.description)].filter(Boolean).join(' ');
-  const types = new Set([d.type, ...alts.map(a => a.type)].flat().filter(Boolean)); types.delete('null');
-  const f = { k, desc, def: d.default, title: GLOSS[k] || '' };
-  if (d.const !== undefined) return { ...f, t: 'const', v: d.const };
-  const enums = d.enum || (alts.length && alts.every(a => a.enum || a.const !== undefined) ? alts.flatMap(a => a.enum || [a.const]) : null);
-  if (enums) return { ...f, t: 'enum', options: enums.filter(x => x !== null), num: typeof enums.find(x => x !== null) === 'number' };
-  const notMedia = /webhook|callback|_format$|_settings$|^voice_id$|^voice$|_seconds$|_ms$|_labels$|^audio_(start|end)/.test(k) || types.has('boolean') || types.has('number') || types.has('integer');
-  if (!notMedia && (MEDIA_KEY.test(k) || /data:(image|audio|video)|base64[- ]encoded|data uri/i.test(desc))) {
-    const item = deref(d.items || (alts.find(a => a.type === 'array') || {}).items, root), wrap = (d.type === 'object' && d.properties && d.properties.url) || (item && item.properties && item.properties.url);
-    const multi = types.has('array') || d.type === 'array';
-    if (types.has('string') || wrap || (item && item.type === 'string')) return { ...f, t: 'media', multi, single: types.has('string') || (d.type === 'object' && !!wrap), wrap: !!wrap, max: Math.max(d.maxItems || 0, ...alts.map(a => a.maxItems || 0)) || (multi ? 8 : 1), accept: mediaAccept(k, desc, sector) };
-  }
-  if (types.has('boolean') && types.size === 1) return { ...f, t: 'bool' };
-  if ([...types].every(t => t === 'integer' || t === 'number') && types.size) { const src = d.type ? d : alts[0] || d; return { ...f, t: 'num', int: types.has('integer') && !types.has('number'), min: src.minimum, max: src.maximum }; }
-  if ((types.has('integer') || types.has('number')) && alts.some(a => a.const === 'auto' || (a.enum || []).includes('auto'))) return { ...f, t: 'numauto' };
-  if (types.size === 1 && types.has('string')) return { ...f, t: LONG_KEY.test(k) || (d.maxLength || 0) > 600 ? 'long' : 'str' };
-  if (d.type === 'array' && deref(d.items, root).type === 'string') return { ...f, t: 'list' };
-  return { ...f, t: 'json' };
-}
-
 /* ---------- media: upload, link, or a result from this session ---------- */
 const SESSION = [];   // { url, kind, model }
 async function fileToData(file) {
@@ -225,9 +172,10 @@ const SAMPLE = {
 let CUR = null, timer = 0;
 const sheet = $('#pdSheet');
 const docs = id => `https://developers.cloudflare.com/ai/models/${id}/`;
-async function open(id) {
+async function open(id, opts = {}) {
   const m = BY[id]; if (!m) return;
-  CUR = { m, s: null, vs: [], v: 0, manual: false, hist: [], seconds: 0 };
+  CUR = { m, s: null, vs: [], v: 0, manual: false, hist: [], seconds: 0, cfg: opts.configure || null };
+  $('#pdSave').hidden = !CUR.cfg; $('#pdGo').classList.toggle('ghost', !!CUR.cfg); $('#pdGo').classList.toggle('go', !CUR.cfg);
   $('#pdProvName').textContent = `${m.provider} · ${TIER_NAME[m.tier]} · ${PAID.groups.find(g => g.id === m.group).title}`;
   $('#pdName').textContent = m.name; $('#pdId').textContent = m.id;
   const sample = m.demo ? `<figure class="sample"><video src="${esc(m.demo)}" controls muted playsinline preload="none"></video><figcaption>דוגמה מהקטלוג של Cloudflare</figcaption></figure>`
@@ -246,26 +194,17 @@ async function open(id) {
   // the examples are Cloudflare's own calls: a click fills the form (and shows what the model made, when there is media)
   $('#pdExs').innerHTML = ex.length ? `<p class="exh">דוגמאות מהקטלוג של Cloudflare</p><div class="exl">${ex.map((e, i) => `<button type="button" class="exb" data-ex="${i}">${e.media && mediaKind(e.media) === 'image' ? `<img src="${esc(e.media)}" alt="" loading="lazy">` : e.media ? `<i>${mediaKind(e.media) === 'video' ? '🎬' : '♪'}</i>` : ''}<span dir="ltr">${esc(e.title || (isChat() ? exText(e.input) : 'דוגמה ' + (i + 1)).slice(0, 60))}</span></button>`).join('')}</div>` : '';
   $$('#pdExs [data-ex]').forEach(b => b.onclick = () => useExample(ex[+b.dataset.ex], true));
-  if (isChat()) { chatForm(); } else {
+  if (isChat()) { chatForm(); if (CUR.cfg && CUR.cfg.input) { const p = chatParams(m.shape, CUR.cfg.input), f = $('#pdForm'); f.msg.value = p.msg || ''; f.sys.value = p.sys || ''; if (p.max) f.max.value = p.max; if (p.effort && f.effort) f.effort.value = p.effort; if (p.temp != null && f.temp) f.temp.value = p.temp; } } else {
     const best = ex[0] ? bestVariant(ex[0].input) : 0;
     variantBar(best); schemaForm(best);
-    if (ex[0]) useExample(ex[0], false);
+    if (CUR.cfg && CUR.cfg.input) setValues(CUR.cfg.input);
+    else if (ex[0]) useExample(ex[0], false);
     else { const k = ['prompt', 'text'].find(x => $(`#pdForm [data-k="${x}"]`)); if (k) $(`#pdForm [data-k="${k}"] textarea, #pdForm [data-k="${k}"] input`).value = SAMPLE[CUR.m.group] || SAMPLE.image; }
   }
   changed();
 }
-const isChat = () => CUR && ['chat', 'anthropic', 'responses', 'gemini'].includes(CUR.m.shape);
-const exText = input => { const m = (input.messages || []).filter(x => x.role === 'user').pop(); return String((m && (typeof m.content === 'string' ? m.content : (m.content || []).map(c => c.text || '').join(' '))) || input.input || input.prompt || ''); };
-function bestVariant(input) {
-  let best = 0, score = -1;
-  CUR.vs.forEach((v, i) => {
-    const keys = Object.keys(input), cons = Object.entries(v.properties).filter(([, d]) => d && d.const !== undefined);
-    if (cons.some(([k, d]) => input[k] !== undefined && input[k] !== d.const)) return;
-    const sc = keys.filter(k => v.properties[k]).length * 2 - keys.filter(k => !v.properties[k]).length * 3 - v.required.filter(k => input[k] === undefined && !(v.properties[k] && v.properties[k].const !== undefined)).length;
-    if (sc > score) { score = sc; best = i; }
-  });
-  return best;
-}
+const isChat = () => CUR && isChatShape(CUR.m.shape);
+const bestVariant = input => bestOf(CUR.vs, input);
 function variantBar(i) {
   CUR.v = i;
   if (CUR.vs.length < 2) { $('#pdVariant').innerHTML = ''; return; }
@@ -345,19 +284,7 @@ function useExample(e, announce) {
 }
 
 /* the chat form: one form for the four chat formats (OpenAI chat, OpenAI Responses, Anthropic, Gemini) */
-function chatCaps() {
-  const vs = variantsOf(CUR.s.schema), shape = CUR.m.shape;
-  const v = shape === 'chat' ? vs.find(x => x.properties.messages && (x.properties.max_completion_tokens || !x.properties.system)) || vs[0]
-    : shape === 'anthropic' ? vs.find(x => x.properties.messages) : shape === 'responses' ? vs.find(x => x.properties.input) : vs.find(x => x.properties.contents);
-  const p = (v && v.properties) || {}, root = CUR.s.schema, en = d => { d = deref(d, root); return d.enum || ((d.anyOf || d.oneOf || []).map(x => deref(x, root)).find(x => x.enum) || {}).enum || null; };
-  const effort = shape === 'chat' ? (p.reasoning_effort && en(p.reasoning_effort)) : shape === 'responses' ? (p.reasoning && deref(p.reasoning, root).properties && en(deref(p.reasoning, root).properties.effort))
-    : shape === 'anthropic' ? (p.output_config && deref(p.output_config, root).properties && en(deref(p.output_config, root).properties.effort)) : null;
-  // max_completion_tokens when the schema also has an Anthropic-style variant, so the request matches exactly one of them
-  const both = vs.filter(x => x.properties.messages).length > 1;
-  const maxKey = shape === 'chat' ? (p.max_completion_tokens && (/^openai\//.test(CUR.m.id) || !p.max_tokens || both) ? 'max_completion_tokens' : 'max_tokens') : shape === 'anthropic' ? 'max_tokens' : shape === 'responses' ? 'max_output_tokens' : 'maxOutputTokens';
-  const temp = shape === 'gemini' ? true : !!p.temperature;
-  return { effort: effort && effort.filter(x => x !== null), maxKey, temp, thinking: shape === 'anthropic' && !!p.thinking };
-}
+const chatCaps = () => capsOf(CUR.m, CUR.s.schema);
 function chatForm() {
   const c = CUR.caps = chatCaps();
   $('#pdForm').innerHTML = `<div class="fgrid2">
@@ -378,26 +305,8 @@ function readChat() {
   const f = $('#pdForm'), c = CUR.caps, shape = CUR.m.shape, msg = f.msg.value.trim(), sys = f.sys.value.trim(), max = Math.max(16, +f.max.value || 1024);
   const temp = f.temp && f.temp.value !== '' ? +f.temp.value : undefined, effort = f.effort && f.effort.value || undefined, img = ($('#pdForm .fld.media')._vals || [])[0];
   const hist = f.thread.checked ? CUR.hist : [];
-  const b64 = d => ({ mime: d.slice(5, d.indexOf(';')), data: d.slice(d.indexOf(',') + 1) });
-  return { input: buildChat(shape, c, { msg, sys, max, temp, effort, img, hist }, b64), missing: msg ? [] : ['msg'], bad: [] };
+  return { input: buildChat(shape, c, { msg, sys, max, temp, effort, img, hist }), missing: msg || CUR.cfg ? [] : ['msg'], bad: [] };
 }
-function buildChat(shape, c, { msg, sys, max, temp, effort, img, hist }, b64) {
-  if (shape === 'anthropic') {
-    const content = img ? [{ type: 'image', source: img.startsWith('data:') ? { type: 'base64', media_type: b64(img).mime, data: b64(img).data } : { type: 'url', url: img } }, { type: 'text', text: msg }] : msg;
-    return { messages: [...hist, { role: 'user', content }], max_tokens: max, ...(sys ? { system: sys } : {}), ...(temp !== undefined ? { temperature: temp } : {}), ...(effort ? { output_config: { effort } } : {}) };
-  }
-  if (shape === 'responses') {
-    const turn = { role: 'user', content: [{ type: 'input_text', text: msg }, ...(img ? [{ type: 'input_image', image_url: img }] : [])] };
-    return { input: hist.length || img ? [...hist.map(h => ({ role: h.role, content: h.content })), turn] : msg, max_output_tokens: max, ...(sys ? { instructions: sys } : {}), ...(temp !== undefined ? { temperature: temp } : {}), ...(effort ? { reasoning: { effort } } : {}) };
-  }
-  if (shape === 'gemini') {
-    const parts = [{ text: msg }, ...(img && img.startsWith('data:') ? [{ inlineData: { mimeType: b64(img).mime, data: b64(img).data } }] : [])];
-    return { contents: [...hist.map(h => ({ role: h.role === 'assistant' ? 'model' : 'user', parts: [{ text: h.content }] })), { role: 'user', parts }], ...(sys ? { systemInstruction: { parts: [{ text: sys }] } } : {}), generationConfig: { maxOutputTokens: max, ...(temp !== undefined ? { temperature: temp } : {}) } };
-  }
-  const content = img ? [{ type: 'text', text: msg }, { type: 'image_url', image_url: { url: img } }] : msg;
-  return { messages: [...(sys ? [{ role: 'system', content: sys }] : []), ...hist, { role: 'user', content }], [c.maxKey]: max, ...(temp !== undefined ? { temperature: temp } : {}), ...(effort ? { reasoning_effort: effort } : {}) };
-}
-
 /* the request as it will be sent, its price, and the run */
 function current() {
   if (CUR.manual) { try { return { input: JSON.parse($('#pdJson').value), missing: [], bad: [] }; } catch { return { input: null, missing: [], bad: ['JSON'] }; } }
@@ -441,13 +350,25 @@ $('#pdGo').onclick = () => L.busy($('#pdGo'), async () => {
   const e = estimate(CUR.m, r.input, { seconds: CUR.seconds });
   if ((e.usd || 0) > 1 && !confirm(`ההרצה הזו עולה ${label(e)}. להמשיך?`)) return;
   if (e.kind === 'unknown' && !confirm('למודל הזה אין הערכת מחיר לפני ההרצה. המחיר האמיתי יופיע אחרי ההרצה, מהיומן. להמשיך?')) return;
+  // a field that takes the file itself (base64), given a link (an earlier result): the file is fetched through the lab and inlined
+  if (!isChat() && !CUR.manual) for (const f of (CUR.fields || []).filter(x => x.t === 'media' && x.b64)) {
+    const v = r.input[f.k], conv = async u => { if (typeof u !== 'string' || !/^https:\/\//.test(u)) return u; const b = await fetch('/api/media', { method: 'POST', headers: { 'content-type': 'application/json', 'x-lab-key': L.key }, body: JSON.stringify({ url: u }) }).then(x => x.ok ? x.blob() : null).catch(() => null); return b ? new Promise(ok => { const fr = new FileReader(); fr.onload = () => ok(fr.result); fr.readAsDataURL(b); }) : u; };
+    if (v != null) r.input[f.k] = Array.isArray(v) ? await Promise.all(v.map(conv)) : await conv(v);
+  }
   const m = CUR.m, msg = isChat() ? $('#pdForm').msg.value.trim() : null, c = L.card($('#pdOut'), m.name, true);
   const j = await L.call(m.id, r.input, '', 'credits', { hint: { seconds: CUR.seconds || undefined } });
   L.fill(c, j, (body, x) => renderOut(body, x, m.id));
   if (j.ok && isChat() && CUR.m === m && j.text) { CUR.hist.push({ role: 'user', content: msg }, { role: 'assistant', content: j.text }); turns(); $('#pdForm').msg.value = ''; changed(); }
   L.renderBudget(true);
 });
-sheet.addEventListener('close', () => { CUR = null; });
+sheet.addEventListener('close', () => { CUR = null; $('#pdSave').hidden = true; $('#pdGo').classList.add('go'); $('#pdGo').classList.remove('ghost'); });
+// AI UNIFIED: a flow node's settings are this same form; "save to the node" hands the exact request back instead of running it
+$('#pdSave').onclick = () => {
+  if (!CUR || !CUR.cfg) return;
+  const r = current(); if (r.bad.length) return alert('יש שדה JSON לא תקין: ' + r.bad.join(', '));
+  const input = { ...r.input }; if (isChat() && !$('#pdForm').msg.value.trim()) delete input.messages;   // the message usually arrives from the flow
+  CUR.cfg.onSave(input); sheet.close();
+};
 sheet.addEventListener('click', e => { if (e.target === sheet) sheet.close(); });
 
 /* ---------- compare: one simple brief, sent to each model in its own format ---------- */
@@ -470,41 +391,9 @@ $('#pdCmp').onclick = async () => {
   await Promise.all(CMP.models.map(async m => { if (!CMP.schemas[m.id]) CMP.schemas[m.id] = await fetch('schemas/' + m.slug + '.json').then(r => r.json()); }));
   cmpChanged();
 };
-// one brief → this model's input: its own first example as the base (it has every required field), with the brief's values
-// put into the fields this model calls by those names, at the nearest value its schema allows
-const nearest = (opts, want, num) => { const n = v => parseFloat(String(v).replace(/[^\d.]/g, '')) || 0; return opts.slice().sort((a, b) => Math.abs(n(a) - n(want)) - Math.abs(n(b) - n(want)))[0]; };
-function cmpInput(m, b) {
-  const s = CMP.schemas[m.id]; if (!s) return { error: 'הסכמה עוד נטענת' };
-  if (['chat', 'anthropic', 'responses', 'gemini'].includes(m.shape)) {
-    const save = CUR; CUR = { m, s }; const caps = chatCaps(); CUR = save;
-    return { input: buildChat(m.shape, caps, { msg: b.msg, sys: b.sys, max: b.max, img: null, hist: [] }, d => ({ mime: d.slice(5, d.indexOf(';')), data: d.slice(d.indexOf(',') + 1) })) };
-  }
-  const root = s.schema, vs = variantsOf(root), ex = (s.examples || [])[0];
-  const fieldsOf = v => Object.fromEntries(Object.entries(v.properties).map(([k, d]) => [k, field(k, d, root, m.group)]));
-  // the variant: one whose required media we can supply (with a reference image: one that takes it; without: one that needs none)
-  const needs = v => v.required.filter(k => { const f = field(k, v.properties[k], root, m.group); return f.t === 'media'; });
-  let vi = vs.findIndex(v => b.ref ? needs(v).length <= 1 && needs(v).every(k => /image|frame|keyframe/.test(k)) && needs(v).length : !needs(v).length);
-  if (vi < 0) vi = vs.findIndex(v => !needs(v).length); if (vi < 0) vi = 0;
-  const v = vs[vi], F = fieldsOf(v), input = {};
-  if (ex) for (const [k, x] of Object.entries(ex.input)) if (F[k] && F[k].t !== 'media' && F[k].t !== 'const') input[k] = x;
-  for (const [k, f] of Object.entries(F)) if (f.t === 'const') input[k] = f.v;
-  for (const k of v.required) if (input[k] === undefined && F[k] && F[k].def !== undefined) input[k] = F[k].def;   // required with a default
-  const set = (keys, val) => { const k = keys.find(x => F[x]); if (k == null || val == null || val === '') return; const f = F[k];
-    if (f.t === 'enum') { const o = f.options.includes(val) ? val : nearest(f.options, val); if (o != null) input[k] = o; }
-    else if (f.t === 'num' || f.t === 'numauto') input[k] = Math.min(f.max ?? 1e9, Math.max(f.min ?? -1e9, +String(val).replace(/[^\d.]/g, '')));
-    else if (f.t === 'bool') input[k] = !!val; else input[k] = val; };
-  set(['prompt', 'text', 'input'], m.group === 'voice' ? b.text : b.prompt);
-  if (b.ratio) { const k = ['aspect_ratio', 'ratio'].find(x => F[x]); if (k && F[k].t === 'enum') { const o = F[k].options.find(o => String(o) === b.ratio) || F[k].options.find(o => { const [w, h] = String(o).split(/[:x]/).map(Number), [a, c] = b.ratio.split(':').map(Number); return w && h && Math.abs(w / h - a / c) < 0.02; }); if (o) input[k] = o; } else set(['aspect_ratio'], b.ratio); }
-  if (b.dur) { const f = F.duration; if (f && f.t === 'enum') input.duration = nearest(f.options, b.dur); else set(['duration', 'seconds'], b.dur); }
-  if (b.res) { const f = F.resolution; if (f && f.t === 'enum') input.resolution = f.options.find(o => String(o).toLowerCase() === b.res) || f.options.find(o => /^(hd)$/i.test(o) && b.res === '720p') || f.options.find(o => /^fhd$/i.test(o) && b.res === '1080p') || nearest(f.options, b.res); }
-  if (b.audio != null && F.generate_audio) input.generate_audio = b.audio;
-  if (b.len) { if (F.music_length_ms) input.music_length_ms = b.len * 1000; else set(['duration'], b.len); }
-  const media = (want, val) => { if (!val) return; const k = Object.keys(F).filter(k => F[k].t === 'media' && F[k].accept.startsWith(want)).sort((a, c) => (PRIORITY.indexOf(a) + 1 || 99) - (PRIORITY.indexOf(c) + 1 || 99))[0]; if (k) { const f = F[k]; input[k] = f.wrap ? (f.multi ? [{ url: val }] : { url: val }) : f.multi && !f.single ? [val] : val; } };
-  media('image', b.ref); media('audio', b.aud);
-  const miss = v.required.filter(k => input[k] === undefined);
-  if (miss.some(k => F[k] && F[k].t === 'media')) return { error: F[miss.find(k => F[k].t === 'media')].accept.startsWith('image') ? 'המודל הזה צריך תמונה: מוסיפים תמונת פתיחה למעלה' : 'המודל הזה צריך קובץ קלט' };
-  return miss.length ? { error: 'חסר בבקשה: ' + miss.join(', ') } : { input };
-}
+// one brief → this model's input (schema.js: its own first example as the base, the brief's values in the fields it calls by
+// those names, at the nearest value its schema allows)
+function cmpInput(m, b) { const s = CMP.schemas[m.id]; return s ? briefInput(m, s, b) : { error: 'הסכמה עוד נטענת' }; }
 function brief2() {
   const f = $('#pcForm'), g = n => f.querySelector(`[name=${n}]`), media = k => (($(`#pcForm [data-k=${k}]`) || {})._vals || [])[0];
   return { sys: g('sys')?.value.trim(), msg: g('msg')?.value.trim(), max: +(g('max')?.value) || 800, prompt: g('prompt')?.value.trim(), ratio: g('ratio')?.value, dur: +(g('dur')?.value) || null,
@@ -545,3 +434,7 @@ $('#pdLead').textContent = `${PAID.count} מודלים בתשלום, כל מה �
 $('#pdWhy p').textContent = PAID.tiersWhy;
 renderSeg(); renderProv(); render();
 L.renderModels();
+
+/* ---------- what AI UNIFIED (unified/ui.js) uses from the catalog ---------- */
+export { PAID, ALL, BY, brief, TIER_NAME, SESSION };
+export const configure = (id, input, onSave) => open(id, { configure: { input, onSave } });

@@ -6,6 +6,7 @@
 //   node cloud/dev.mjs call <surface> <route> '<json body>' [--key ...] [--out f]   one POST, the answer printed (and saved)
 //   --mock-paid   answer gateway calls here, in each provider's own shape, with the catalog's own example media, after a short
 //                 wait: the lab's paid tab end to end with nothing spent (the answers are not the models')
+//   --mock-free   the same for the free Workers AI models (no neurons spent): a stock answer, a small image, a short tone
 import fs from 'node:fs';
 import path from 'node:path';
 import http from 'node:http';
@@ -30,7 +31,12 @@ async function mockPaid(model, input) {
   if (JSON.stringify(input).includes('__mock_fail__')) throw new Error('mock: the provider refused this input (400)');
   await new Promise(r => setTimeout(r, 600 + Math.random() * 900));
   const ex = JSON.parse(fs.readFileSync(path.join(ROOT, 'lab/schemas', m.slug + '.json'), 'utf8')).examples.find(e => e.media);
-  const said = 'תשובת דמה מהמריץ המקומי (' + model + '): בלי קריאה למודל ובלי עלות.';
+  // a flow that asks for JSON gets JSON in the shape it asked for (AI UNIFIED's templates), so its next nodes can be tested
+  const asked = JSON.stringify(input);
+  const said = asked.includes('voiceover') ? JSON.stringify({ title: 'דמה', voiceover: 'זו קריינות דמה מהמריץ המקומי, בלי עלות.', music: 'calm piano, 80 bpm', shots: [1, 2, 3].map(i => ({ image: `mock still ${i}, window light`, motion: `mock slow push-in ${i}` })) })
+    : asked.includes('4 distinct') ? JSON.stringify({ shots: [1, 2, 3, 4].map(i => ({ prompt: `mock direction ${i}` })) })
+    : asked.includes('script') && asked.includes('Return JSON') ? JSON.stringify({ script: 'תסריט דמה בעברית מהמריץ המקומי.', image: 'mock cover image', music: 'mock calm music' })
+    : 'תשובת דמה מהמריץ המקומי (' + model + '): בלי קריאה למודל ובלי עלות.';
   const usage = { prompt_tokens: 120, completion_tokens: 240 };
   if (m.out === 'text') {
     if (m.shape === 'anthropic') return { id: 'mock', type: 'message', role: 'assistant', content: [{ type: 'text', text: said }], usage: { input_tokens: 120, output_tokens: 240 } };
@@ -41,11 +47,28 @@ async function mockPaid(model, input) {
   if (m.id === 'minimax/h3') return { state: 'Completed', result: { task: { status: 'succeeded', content: { url: ex && ex.media } } } };
   return { state: 'Completed', gatewayMetadata: { keySource: 'Unified' }, result: { [m.out]: ex ? ex.media : null } };
 }
+const MOCK_FREE = argv.includes('--mock-free');
+async function mockFree(model, input) {
+  await new Promise(r => setTimeout(r, 300));
+  if (/flux|stable-diffusion|dreamshaper|lucid|phoenix/.test(model)) {   // a 64×64 PNG in the brand's night blue
+    const { deflateSync } = await import('node:zlib');
+    const w = 64, h = 64, raw = Buffer.alloc((w * 3 + 1) * h); for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) raw.set([13, 20 + y, 71 + x], y * (w * 3 + 1) + 1 + x * 3);
+    const chunk = (t, d) => { const b = Buffer.alloc(8 + d.length + 4); b.writeUInt32BE(d.length); b.write(t, 4); d.copy(b, 8); const { crc32 } = zlibCrc; b.writeUInt32BE(crc32(Buffer.concat([Buffer.from(t), d])) >>> 0, 8 + d.length); return b; };
+    const zlibCrc = await import('node:zlib');
+    const ihdr = Buffer.alloc(13); ihdr.writeUInt32BE(w); ihdr.writeUInt32BE(h, 4); ihdr.set([8, 2, 0, 0, 0], 8);
+    const png = Buffer.concat([Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]), chunk('IHDR', ihdr), chunk('IDAT', deflateSync(raw)), chunk('IEND', Buffer.alloc(0))]);
+    return { image: png.toString('base64') };
+  }
+  if (/whisper|nova|asr/.test(model)) return { text: 'תמלול דמה מהמריץ המקומי.' };
+  if (/aura|melotts|tts/.test(model)) return { audio: Buffer.from('ID3mock').toString('base64') };
+  return { response: 'תשובת דמה חינמית מהמריץ המקומי (' + model + ').', usage: { prompt_tokens: 40, completion_tokens: 20, neurons: 0 } };
+}
 const AI = {
   aiGatewayLogId: null,
   gateway: () => ({ async getLog() { return null; } }),   // no gateway log here: the lab falls back to its estimate
   async run(model, input, opts) {
     if (opts && opts.gateway && MOCK) return mockPaid(model, input);
+    if (!(opts && opts.gateway) && MOCK_FREE) return mockFree(model, input);
     // the credits path goes through an AI Gateway with Unified Billing; here only when DEV_GATEWAY_OK=1 says the gateway exists
     if (opts && opts.gateway && !process.env.DEV_GATEWAY_OK) throw new Error(`gateway ${opts.gateway.id}: not reachable from the local runner (set DEV_GATEWAY_OK=1 once it exists)`);
     let init;
@@ -65,6 +88,7 @@ const kvStore = new Map();
 const LEDGER = {
   async get(k, type) { const v = kvStore.get(k); return v == null ? null : type === 'json' ? JSON.parse(v.value) : v.value; },
   async put(k, value, o = {}) { kvStore.set(k, { value: String(value), metadata: o.metadata }); },
+  async delete(k) { kvStore.delete(k); },
   async list({ prefix = '', limit = 1000 } = {}) { const keys = [...kvStore.keys()].filter(k => k.startsWith(prefix)).sort().slice(0, limit).map(name => ({ name, metadata: kvStore.get(name).metadata })); return { keys, list_complete: true }; },
 };
 const env = { AI, LEDGER, LAB_GATEWAY: 'ailgen-lab', LAB_BUDGET_USD: '100', ...(flag('--key') ? { LAB_PASSCODE: flag('--key') } : {}) };

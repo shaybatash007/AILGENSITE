@@ -7,7 +7,7 @@ It is a Cloudflare Pages Function with the Workers AI binding `env.AI`. That bin
 |---|---|---|
 | `edencosmetic` | `POST /api/lotti` | Lotti answers in Hebrew from the shop's own facts (`context.js`, built from the page). On 503 the page falls back to its fixed answers. |
 | `ailgen` | `POST /api/brief`, `POST /api/mood` | The studio demo on the public site: a brand brief from a name or an idea, then a first atmosphere image. |
-| `lab` | `POST /api/run`, `POST /api/ping`, `POST /api/budget` | AILGEN Lab, behind `LAB_PASSCODE`: every free model, the paid catalog through the AI Gateway (`lab/paid.json`), and one budget for both. |
+| `lab` | `POST /api/run`, `/api/ping`, `/api/budget`, `/api/flows`, `/api/media` | AILGEN Lab, behind `LAB_PASSCODE`: every free model, the paid catalog through the AI Gateway (`lab/paid.json`), one budget for both, and AI UNIFIED (flows of many engines). |
 
 ## How it ships
 
@@ -68,6 +68,17 @@ credential for `api.cloudflare.com`, or from `CLOUDFLARE_API_TOKEN`.
   gateway's log has one. `POST /api/run` with `dry: true` checks the model, the price and the budget without calling anything.
 - **Compare.** Up to four models of one sector take one brief; each gets it in its own format (its own first example as the base,
   the brief's values in the fields it calls by those names, at the nearest value its schema allows).
+
+## AI UNIFIED (the lab's flow studio)
+
+- **One job, many engines.** A flow joins inputs, any of the lab's models, tools (template, JSON extract, split, join, pick), the
+  composer (images, clips, voice and music into one video) and outputs. Lists fan out: one call per item.
+- **The same engine in the page and in the agent's CLI.** `lab/unified/engine.js`, with requests from `lab/schema.js` and prices
+  from `lab/price.js`; the page composes in the browser (MediaRecorder), `cloud/lab/unified.mjs` with ffmpeg.
+- **Server:** `POST /api/flows` (list, get, save, delete, record, runs, run) keeps flows and runs in the `LEDGER` namespace;
+  `POST /api/media` brings a model's media to the lab's origin for the composer. Every model call still goes through `/api/run`.
+- **Locally:** `node cloud/dev.mjs serve lab --port 8791 --key test --mock-paid --mock-free` runs every flow with nothing spent
+  (answers in each provider's shape, JSON when a flow asks for JSON, the catalog's own sample media).
 
 ## The lab's budget
 

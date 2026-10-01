@@ -166,6 +166,13 @@ scroll scene, material fields, page-wide motion, each with its guardrails: refer
 approved asset exists, and is complete without any.
 - **Gate**: every published asset approved with a reason; cutouts keep their pixels; the budget cap held; the disclosure line shown when generated images are.
 
+### 5e · Multi-engine jobs → `references/17-ai-unified.md`
+Any deliverable that needs more than one engine (brief → stills → video shots → voice → music → one film; four directions → four
+images; a recording → summary → voice) is a flow in AI UNIFIED, the lab's flow studio. Build it from a template or as JSON, price it
+(`cloud/lab/unified.mjs estimate`), save it to the lab so the owner sees it, run it with `--yes` under a `--max-usd` cap, and take the
+outputs from `projects/_unified/out/` into the project. Everything goes through the lab's budget and ledger.
+- **Gate**: the estimate stated before the run; the run recorded in the lab; every output approved before it ships (reference 12 rules hold).
+
 ### 5d · Design critique → `references/16-design-critique.md`
 The first draft is never kept by default. `regions.mjs` shoots every region alone (desktop and phone, inner page types too);
 score each on six axes (hierarchy, typography, composition, imagery, detail, distinctiveness), weigh two alternatives for every
@@ -249,6 +256,7 @@ Set up `evolve.json` and take the baseline snapshot, so new products, prices, st
 | `scripts/matte.py` | AI matting for hard product photos (rembg + BiRefNet, MIT, CPU): alpha only, pixels proven kept |
 | `scripts/cfai.mjs` | Cloudflare Workers AI from the studio: any catalog model (text, vision, translation, speech, embeddings) with one token; `--verify`, `--models` |
 | `cloud/dev.mjs` · `cloud/context.mjs` | Server functions of each surface (Cloudflare Pages + Workers AI binding): run them here against the real models; build an agent's facts from its page |
+| `cloud/lab/unified.mjs` | AI UNIFIED from the command line: templates, models, estimate, save, run (ffmpeg composer, outputs downloaded, run recorded in the lab), flows, runs, budget, one-off calls. `LAB_PASSCODE` from the environment; `--local` for the mocked dev server |
 | AILGEN Lab (`lab/`, `cloud/lab/`) | The private workbench at ailgen-lab.pages.dev: every free model side by side (text, compare, image, vision, translation, speech, search, raw JSON), the catalog with measured notes, the bench results. `node cloud/lab/catalog.mjs` refreshes the catalog |
 | `scripts/film-site.mjs` | Film a live site on a virtual clock: smooth 30 fps footage of WebGL, canvas and CSS motion from a shot list (scroll targets, pointer paths) |
 | `scripts/grade.py` | Brand colour grade for approved plates (Lab transfer, ΔE before/after); colour-swatch references |
