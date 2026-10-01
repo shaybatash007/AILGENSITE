@@ -87,24 +87,43 @@ image). Headless Chromium renders WebGL through SwiftShader, so every machine ge
 
 ## Cloudflare Workers AI: what one free token gives the studio (checked 2026-10-01)
 
-One token (Workers AI Read + Edit) in the environment, and the account ID (not a secret, in `surfaces.json`). No payment
-method: 10,000 neurons a day on every plan, reset at 00:00 UTC; above that $0.011 per 1,000 neurons on Workers Paid ($5 a
-month), and on the Free plan calls fail until the reset. Cloudflare does not train on what is sent. Measured per call:
+One token (Workers AI Read + Edit), stored as an API credential in the cloud environment's settings (type Bearer, allowed
+website `api.cloudflare.com`; the environment adds it to each request and no script sees it) or as `CLOUDFLARE_API_TOKEN`. The
+account ID is not a secret and sits in `surfaces.json`. No payment method: 10,000 neurons a day on every plan, reset at 00:00 UTC;
+above that $0.011 per 1,000 neurons on Workers Paid ($5 a month), and on the Free plan calls fail until the reset. Cloudflare does
+not train on what is sent. The key reaches Workers AI only: Pages, Vectorize, D1, R2, KV, AI Gateway, Images, Stream and Browser
+Rendering answer 401/403 with it (site publishing has its own token, in GitHub).
 
 | Job | Model | Free a day | Tool |
 |---|---|---|---|
-| Image drafts | `@cf/black-forest-labs/flux-2-klein-4b` (26.05 neurons per 512 tile) | about 95 at 1 MP | `imagegen.mjs` route `draft` |
+| Image drafts | `@cf/black-forest-labs/flux-2-klein-4b` (26.05 neurons per 512 tile) | about 60 at the concepts' sizes | `imagegen.mjs` route `draft` |
 | Best free image | `@cf/black-forest-labs/flux-2-dev` (37.5 neurons per tile per step, references, editing) | about 2 at 1 MP | `final` (after the paid routes), `bakeoff` |
 | Fast, many | `flux-1-schnell` (4.8 per tile + 9.6 per step) | about 170 | `--use` |
-| Text, strongest free | `@cf/openai/gpt-oss-120b`, `@cf/meta/llama-3.3-70b-instruct-fp8-fast` | about 50k output tokens on the 70B | `cfai.mjs --run` |
-| Text, most per neuron | `@cf/qwen/qwen3-30b-a3b-fp8` (30,475 neurons per M output) | about 330k output tokens | `cfai.mjs --run` |
-| Vision | `@cf/meta/llama-4-scout-17b-16e-instruct` (multimodal), `llama-3.2-11b-vision-instruct` | | `cfai.mjs --image` |
-| Hebrew translation, speech, search | `m2m100-1.2b`, `whisper-large-v3-turbo`, `bge-m3` (multilingual embeddings) | | `cfai.mjs` |
+| Hebrew answers from facts (an agent like Lotti) | `@cf/openai/gpt-oss-120b` | about 90 answers | `cfai.mjs --run` |
+| Vision: packaging text, alt text, the image gate | `@cf/meta/llama-4-scout-17b-16e-instruct`, `@cf/mistralai/mistral-small-3.1-24b-instruct` | | `cfai.mjs --image` |
+| Translation | `@cf/openai/gpt-oss-120b` (about 30 neurons a product text), not `m2m100` | | `cfai.mjs --run --system` |
+| Speech to text | `whisper-large-v3-turbo` (Hebrew supported; not yet tested on Hebrew audio) | | `cfai.mjs --audio` |
 
-Paid only (Workers Paid or AI Gateway credits): Kimi K2.6 / K2.7-code, GLM-5.2 / 5.3, DeepSeek V4. Workers AI has no video model;
-video through Cloudflare is xAI Grok Imagine on AI Gateway unified billing (credits plus a 5% fee, 480p/720p), below the
-1080p of Veo 3.1 and Kling 3.0 on fal, so the film routes stay on fal. The studio's own words and judgement stay with Claude;
-these models carry volume (drafts, translation checks, embeddings for a site search, transcripts).
+Measured on Eden on 2026-10-01 (Free plan), so the next project starts from results, not from the catalog page:
+- **Agent answers.** The question was "I'm starting lash lifts, budget 150 ₪, what should I buy?", with the whole catalog (71 products,
+  2,300 tokens) in the system prompt. `gpt-oss-120b` named the right two products with exact prices and a correct total, in good
+  Hebrew: 111 neurons, 6.8 s. `llama-3.3-70b` was right but made Hebrew mistakes (188 neurons). `llama-4-scout` was right and short
+  (69 neurons, 1.7 s). `mistral-small-3.1` gave wrong advice (tweezers to lift lashes). `nemotron-3-120b` spent all 1,500 tokens
+  reasoning and gave no answer. `gemma-4-26b`, `qwen3.8-27b` and `glm-4.7-flash` returned 502 after 30 s at the time of the test.
+- **Paid only, confirmed:** GLM-5.3, Kimi K2.6, DeepSeek V4 Pro and Flash refuse with error 5035 ("not available on the Workers
+  Free plan").
+- **Vision.** Scout and Mistral Small read every word on a THUYA kit's packaging, with a slip or two (one misread line, one wrong
+  colour), so a person confirms anything that is published. As an automatic gate on generated images (JSON: text, logo, product,
+  person, artifacts, palette) Scout answered correctly on the drafts in about 7 s.
+- **Translation.** `m2m100-1.2b` garbles Hebrew in both directions; `gpt-oss-120b` with a one-line system prompt translates well.
+- **Search.** Hebrew embeddings are weak: of `bge-m3`, `qwen3-embedding-0.6b` and `embeddinggemma-300m`, the best (`bge-m3`) still
+  missed "a tool to pluck brow hairs" (tweezers) and "what holds the lashes on the silicone" (glue). For a catalog under a few hundred
+  products, give the agent the whole catalog instead; embeddings plus a reranker only for large catalogs.
+- **Missing:** no Hebrew text-to-speech (Aura speaks English and Spanish, MeloTTS has no Hebrew) and no video model.
+
+Workers AI has no video; video through Cloudflare is xAI Grok Imagine on AI Gateway unified billing (credits plus a 5% fee,
+480p/720p), below the 1080p of Veo 3.1 and Kling 3.0 on fal, so the film routes stay on fal. The studio's own words and judgement
+stay with Claude; these models carry volume (drafts, the image gate, translation checks, a site agent's answers, transcripts).
 
 ## Choosing a model: vendor-neutral routing (checked 2026-09-30)
 

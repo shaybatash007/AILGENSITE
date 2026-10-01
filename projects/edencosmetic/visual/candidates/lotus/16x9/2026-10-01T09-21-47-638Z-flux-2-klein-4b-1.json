@@ -1,0 +1,32 @@
+{
+ "concept": "lotus",
+ "brand": null,
+ "ratio": "16:9",
+ "size": "2K",
+ "provider": "cloudflare",
+ "model": "@cf/black-forest-labs/flux-2-klein-4b",
+ "route": "cloudflare:@cf/black-forest-labs/flux-2-klein-4b",
+ "bakeoff": false,
+ "refs": [],
+ "prompt": "Soft-focus fine-art photograph of a single pale blush lotus flower floating on still water at dawn, light mist, warm cream light, muted palette of #F8EFEA, #F0D3C3 and #BF7F7F, the flower small in the lower third with calm open space above.\n\nHouse style: Warm, calm, precise; an atelier for lash and brow professionals. Cream, blush and dusty rose; soft window light from the upper right; natural stone and satin; generous negative space. Editorial beauty still life, never glossy advertising, never clinical.\n\nDo not include: several flowers, frogs, people, text, logos, saturated pink, dark water, lily pads covering the frame. Never: products, bottles, tubes, jars, boxes, packaging or labels; text, letters, numbers, logos, watermarks or brand marks; faces, eyes, lashes or brows; before-and-after or treatment results; a recognisable person; stock clichés: flowers scattered on marble, fanned makeup brushes, spa stones, candles, champagne, gold glitter.\n\nPhotographic, natural, no illustration look, no AI gloss, no watermark.",
+ "promptHash": "5352917be7ff",
+ "at": "2026-10-01T09:21:47.640Z",
+ "ms": 23463,
+ "costUsd": 0.0017,
+ "synthid": false,
+ "note": "",
+ "usage": null,
+ "status": "candidate",
+ "review": null,
+ "checks": {
+  "w": 1328,
+  "h": 752,
+  "ratioOk": true,
+  "std": 0.161,
+  "deltaE": 10.1,
+  "neon": 0,
+  "black": 0,
+  "pass": true,
+  "fails": []
+ }
+}

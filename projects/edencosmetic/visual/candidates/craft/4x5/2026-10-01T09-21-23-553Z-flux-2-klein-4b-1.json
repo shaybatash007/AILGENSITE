@@ -1,0 +1,32 @@
+{
+ "concept": "craft",
+ "brand": null,
+ "ratio": "4:5",
+ "size": "2K",
+ "provider": "cloudflare",
+ "model": "@cf/black-forest-labs/flux-2-klein-4b",
+ "route": "cloudflare:@cf/black-forest-labs/flux-2-klein-4b",
+ "bakeoff": false,
+ "refs": [],
+ "prompt": "Close-up editorial photograph of a beauty professional's hands in blush-pink nitrile gloves arranging plain, unbranded lash-lift tools on a warm cream travertine tray: simple stainless steel tweezers, a slim lift rod, a few translucent silicone shields. Soft window light from the upper right, shallow depth of field, calm and precise. Cropped at the wrists.\n\nHouse style: Warm, calm, precise; an atelier for lash and brow professionals. Cream, blush and dusty rose; soft window light from the upper right; natural stone and satin; generous negative space. Editorial beauty still life, never glossy advertising, never clinical.\n\nDo not include: faces, eyes, lashes being treated, a client, brand names, text, logos, packaging, bottles, tubes, jars, jewellery, long nails, messy surface. Never: products, bottles, tubes, jars, boxes, packaging or labels; text, letters, numbers, logos, watermarks or brand marks; faces, eyes, lashes or brows; before-and-after or treatment results; a recognisable person; stock clichés: flowers scattered on marble, fanned makeup brushes, spa stones, candles, champagne, gold glitter.\n\nPhotographic, natural, no illustration look, no AI gloss, no watermark.",
+ "promptHash": "a651256a650f",
+ "at": "2026-10-01T09:21:23.555Z",
+ "ms": 124115,
+ "costUsd": 0.0017,
+ "synthid": false,
+ "note": "",
+ "usage": null,
+ "status": "candidate",
+ "review": null,
+ "checks": {
+  "w": 896,
+  "h": 1120,
+  "ratioOk": true,
+  "std": 0.206,
+  "deltaE": 10.2,
+  "neon": 0,
+  "black": 0,
+  "pass": true,
+  "fails": []
+ }
+}

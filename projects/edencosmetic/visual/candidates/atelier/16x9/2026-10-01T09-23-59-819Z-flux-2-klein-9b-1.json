@@ -1,0 +1,32 @@
+{
+ "concept": "atelier",
+ "brand": null,
+ "ratio": "16:9",
+ "size": "2K",
+ "provider": "cloudflare",
+ "model": "@cf/black-forest-labs/flux-2-klein-9b",
+ "route": "cloudflare:@cf/black-forest-labs/flux-2-klein-9b",
+ "bakeoff": false,
+ "refs": [],
+ "prompt": "Top-down editorial photograph of an empty warm travertine stone surface in blush-cream tones, from #F4E9E2 to #DFC7BA. Late-afternoon window light from the upper right casts long, soft diagonal shadows of window mullions and the blurred silhouette of a lotus leaf and petals across the lower left third. Fine natural stone pores, a faint linen texture at one edge, a gentle tonal gradient. Medium-format still-life photography, overhead, 50mm, f/8, soft and even. The surface is completely empty. The centre stays open and calm, ready for objects to be placed later.\n\nHouse style: Warm, calm, precise; an atelier for lash and brow professionals. Cream, blush and dusty rose; soft window light from the upper right; natural stone and satin; generous negative space. Editorial beauty still life, never glossy advertising, never clinical.\n\nDo not include: objects, products, bottles, tubes, jars, boxes, tools, flowers, petals on the surface, people, hands, text, logos, watermark, glitter, marble veins, heavy vignette. Never: products, bottles, tubes, jars, boxes, packaging or labels; text, letters, numbers, logos, watermarks or brand marks; faces, eyes, lashes or brows; before-and-after or treatment results; a recognisable person; stock clichés: flowers scattered on marble, fanned makeup brushes, spa stones, candles, champagne, gold glitter.\n\nPhotographic, natural, no illustration look, no AI gloss, no watermark.",
+ "promptHash": "f0309dc819cf",
+ "at": "2026-10-01T09:23:59.820Z",
+ "ms": 2153,
+ "costUsd": 0.015,
+ "synthid": false,
+ "note": "",
+ "usage": null,
+ "status": "candidate",
+ "review": null,
+ "checks": {
+  "w": 1328,
+  "h": 752,
+  "ratioOk": true,
+  "std": 0.182,
+  "deltaE": 7.7,
+  "neon": 0,
+  "black": 0,
+  "pass": true,
+  "fails": []
+ }
+}

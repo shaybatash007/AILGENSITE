@@ -1,0 +1,32 @@
+{
+ "concept": "field",
+ "brand": "thuya",
+ "ratio": "16:9",
+ "size": "1K",
+ "provider": "cloudflare",
+ "model": "@cf/black-forest-labs/flux-2-klein-4b",
+ "route": "cloudflare:@cf/black-forest-labs/flux-2-klein-4b",
+ "bakeoff": false,
+ "refs": [],
+ "prompt": "Abstract studio photograph, a material study: glossy red lacquer plane (#C10C08) meeting matte charcoal paper (#1F1A1C) at a soft angle, a thin brushed-silver edge between them. Soft studio light, shallow depth, generous empty space on one side for a product to be placed later.\n\nHouse style: Warm, calm, precise; an atelier for lash and brow professionals. Cream, blush and dusty rose; soft window light from the upper right; natural stone and satin; generous negative space. Editorial beauty still life, never glossy advertising, never clinical.\n\nDo not include: text, logos, letters, packaging, products, bottles, tubes, jars, boxes, people, hands, faces. Never: products, bottles, tubes, jars, boxes, packaging or labels; text, letters, numbers, logos, watermarks or brand marks; faces, eyes, lashes or brows; before-and-after or treatment results; a recognisable person; stock clichés: flowers scattered on marble, fanned makeup brushes, spa stones, candles, champagne, gold glitter.\n\nPhotographic, natural, no illustration look, no AI gloss, no watermark.",
+ "promptHash": "b626dc213de9",
+ "at": "2026-10-01T09:23:57.113Z",
+ "ms": 128949,
+ "costUsd": 0.0017,
+ "synthid": false,
+ "note": "",
+ "usage": null,
+ "status": "candidate",
+ "review": null,
+ "checks": {
+  "w": 1328,
+  "h": 752,
+  "ratioOk": true,
+  "std": 0.208,
+  "deltaE": 25.1,
+  "neon": 0,
+  "black": 0,
+  "pass": true,
+  "fails": []
+ }
+}
