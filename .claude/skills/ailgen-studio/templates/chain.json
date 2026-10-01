@@ -737,6 +737,18 @@
    }
   },
   {
+   "id": "agent-live",
+   "phase": "5-site",
+   "label": "The site's agent answers on the public host from the page's own facts: a server function with the Workers AI binding, and its context built from the page itself (cloud/<slug>/, cloud/context.mjs, reference 12)",
+   "check": {
+    "glob": "cloud/{slug}/functions/api/*.js",
+    "min": 1,
+    "files": [
+     "cloud/{slug}/context.js"
+    ]
+   }
+  },
+  {
    "id": "evolve",
    "phase": "8-deliver",
    "label": "Autonomy: evolve.json and a baseline catalog snapshot",

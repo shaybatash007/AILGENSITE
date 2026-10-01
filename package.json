@@ -39,7 +39,11 @@
     "site:status": "node tools/site-switch.mjs status",
     "site:on": "node tools/site-switch.mjs on",
     "site:off": "node tools/site-switch.mjs off",
-    "site:check": "node tools/build-surfaces.mjs && node tools/link-audit.mjs"
+    "site:check": "node tools/build-surfaces.mjs && node tools/link-audit.mjs",
+    "cloud:context": "node cloud/context.mjs edencosmetic",
+    "cloud:lotti": "node cloud/dev.mjs call edencosmetic api/lotti '{\"messages\":[{\"role\":\"user\",\"content\":\"מה כדאי למתחילה?\"}]}'",
+    "lab:catalog": "node cloud/lab/catalog.mjs",
+    "lab:dev": "node cloud/dev.mjs serve lab --port 8791 --key test"
   },
   "devDependencies": {
     "@playwright/mcp": "^0.0.82",

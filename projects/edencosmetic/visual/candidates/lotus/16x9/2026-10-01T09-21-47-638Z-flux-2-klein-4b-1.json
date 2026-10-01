@@ -28,5 +28,19 @@
   "black": 0,
   "pass": true,
   "fails": []
+ },
+ "vision": {
+  "model": "@cf/meta/llama-4-scout-17b-16e-instruct",
+  "at": "2026-10-01T10:05:28.541Z",
+  "answer": {
+   "artifacts": "none",
+   "face_or_eyes": false,
+   "hands": false,
+   "logo": false,
+   "one_line": "a pink lotus flower on water",
+   "product_or_packaging": false,
+   "text_or_letters": false
+  },
+  "fails": []
  }
 }

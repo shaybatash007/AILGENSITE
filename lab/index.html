@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>AILGEN Lab</title>
+<meta name="description" content="המעבדה הפרטית של AILGEN: כל מודל חינמי של Cloudflare Workers AI, במקום אחד.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23070B2E'/%3E%3Cpolygon points='22,80 44,20 56,20 78,80 66,80 50,37 34,80' fill='%23EEF0FB'/%3E%3Crect x='45' y='58' width='10' height='10' fill='%23FFB23E'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Frank+Ruhl+Libre:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<a class="skip" href="#main">לתוכן</a>
+<header class="top">
+ <div class="brand"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="22,80 44,20 56,20 78,80 66,80 50,37 34,80" fill="currentColor"/><rect x="45" y="58" width="10" height="10" fill="var(--amber)"/></svg><b>AILGEN</b><span>Lab</span></div>
+ <p class="sub" id="plan">כל המודלים החינמיים של Cloudflare Workers AI</p>
+ <div class="meta">
+  <span class="chip" id="meter" title="נוירונים שהמודלים דיווחו בסשן הזה. המכסה החינמית: 10,000 ביום, מתאפסת בחצות UTC (02:00 או 03:00 בישראל)">0 נוירונים בסשן</span>
+  <button class="chip btnchip" id="logout" type="button" hidden>יציאה</button>
+ </div>
+</header>
+
+<div class="shell">
+ <nav class="tabs" aria-label="סביבות עבודה" id="tabs">
+  <button type="button" data-tab="text" aria-current="page"><i>01</i>טקסט</button>
+  <button type="button" data-tab="compare"><i>02</i>השוואה</button>
+  <button type="button" data-tab="image"><i>03</i>תמונה</button>
+  <button type="button" data-tab="vision"><i>04</i>ראייה</button>
+  <button type="button" data-tab="translate"><i>05</i>תרגום</button>
+  <button type="button" data-tab="speech"><i>06</i>דיבור</button>
+  <button type="button" data-tab="search"><i>07</i>חיפוש</button>
+  <button type="button" data-tab="raw"><i>08</i>JSON חופשי</button>
+  <button type="button" data-tab="models"><i>09</i>מודלים</button>
+  <button type="button" data-tab="bench"><i>10</i>תוצאות</button>
+ </nav>
+
+ <main id="main" tabindex="-1">
+  <!-- text -->
+  <section class="pane" id="p-text" aria-labelledby="h-text">
+   <h1 id="h-text">טקסט</h1>
+   <p class="lead">מודל שפה אחד, הוראות ושאלה. המודל המומלץ לעברית מסומן.</p>
+   <div class="grid2">
+    <label>מודל<select id="tModel"></select></label>
+    <div class="row3">
+     <label>אורך מרבי<input id="tMax" type="number" min="16" max="4000" value="800"></label>
+     <label>טמפרטורה<input id="tTemp" type="number" min="0" max="2" step="0.1" placeholder="ברירת מחדל"></label>
+     <label>חשיבה<select id="tEffort"><option value="">ברירת מחדל</option><option value="low" selected>low</option><option value="medium">medium</option><option value="high">high</option></select></label>
+    </div>
+   </div>
+   <label>הוראות (system)<textarea id="tSys" rows="3" placeholder="למשל: ענו בעברית, בקצרה, רק מתוך העובדות שלמטה."></textarea></label>
+   <label>הודעה<textarea id="tMsg" rows="4" placeholder="מה לשאול?"></textarea></label>
+   <div class="actions"><button class="go" id="tGo" type="button">הרצה</button><span class="hint">Ctrl+Enter</span></div>
+   <div id="tOut" class="outs"></div>
+  </section>
+
+  <!-- compare -->
+  <section class="pane" id="p-compare" aria-labelledby="h-compare" hidden>
+   <h1 id="h-compare">השוואה</h1>
+   <p class="lead">אותן הוראות ואותה שאלה בעד ארבעה מודלים במקביל: זמן, נוירונים ותשובה, זה לצד זה.</p>
+   <fieldset class="picks" id="cPicks"><legend>מודלים (עד 4)</legend></fieldset>
+   <label>הוראות (system)<textarea id="cSys" rows="3"></textarea></label>
+   <label>הודעה<textarea id="cMsg" rows="3"></textarea></label>
+   <div class="actions"><button class="go" id="cGo" type="button">הרצה במקביל</button></div>
+   <div id="cOut" class="cols"></div>
+  </section>
+
+  <!-- image -->
+  <section class="pane" id="p-image" aria-labelledby="h-image" hidden>
+   <h1 id="h-image">תמונה</h1>
+   <p class="lead">אותה בקשה בכמה מודלים. במקום אחד רואים איכות, זמן ועלות לפני שמחליטים מה נכנס לנתיב של הסטודיו.</p>
+   <fieldset class="picks" id="iPicks"><legend>מודלים</legend></fieldset>
+   <label>בקשה (באנגלית עובד הכי טוב)<textarea id="iPrompt" rows="3" placeholder="Top-down editorial photograph of an empty travertine surface, late afternoon window light…"></textarea></label>
+   <div class="row3">
+    <label>יחס<select id="iRatio"><option value="1:1">1:1</option><option value="16:9" selected>16:9</option><option value="9:16">9:16</option><option value="4:5">4:5</option><option value="21:9">21:9</option></select></label>
+    <label>גודל<select id="iSize"><option value="s">קטן (כ-0.3MP, זול)</option><option value="m" selected>בינוני (כ-1MP)</option></select></label>
+    <label>Seed<input id="iSeed" type="number" min="0" placeholder="אקראי"></label>
+   </div>
+   <div class="actions"><button class="go" id="iGo" type="button">יצירה</button><span class="hint" id="iCost"></span></div>
+   <div id="iOut" class="gallery"></div>
+  </section>
+
+  <!-- vision -->
+  <section class="pane" id="p-vision" aria-labelledby="h-vision" hidden>
+   <h1 id="h-vision">ראייה</h1>
+   <p class="lead">תמונה ושאלה: טקסט חלופי, קריאת אריזה, בדיקה אם בתמונה שנוצרה יש טקסט, לוגו או אדם.</p>
+   <div class="drop" id="vDrop" tabindex="0" role="button" aria-label="בחירת תמונה"><input type="file" id="vFile" accept="image/*" hidden><img id="vPrev" alt="" hidden><span id="vHint">גוררים לכאן תמונה, מדביקים, או לוחצים לבחירה</span></div>
+   <fieldset class="picks" id="vPicks"><legend>מודלים</legend></fieldset>
+   <label>שאלה<textarea id="vQ" rows="2">Describe this image for an online shop: what it shows, colours, and every word printed on it, exactly as written.</textarea></label>
+   <div class="quick" id="vQuick"><button type="button" data-q="Answer ONLY compact JSON: {&quot;text_or_letters&quot;:bool,&quot;logo&quot;:bool,&quot;product_or_packaging&quot;:bool,&quot;person_face_or_hands&quot;:bool,&quot;artifacts&quot;:&quot;none|minor|major&quot;,&quot;one_line&quot;:&quot;what it shows&quot;}">שער לתמונה שנוצרה</button><button type="button" data-q="כתבו טקסט חלופי בעברית לתמונה, משפט אחד, בלי &quot;תמונה של&quot;.">טקסט חלופי בעברית</button><button type="button" data-q="Read every word printed on the product, exactly as written, line by line.">קריאת אריזה</button></div>
+   <div class="actions"><button class="go" id="vGo" type="button">שאילה</button></div>
+   <div id="vOut" class="cols"></div>
+  </section>
+
+  <!-- translate -->
+  <section class="pane" id="p-translate" aria-labelledby="h-translate" hidden>
+   <h1 id="h-translate">תרגום</h1>
+   <p class="lead">מודל התרגום הייעודי מול מודל שפה עם הוראה של שורה אחת, על אותו טקסט.</p>
+   <div class="row3">
+    <label>מ־<select id="trFrom"></select></label>
+    <label>אל<select id="trTo"></select></label>
+    <label>מודל שפה<select id="trLlm"></select></label>
+   </div>
+   <label>טקסט<textarea id="trText" rows="4"></textarea></label>
+   <div class="actions"><button class="go" id="trGo" type="button">תרגום</button></div>
+   <div id="trOut" class="cols"></div>
+  </section>
+
+  <!-- speech -->
+  <section class="pane" id="p-speech" aria-labelledby="h-speech" hidden>
+   <h1 id="h-speech">דיבור</h1>
+   <div class="split">
+    <div>
+     <h2>מדיבור לטקסט</h2>
+     <p class="lead">קובץ קול או הקלטה מהמיקרופון.</p>
+     <label>מודל<select id="sModel"></select></label>
+     <label>שפה<select id="sLang"><option value="he" selected>עברית</option><option value="en">אנגלית</option><option value="">זיהוי אוטומטי</option></select></label>
+     <div class="actions"><button class="ghost" id="sRec" type="button">הקלטה</button><label class="ghost file">קובץ<input type="file" id="sFile" accept="audio/*" hidden></label><span class="hint" id="sState"></span></div>
+     <div id="sOut" class="outs"></div>
+    </div>
+    <div>
+     <h2>מטקסט לדיבור</h2>
+     <p class="lead">אין כרגע מודל שמדבר עברית ב-Workers AI. אנגלית וספרדית כן.</p>
+     <label>מודל<select id="ttsModel"></select></label>
+     <label>טקסט<textarea id="ttsText" rows="3">Welcome to the studio. Every site we build starts with one true sentence.</textarea></label>
+     <div class="actions"><button class="go" id="ttsGo" type="button">הקראה</button></div>
+     <div id="ttsOut" class="outs"></div>
+    </div>
+   </div>
+  </section>
+
+  <!-- search -->
+  <section class="pane" id="p-search" aria-labelledby="h-search" hidden>
+   <h1 id="h-search">חיפוש לפי משמעות</h1>
+   <p class="lead">רשימה (שורה לכל פריט) ושאלה במילים אחרות. כל מודל הטמעה מדרג את הרשימה בנפרד.</p>
+   <div class="actions"><button class="ghost" id="seEden" type="button">טעינת 71 המוצרים של עדן</button><span class="hint" id="seN"></span></div>
+   <label>רשימה<textarea id="seDocs" rows="6" placeholder="פריט אחד בכל שורה"></textarea></label>
+   <fieldset class="picks" id="sePicks"><legend>מודלים</legend></fieldset>
+   <label>שאלה<input id="seQ" value="כלי לתלוש שערות מהגבה"></label>
+   <div class="actions"><button class="go" id="seGo" type="button">חיפוש</button></div>
+   <div id="seOut" class="cols"></div>
+  </section>
+
+  <!-- raw -->
+  <section class="pane" id="p-raw" aria-labelledby="h-raw" hidden>
+   <h1 id="h-raw">JSON חופשי</h1>
+   <p class="lead">כל מודל בקטלוג, עם הקלט המדויק שלו. התשובה מוצגת כמו שהיא: טקסט, תמונה, קול או JSON.</p>
+   <div class="grid2">
+    <label>מודל<select id="rModel"></select></label>
+    <label>סוג קריאה<select id="rKind"><option value="">כמו שהוא</option><option value="flux2">FLUX.2 (טופס)</option><option value="audio">קול (base64)</option></select></label>
+   </div>
+   <label>קלט (JSON)<textarea id="rIn" rows="8" class="mono" dir="ltr">{ "messages": [ { "role": "user", "content": "שלום" } ], "max_tokens": 200 }</textarea></label>
+   <div class="actions"><button class="go" id="rGo" type="button">הרצה</button><button class="ghost" id="rEx" type="button">דוגמה לסוג המודל</button></div>
+   <div id="rOut" class="outs"></div>
+  </section>
+
+  <!-- models -->
+  <section class="pane" id="p-models" aria-labelledby="h-models" hidden>
+   <h1 id="h-models">מודלים</h1>
+   <p class="lead" id="mLead"></p>
+   <div class="row3">
+    <label>חיפוש<input id="mQ" placeholder="שם או תיאור"></label>
+    <label>משימה<select id="mTask"><option value="">הכול</option></select></label>
+    <label>זמינות<select id="mPaid"><option value="free" selected>חינם בלבד</option><option value="">הכול</option><option value="paid">בתשלום בלבד</option></select></label>
+   </div>
+   <div id="mList" class="mlist"></div>
+  </section>
+
+  <!-- bench -->
+  <section class="pane" id="p-bench" aria-labelledby="h-bench" hidden>
+   <h1 id="h-bench">תוצאות</h1>
+   <p class="lead" id="bLead"></p>
+   <div id="bList"></div>
+  </section>
+ </main>
+</div>
+
+<div class="lock" id="lock" role="dialog" aria-modal="true" aria-labelledby="lockT" hidden>
+ <form class="lockbox" id="lockF">
+  <div class="brand big"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="22,80 44,20 56,20 78,80 66,80 50,37 34,80" fill="currentColor"/><rect x="45" y="58" width="10" height="10" fill="var(--amber)"/></svg><b>AILGEN</b><span>Lab</span></div>
+  <h2 id="lockT">המעבדה פרטית</h2>
+  <p id="lockMsg">הקוד הוא הסוד <bdi dir="ltr">LAB_PASSCODE</bdi> שנקבע ב-GitHub.</p>
+  <label class="sr" for="lockIn">קוד</label>
+  <input id="lockIn" type="password" autocomplete="current-password" placeholder="קוד" required>
+  <button class="go" type="submit">כניסה</button>
+  <p class="hint" id="lockErr" role="status"></p>
+ </form>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

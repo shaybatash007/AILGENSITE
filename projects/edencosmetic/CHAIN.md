@@ -1,8 +1,10 @@
 # בדיקת השרשרת: edencosmetic
 
-2026-09-30 21:22 · 69 אלמנטים · **68 קיימים** · 0 חסרים · 1 לא רלוונטיים
+2026-10-01 10:05 · 70 אלמנטים · **68 קיימים** · **1 חסרים** · 1 לא רלוונטיים
 
-כל אלמנט בשרשרת קיים, עם ראיה.
+## חסרים (חוסמים מסירה)
+
+- **Committed and pushed** (8-deliver): 18 קבצים לא מחויבים
 
 ## כל האלמנטים, עם זמן ועלות
 
@@ -73,12 +75,13 @@
 | 5-site | Design critique: every region scored before and after, alternatives weighed (critique/critique.md) | קיים | — | — |
 | 5-site | Design critique shots: every region alone, desktop and phone, after the rebuild | קיים | — | — |
 | 5-site | The free layer is live on the site, not beside it: a GPU first screen, a signature scroll scene, brand materials, page-wide motion, each with its guardrails (reference 12) | קיים | — | — |
+| 5-site | The site's agent answers on the public host from the page's own facts: a server function with the Workers AI binding, and its context built from the page itself (cloud/<slug>/, cloud/context.mjs, reference 12) | קיים | — | — |
 | 8-deliver | Autonomy: evolve.json and a baseline catalog snapshot | קיים | — | — |
 | 8-deliver | Autonomy: the loop's first report | קיים | — | — |
 | 7-portfolio | The site filmed in motion on a virtual clock: a shot list and the film (scripts/film-site.mjs) | קיים | — | — |
 | 8-deliver | Meter: every phase opened and closed, report written | קיים | — | — |
 | 8-deliver | Report to the owner in Hebrew (report.md) with links and what only they can supply | קיים | 1.7 דק׳ (מדוד) | $0.89 |
-| 8-deliver | Committed and pushed | קיים | — | — |
+| 8-deliver | Committed and pushed | **חסר** | — | — |
 
 ## סיכום לפי שלב
 
@@ -90,7 +93,7 @@
 | 3-mascot | 3 | 3 | 3.1 דק׳ | $1.40 |
 | 4-blueprint | 1 | 1 | 1.1 דק׳ | $0.34 |
 | 4b-seo | 6 | 6 | 7.7 דק׳ | $5.05 |
-| 5-site | 22 | 22 | 41.1 דק׳ | $17.80 |
+| 5-site | 23 | 23 | 41.1 דק׳ | $17.80 |
 | 6-film | 8 | 8 | 146.3 דק׳ | $9.62 |
 | 7-portfolio | 6 | 6 | 11.7 דק׳ | $6.88 |
-| 8-deliver | 5 | 5 | 1.7 דק׳ | $0.89 |
+| 8-deliver | 5 | 4 | 1.7 דק׳ | $0.89 |

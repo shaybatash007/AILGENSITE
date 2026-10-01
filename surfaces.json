@@ -10,7 +10,8 @@
     "projects": {
       "ailgen": "ailgen",
       "edencosmetic": "ailgen-edencosmetic",
-      "talorkaradi": "ailgen-talorkaradi"
+      "talorkaradi": "ailgen-talorkaradi",
+      "lab": "ailgen-lab"
     }
   },
   "surfaces": [
@@ -35,7 +36,8 @@
         "studio/src",
         "studio/build.sh"
       ],
-      "label": "AILGEN"
+      "label": "AILGEN",
+      "functions": "cloud/ailgen"
     },
     {
       "name": "edencosmetic",
@@ -50,7 +52,9 @@
         "src",
         "build.sh"
       ],
-      "label": "עדן קוסמטיקס"
+      "label": "עדן קוסמטיקס",
+      "functions": "cloud/edencosmetic",
+      "$functions": "Server routes for this surface (cloud/<surface>/functions/, Cloudflare Pages Functions) with the Workers AI binding env.AI. Deployed with the surface only while the switch is on; tools/site-switch.mjs writes the wrangler.toml."
     },
     {
       "name": "talorkaradi",
@@ -65,6 +69,20 @@
         "build.sh"
       ],
       "label": "קבוצת טלאור כראדי"
+    },
+    {
+      "name": "lab",
+      "role": "AILGEN Lab: the studio's private workbench for every free Workers AI model. Never linked from a site, noindex, its routes behind LAB_PASSCODE.",
+      "dir": "lab",
+      "include": null,
+      "hostFree": "ailgen-lab.pages.dev",
+      "hostCustom": null,
+      "label": "AILGEN Lab",
+      "functions": "cloud/lab",
+      "secrets": [
+        "LAB_PASSCODE"
+      ],
+      "$secrets": "Repository secrets copied to the Pages project on each deploy (tools/site-switch.mjs). LAB_PASSCODE: any password the owner chooses; until it exists the lab answers 423 and stays locked."
     }
   ],
   "$interim": "Until a hostname exists, edencosmetic and talorkaradi are published on GitHub Pages at a path, and their root-absolute links 404. tools/link-audit.mjs counts those as 'root-assumed' and exits 0, because they are not defects - they are correct links waiting for the layout to catch up. The audit becomes a real failure the moment a hostname is attached, which is exactly when it should.",

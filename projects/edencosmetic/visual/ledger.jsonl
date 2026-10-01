@@ -4,3 +4,5 @@
 {"at":"2026-10-01T09:21:47.637Z","kind":"image","provider":"cloudflare","model":"@cf/black-forest-labs/flux-2-klein-4b","concept":"lotus","brand":null,"ratio":"16:9","size":"2K","refs":0,"costUsd":0.0017,"ok":true,"bakeoff":false}
 {"at":"2026-10-01T09:23:57.111Z","kind":"image","provider":"cloudflare","model":"@cf/black-forest-labs/flux-2-klein-4b","concept":"field","brand":"thuya","ratio":"16:9","size":"1K","refs":0,"costUsd":0.0017,"ok":true,"bakeoff":false}
 {"at":"2026-10-01T09:23:59.819Z","kind":"image","provider":"cloudflare","model":"@cf/black-forest-labs/flux-2-klein-9b","concept":"atelier","brand":null,"ratio":"16:9","size":"2K","refs":0,"costUsd":0.015,"ok":true,"bakeoff":false}
+{"at":"2026-10-01T10:02:48.248Z","kind":"image","provider":"cloudflare","model":"@cf/black-forest-labs/flux-2-klein-9b","concept":"craft","brand":null,"ratio":"4:5","size":"2K","refs":0,"costUsd":0.017,"ok":true,"bakeoff":false}
+{"at":"2026-10-01T10:02:50.859Z","kind":"image","provider":"cloudflare","model":"@cf/black-forest-labs/flux-2-klein-9b","concept":"curl","brand":null,"ratio":"21:9","size":"2K","refs":0,"costUsd":0.015,"ok":true,"bakeoff":false}

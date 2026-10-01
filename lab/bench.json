@@ -1,0 +1,592 @@
+{
+ "date": "2026-10-01",
+ "plan": "Workers Free",
+ "source": "קריאות אמיתיות מסביבת הסטודיו ל-Workers AI; התשובות מצוטטות כמו שהן, מקוצרות",
+ "tests": [
+  {
+   "id": "lotti",
+   "title": "לוטי של עדן: \"אני מתחילה בהרמת ריסים, תקציב 150 ₪\"",
+   "setup": "כל הקטלוג של עדן (71 מוצרים, כ-2,300 טוקנים) בהוראות; שאלה אחת; max_tokens 1,500",
+   "correct": "מיני ערכת ניסיון של My lamination (99 ₪), ואולי מוט הרמה (30 ₪)",
+   "runs": [
+    {
+     "model": "@cf/openai/gpt-oss-120b",
+     "ok": true,
+     "ms": 6800,
+     "neurons": 111,
+     "answer": "היי! 😊 כדי להתחיל בהרמת ריסים במסגרת תקציב של 150 ₪, מומלץ:\n\n- **My lamination מיני ערכת ניסיון להרמת ריסים וגבות – שקית אחת מכל שלב** – 99 ₪  \n- **מוט הרמה – להרמת ריסים** – 30 ₪  \n\nסה״כ 129 ₪ – ערכה מושלמת למתחילים! אם יש לך שאלות נוספות, אפשר ליצור קשר עם עדן בוואטסאפ.",
+     "verdict": "נכון"
+    },
+    {
+     "model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+     "ok": true,
+     "ms": 12400,
+     "neurons": 188,
+     "answer": "לוטי בשבילך! \n\nאני ממליצה לך לקנות את My lamination מיני ערכת ניסיון להרמת ריסים וגבות- שקית אחת מכל שלב, במחיר 99 ₪. זו ערכה קטנה ונוחה לניסיון, ותוכלי להרגיש איך זה עובד בשבילך. \n\nאם תרצי, תוכלי גם לקנות את מוט הרמה - להרמת ריסים, במחיר 30 ₪, כדי לעזור לך בתהליך. \n\nשתי האפשרויות האלה יותרות תוך תקציב של 150 ₪. \n\nאם תהיה לך שאלה נוספת, אל תהססי לשאול!",
+     "verdict": "נכון, עם שגיאות עברית"
+    },
+    {
+     "model": "@cf/meta/llama-4-scout-17b-16e-instruct",
+     "ok": true,
+     "ms": 1700,
+     "neurons": 69,
+     "answer": "ערכת מיני ניסיון להרמת ריסים וגבות של My lamination, רק 99 ₪. תוכלי לנסות ולראות איך זה עובד בשבילך. אם תרצי משהו אחר, אשמח שתדברי עם עדן בוואטסאפ.",
+     "verdict": "נכון"
+    },
+    {
+     "model": "@cf/google/gemma-4-26b-a4b-it",
+     "ok": false,
+     "ms": 30100,
+     "neurons": null,
+     "answer": "502 אחרי 30 שניות",
+     "verdict": "לא ענה"
+    },
+    {
+     "model": "@cf/google/gemma-4-26b-a4b-it",
+     "ok": false,
+     "ms": 30500,
+     "neurons": null,
+     "answer": "502 אחרי 30 שניות",
+     "verdict": "לא ענה"
+    },
+    {
+     "model": "@cf/qwen/qwen3.8-27b",
+     "ok": false,
+     "ms": 30500,
+     "neurons": null,
+     "answer": "502 אחרי 30 שניות",
+     "verdict": "לא ענה"
+    },
+    {
+     "model": "@cf/mistralai/mistral-small-3.1-24b-instruct",
+     "ok": true,
+     "ms": 3300,
+     "neurons": 90,
+     "answer": "להתחלה, אני ממליצה על המיני ערכת ניסיון של My lamination להרמת ריסים וגבות, שמכילה שקית אחת מכל שלב. המחיר הוא 99 ₪, והיא תאפשר לך לנסות את התהליך ולראות אם זה מה שאת רוצה. בנוסף, תוכל לקנות פינצטה סטאלקס 11/3 תמורת 42 ₪, כדי להרים את הריסים בצורה נוחה ומדויקת.",
+     "verdict": "שגוי"
+    },
+    {
+     "model": "@cf/nvidia/nemotron-3-120b-a12b",
+     "ok": true,
+     "ms": 14200,
+     "neurons": 322,
+     "answer": "(אין תוכן: 1,500 טוקנים של חשיבה בלבד)",
+     "verdict": "לא ענה"
+    },
+    {
+     "model": "@cf/zai-org/glm-4.7-flash",
+     "ok": false,
+     "ms": 30100,
+     "neurons": null,
+     "answer": "502 אחרי 30 שניות",
+     "verdict": "לא ענה"
+    },
+    {
+     "model": "@cf/zai-org/glm-5.3",
+     "ok": false,
+     "ms": 800,
+     "neurons": null,
+     "answer": "AiError 5035: לא זמין בתוכנית Workers Free",
+     "verdict": "בתשלום בלבד"
+    },
+    {
+     "model": "@cf/moonshotai/kimi-k2.6",
+     "ok": false,
+     "ms": 100,
+     "neurons": null,
+     "answer": "AiError 5035: לא זמין בתוכנית Workers Free",
+     "verdict": "בתשלום בלבד"
+    },
+    {
+     "model": "@cf/deepseek-ai/deepseek-v4-pro-0813",
+     "ok": false,
+     "ms": 100,
+     "neurons": null,
+     "answer": "AiError 5035: לא זמין בתוכנית Workers Free",
+     "verdict": "בתשלום בלבד"
+    },
+    {
+     "model": "@cf/deepseek-ai/deepseek-v4-flash-0731",
+     "ok": false,
+     "ms": 100,
+     "neurons": null,
+     "answer": "AiError 5035: לא זמין בתוכנית Workers Free",
+     "verdict": "בתשלום בלבד"
+    }
+   ]
+  },
+  {
+   "id": "lotti-v2",
+   "title": "לוטי עם ההקשר המלא של האתר (מחירים, מלאי, שלבי הטיפול, כללים)",
+   "setup": "ההוראות שהאתר עצמו בונה (9,282 תווים); אותה שאלה, ועוד בקשה שאינה בנושא החנות (\"תכתבי לי שיר על חתולים\")",
+   "correct": "מיני ערכת ניסיון 99 ₪; סירוב מנומס לשיר",
+   "runs": [
+    {
+     "model": "@cf/openai/gpt-oss-120b",
+     "opts": "reasoning_effort=low",
+     "ms": 4743,
+     "neurons": 146,
+     "verdict": "נכון",
+     "answer": "מיני ערכת ניסיון להרמת ריסים וגבות – 99 ₪ (כוללת שקית אחת מכל שלב) ופינצטה... הסכום הכולל 154 ₪, או עם פינצטה של Stalex 141 ₪."
+    },
+    {
+     "model": "@cf/openai/gpt-oss-120b",
+     "opts": "default effort",
+     "ms": 12687,
+     "neurons": 176,
+     "verdict": "נכון, אבל נקטע",
+     "answer": "עם תקציב של 150 ₪ אפשר להתחיל עם מיני ערכת ניסיון של My lamination (99 ₪) ול… (נקטע: התקציב נגמר על חשיבה)"
+    },
+    {
+     "model": "@cf/meta/llama-4-scout-17b-16e-instruct",
+     "opts": "",
+     "ms": 2650,
+     "neurons": 122,
+     "verdict": "שגוי",
+     "answer": "עם 150 ₪ תוכלי לקנות שלב 1, 2 או 3 של My lamination…"
+    },
+    {
+     "model": "@cf/openai/gpt-oss-120b",
+     "opts": "reasoning_effort=low · שיר על חתולים",
+     "ms": 1643,
+     "neurons": 135,
+     "verdict": "סירב, כמו שצריך",
+     "answer": "עדן תענה בוואטסאפ 052-545-3602."
+    },
+    {
+     "model": "@cf/openai/gpt-oss-120b",
+     "opts": "default effort · שיר על חתולים",
+     "ms": 9103,
+     "neurons": 147,
+     "verdict": "כתב את השיר",
+     "answer": "פזזים על החלון, עיניים כוכביות…"
+    },
+    {
+     "model": "@cf/meta/llama-4-scout-17b-16e-instruct",
+     "opts": "שיר על חתולים",
+     "ms": 2837,
+     "neurons": 123,
+     "verdict": "כתב את השיר",
+     "answer": "חתולים, יצורים קטנים, בעלי עיניים גדולות…"
+    }
+   ]
+  },
+  {
+   "id": "vision",
+   "title": "קריאת אריזה: ערכת THUYA מהחנות",
+   "setup": "תמונת המוצר מהחנות; \"תאר את המוצר וכל מילה שכתובה עליו\"",
+   "image": "img/thuya-kit.jpg",
+   "runs": [
+    {
+     "model": "@cf/meta/llama-4-scout-17b-16e-instruct",
+     "ok": true,
+     "ms": 7100,
+     "answer": "The product photo shows a \"Mini Kit Lamination\" set from the Thuya Israel Professional Line. The kit includes three items: \n\n1. A tall, rectangular box with a red and white color scheme. The box is labeled \"THUYA ISRAEL PROFESSIONAL LINE\" in red text on the left side, and \"MINI KIT LAMINATION\" in larger red text below it. The top of the box features the brand name \"ACADEMY\" in small white text, followed by \"thuya\" in larger white cursive text, and \"ISRAEL PROFESSIONAL LINE\" in smaller white text underneath.\n\n2. A silver tube with a white cap, labeled \"Gel Permanente Permanent Gel\" in black text, and featuring the Thuya logo.\n\n3. A smaller white tube with a red stripe at the top, labeled \"Neutralizante Cejas\" in black text, and also featuring the Thuya logo.\n\n4. A black and gold box with a label that reads \"CREMA REGENERADORA PESTAÑAS EYELASH REGENERATING CREAM\" in white and gold text. Th",
+     "verdict": "קרא את האריזה, שורה אחת שגויה (Neutralizante Cejas)"
+    },
+    {
+     "model": "@cf/mistralai/mistral-small-3.1-24b-instruct",
+     "ok": true,
+     "ms": 7000,
+     "answer": "### Product Description:\n\n**Product Name:** Thuya Mini Kit Lamination\n\n**Brand:** Thuya Israel Professional Line\n\n**Packaging:**\n- The product comes in a set of three items, each with its own packaging, and a main box.\n- The main box is rectangular with a predominantly red and white color scheme.\n- The two tubes and one box are placed in front of the main box.\n\n**Main Box:**\n- **Color:** Red and white\n- **Text:**\n  - Vertical text on the side: \"THUYA ISRAEL PROFESSIONAL LINE\"\n  - Vertical text on the front: \"MINI KIT LAMINATION\"\n  - Top of the box: \"ACADEMY Thuya\" with a stylized signature below it\n  - Bottom of the box: \"ISRAEL PROFESSIONAL LINE\"\n\n**First Tube (on the left):**\n- **Color:** White with red cap and red bottom\n- **Text:**\n  - \"Gel Permanente Permanent Gel\"\n  - \"Professional Line\"\n  - \"Thuya\" with a stylized signature below it\n\n**Second Tube (in the middle):**\n- **Color:** W",
+     "verdict": "קרא כל שורה, צבע אחד שגוי"
+    }
+   ]
+  },
+  {
+   "id": "search",
+   "title": "חיפוש לפי משמעות בעברית, על 71 המוצרים",
+   "setup": "הטמעה של שם + סוג + תיאור; 5 שאלות שמילות מפתח לא פותרות",
+   "runs": [
+    {
+     "model": "@cf/baai/bge-m3",
+     "queries": [
+      {
+       "q": "משהו שמחזיק את הריסים על הסיליקון",
+       "keyword": 1,
+       "top": [
+        {
+         "score": 0.533,
+         "title": "סיליקונים ליפט צבעוניים להרמת ריסים -6 מידות",
+         "price": 60
+        },
+        {
+         "score": 0.524,
+         "title": "זוג סיליקונים לתיקונים / הסרות / צביעת ריסים",
+         "price": 30
+        },
+        {
+         "score": 0.518,
+         "title": "סיליקון לכיסוי הרמת גבות - רב פעמי",
+         "price": 35
+        }
+       ]
+      },
+      {
+       "q": "צבע לגבות בגוון חום",
+       "keyword": 25,
+       "top": [
+        {
+         "score": 0.695,
+         "title": "צבע לגבות -NIKK MOLE  חום",
+         "price": 45
+        },
+        {
+         "score": 0.65,
+         "title": "צבע THUYA ריסים וגבות - brown",
+         "price": 65
+        },
+        {
+         "score": 0.639,
+         "title": "צבע לגבות / ריסים refectocil מס' 3",
+         "price": 60
+        }
+       ]
+      },
+      {
+       "q": "ערכה זולה לנסות הרמת ריסים בפעם הראשונה",
+       "keyword": 37,
+       "top": [
+        {
+         "score": 0.543,
+         "title": "My lamination חמצן",
+         "price": 30
+        },
+        {
+         "score": 0.511,
+         "title": "My lamination מיני ערכת ניסיון להרמת ריסים וגבות- שקית אחת מכל שלב",
+         "price": 99
+        },
+        {
+         "score": 0.499,
+         "title": "My lamination שלב 3 להרמת גבות- 5 שקיות",
+         "price": 140
+        }
+       ]
+      },
+      {
+       "q": "כלי לתלוש שערות מהגבה",
+       "keyword": 0,
+       "top": [
+        {
+         "score": 0.558,
+         "title": "My lamination קצף ניקוי לפנים/ ריסים/ גבות 4 ב1 50 מ״ל",
+         "price": 50
+        },
+        {
+         "score": 0.54,
+         "title": "מספריים קפיץ לגבות",
+         "price": 60
+        },
+        {
+         "score": 0.524,
+         "title": "My lamination שלב 3 להרמת גבות- 5 שקיות",
+         "price": 140
+        }
+       ]
+      },
+      {
+       "q": "לנקות את האזור לפני הטיפול",
+       "keyword": 1,
+       "top": [
+        {
+         "score": 0.513,
+         "title": "שמפו קצף ניקוי לריסים / גבות / פנים חברת nikk mola",
+         "price": 60
+        },
+        {
+         "score": 0.5,
+         "title": "My lamination קצף ניקוי לפנים/ ריסים/ גבות 4 ב1 50 מ״ל",
+         "price": 50
+        },
+        {
+         "score": 0.469,
+         "title": "My lamination שלב 2 להרמת ריסים וגבות- שפורפרת 10 מ״ל",
+         "price": 150
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "model": "@cf/qwen/qwen3-embedding-0.6b",
+     "queries": [
+      {
+       "q": "משהו שמחזיק את הריסים על הסיליקון",
+       "keyword": 1,
+       "top": [
+        {
+         "score": 0.593,
+         "title": "זוג סיליקונים לתיקונים / הסרות / צביעת ריסים",
+         "price": 30
+        },
+        {
+         "score": 0.577,
+         "title": "סיליקון לכיסוי הרמת גבות - רב פעמי",
+         "price": 35
+        },
+        {
+         "score": 0.573,
+         "title": "סיליקונים כריש - מעוגל רחב",
+         "price": 55
+        }
+       ]
+      },
+      {
+       "q": "צבע לגבות בגוון חום",
+       "keyword": 25,
+       "top": [
+        {
+         "score": 0.662,
+         "title": "צבע לגבות -NIKK MOLE  חום",
+         "price": 45
+        },
+        {
+         "score": 0.538,
+         "title": "צבע THUYA ריסים וגבות - brown",
+         "price": 65
+        },
+        {
+         "score": 0.502,
+         "title": "צבע THUYA ריסים וגבות -bluish black",
+         "price": 65
+        }
+       ]
+      },
+      {
+       "q": "ערכה זולה לנסות הרמת ריסים בפעם הראשונה",
+       "keyword": 37,
+       "top": [
+        {
+         "score": 0.506,
+         "title": "My lamination שלב 2 להרמת ריסים וגבות- שפורפרת 10 מ״ל",
+         "price": 150
+        },
+        {
+         "score": 0.502,
+         "title": "My lamination שלב 2 להרמת ריסים וגבות- מארז 5 שקיות של 1.5 מ״ל",
+         "price": 140
+        },
+        {
+         "score": 0.456,
+         "title": "My lamination שלב 1 להרמת ריסים וגבות- שפורפרת 10 מ״ל",
+         "price": 150
+        }
+       ]
+      },
+      {
+       "q": "כלי לתלוש שערות מהגבה",
+       "keyword": 0,
+       "top": [
+        {
+         "score": 0.511,
+         "title": "סיליקונים קשת בענן - מעוגל חד 10 מידות נדבקים ללא דבק",
+         "price": 55
+        },
+        {
+         "score": 0.488,
+         "title": "מארז 10 מסרקונים להרמת גבות - בצבע שחור",
+         "price": 10
+        },
+        {
+         "score": 0.487,
+         "title": "סיליקון לכיסוי הרמת גבות - רב פעמי",
+         "price": 35
+        }
+       ]
+      },
+      {
+       "q": "לנקות את האזור לפני הטיפול",
+       "keyword": 1,
+       "top": [
+        {
+         "score": 0.427,
+         "title": "My lamination שלב 2 להרמת ריסים וגבות- שפורפרת 10 מ״ל",
+         "price": 150
+        },
+        {
+         "score": 0.415,
+         "title": "My lamination קצף ניקוי לפנים/ ריסים/ גבות 4 ב1 50 מ״ל",
+         "price": 50
+        },
+        {
+         "score": 0.402,
+         "title": "My lamination שלב 2 להרמת ריסים וגבות- מארז 5 שקיות של 1.5 מ״ל",
+         "price": 140
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "model": "@cf/google/embeddinggemma-300m",
+     "queries": [
+      {
+       "q": "משהו שמחזיק את הריסים על הסיליקון",
+       "keyword": 1,
+       "top": [
+        {
+         "score": 0.433,
+         "title": "דבק קודי להרמת ריסים",
+         "price": 55
+        },
+        {
+         "score": 0.412,
+         "title": "My lamination מארז 2 זוגות פאצים דביקים לריסים פרפרים",
+         "price": 49
+        },
+        {
+         "score": 0.407,
+         "title": "גליל ניילון נצמד",
+         "price": 10
+        }
+       ]
+      },
+      {
+       "q": "צבע לגבות בגוון חום",
+       "keyword": 25,
+       "top": [
+        {
+         "score": 0.558,
+         "title": "מספריים קפיץ לגבות",
+         "price": 60
+        },
+        {
+         "score": 0.532,
+         "title": "גליל ניילון נצמד",
+         "price": 10
+        },
+        {
+         "score": 0.519,
+         "title": "צבע לגבות -NIKK MOLE  חום",
+         "price": 45
+        }
+       ]
+      },
+      {
+       "q": "ערכה זולה לנסות הרמת ריסים בפעם הראשונה",
+       "keyword": 37,
+       "top": [
+        {
+         "score": 0.486,
+         "title": "My lamination מארז 2 זוגות פאצים דביקים לריסים פרפרים",
+         "price": 49
+        },
+        {
+         "score": 0.42,
+         "title": "מוט הרמה - להרמת ריסים",
+         "price": 30
+        },
+        {
+         "score": 0.409,
+         "title": "דבק קודי להרמת ריסים",
+         "price": 55
+        }
+       ]
+      },
+      {
+       "q": "כלי לתלוש שערות מהגבה",
+       "keyword": 0,
+       "top": [
+        {
+         "score": 0.443,
+         "title": "גליל ניילון נצמד",
+         "price": 10
+        },
+        {
+         "score": 0.428,
+         "title": "מספריים קפיץ לגבות",
+         "price": 60
+        },
+        {
+         "score": 0.403,
+         "title": "מוט הרמה - להרמת ריסים",
+         "price": 30
+        }
+       ]
+      },
+      {
+       "q": "לנקות את האזור לפני הטיפול",
+       "keyword": 1,
+       "top": [
+        {
+         "score": 0.392,
+         "title": "My lamination מארז 2 זוגות פאצים דביקים לריסים פרפרים",
+         "price": 49
+        },
+        {
+         "score": 0.389,
+         "title": "גליל ניילון נצמד",
+         "price": 10
+        },
+        {
+         "score": 0.369,
+         "title": "סרט דבק רפואי -דק",
+         "price": 10
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "translate",
+   "title": "תרגום תיאור מוצר",
+   "setup": "m2m100 מול gpt-oss-120b, אותו טקסט",
+   "raw": "hebrew→english: קרם ריסים+ זה של My Lamination יוצר תלתל חדש של הריסים וכיוון חדש של הגבות. הוא הופך את השיער לגמיש וגמיש, ומכין אותו למריחה של השלב השני עם קרם ניטרול+. הוא מעניק תלתל חדש לריסים וכיוון חדש לגבות מבל\n   → This My Lamination+ eyelash cream creates a new eyelash and a new direction of the eyelashes. It makes the hair flexible and flexible, preparing it for the smell of the second phase with a neutral cream+. It gives a new eyelash and a new direction to the back of the eyelash.\n\nenglish→hebrew: Lash lift kit, three steps: perm lotion, setting lotion and nourishing balm. For professional use.\n   → Lash Lift Kit, שלושה שלבים: קרם perm, קרם הגדרת מרפא מזין לשימוש מקצועי.",
+   "runs": [
+    {
+     "model": "@cf/openai/gpt-oss-120b",
+     "ms": 7100,
+     "neurons": 30,
+     "verdict": "נכון",
+     "answer": "My Lamination Lash+ Cream creates a fresh curl on the lashes and a new direction for the brows. It makes the hair soft and pliable, preparing it for the second-stage application with Neutralizer Cream+. The result is a renewed lash curl and a precisely set brow shape."
+    }
+   ]
+  },
+  {
+   "id": "images",
+   "title": "טיוטות של חמשת הקונספטים של עדן",
+   "setup": "imagegen.mjs, נתיב draft; כל התמונות עברו את הבדיקות האוטומטיות (יחס, פלטה, בלי טקסט, לוגו או מוצר)",
+   "runs": [
+    {
+     "model": "@cf/black-forest-labs/flux-2-klein-4b",
+     "ms": 26700,
+     "image": "img/atelier-4b.webp",
+     "verdict": "אבן, אור חלון ולוטוס"
+    },
+    {
+     "model": "@cf/black-forest-labs/flux-2-klein-9b",
+     "ms": 2200,
+     "image": "img/atelier-9b.webp",
+     "verdict": "אותה בקשה במודל הגדול"
+    },
+    {
+     "model": "@cf/black-forest-labs/flux-2-klein-4b",
+     "ms": 23500,
+     "image": "img/lotus.webp",
+     "verdict": "לוטוס על מים בערפל"
+    },
+    {
+     "model": "@cf/black-forest-labs/flux-2-klein-4b",
+     "ms": 128900,
+     "image": "img/field-thuya.webp",
+     "verdict": "שדה מותג בצבעי האריזה"
+    },
+    {
+     "model": "@cf/black-forest-labs/flux-2-klein-4b",
+     "ms": 134400,
+     "image": "img/curl.webp",
+     "verdict": "סרט סאטן: העיקול לא נקרא כריס"
+    },
+    {
+     "model": "@cf/black-forest-labs/flux-2-klein-4b",
+     "ms": 124100,
+     "image": "img/craft.webp",
+     "verdict": "ידיים בכפפות: מלאכותיות מעט"
+    }
+   ]
+  }
+ ]
+}

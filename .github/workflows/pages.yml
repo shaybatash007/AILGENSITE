@@ -58,6 +58,8 @@ jobs:
       # the token: the secret CLOUDFLARE_API_TOKEN, or CLOUDFLARE (the name it was first saved under)
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CLOUDFLARE }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      # the AILGEN Lab's passcode (any password you choose; until it exists the lab's routes stay locked)
+      LAB_PASSCODE: ${{ secrets.LAB_PASSCODE }}
     steps:
       - uses: actions/checkout@v4
 

@@ -1,0 +1,51 @@
+{
+ "concept": "curl",
+ "brand": null,
+ "ratio": "21:9",
+ "size": "2K",
+ "provider": "cloudflare",
+ "model": "@cf/black-forest-labs/flux-2-klein-9b",
+ "route": "cloudflare:@cf/black-forest-labs/flux-2-klein-9b",
+ "bakeoff": false,
+ "refs": [],
+ "prompt": "Macro studio photograph of a single narrow ribbon of dusty-rose silk satin, #BF7F7F to #964F58, lying straight across a cream background (#F8EFEA); toward one end it lifts into a soft, elegant upward curl, like an eyelash after a lift. Soft diffused light, a gentle sheen along the satin, extremely shallow depth of field, creamy background blur. Minimal and sculptural, with wide negative space on both sides.\n\nHouse style: Warm, calm, precise; an atelier for lash and brow professionals. Cream, blush and dusty rose; soft window light from the upper right; natural stone and satin; generous negative space. Editorial beauty still life, never glossy advertising, never clinical.\n\nDo not include: eyes, eyelashes, faces, text, logos, several ribbons, bows, knots, gift wrapping, glitter, jewellery. Never: products, bottles, tubes, jars, boxes, packaging or labels; text, letters, numbers, logos, watermarks or brand marks; faces, eyes, lashes or brows; before-and-after or treatment results; a recognisable person; stock clichés: flowers scattered on marble, fanned makeup brushes, spa stones, candles, champagne, gold glitter.\n\nPhotographic, natural, no illustration look, no AI gloss, no watermark.",
+ "promptHash": "c4ce38195359",
+ "at": "2026-10-01T10:02:50.861Z",
+ "ms": 2055,
+ "costUsd": 0.015,
+ "synthid": false,
+ "note": "",
+ "usage": null,
+ "status": "rejected",
+ "review": {
+  "verdict": "reject",
+  "why": "The ribbon loops over itself instead of lifting into a curl, so it does not read as a lash after a lift. Kept as a candidate only.",
+  "by": "claude",
+  "at": "2026-10-01T10:03:13.655Z"
+ },
+ "checks": {
+  "w": 1520,
+  "h": 656,
+  "ratioOk": true,
+  "std": 0.151,
+  "deltaE": 7.6,
+  "neon": 0,
+  "black": 0,
+  "pass": true,
+  "fails": []
+ },
+ "vision": {
+  "model": "@cf/meta/llama-4-scout-17b-16e-instruct",
+  "at": "2026-10-01T10:05:25.504Z",
+  "answer": {
+   "artifacts": "none",
+   "face_or_eyes": false,
+   "hands": false,
+   "logo": false,
+   "one_line": "a pink ribbon",
+   "product_or_packaging": false,
+   "text_or_letters": false
+  },
+  "fails": []
+ }
+}

@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 // The visual system, step 2: check, review, approve and publish generated candidates (imagegen.mjs, videogen.mjs).
 //   node image-review.mjs --project projects/<slug> --check              automatic checks on every candidate (writes into its sidecar)
+//   node image-review.mjs --project projects/<slug> --check --vision     and the vision gate: Llama 4 Scout on Cloudflare (free) looks for
+//                                                                          text, logos, products, faces; any of them fails the candidate
 //   node image-review.mjs --project projects/<slug> --sheet              one contact sheet per concept for the vision review (visual/review/)
 //   node image-review.mjs --project projects/<slug> --frames <video.mp4>     six frames of a generated video, for its review
 //   node image-review.mjs --project projects/<slug> --verdict <file> approve|reject --why "..." [--by claude|owner] [--pick]
@@ -13,7 +15,8 @@ import { fileURLToPath } from 'url';
 import fs from 'fs';
 import path from 'path';
 import { spawnSync } from 'child_process';
-import { parseArgs, repoRoot } from './lib.mjs';
+import { parseArgs, repoRoot, ensureProxyEnv, cloudflareAuth, cloudflareReach } from './lib.mjs';
+if (ensureProxyEnv()) process.exit(0);
 const a = parseArgs(), ROOT = repoRoot();
 if (!a.project) { console.error('usage: node image-review.mjs --project projects/<slug> (--check | --sheet | --verdict <file> approve|reject --why ".." | --publish --site <folder>)'); process.exit(2); }
 const PROJ = path.resolve(ROOT, a.project), VIS = path.join(PROJ, 'visual'), CFG = JSON.parse(fs.readFileSync(path.join(VIS, 'concepts.json'), 'utf8'));
@@ -54,10 +57,42 @@ function checks(c) {
   return { ...m, pass: !fails.length, fails };
 }
 
+// the vision gate (reference 12, measured 2026-10-01): a free vision model answers a fixed rubric about the image itself.
+// It catches what pixel statistics cannot: letters, a logo, a product, a face. Hands are allowed (the craft concept shows them).
+const VISION_MODEL = '@cf/meta/llama-4-scout-17b-16e-instruct';
+const RUBRIC = 'You review a generated image for a website. Answer ONLY compact JSON: {"text_or_letters":bool,"logo":bool,"product_or_packaging":bool,"face_or_eyes":bool,"hands":bool,"artifacts":"none|minor|major","one_line":"what it shows"}';
+async function vision(c) {
+  const acc = process.env.CLOUDFLARE_ACCOUNT_ID || (() => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, 'surfaces.json'), 'utf8')).cloudflare.accountId; } catch { return null; } })();
+  const jpg = py(`
+import sys, io, base64
+from PIL import Image
+im = Image.open(sys.argv[1]).convert('RGB'); im.thumbnail((1024, 1024)); b = io.BytesIO(); im.save(b, 'JPEG', quality=85)
+print(base64.b64encode(b.getvalue()).decode())`, [c.file]).trim();
+  const r = await fetch(`https://api.cloudflare.com/client/v4/accounts/${acc}/ai/run/${VISION_MODEL}`, { method: 'POST', headers: { ...cloudflareAuth(), 'content-type': 'application/json' },
+    body: JSON.stringify({ messages: [{ role: 'user', content: [{ type: 'text', text: RUBRIC }, { type: 'image_url', image_url: { url: 'data:image/jpeg;base64,' + jpg } }] }], max_tokens: 220 }) });
+  const j = await r.json(); if (!r.ok || j.success === false) throw new Error(JSON.stringify(j.errors || j).slice(0, 200));
+  const res = j.result || {}, txt = res.response ?? res.choices?.[0]?.message?.content ?? '';
+  // Workers AI hands back JSON it recognises as an object, anything else as text
+  const s = String(txt), v = typeof txt === 'object' && txt ? txt : JSON.parse(s.slice(s.indexOf('{'), s.lastIndexOf('}') + 1));
+  const fails = ['text_or_letters', 'logo', 'product_or_packaging', 'face_or_eyes'].filter(k => v[k] === true).map(k => 'vision: ' + k);
+  if (v.artifacts === 'major') fails.push('vision: major artifacts');
+  return { model: VISION_MODEL, at: new Date().toISOString(), answer: v, fails };
+}
+
 if (a.check) {
   let n = 0, pass = 0;
-  for (const c of cands()) { c.meta.checks = checks(c); save(c); n++; if (c.meta.checks.pass) pass++; console.log(`${c.meta.checks.pass ? '✓' : '✗'} ${path.relative(ROOT, c.file)}  ΔE ${c.meta.checks.deltaE}${c.meta.checks.fails.length ? '  · ' + c.meta.checks.fails.join(', ') : ''}`); }
-  console.log(`${pass} of ${n} candidates pass the automatic checks`);
+  const useVision = !!a.vision && await cloudflareReach(process.env.CLOUDFLARE_ACCOUNT_ID || JSON.parse(fs.readFileSync(path.join(ROOT, 'surfaces.json'), 'utf8')).cloudflare?.accountId);
+  if (a.vision && !useVision) console.log('  vision gate skipped: Cloudflare does not answer (a Workers AI credential for api.cloudflare.com, or CLOUDFLARE_API_TOKEN)');
+  for (const c of cands()) {
+    c.meta.checks = checks(c);
+    if (useVision && !/\.mp4$/.test(c.file)) {
+      try { if (!c.meta.vision || a.force) c.meta.vision = await vision(c); } catch (e) { console.log('  vision gate failed on ' + path.basename(c.file) + ': ' + e.message); }
+      if (c.meta.vision && c.meta.vision.fails.length) { c.meta.checks.fails.push(...c.meta.vision.fails); c.meta.checks.pass = false; }
+    }
+    save(c); n++; if (c.meta.checks.pass) pass++;
+    console.log(`${c.meta.checks.pass ? '✓' : '✗'} ${path.relative(ROOT, c.file)}  ΔE ${c.meta.checks.deltaE}${c.meta.vision ? '  · ' + c.meta.vision.answer.one_line : ''}${c.meta.checks.fails.length ? '  · ' + c.meta.checks.fails.join(', ') : ''}`);
+  }
+  console.log(`${pass} of ${n} candidates pass the automatic checks${useVision ? ' and the vision gate' : ''}`);
 }
 
 if (a.sheet) {
@@ -95,7 +130,7 @@ if (a.verdict) {
   if (v === 'approve' && !/\.mp4$/.test(file)) { c.meta.checks = c.meta.checks || checks(c); if (!c.meta.checks.pass && !a.override) { console.error('cannot approve: fails ' + c.meta.checks.fails.join(', ')); process.exit(5); } }
   c.meta.review = { verdict: v, why: a.why || '', by: a.by || 'claude', at: new Date().toISOString() };
   c.meta.status = v === 'approve' ? 'approved' : 'rejected'; if (a.pick) c.meta.pick = true; save(c);
-  console.log(`${v}d ${path.relative(ROOT, file)}${a.pick ? ' (picked for the site)' : ''}`);
+  console.log(`${v === "reject" ? "rejected" : v + "d"} ${path.relative(ROOT, file)}${a.pick ? ' (picked for the site)' : ''}`);
 }
 
 if (a.publish) {

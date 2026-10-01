@@ -1,0 +1,26 @@
+{
+  "$comment": "What the studio measured on each model (AILGEN Lab shows it beside the catalog). Every line comes from a real run; the date is the run. Edit after each bench (cloud/lab/bench.mjs) and rebuild the catalog: node cloud/lab/catalog.mjs.",
+  "measuredOn": "2026-10-01",
+  "plan": "Workers Free",
+  "notes": {
+    "@cf/openai/gpt-oss-120b": { "verdict": "best", "note": "הכי טוב בעברית מתוך עובדות: בחר את המוצרים הנכונים במחירים מדויקים וסירב לנושא שאינו החנות. עם reasoning_effort=low כ-4–5 שניות; בלעדיו נכון אבל 10–13 שניות. לוטי של עדן והסטודיו רצים עליו.", "ms": 4700, "neurons": 140 },
+    "@cf/meta/llama-3.3-70b-instruct-fp8-fast": { "verdict": "ok", "note": "בחר נכון, אבל עם שגיאות עברית.", "ms": 12400, "neurons": 188 },
+    "@cf/meta/llama-4-scout-17b-16e-instruct": { "verdict": "ok", "note": "מהיר (1.7–2.7 שניות) וקורא תמונות. כמוכר: המליץ על שלב בודד במקום ערכה, וכתב שיר כשביקשו, למרות הכללים.", "ms": 2650, "neurons": 122 },
+    "@cf/mistralai/mistral-small-3.1-24b-instruct": { "verdict": "ok", "note": "קורא כל מילה על אריזה. כמוכר: המליץ על פינצטה להרמת ריסים, וזו טעות.", "ms": 3300, "neurons": 90 },
+    "@cf/nvidia/nemotron-3-120b-a12b": { "verdict": "weak", "note": "השקיע את כל 1,500 הטוקנים בחשיבה ולא החזיר תשובה.", "ms": 14200, "neurons": 322 },
+    "@cf/google/gemma-4-26b-a4b-it": { "verdict": "down", "note": "החזיר 502 אחרי 30 שניות בזמן הבדיקה, פעמיים." },
+    "@cf/qwen/qwen3.8-27b": { "verdict": "down", "note": "החזיר 502 אחרי 30 שניות בזמן הבדיקה." },
+    "@cf/zai-org/glm-4.7-flash": { "verdict": "down", "note": "החזיר 502 אחרי 30 שניות בזמן הבדיקה." },
+    "@cf/black-forest-labs/flux-2-klein-4b": { "verdict": "best", "note": "טיוטות מצוינות: האבן, הלוטוס ושדה המותג של THUYA עברו את כל הבדיקות. 24 שניות עד 2 דקות (הקריאה הראשונה לפעמים נכשלת ב-502 ומצליחה בשנייה). כ-155 נוירונים לתמונה של כמגה-פיקסל.", "ms": 24000, "neurons": 155 },
+    "@cf/black-forest-labs/flux-2-klein-9b": { "verdict": "best", "note": "האיכות הגבוהה ביותר שראינו בחינם במחיר סביר: האבן של עדן ב-2.2 שניות. כ-1,364 נוירונים למגה-פיקסל.", "ms": 2200, "neurons": 1364 },
+    "@cf/black-forest-labs/flux-2-dev": { "verdict": "untested", "note": "האיכות הגבוהה ביותר בחינם לפי Cloudflare, עם תמונות ייחוס ועריכה; כ-5,600 נוירונים לתמונה של מגה-פיקסל (כחצי מהמכסה היומית)." },
+    "@cf/meta/m2m100-1.2b": { "verdict": "weak", "note": "משבש עברית בשני הכיוונים. לתרגום: gpt-oss-120b עם הוראה של שורה אחת (כ-30 נוירונים לתיאור מוצר)." },
+    "@cf/baai/bge-m3": { "verdict": "ok", "note": "הטוב מבין שלושה מודלי הטמעה בעברית, אבל פספס 'כלי לתלוש שערות' (פינצטה) ו'מה מחזיק את הריסים' (דבק). לקטלוג קטן עדיף לתת למודל שפה את כל הקטלוג." },
+    "@cf/qwen/qwen3-embedding-0.6b": { "verdict": "weak", "note": "בעברית חלש מ-bge-m3 בחיפוש מוצרים." },
+    "@cf/google/embeddinggemma-300m": { "verdict": "weak", "note": "בעברית: מצא 'דבק' אבל דירג 'ניילון נצמד' גבוה לשאלות לא קשורות." },
+    "@cf/openai/whisper-large-v3-turbo": { "verdict": "untested", "note": "תומך בעברית לפי היצרן; עוד לא נבדק על הקלטה בעברית." },
+    "@cf/deepgram/aura-2-en": { "verdict": "no-hebrew", "note": "הקראה באנגלית בלבד." },
+    "@cf/deepgram/aura-2-es": { "verdict": "no-hebrew", "note": "הקראה בספרדית בלבד." },
+    "@cf/myshell-ai/melotts": { "verdict": "no-hebrew", "note": "אין עברית בשפות שלו." }
+  }
+}

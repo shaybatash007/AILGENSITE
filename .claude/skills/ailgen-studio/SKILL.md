@@ -140,6 +140,11 @@ export it statically to the repo. Then run the user's skills in full, no shortcu
 system, icons) and `references/skills/levelup2.md` (copy deck, real footage, illustration system, honesty).
 Hebrew and RTL rules: `references/05-hebrew-rtl.md`. Content rules: `references/04-content-honesty.md`.
 - **Gate**: levelup VERIFY passes; zero console errors; no overflow at 390 px; keyboard and reduced-motion passes (`scripts/site-qa.mjs` with a scenario of real interactions; `scripts/lighthouse.mjs` for the dated numbers).
+- **The agent answers on the public host too.** In the artifact the agent runs on Claude; on the published site it runs on a server
+  function with the Workers AI binding (`cloud/<slug>/functions/api/*.js`, `surfaces.json` `"functions"`). Its facts are built from
+  the page itself (`node cloud/context.mjs <slug>`, the page's `advPrompt(true)`), never sent by the visitor. The model is the one the
+  lab measured for answering from facts in Hebrew (`gpt-oss-120b`, `reasoning_effort: low`). The page keeps its fixed answers for a
+  503. Try it with `node cloud/dev.mjs call <slug> api/<route> '<json>'` before it ships (`cloud/README.md`, reference 12).
 
 ### 5b · Content quality → `references/13-content-quality.md`
 `copy-harvest.mjs` collects every string on every page and in every state (dialogs, empty states, errors, agent answers, alt and
@@ -152,7 +157,9 @@ At most five generated concepts, each with a job, placements and a never-list (`
 generated (real cutouts on one stage, `cutout.py`); vendor-neutral routes per job (`provider:model`, the first keyed route runs):
 free drafts on Cloudflare Workers AI, finals through one fal.ai key (Nano Banana Pro, FLUX.2 [pro], Seedream 4.5), Gemini and
 OpenAI as keyed fallbacks, a `--bakeoff` before any series; `image-review.mjs` (checks, sheets labelled by model, verdicts,
-publish with the brand grade `grade.py`), `videogen.mjs` (Veo 3.1 or Kling 3.0 from an approved still). Build the free layer first (code-native plates and draft films in the same composition as each brief,
+publish with the brand grade `grade.py`; `--check --vision` adds the free vision gate: Llama 4 Scout looks for text, logos,
+products and faces), `videogen.mjs` (Veo 3.1 or Kling 3.0 from an approved still). With only Cloudflare, finals go to FLUX.2
+[klein] 9B, then FLUX.2 [dev]. Build the free layer first (code-native plates and draft films in the same composition as each brief,
 `glrender.mjs`; AI matting for hard product photos, `matte.py`) **and ship it into the live site** (a GPU first screen, a signature
 scroll scene, material fields, page-wide motion, each with its guardrails: reference 12, "Live on the site"), then write the asset plan
 (`visual/plan.md`: every placement, model and why, counts, cost, what the owner provides). The site renders a slot only when an
@@ -241,6 +248,8 @@ Set up `evolve.json` and take the baseline snapshot, so new products, prices, st
 | `scripts/glrender.mjs` | The free visual layer: render WebGL shaders and Three.js scenes to stills and draft films (SwiftShader, identical on every machine) |
 | `scripts/matte.py` | AI matting for hard product photos (rembg + BiRefNet, MIT, CPU): alpha only, pixels proven kept |
 | `scripts/cfai.mjs` | Cloudflare Workers AI from the studio: any catalog model (text, vision, translation, speech, embeddings) with one token; `--verify`, `--models` |
+| `cloud/dev.mjs` · `cloud/context.mjs` | Server functions of each surface (Cloudflare Pages + Workers AI binding): run them here against the real models; build an agent's facts from its page |
+| AILGEN Lab (`lab/`, `cloud/lab/`) | The private workbench at ailgen-lab.pages.dev: every free model side by side (text, compare, image, vision, translation, speech, search, raw JSON), the catalog with measured notes, the bench results. `node cloud/lab/catalog.mjs` refreshes the catalog |
 | `scripts/film-site.mjs` | Film a live site on a virtual clock: smooth 30 fps footage of WebGL, canvas and CSS motion from a shot list (scroll targets, pointer paths) |
 | `scripts/grade.py` | Brand colour grade for approved plates (Lab transfer, ΔE before/after); colour-swatch references |
 | `scripts/regions.mjs` | Design critique shots: every region alone, desktop and phone, before and after |

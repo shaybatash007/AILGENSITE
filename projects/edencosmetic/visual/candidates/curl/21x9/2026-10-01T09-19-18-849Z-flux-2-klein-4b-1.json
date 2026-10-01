@@ -26,7 +26,25 @@
   "deltaE": 7.4,
   "neon": 0,
   "black": 0,
-  "pass": true,
-  "fails": []
+  "pass": false,
+  "fails": [
+   "vision: product_or_packaging"
+  ]
+ },
+ "vision": {
+  "model": "@cf/meta/llama-4-scout-17b-16e-instruct",
+  "at": "2026-10-01T10:05:23.300Z",
+  "answer": {
+   "artifacts": "none",
+   "face_or_eyes": false,
+   "hands": false,
+   "logo": false,
+   "one_line": "a pink ribbon",
+   "product_or_packaging": true,
+   "text_or_letters": false
+  },
+  "fails": [
+   "vision: product_or_packaging"
+  ]
  }
 }

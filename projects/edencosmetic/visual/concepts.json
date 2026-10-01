@@ -19,7 +19,7 @@
   "stock clichés: flowers scattered on marble, fanned makeup brushes, spa stones, candles, champagne, gold glitter"
  ],
  "routing": {
-  "_why": "Vendor-neutral (references/12-visual-production.md, 'Choosing a model'). Drafts on Cloudflare's free daily allocation (FLUX.2 [klein] 4B, Apache 2.0). Finals through one fal.ai key: Nano Banana Pro for photographic light and material, FLUX.2 [pro] for colour-exact fields and wide textures (priced per megapixel, takes reference images), Seedream 4.5 as a third opinion. Gemini and OpenAI stay as fallbacks with their own keys. Video only from an approved still: Veo 3.1 Fast for drafts, Veo 3.1 for the final, Kling 3.0 Pro as the second opinion on motion. With only the Cloudflare token, finals fall back to FLUX.2 [dev] on the free daily allocation (about two 1-megapixel images a day), and the bake-off adds FLUX.2 [dev] and [klein] 9B, both free (checked 2026-10-01).",
+  "_why": "Vendor-neutral (references/12-visual-production.md, 'Choosing a model'). Drafts on Cloudflare's free daily allocation (FLUX.2 [klein] 4B, Apache 2.0). Finals through one fal.ai key: Nano Banana Pro for photographic light and material, FLUX.2 [pro] for colour-exact fields and wide textures (priced per megapixel, takes reference images), Seedream 4.5 as a third opinion. Gemini and OpenAI stay as fallbacks with their own keys. Video only from an approved still: Veo 3.1 Fast for drafts, Veo 3.1 for the final, Kling 3.0 Pro as the second opinion on motion. With only the Cloudflare token, finals fall back to FLUX.2 [dev] on the free daily allocation (about two 1-megapixel images a day), and the bake-off adds FLUX.2 [dev] and [klein] 9B, both free (checked 2026-10-01). Measured on 2026-10-01: with only Cloudflare, finals go to FLUX.2 [klein] 9B first (the courses image, 2.4 s, about 1,400 neurons) and FLUX.2 [dev] second (about 5,600 neurons, two a day).",
   "draft": [
    "cloudflare:@cf/black-forest-labs/flux-2-klein-4b",
    "fal:fal-ai/flux-2-pro",
@@ -30,6 +30,7 @@
    "gemini:gemini-3-pro-image",
    "fal:fal-ai/flux-2-pro",
    "openai:gpt-image-2",
+   "cloudflare:@cf/black-forest-labs/flux-2-klein-9b",
    "cloudflare:@cf/black-forest-labs/flux-2-dev"
   ],
   "bakeoff": [

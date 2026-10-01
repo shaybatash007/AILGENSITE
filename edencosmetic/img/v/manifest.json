@@ -1,0 +1,40 @@
+{
+ "images": {
+  "craft": {
+   "4:5": {
+    "srcset": [
+     {
+      "src": "img/v/craft-4x5-640.webp",
+      "w": 640
+     }
+    ],
+    "w": 640,
+    "h": 800,
+    "label": "תמונת אווירה",
+    "provenance": {
+     "provider": "cloudflare",
+     "model": "@cf/black-forest-labs/flux-2-klein-9b",
+     "at": "2026-10-01T10:02:48.249Z",
+     "synthid": false,
+     "promptHash": "a651256a650f",
+     "review": {
+      "verdict": "approve",
+      "why": "Calm, precise and on-palette: blush nitrile gloves, plain tools and silicone shields on a travertine tray in window light; no face, text, logo or packaging (vision gate agrees). Shown in the courses section with the label תמונת אווירה.",
+      "by": "claude",
+      "at": "2026-10-01T10:03:13.603Z"
+     },
+     "grade": {
+      "strength": 0.35,
+      "deltaE": [
+       9.5,
+       8.8
+      ]
+     }
+    }
+   }
+  }
+ },
+ "videos": {},
+ "updated": "2026-10-01T10:03:21.489Z",
+ "disclosure": "חלק מתמונות האווירה באתר נוצרו בעזרת בינה מלאכותית. תמונות המוצרים הן הצילומים של המוצרים עצמם."
+}

@@ -1,0 +1,9 @@
+# AILGEN Lab: private, never indexed, never framed
+/*
+  X-Robots-Tag: noindex, nofollow
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  Permissions-Policy: camera=(), geolocation=(), microphone=(self)
+/*.json
+  Cache-Control: no-cache

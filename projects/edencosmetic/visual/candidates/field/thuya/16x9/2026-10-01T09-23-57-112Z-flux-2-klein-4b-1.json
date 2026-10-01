@@ -26,7 +26,25 @@
   "deltaE": 25.1,
   "neon": 0,
   "black": 0,
-  "pass": true,
-  "fails": []
+  "pass": false,
+  "fails": [
+   "vision: product_or_packaging"
+  ]
+ },
+ "vision": {
+  "model": "@cf/meta/llama-4-scout-17b-16e-instruct",
+  "at": "2026-10-01T10:05:27.092Z",
+  "answer": {
+   "artifacts": "none",
+   "face_or_eyes": false,
+   "hands": false,
+   "logo": false,
+   "one_line": "red and silver metallic surface",
+   "product_or_packaging": true,
+   "text_or_letters": false
+  },
+  "fails": [
+   "vision: product_or_packaging"
+  ]
  }
 }

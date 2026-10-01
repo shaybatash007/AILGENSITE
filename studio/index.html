@@ -688,14 +688,19 @@ async function replayExample(){
  clearInterval(clock); $('#bClock').textContent='ריצה מלאה · נמדדה'; running=false;
 }
 
-/* a new business, from an idea or a name: Claude drafts the brand live (sample), or the spirit matrix offline */
+/* a new business, from an idea or a name: Claude drafts the brand live (sample), open models on the public site (cloud), or the spirit matrix offline */
 let sample=null;
+const cloudOK=()=>!cl&&/^https?:$/.test(location.protocol)&&(!/^(localhost|127\.)/.test(location.hostname)||/[?&]cloud\b/.test(location.search));
+/* the first atmosphere image for the brief (public site only): surface, light and material in its palette */
+async function moodImage(s){ try{ const r=await fetch('/api/mood',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({scene:String(s.scene||s.idea||'').slice(0,220),palette:s.palette})}); const j=r.ok?await r.json():null; return j&&/^data:image\//.test(j.image||'')?j.image:null; }catch(_){return null;} }
 async function brandSpec(mode,input){
  const prompt=`אתה מנוע המיתוג של סטודיו AILGEN. לקוח ${mode==='name'?'נתן רק שם של עסק':'תיאר רעיון לעסק'}: "${input.slice(0,600)}".
 החזר JSON בלבד, בעברית, במבנה הזה בדיוק:
 {"name":"שם העסק","type":"סוג העסק במילים ספורות","spirit":"הרוח ב-2–3 מילים","idea":"הרעיון של המותג כתמונה, משפט אחד","claim":"כותרת ראשית לאתר, עד 8 מילים","sub":"משפט משנה לאתר, עד 22 מילים","palette":{"bg":"#hex","ink":"#hex","accent":"#hex","accent2":"#hex"},"display":"פונט כותרות","body":"פונט טקסט","motif":"אחד מ: pixels, particles, light, ink, iris, wipe, spin","mascot":"כן / לא, ומשפט למה","tool":"כלי ההוכחה באתר: שם ומה הוא עושה, משפט אחד","toolCta":"כפתור של הכלי, 2–3 מילים","sections":["6 שמות סקשנים קצרים"],"film":["7 סצנות לסרטון של 26 שניות, כל אחת עד 7 מילים"],"domains":["3 הצעות דומיין לטיניות, בלי www"]}
 כללים: הפונטים רק מתוך: ${FONTS_OK.join(', ')}. ניגודיות ink על bg לפחות 7:1. בלי המלצות, מספרים או לקוחות מומצאים. בלי קלישאות כמו "מהפכה" או "העתיד כבר כאן".`;
  if(sample){ try{ const j=await sample.json(prompt,{modelTier:'quick'}); if(j&&j.palette&&j.claim)return {...j,source:'claude'}; }catch(_){} }
+ /* the public site: the same brief from open models on the studio's own server (cloud/ailgen), no key on the page */
+ if(!sample&&cloudOK()){ try{ const r=await fetch('/api/brief',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({mode,input:input.slice(0,400)})}); const j=r.ok?await r.json():null; if(j&&j.spec&&j.spec.palette&&j.spec.claim)return {...j.spec,source:'cloud'}; }catch(_){} }
  const sp=SPIRITS.find(s=>s.re.test(input))||DEFAULT_SPIRIT, nm=mode==='name'?input.trim():(input.split(/[,.]/)[0].slice(0,28));
  return {name:nm,type:sp.type,spirit:sp.spirit,idea:'הדבר הכי אמיתי בעסק, כתמונה אחת שחוזרת בכל מקום',claim:`${nm}. בדיוק מה שחיפשתם.`,sub:'כאן תופיע הטענה החזקה ביותר שאפשר להוכיח, מתוך המספרים והלקוחות האמיתיים של העסק.',palette:{bg:sp.pal[0],ink:sp.pal[1],accent:sp.pal[2],accent2:sp.pal[3]},display:sp.fonts[0],body:sp.fonts[1],motif:sp.motif,mascot:sp.mascot,tool:sp.tool,toolCta:'נסו עכשיו',sections:sp.sections,film:['הרגע של הלקוח','הגילוי: הלוגו','ההוכחה במספר','מה מקבלים','מילים של לקוח','למה אנחנו','קריאה לפעולה'],domains:[],source:'matrix'};
 }
@@ -709,7 +714,7 @@ async function runNew(mode,input){
  const done=i=>{st[i]='done'; stageList(st);};
  await step(0,'brief',mode==='name'?'קלט: שם בלבד. מחקר קטגוריה ותחרות':'קלט: רעיון בכתיבה. מזהים סוג עסק ורוח');
  const specP=brandSpec(mode,input);
- await step(1,'research',sample?'Claude מנסח את התדריך…':'בלי Claude בתצוגה הזו: טבלת הרוח של הסטודיו',400);
+ await step(1,'research',sample?'Claude מנסח את התדריך…':cloudOK()?'מנסחים את התדריך…':'בלי מודל בתצוגה הזו: טבלת הרוח של הסטודיו',400);
  const s=await specP; done(0); done(1);
  const P=s.palette||{}; ['bg','ink','accent','accent2'].forEach((k,i)=>{if(!hexOk(P[k]))P[k]=DEFAULT_SPIRIT.pal[i];});
  const disp=FONTS_OK.includes(s.display)?s.display:'Heebo', bod=FONTS_OK.includes(s.body)?s.body:'Heebo'; loadFont(disp); loadFont(bod);
@@ -723,6 +728,8 @@ async function runNew(mode,input){
  await step(3,'site',`אתר: ${(s.sections||[]).slice(0,6).join(' · ')}`,600);
  card('c4','אתר',`<div class="mock" style="background:${P.bg};color:${P.ink};font-family:'${esc(bod)}',var(--body)"><div class="mn"><i style="background:${P.accent}"></i>${esc(s.name)}<span>${(s.sections||[]).slice(0,4).map(x=>`<em style="font-style:normal">${esc(x)}</em>`).join('')}</span></div><div class="mh"><div><b style="font-family:'${esc(disp)}',var(--display)">${esc(s.claim)}</b><p>${esc(s.sub)}</p><u style="background:${P.accent};color:${P.bg}">${esc(s.toolCta||'דברו איתנו')}</u></div><div class="tool" style="background:${P.ink};color:${P.bg}"><b style="font-size:12px">${esc((s.tool||'').split(':')[0])}</b><p style="opacity:.85">${esc(s.tool)}</p></div></div></div>`,lab);
  card('c2','כלי הוכחה',`<p style="font-size:14.5px;line-height:1.5">${esc(s.tool)}</p><p style="color:var(--mist);font-size:13px;margin-top:8px">כל תוצאה של הכלי מגיעה כפנייה למרכז הבקרה.</p>`,lab);
+ if(s.source==='cloud'){ const mc=card('c6','תמונת אווירה ראשונה',`<div class="shot mood" style="aspect-ratio:16/9;background:${P.ink}"><span class="lbl" style="position:absolute;inset:auto auto 10px 10px">נוצרת עכשיו…</span></div><small style="color:var(--mist);font:500 12px var(--mono)">משטח, אור וחומר בפלטה של התדריך. בהזמנה אמיתית: עד חמש תמונות כאלה, נבדקות ומאושרות</small>`,'הדמיה'); const sh=$('.mood',mc);
+  moodImage(s).then(src=>{ if(!src){ sh.innerHTML='<span class="lbl">התמונה לא נוצרה הפעם</span>'; return; } const im=new Image(); im.alt='תמונת אווירה ראשונה ל'+(s.name||'עסק'); im.src=src; im.style.cssText='width:100%;height:100%;object-fit:cover;display:block'; im.onload=()=>{ sh.innerHTML=''; sh.appendChild(im); }; }); }
  done(3); await step(4,'seo','ארכיטקטורת כתובות: כל שירות ומדריך בכתובת משלו',350);
  card('c3','כתובות וחיפוש',`<div style="display:grid;gap:6px;font-size:14px"><span dir="ltr">/</span>${(s.sections||[]).slice(0,6).map(x=>`<span>/${esc(x)}/</span>`).join('')}</div><p style="color:var(--mist);font-size:13px;margin-top:8px">לכל כתובת: title, description, h1, canonical ו-JSON-LD, ומפת אתר ו-robots מהיום הראשון.</p>`,lab);
  done(4); await step(5,'admin','מרכז בקרה ומוקד דיגיטלי מחוברים',350); done(5);
@@ -734,8 +741,8 @@ async function runNew(mode,input){
  done(7); await step(8,'qa','שערי איכות: אדם בודק לפני פרסום',300);
  card('c3','מה קורה עכשיו',`<p style="font-size:14.5px;line-height:1.55">בהזמנה אמיתית, הסטודיו מריץ את כל השלבים עד הסוף: לוגו אמיתי, אתר חי, סרטון מרונדר. זו טיוטה ראשונה שנוצרה עכשיו.</p>`);
  done(8); clearInterval(clock);
- $('#bClock').textContent=((performance.now()-t0)/1000).toFixed(1)+'s · '+(s.source==='claude'?'נוצר עכשיו עם Claude':'טבלת הרוח (בלי Claude)');
- $('#bFoot').textContent=s.source==='claude'?'התדריך, הפלטה, הפונטים והסטוריבורד נוצרו עכשיו על ידי Claude, מהקלט שלכם. בהזמנה אמיתית הכול נבנה עד הסוף.':'Claude לא זמין בתצוגה הזו, אז הסטודיו השתמש בטבלת הרוח שלו לפי סוג העסק. בהזמנה אמיתית הכול נבנה מהעסק שלכם.';
+ $('#bClock').textContent=((performance.now()-t0)/1000).toFixed(1)+'s · '+(s.source==='claude'?'נוצר עכשיו עם Claude':s.source==='cloud'?'נוצר עכשיו במודלים פתוחים':'טבלת הרוח (בלי מודל)');
+ $('#bFoot').textContent=s.source==='claude'?'התדריך, הפלטה, הפונטים והסטוריבורד נוצרו עכשיו על ידי Claude, מהקלט שלכם. בהזמנה אמיתית הכול נבנה עד הסוף.':s.source==='cloud'?'התדריך, הפלטה, הפונטים, הסטוריבורד ותמונת האווירה נוצרו עכשיו במודלים פתוחים, מהקלט שלכם. בהזמנה אמיתית הכול נבנה עד הסוף, ואדם בודק כל פרט.':'מודל לא זמין בתצוגה הזו, אז הסטודיו השתמש בטבלת הרוח שלו לפי סוג העסק. בהזמנה אמיתית הכול נבנה מהעסק שלכם.';
  $('#oIn').value=input; running=false;
 }
 
@@ -744,7 +751,7 @@ let mode='url';
 $$('.seg button').forEach(b=>b.addEventListener('click',()=>{ mode=b.dataset.m; $$('.seg button').forEach(x=>x.setAttribute('aria-selected',String(x===b)));
  const url=mode==='url'; $('#lIn').hidden=!url&&mode==='idea'; $('#lIdea').hidden=mode!=='idea'; $('#lIn').dir=url?'ltr':'rtl';
  $('#lIn').value=url?'https://talorkaradi.co.il/':''; $('#lIn').placeholder=mode==='name'?'למשל: "אור ים"':'';
- $('#lHint').textContent=url?'הדגמה על אתר אמיתי: טלאור כראדי. הריצה המלאה נמדדה, והתוצרים למטה אמיתיים.':mode==='idea'?'Claude ינסח תדריך, פלטה, פונטים, אתר וסטוריבורד, כאן ועכשיו.':'רק שם. הסטודיו יחקור את הקטגוריה ויציע רוח, צבעים ורעיון.';
+ $('#lHint').textContent=url?'הדגמה על אתר אמיתי: טלאור כראדי. הריצה המלאה נמדדה, והתוצרים למטה אמיתיים.':mode==='idea'?'הסטודיו ינסח תדריך, פלטה, פונטים, אתר וסטוריבורד, כאן ועכשיו.':'רק שם. הסטודיו יחקור את הקטגוריה ויציע רוח, צבעים ורעיון.';
  const ex=$('#lEx'); ex.hidden=url; ex.innerHTML=(mode==='idea'?['בית קפה קטן בחיפה, קפה מיוחד וחם, סטודנטים וזוגות','קליניקה לפיזיותרפיה ספורטיבית בתל אביב','חנות פרחים שמרכיבה זרים לפי מצב רוח']:['אור ים','נגריית העמק','סטודיו פילאטיס ליה']).map(t=>`<button type="button">${esc(t)}</button>`).join('');
  $$('button',ex).forEach(x=>x.onclick=()=>{ if(mode==='idea')$('#lIdea').value=x.textContent; else $('#lIn').value=x.textContent; });
 }));

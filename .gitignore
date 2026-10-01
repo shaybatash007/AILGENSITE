@@ -33,3 +33,8 @@ projects/*/visual/free/out/*.png
 # build output - 111 MB of assembled site, never committed
 _surfaces/
 _site/
+
+# Cloudflare Pages functions: the per-deploy config and wrangler state
+cloud/*/wrangler.toml
+cloud/*/.wrangler/
+_deploy/

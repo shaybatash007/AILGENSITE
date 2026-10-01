@@ -171,5 +171,5 @@ const LIFT=(()=>{
   // Lotti steps aside while the eye is on screen (it would sit on the products)
   new IntersectionObserver(es=>es.forEach(e=>document.documentElement.classList.toggle('inlift',e.isIntersecting)),{rootMargin:'-20% 0px -20% 0px'}).observe(sec);
  }
- return {init};
+ return {init,steps:()=>STEPS.map(s=>s.n+': '+s.t)};
 })();

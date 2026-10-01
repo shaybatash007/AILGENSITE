@@ -26,7 +26,25 @@
   "deltaE": 10.2,
   "neon": 0,
   "black": 0,
-  "pass": true,
-  "fails": []
+  "pass": false,
+  "fails": [
+   "vision: major artifacts"
+  ]
+ },
+ "vision": {
+  "model": "@cf/meta/llama-4-scout-17b-16e-instruct",
+  "at": "2026-10-01T10:05:20.386Z",
+  "answer": {
+   "artifacts": "major",
+   "face_or_eyes": false,
+   "hands": true,
+   "logo": false,
+   "one_line": "a hand in a pink glove holding a tool",
+   "product_or_packaging": false,
+   "text_or_letters": false
+  },
+  "fails": [
+   "vision: major artifacts"
+  ]
  }
 }

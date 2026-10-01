@@ -125,6 +125,29 @@ Workers AI has no video; video through Cloudflare is xAI Grok Imagine on AI Gate
 480p/720p), below the 1080p of Veo 3.1 and Kling 3.0 on fal, so the film routes stay on fal. The studio's own words and judgement
 stay with Claude; these models carry volume (drafts, the image gate, translation checks, a site agent's answers, transcripts).
 
+### In production: the same models behind every published site (2026-10-01)
+
+The token is for the studio's own work. A published site does not use it. A site uses its Cloudflare Pages project's binding
+(`env.AI`), declared by the deploy, so nothing reaches the page (`cloud/README.md`).
+
+| Where | Route | Model and settings | Measured |
+|---|---|---|---|
+| Eden: Lotti on the public site | `/api/lotti` | `gpt-oss-120b`, `reasoning_effort: low`, the page's own facts (9,282 characters); a second try without the low effort; then the page's fixed answers | 4.7 s, about 140 neurons an answer; declined an off-topic request |
+| AILGEN studio demo | `/api/brief` → `/api/mood` | `gpt-oss-120b` for the brief (JSON); FLUX.2 [klein] 4B at 768×432 for the first atmosphere image, one retry | brief 5-7 s, about 52 neurons; image 10-25 s, about 52 neurons |
+| AILGEN Lab | `/api/run` | any model in the catalog, behind `LAB_PASSCODE` | every free model one click away |
+
+- **The gate on generated images.** `image-review.mjs --check --vision` runs Llama 4 Scout with a fixed JSON rubric. On Eden's eight
+  candidates it failed three:
+  - The 4B hands, for major artifacts. A person had reached the same verdict.
+  - The 4B ribbon and the THUYA material study, as "product or packaging".
+  The gate is strict: a material study can fail it, and the reviewer may approve with `--override` and a written reason. It passed the
+  approved 9B craft image.
+- **What the lab proved, and what it disproved:**
+  - Before shipping, the agent's first context made gpt-oss leak its reasoning ("analysis: … eyel eyel eyel"). The route now rejects
+    leaked or looping text (`broken()` in `cloud/_shared/ai.js`) and retries.
+  - Adding the product type to each line, and the treatment's stages as the page shows them, turned "stage 1 is a starter kit" into
+    the right answer.
+
 ## Choosing a model: vendor-neutral routing (checked 2026-09-30)
 
 No provider is the default by habit. Every job names an ordered route of `provider:model` in `concepts.json`

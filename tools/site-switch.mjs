@@ -80,7 +80,7 @@ function closed(dir, label, worker) {
 }
 // the GitHub Pages copy once the surfaces have their own addresses: every old path forwards to its new home
 function moved(dir) {
-  const map = cfg.surfaces.map(s => ({ prefix: "/" + (s.githubPagesPath || "").replace(/^\/|\/$/g, ""), host: hostOf(s) }))
+  const map = cfg.surfaces.filter(s => s.githubPagesPath).map(s => ({ prefix: "/" + s.githubPagesPath.replace(/^\/|\/$/g, ""), host: hostOf(s) }))
     .sort((a, b) => b.prefix.length - a.prefix.length);
   const main = hostOf(cfg.surfaces.find(s => s.dir === ".") || cfg.surfaces[0]);
   const html = `<!doctype html>
@@ -92,6 +92,20 @@ function moved(dir) {
 `;
   fs.rmSync(dir, { recursive: true, force: true }); fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, "index.html"), html); fs.writeFileSync(path.join(dir, "404.html"), html);
+}
+// a surface with server functions deploys from its cloud/<surface> folder: wrangler compiles functions/ there and reads the
+// wrangler.toml written here, which declares the Workers AI binding (env.AI) and points at the built static files
+function pagesConfig(s, dir) {
+  const fdir = path.join(root, s.functions);
+  fs.writeFileSync(path.join(fdir, "wrangler.toml"), `# Written by tools/site-switch.mjs for each deploy; not committed. The binding is the only "key": no token reaches the page.
+name = "${project(s)}"
+pages_build_output_dir = "${path.relative(fdir, dir).replace(/\\/g, "/")}"
+compatibility_date = "2025-09-01"
+
+[ai]
+binding = "AI"
+`);
+  return fdir;
 }
 // the account ID comes from the environment or from surfaces.json (it is not a secret); the token only from a secret
 if (!process.env.CLOUDFLARE_ACCOUNT_ID && cfg.cloudflare?.accountId) process.env.CLOUDFLARE_ACCOUNT_ID = cfg.cloudflare.accountId;
@@ -122,7 +136,14 @@ if (cmd === "cloudflare") {
     if (!fs.existsSync(dir)) { console.error(`  missing ${dir}: build the surfaces first`); failed++; continue; }
     // the project is created once; afterwards the create answers "already exists", which is fine
     run("npx", ["--yes", "wrangler@4", "pages", "project", "create", name, "--production-branch=main"], { stdio: "inherit" });
-    const r = run("npx", ["--yes", "wrangler@4", "pages", "deploy", dir, `--project-name=${name}`, "--branch=main", "--commit-dirty=true"], { stdio: "inherit" });
+    // server functions (surfaces.json "functions") ship only while the site is on; closed, the 503 worker answers everything
+    const cwd = state === "on" && s.functions ? pagesConfig(s, dir) : root;
+    for (const k of state === "on" ? s.secrets || [] : []) {
+      if (!process.env[k]) { console.log(`  ${s.name}: no ${k} secret in the repository yet (its routes stay locked)`); continue; }
+      const w = run("npx", ["--yes", "wrangler@4", "pages", "secret", "put", k, `--project-name=${name}`], { cwd, input: process.env[k], stdio: ["pipe", "inherit", "inherit"] });
+      console.log(`  ${w.status ? "✗" : "✓"} ${s.name}: ${k} set`);
+    }
+    const r = run("npx", ["--yes", "wrangler@4", "pages", "deploy", dir, `--project-name=${name}`, "--branch=main", "--commit-dirty=true"], { stdio: "inherit", cwd });
     console.log(`  ${r.status ? "✗" : "✓"} ${s.name} → https://${hostOf(s)}/ (${state})`); if (r.status) failed++;
   }
   process.exit(failed ? 1 : 0);

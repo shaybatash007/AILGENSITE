@@ -1,8 +1,16 @@
 {
   "slug": "edencosmetic",
-  "at": "2026-09-30T21:22:25.446Z",
+  "at": "2026-10-01T10:05:45.089Z",
   "ok": 68,
-  "missing": [],
+  "missing": [
+    {
+      "id": "pushed",
+      "phase": "8-deliver",
+      "why": [
+        "18 קבצים לא מחויבים"
+      ]
+    }
+  ],
   "na": 1,
   "elements": [
     {
@@ -435,6 +443,12 @@
       "status": "ok"
     },
     {
+      "id": "agent-live",
+      "phase": "5-site",
+      "label": "The site's agent answers on the public host from the page's own facts: a server function with the Workers AI binding, and its context built from the page itself (cloud/<slug>/, cloud/context.mjs, reference 12)",
+      "status": "ok"
+    },
+    {
       "id": "evolve",
       "phase": "8-deliver",
       "label": "Autonomy: evolve.json and a baseline catalog snapshot",
@@ -471,7 +485,7 @@
       "id": "pushed",
       "phase": "8-deliver",
       "label": "Committed and pushed",
-      "status": "ok"
+      "status": "missing"
     }
   ]
 }
