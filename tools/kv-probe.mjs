@@ -86,42 +86,62 @@ async function main() {
     process.exit(1);
   }
 
-  rule('2 · Workers KV Storage');
+  // Read and write are separate permissions, so a denied list is NOT proof that a create
+  // would fail: Cloudflare grants "Workers KV Storage · Read" and "· Edit" independently,
+  // and this token demonstrably has neither. When CREATE is asked for, the write is
+  // attempted regardless of what the read returned - otherwise the probe would report a
+  // conclusion it never tested.
+  const made = CREATE
+    ? await call('/storage/kv/namespaces', { method: 'POST', body: JSON.stringify({ title: TITLE }) })
+    : null;
+
+  rule('2 · Workers KV Storage · read');
   const list = await call('/storage/kv/namespaces?per_page=100');
   if (!list.ok) {
     say(`  NO · ${firstError(list.body)}`);
     say('\n  The token cannot list KV namespaces. That is why the deploy printed');
     say('  "KV LEDGER not bound", and it is why the lab has no budget ceiling.');
-    say('\nFIX · dash.cloudflare.com -> My Profile -> API Tokens -> the token of this deploy');
-    say('      -> Edit -> Add permission:  Account  ·  Workers KV Storage  ·  Edit');
-    say('      -> Save. Then push anything; the next deploy binds the namespace.');
-    process.exit(1);
+  } else {
+    const namespaces = Array.isArray(list.body?.result) ? list.body.result : [];
+    say(`  yes · ${namespaces.length} namespace(s) visible`);
+    for (const n of namespaces.slice(0, 12)) say(`        ${n.title}  ${n.id}`);
+    const hit = namespaces.find(n => n.title === TITLE);
+    rule('3 · the lab ledger');
+    if (hit) {
+      say(`  FOUND · ${hit.title}`);
+      say(`  id     ${hit.id}`);
+      say('\n  Nothing to create. If the lab still shows "the ledger is not connected",');
+      say('  the deploy that binds it has not run since the token was fixed.');
+      say(`  Run:  node tools/site-switch.mjs cloudflare   (or push to trigger it)`);
+      return 0;
+    }
+    say(`  MISSING · no namespace titled "${TITLE}"`);
   }
 
-  const namespaces = Array.isArray(list.body?.result) ? list.body.result : [];
-  say(`  yes · ${namespaces.length} namespace(s) visible`);
-  for (const n of namespaces.slice(0, 12)) say(`        ${n.title}  ${n.id}`);
-
-  rule('3 · the lab ledger');
-  const hit = namespaces.find(n => n.title === TITLE);
-  if (hit) {
-    say(`  FOUND · ${hit.title}`);
-    say(`  id     ${hit.id}`);
-    say('\n  Nothing to create. If the lab still shows "the ledger is not connected",');
-    say('  the deploy that binds it has not run since the token was fixed.');
-    say(`  Run:  node tools/site-switch.mjs cloudflare   (or push to trigger it)`);
-    return 0;
-  }
-
-  say(`  MISSING · no namespace titled "${TITLE}"`);
   if (!CREATE) {
-    say('\n  Re-run with the "create" input ticked, or with CREATE=1, to make it.');
+    say('\n  Re-run with the "create" input ticked, or with CREATE=1, to test the write');
+    say('  and make the namespace if the token is allowed.');
     return 1;
   }
 
-  const made = await call('/storage/kv/namespaces', { method: 'POST', body: JSON.stringify({ title: TITLE }) });
+  rule('3 · Workers KV Storage · write');
+  if (!made) {
+    say('  SKIPPED · create was not requested');
+    return 1;
+  }
   if (!made.ok) {
-    say(`  FAILED · ${firstError(made.body)}`);
+    say(`  NO · ${firstError(made.body)}`);
+    say('\n  Both the read and the write are refused, so this token carries no');
+    say('  "Workers KV Storage" permission at all. Only the dashboard can change that:');
+    say('\nFIX · dash.cloudflare.com -> My Profile -> API Tokens -> the token of this deploy');
+    say('      -> Edit -> Add permission:  Account  ·  Workers KV Storage  ·  Edit');
+    say('      -> Save. Then re-run this probe.');
+    say('\n  OR, with no token change at all: create the namespace by hand at');
+    say('      Workers & Pages -> KV -> Create namespace, name it');
+    say(`      ${TITLE}, and put its id into surfaces.json:`);
+    say(`      { "kvIds": { "LEDGER": "<the id>" } }   // under the lab surface`);
+    say('  The id is an identifier, not a secret: it already appears in every');
+    say('  wrangler.toml, and declaring it makes the deploy independent of this token.');
     return 1;
   }
   say(`  CREATED · ${made.body.result.title}`);
