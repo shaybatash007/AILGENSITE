@@ -1,29 +1,5930 @@
 {
- "$comment": "AILGEN Lab's paid models: every one is billed from the AI Gateway credits (Unified Billing) through the gateway in surfaces.json (LAB_GATEWAY). Ids, inputs and prices are from each model's page in the Cloudflare catalog (developers.cloudflare.com/ai/models/<id>/), checked 2026-10-01. The real cost of each call comes from the gateway's log; the numbers here are for the estimate shown before a run. Credits cost 5% more than their face value ($100 of credits = $105).",
  "checked": "2026-10-01",
+ "source": "https://developers.cloudflare.com/ai/models/",
  "creditFee": 0.05,
+ "count": 171,
+ "tiersWhy": "מובחרים: מודל הדגל של הדור הנוכחי אצל כל יצרן (Pro, Max, Opus, Fable וכו׳), האיכות הגבוהה ביותר והמחיר הגבוה. בינוניים: מאוזנים ומהירים, או דגל של הדור הקודם, איכות גבוהה במחיר נמוך יותר. חלשים וזולים: גרסאות Lite, Mini, Nano ו-Turbo, דורות ישנים וכלי עזר, למשימות פשוטות ובכמות. הדירוג לפי מיצוב היצרן, הדור והמחיר, ובדיקה במעבדה גוברת עליו.",
  "groups": [
-  { "id": "text", "title": "טקסט", "models": [
-   { "id": "google/gemini-3.5-flash", "name": "Gemini 3.5 Flash", "fmt": "gemini", "price": { "in": 1.5, "out": 9 }, "note": "מהיר וזול, עברית טובה, הקשר של מיליון טוקנים" },
-   { "id": "anthropic/claude-sonnet-5", "name": "Claude Sonnet 5", "fmt": "anthropic", "price": { "in": 2, "out": 10 }, "note": "כתיבה, ניתוח ועבודה ארוכה" },
-   { "id": "openai/gpt-5.5", "name": "GPT-5.5", "fmt": "openai", "price": { "in": 5, "out": 30 }, "note": "המודל החזק של OpenAI כאן; היקר מבין השלושה" },
-   { "id": "@cf/moonshotai/kimi-k2.6", "name": "Kimi K2.6", "fmt": "openai", "price": { "in": 0.95, "out": 4 }, "note": "רץ ב-Workers AI; בחשבון בלי Workers Paid רק דרך הקרדיטים" },
-   { "id": "@cf/zai-org/glm-5.2", "name": "GLM-5.2", "fmt": "openai", "price": { "in": 1.4, "out": 4.4 }, "note": "רץ ב-Workers AI; בחשבון בלי Workers Paid רק דרך הקרדיטים" }
-  ]},
-  { "id": "image", "title": "תמונה", "models": [
-   { "id": "google/nano-banana-pro", "name": "Nano Banana Pro", "fmt": "nano-pro", "per": "image", "est": { "1K": 0.14, "2K": 0.14, "4K": 0.24 }, "price": { "in": 2, "out": 120 }, "note": "הכי צילומי באור ובחומר; לפי טוקנים, כ-$0.14 לתמונה ו-$0.24 ב-4K" },
-   { "id": "google/nano-banana-2", "name": "Nano Banana 2", "fmt": "nano-2", "per": "image", "est": { "1K": 0.07, "2K": 0.07, "4K": 0.12 }, "price": { "in": 0.5, "out": 60 }, "note": "חצי מחיר של Pro, איכות קרובה" },
-   { "id": "openai/gpt-image-2", "name": "GPT Image 2", "fmt": "gpt-image", "per": "image", "est": { "low": 0.01, "medium": 0.04, "high": 0.17 }, "price": { "in": 5, "out": 10, "outImage": 30 }, "note": "טוב בטקסט בתוך תמונה ובעריכה; המחיר לפי איכות" },
-   { "id": "black-forest-labs/flux-2-max", "name": "FLUX.2 [max]", "fmt": "flux-max", "per": "megapixel", "price": { "firstMp": 0.07, "nextMp": 0.03 }, "note": "צבע מדויק ומרקמים; $0.07 למגה-פיקסל הראשון" },
-   { "id": "bytedance/seedream-4.5", "name": "Seedream 4.5", "fmt": "seedream", "per": "image", "est": { "any": 0.04 }, "note": "$0.04 לתמונה, גם ב-4K" }
-  ]},
-  { "id": "video", "title": "וידאו", "models": [
-   { "id": "google/veo-3.1-fast", "name": "Veo 3.1 Fast", "fmt": "veo", "per": "second", "rate": { "720p": 0.08, "1080p": 0.10 }, "audio": 0.05, "note": "טיוטות וידאו; 8 שניות ב-720p בלי קול: $0.64" },
-   { "id": "google/veo-3.1", "name": "Veo 3.1", "fmt": "veo", "per": "second", "rate": { "720p": 0.2, "1080p": 0.2 }, "audio": 0.2, "note": "הגרסה הסופית; 8 שניות בלי קול: $1.60, עם קול: $3.20" },
-   { "id": "bytedance/seedance-2.0", "name": "Seedance 2.0", "fmt": "seedance", "per": "second", "rate": { "480p": 0.07, "720p": 0.15, "1080p": 0.37 }, "note": "4–12 שניות; דעה שנייה על תנועה" }
-  ]},
-  { "id": "voice", "title": "קול", "models": [
-   { "id": "elevenlabs/eleven-v3", "name": "ElevenLabs v3", "fmt": "eleven", "per": "char", "rate": 0.0001, "note": "הקראה; $0.0001 לתו (1,000 תווים: $0.10). עברית: לבדוק כאן, היצרן לא מפרט" }
-  ]}
+  {
+   "id": "text",
+   "title": "טקסט",
+   "tiers": {
+    "top": [
+     {
+      "id": "openai/gpt-6-astra",
+      "slug": "openai__gpt-6-astra",
+      "sector": "text",
+      "name": "GPT-6 Astra",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "GPT-6 Astra is OpenAI's most capable model, built for complex reasoning, coding, computer use, research, and document creation.",
+      "price": [
+       {
+        "label": "Long-context threshold (input tokens)",
+        "usd": 272000
+       },
+       {
+        "label": "Short-context input (per 1M)",
+        "usd": 10
+       },
+       {
+        "label": "Short-context cached input (per 1M)",
+        "usd": 1
+       },
+       {
+        "label": "Short-context cache write (per 1M)",
+        "usd": 12
+       },
+       {
+        "label": "Short-context output (per 1M)",
+        "usd": 50
+       },
+       {
+        "label": "Long-context input (per 1M)",
+        "usd": 20
+       },
+       {
+        "label": "Long-context cached input (per 1M)",
+        "usd": 2
+       },
+       {
+        "label": "Long-context cache write (per 1M)",
+        "usd": 25
+       },
+       {
+        "label": "Long-context output (per 1M)",
+        "usd": 75
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "הדגל של OpenAI בדור 6",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "anthropic/claude-fable-5.1",
+      "slug": "anthropic__claude-fable-5.1",
+      "sector": "text",
+      "name": "Claude Fable 5.1",
+      "provider": "Anthropic",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Claude Fable 5.1 is Anthropic's next model in the Fable family, with improvements in agentic coding, long-running agentic workflows, knowledge work, front-end and visual code generation, and finance and analysis tasks. I",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 10
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 50
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.25
+       },
+       {
+        "label": "Cache creation (per 1M tokens)",
+        "usd": 12.5
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "anthropic",
+      "note": "הדגל של Anthropic: כתיבה, ניתוח ועבודה ארוכה ברמה הגבוהה ביותר",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "openai/gpt-5.5",
+      "slug": "openai__gpt-5.5",
+      "sector": "text",
+      "name": "GPT-5.5",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "GPT-5.5 is OpenAI's flagship model with strong coding, reasoning, and multimodal capabilities.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 5
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 30
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "הדגל הנוכחי של OpenAI: קוד, חשיבה, וגם קורא תמונות",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "anthropic/claude-opus-5.5",
+      "slug": "anthropic__claude-opus-5.5",
+      "sector": "text",
+      "name": "Claude Opus 5.5",
+      "provider": "Anthropic",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Claude Opus 5.5 is Anthropic's model for long-running agentic coding and knowledge work. It combines a one million token context window with adaptive thinking that is always on, a 128K token maximum output, and a medium ",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 4
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 20
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.2
+       },
+       {
+        "label": "Cache creation (per 1M tokens)",
+        "usd": 5
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "anthropic",
+      "note": "Opus האחרון, זול מ-Fable ועדיין בדרג העליון",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "google/gemini-3.1-pro",
+      "slug": "google__gemini-3.1-pro",
+      "sector": "text",
+      "name": "Gemini 3.1 Pro",
+      "provider": "Google",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Google's most intelligent Gemini model with improved reasoning, a medium thinking level, and a 1M token context window.",
+      "price": [
+       {
+        "label": "Input <=200k (per 1M)",
+        "usd": 2
+       },
+       {
+        "label": "Cached input <=200k (per 1M)",
+        "usd": 0.2
+       },
+       {
+        "label": "Output <=200k (per 1M)",
+        "usd": 12
+       },
+       {
+        "label": "Input >200k (per 1M)",
+        "usd": 4
+       },
+       {
+        "label": "Cached input >200k (per 1M)",
+        "usd": 0.4
+       },
+       {
+        "label": "Output >200k (per 1M)",
+        "usd": 18
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "הדגל של Google: הקשר ארוך מאוד, תמונה ווידאו כקלט",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "xai/grok-4.7",
+      "slug": "xai__grok-4.7",
+      "sector": "text",
+      "name": "Grok 4.7",
+      "provider": "xAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "xAI's Grok 4.7, a frontier reasoning model for coding, agentic tasks, and knowledge work. Accepts text and image inputs, and supports function calling, structured outputs, and configurable reasoning effort (low, medium, ",
+      "price": [
+       {
+        "label": "Input <200k (per 1M)",
+        "usd": 2
+       },
+       {
+        "label": "Cached input <200k (per 1M)",
+        "usd": 0.5
+       },
+       {
+        "label": "Output <200k (per 1M)",
+        "usd": 6
+       },
+       {
+        "label": "Input >=200k (per 1M)",
+        "usd": 4
+       },
+       {
+        "label": "Cached input >=200k (per 1M)",
+        "usd": 1
+       },
+       {
+        "label": "Output >=200k (per 1M)",
+        "usd": 12
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "הדגל של xAI: חשיבה, קוד ועבודה עם כלים; קורא גם תמונות",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "openai/gpt-5.4-pro",
+      "slug": "openai__gpt-5.4-pro",
+      "sector": "text",
+      "name": "GPT-5.4 pro",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "GPT-5.4 pro uses OpenAI's Responses API with built-in tools, improved reasoning, and stateful context management.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 30
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 180
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "responses",
+      "note": "גרסת Pro של GPT-5.4: חשיבה ארוכה דרך Responses API",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "openai/gpt-5.5-pro",
+      "slug": "openai__gpt-5.5-pro",
+      "sector": "text",
+      "name": "GPT-5.5 pro",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "GPT-5.5 pro uses OpenAI's Responses API with built-in tools, improved reasoning, and stateful context management.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 30
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 180
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "responses",
+      "note": "חשיבה ארוכה במיוחד; היקר בקטלוג",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "anthropic/claude-fable-5",
+      "slug": "anthropic__claude-fable-5",
+      "sector": "text",
+      "name": "Claude Fable 5",
+      "provider": "Anthropic",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Claude Fable 5 is Anthropic's most capable widely released model, built for the most demanding reasoning and long-horizon agentic work. Adaptive thinking is always on, and the model supports a 1M token context window wit",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 10
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 50
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 1
+       },
+       {
+        "label": "Cache creation (per 1M tokens)",
+        "usd": 12.5
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "anthropic",
+      "note": "Fable הקודם: חשיבה עמוקה ועבודה ארוכה ומורכבת",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "anthropic/claude-opus-5",
+      "slug": "anthropic__claude-opus-5",
+      "sector": "text",
+      "name": "Claude Opus 5",
+      "provider": "Anthropic",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Claude Opus 5 is Anthropic's model for complex agentic coding and enterprise work, delivering intelligence close to Claude Fable 5 at half the price. It uses adaptive thinking to calibrate reasoning per task and supports",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 5
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 25
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.5
+       },
+       {
+        "label": "Cache creation (per 1M tokens)",
+        "usd": 6.25
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "anthropic",
+      "note": "קרוב ל-Fable 5 בחצי מחיר; קוד ועבודה ארגונית",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "moonshotai/kimi-k3",
+      "slug": "moonshotai__kimi-k3",
+      "sector": "text",
+      "name": "Kimi K3",
+      "provider": "Moonshot AI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Kimi K3 is Moonshot's flagship 2.8 trillion-parameter model, built on Kimi Delta Attention (a hybrid linear attention mechanism) with Attention Residuals. It offers native visual understanding, always-on reasoning, and a",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 3
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 15
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.3
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "הדגל של Moonshot, ‏2.8 טריליון פרמטרים",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "alibaba/qwen3.8-max",
+      "slug": "alibaba__qwen3.8-max",
+      "sector": "text",
+      "name": "Qwen 3.8 Max",
+      "provider": "Alibaba",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Alibaba's Qwen 3.8 Max is a 2.4-trillion-parameter MoE flagship built for professional-grade coding and long-horizon autonomous work, capable of delivering complete, production-grade projects spanning 10+ days across leg",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 2
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 6
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.25
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "הדגל של Alibaba: קוד ברמה מקצועית ועבודה ארוכה",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "deepseek/deepseek-v4-pro",
+      "slug": "deepseek__deepseek-v4-pro",
+      "sector": "text",
+      "name": "DeepSeek V4 Pro",
+      "provider": "deepseek",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "DeepSeek V4 Pro is a high-capability reasoning model from DeepSeek, served via Fireworks infrastructure for production-grade inference.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 1.74
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 3.48
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.145
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "חזק במחיר נמוך יחסית",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     }
+    ],
+    "mid": [
+     {
+      "id": "openai/gpt-6-sol",
+      "slug": "openai__gpt-6-sol",
+      "sector": "text",
+      "name": "GPT-6 Sol",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "GPT-6 Sol is OpenAI's mid-tier GPT-6 model, built to power complex coding and agentic workflows.",
+      "price": [
+       {
+        "label": "Short-context input (per 1M)",
+        "usd": 2
+       },
+       {
+        "label": "Short-context cached input (per 1M)",
+        "usd": 0.2
+       },
+       {
+        "label": "Short-context cache write (per 1M)",
+        "usd": 2.5
+       },
+       {
+        "label": "Short-context output (per 1M)",
+        "usd": 10
+       },
+       {
+        "label": "Long-context input (per 1M)",
+        "usd": 4
+       },
+       {
+        "label": "Long-context cached input (per 1M)",
+        "usd": 0.4
+       },
+       {
+        "label": "Long-context cache write (per 1M)",
+        "usd": 5
+       },
+       {
+        "label": "Long-context output (per 1M)",
+        "usd": 15
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "הדרג האמצעי של GPT-6: קוד ותהליכים מרובי שלבים",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "anthropic/claude-sonnet-5",
+      "slug": "anthropic__claude-sonnet-5",
+      "sector": "text",
+      "name": "Claude Sonnet 5",
+      "provider": "Anthropic",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Claude Sonnet 5 is Anthropic's most agentic Sonnet model yet, built for coding, tool use, reasoning, and long-horizon professional work at lower cost than Opus-class models.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 2
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 10
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.2
+       },
+       {
+        "label": "Cache creation (per 1M tokens)",
+        "usd": 2.5
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "anthropic",
+      "note": "האיזון הטוב של Anthropic: חזק ובחמישית ממחיר Fable",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "google/gemini-3.5-flash",
+      "slug": "google__gemini-3.5-flash",
+      "sector": "text",
+      "name": "Gemini 3.5 Flash",
+      "provider": "Google",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Gemini 3.5 Flash is Google's fast multimodal model with frontier intelligence, superior search, and grounding capabilities.",
+      "price": [
+       {
+        "label": "Input <=200k (per 1M)",
+        "usd": 1.5
+       },
+       {
+        "label": "Cached input <=200k (per 1M)",
+        "usd": 0.15
+       },
+       {
+        "label": "Output <=200k (per 1M)",
+        "usd": 9
+       },
+       {
+        "label": "Input >200k (per 1M)",
+        "usd": 1.5
+       },
+       {
+        "label": "Cached input >200k (per 1M)",
+        "usd": 0.15
+       },
+       {
+        "label": "Output >200k (per 1M)",
+        "usd": 9
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "מהיר וזול עם עברית טובה; ברירת מחדל טובה לכמות",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "anthropic/claude-opus-4.5",
+      "slug": "anthropic__claude-opus-4.5",
+      "sector": "text",
+      "name": "Claude Opus 4.5",
+      "provider": "Anthropic",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Claude Opus 4.5 brings further reasoning, coding, and agentic improvements over Opus 4.1, with stronger tool use and tighter instruction following.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 5
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 25
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.5
+       },
+       {
+        "label": "Cache creation (per 1M tokens)",
+        "usd": 6.25
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "anthropic",
+      "note": "Opus מדור 4.5: קוד, חשיבה ועבודה עם כלים",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "anthropic/claude-opus-4.6",
+      "slug": "anthropic__claude-opus-4.6",
+      "sector": "text",
+      "name": "Claude Opus 4.6",
+      "provider": "Anthropic",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Claude Opus 4.6 is Anthropic's flagship language model built for complex, multi-step work in coding, financial analysis, and legal reasoning. It uses extended thinking to work through complex problems carefully and featu",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 5
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 25
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.5
+       },
+       {
+        "label": "Cache creation (per 1M tokens)",
+        "usd": 6.25
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "anthropic",
+      "note": "Opus מדור 4.6: עבודה מרובת שלבים, ניתוח פיננסי ומשפטי",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "anthropic/claude-opus-4.7",
+      "slug": "anthropic__claude-opus-4.7",
+      "sector": "text",
+      "name": "Claude Opus 4.7",
+      "provider": "Anthropic",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Claude Opus 4.7 is Anthropic's most capable generally available model, with a step-change improvement in agentic coding over Claude Opus 4.6. It uses adaptive thinking to calibrate reasoning per task and supports a one m",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 5
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 25
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.5
+       },
+       {
+        "label": "Cache creation (per 1M tokens)",
+        "usd": 6.25
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "anthropic",
+      "note": "Opus מדור 4.7: קפיצה בקוד מול 4.6",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "anthropic/claude-opus-4.8",
+      "slug": "anthropic__claude-opus-4.8",
+      "sector": "text",
+      "name": "Claude Opus 4.8",
+      "provider": "Anthropic",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Claude Opus 4.8 is Anthropic's most capable generally available model, with a step-change improvement in agentic coding over Claude Opus 4.7. It uses adaptive thinking to calibrate reasoning per task and supports a one m",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 5
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 25
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.5
+       },
+       {
+        "label": "Cache creation (per 1M tokens)",
+        "usd": 6.25
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "anthropic",
+      "note": "Opus מדור 4.8: שיפור גדול בקוד מול 4.7",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "anthropic/claude-sonnet-4.5",
+      "slug": "anthropic__claude-sonnet-4.5",
+      "sector": "text",
+      "name": "Claude Sonnet 4.5",
+      "provider": "Anthropic",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Claude Sonnet 4.5 is the best coding model to date, with significant improvements across the entire development lifecycle.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 3
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 15
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.3
+       },
+       {
+        "label": "Cache creation (per 1M tokens)",
+        "usd": 3.75
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "anthropic",
+      "note": "Sonnet מדור 4.5: חזק במיוחד בקוד",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "anthropic/claude-sonnet-4.6",
+      "slug": "anthropic__claude-sonnet-4.6",
+      "sector": "text",
+      "name": "Claude Sonnet 4.6",
+      "provider": "Anthropic",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Claude Sonnet 4.6 is Anthropic's latest balanced model offering strong coding, reasoning, and agentic capabilities with improved instruction following.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 3
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 15
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.3
+       },
+       {
+        "label": "Cache creation (per 1M tokens)",
+        "usd": 3.75
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "anthropic",
+      "note": "Sonnet מדור 4.6: מאוזן, קוד וחשיבה, היצמדות טובה להוראות",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "openai/gpt-5.4",
+      "slug": "openai__gpt-5.4",
+      "sector": "text",
+      "name": "GPT-5.4",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "GPT-5.4 is OpenAI's flagship model with strong coding, reasoning, and multimodal capabilities.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 2.5
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 15
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.25
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "הדגל של OpenAI בדור 5.4: קוד, חשיבה ותמונות",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "openai/gpt-5.6-terra",
+      "slug": "openai__gpt-5.6-terra",
+      "sector": "text",
+      "name": "GPT-5.6 Terra",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "GPT-5.6 Terra is an OpenAI GPT-5.6 model that balances intelligence and cost, using the Responses API for reasoning and stateful context management.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 2
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 12
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.2
+       },
+       {
+        "label": "Cache creation (per 1M tokens)",
+        "usd": 2.5
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "responses",
+      "note": "GPT-5.6 באיזון בין יכולת למחיר (Responses API)",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "xai/grok-4.5",
+      "slug": "xai__grok-4.5",
+      "sector": "text",
+      "name": "Grok 4.5",
+      "provider": "xAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "xAI's Grok 4.5, a frontier model built for coding, agentic tasks, and knowledge work. Accepts text and image inputs, and supports function calling, structured outputs, and configurable reasoning effort (low, medium, high",
+      "price": [
+       {
+        "label": "Input <200k (per 1M)",
+        "usd": 2
+       },
+       {
+        "label": "Cached input <200k (per 1M)",
+        "usd": 0.3
+       },
+       {
+        "label": "Output <200k (per 1M)",
+        "usd": 6
+       },
+       {
+        "label": "Input >=200k (per 1M)",
+        "usd": 4
+       },
+       {
+        "label": "Cached input >=200k (per 1M)",
+        "usd": 0.6
+       },
+       {
+        "label": "Output >=200k (per 1M)",
+        "usd": 12
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "Grok מדור 4.5: קוד, משימות ועבודת ידע; קורא תמונות",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "xai/grok-4.6",
+      "slug": "xai__grok-4.6",
+      "sector": "text",
+      "name": "Grok 4.6",
+      "provider": "xAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "xAI's Grok 4.6, a flagship reasoning model for coding, agentic tasks, and visual work. Accepts text and image inputs, and supports function calling and structured outputs.",
+      "price": [
+       {
+        "label": "Input <200k (per 1M)",
+        "usd": 2
+       },
+       {
+        "label": "Cached input <200k (per 1M)",
+        "usd": 0.5
+       },
+       {
+        "label": "Output <200k (per 1M)",
+        "usd": 6
+       },
+       {
+        "label": "Input >=200k (per 1M)",
+        "usd": 4
+       },
+       {
+        "label": "Cached input >=200k (per 1M)",
+        "usd": 1
+       },
+       {
+        "label": "Output >=200k (per 1M)",
+        "usd": 12
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "Grok מדור 4.6: חשיבה, קוד ועבודה חזותית",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "google/gemini-2.5-pro",
+      "slug": "google__gemini-2.5-pro",
+      "sector": "text",
+      "name": "Gemini 2.5 Pro",
+      "provider": "Google",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Google's most capable Gemini 2.5 model with strong reasoning, thinking support, and a 1M token context window.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 1.25
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 10
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.125
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "ה-Pro של דור 2.5: חשיבה, והקשר של מיליון טוקנים",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "openai/gpt-5",
+      "slug": "openai__gpt-5",
+      "sector": "text",
+      "name": "GPT-5",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "OpenAI's model excelling at coding, writing, and reasoning.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 1.25
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 10
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.125
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "GPT-5 המקורי: קוד, כתיבה וחשיבה",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "openai/gpt-5.1",
+      "slug": "openai__gpt-5.1",
+      "sector": "text",
+      "name": "GPT-5.1",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "GPT-5.1 is OpenAI’s incremental improvement over GPT-5, with stronger coding, reasoning, and writing.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 1.25
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 10
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.125
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "שיפור של GPT-5 בקוד, בחשיבה ובכתיבה",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "openai/gpt-5.6-sol",
+      "slug": "openai__gpt-5.6-sol",
+      "sector": "text",
+      "name": "GPT-5.6 Sol",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "GPT-5.6 Sol is OpenAI's frontier GPT-5.6 model for complex professional work, using the Responses API for reasoning and stateful context management.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 2
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 10
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.25
+       },
+       {
+        "label": "Cache creation (per 1M tokens)",
+        "usd": 3.125
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "responses",
+      "note": "GPT-5.6 החזק, לעבודה מקצועית מורכבת (Responses API)",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "thinkingmachines/inkling-256k",
+      "slug": "thinkingmachines__inkling-256k",
+      "sector": "text",
+      "name": "Inkling 256K",
+      "provider": "thinkingmachines",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "The 256K-context variant of Inkling, Thinking Machines' open-weights hybrid reasoning MoE model. Same hybrid reasoning, tool-use, and streaming support as the base model, with an extended context window for longer conver",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 3.74
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 9.36
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.748
+       },
+       {
+        "label": "Cache creation (per 1M tokens)",
+        "usd": 3.74
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "anthropic",
+      "note": "Inkling עם הקשר של 256 אלף טוקנים; מודל פתוח עם חשיבה",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "openai/gpt-4.1",
+      "slug": "openai__gpt-4.1",
+      "sector": "text",
+      "name": "GPT-4.1",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "OpenAI's flagship GPT model for complex tasks with a million-token context window.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 2
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 8
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.5
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "GPT-4.1: משימות מורכבות, הקשר של מיליון טוקנים",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "openai/o3",
+      "slug": "openai__o3",
+      "sector": "text",
+      "name": "o3",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "o3 is OpenAI’s general-purpose reasoning model, balancing strong analytical performance with reasonable latency and cost.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 2
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 8
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.5
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "מודל החשיבה הכללי של OpenAI: ניתוח חזק במהירות סבירה",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "google/gemini-3.6-flash",
+      "slug": "google__gemini-3.6-flash",
+      "sector": "text",
+      "name": "Gemini 3.6 Flash",
+      "provider": "Google",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Gemini 3.6 Flash provides sustained frontier-level intelligence optimized for real-world tasks at a higher speed and lower cost, excelling at code generation, agentic execution, and spatial reasoning.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 1.5
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 7.5
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.15
+       },
+       {
+        "label": "Cache creation (per 1M tokens)",
+        "usd": 1.5
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "Flash מדור 3.6: מהיר וזול, חזק בקוד ובמשימות",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "unbiased/pareto",
+      "slug": "unbiased__pareto",
+      "sector": "text",
+      "name": "Pareto",
+      "provider": "unbiased",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Pareto is Unbiased's blended AI model. It engages multiple language models in parallel for each request, synthesizes one answer, and supports text and vision inputs through a single API response.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 2.5
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 7.5
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.25
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "שולח כל בקשה לכמה מודלים במקביל ומחבר תשובה אחת",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "xai/grok-4.20-multi-agent-0309",
+      "slug": "xai__grok-4.20-multi-agent-0309",
+      "sector": "text",
+      "name": "Grok 4.20 Multi-Agent",
+      "provider": "xAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "xAI's Grok 4.20 multi-agent model with a 2M-token context window. Multiple agents collaborate in parallel to perform deep research tasks, with function calling, structured outputs, and reasoning capabilities.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 2
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 6
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.2
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "responses",
+      "note": "כמה סוכנים עובדים במקביל על מחקר עמוק; הקשר של 2 מיליון",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "xai/grok-4.20-0309-non-reasoning",
+      "slug": "xai__grok-4.20-0309-non-reasoning",
+      "sector": "text",
+      "name": "Grok 4.20 Non-Reasoning",
+      "provider": "xAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "xAI's Grok 4.20 non-reasoning model. Skips the thinking trace for fast, single-pass responses while keeping the same training as the reasoning variant.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 2
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 6
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.2
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "Grok 4.20 בלי שלב חשיבה: תשובה מהירה במעבר אחד",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "xai/grok-4.20-0309-reasoning",
+      "slug": "xai__grok-4.20-0309-reasoning",
+      "sector": "text",
+      "name": "Grok 4.20 Reasoning",
+      "provider": "xAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "xAI's Grok 4.20 reasoning model. Uses extended thinking to work through complex problems, returning a reasoning trace alongside the final answer.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 2
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 6
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.2
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "Grok 4.20 עם חשיבה מורחבת לבעיות מורכבות",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "alibaba/qwen3-max",
+      "slug": "alibaba__qwen3-max",
+      "sector": "text",
+      "name": "Qwen 3 Max",
+      "provider": "Alibaba",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Alibaba's Qwen 3 Max is a large language model with strong coding, reasoning, and multilingual capabilities, served via DashScope's OpenAI-compatible endpoint.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 1.2
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 6
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "Qwen 3 Max: קוד, חשיבה ושפות רבות",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "minimax/m3",
+      "slug": "minimax__m3",
+      "sector": "text",
+      "name": "MiniMax M3",
+      "provider": "MiniMax",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "MiniMax's M3 language model with frontier coding and agentic capabilities, a 1M token context window, and multilingual support.",
+      "price": [
+       {
+        "label": "Input <=512k (per 1M)",
+        "usd": 0.3
+       },
+       {
+        "label": "Cached input <=512k (per 1M)",
+        "usd": 0.06
+       },
+       {
+        "label": "Output <=512k (per 1M)",
+        "usd": 1.2
+       },
+       {
+        "label": "Input >512k (per 1M)",
+        "usd": 1.2
+       },
+       {
+        "label": "Cached input >512k (per 1M)",
+        "usd": 0.24
+       },
+       {
+        "label": "Output >512k (per 1M)",
+        "usd": 4.8
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "MiniMax M3: קוד ומשימות, הקשר של מיליון טוקנים",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "thinkingmachines/inkling",
+      "slug": "thinkingmachines__inkling",
+      "sector": "text",
+      "name": "Inkling",
+      "provider": "thinkingmachines",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Inkling is Thinking Machines' open-weights hybrid reasoning model, built on a mixture-of-experts architecture. It reasons by default, exposing its chain-of-thought as leading thinking content blocks, with reasoning effor",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 1.87
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 4.68
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.374
+       },
+       {
+        "label": "Cache creation (per 1M tokens)",
+        "usd": 1.87
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "anthropic",
+      "note": "מודל פתוח של Thinking Machines, חושב כברירת מחדל",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "@cf/zai-org/glm-5.2",
+      "slug": "cf__zai-org__glm-5.2",
+      "sector": "text",
+      "name": "glm-5.2",
+      "provider": "Workers AI",
+      "wai": true,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Z.ai's flagship agentic coding model",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 1.4
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 4.4
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.26
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "רץ ב-Workers AI. בלי Workers Paid רק מהקרדיטים",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "@cf/zai-org/glm-5.3",
+      "slug": "cf__zai-org__glm-5.3",
+      "sector": "text",
+      "name": "glm-5.3",
+      "provider": "Workers AI",
+      "wai": true,
+      "live": true,
+      "task": "Text Generation",
+      "about": "GLM-5.3 is Z.ai's flagship agentic coding model, pairing a 1M-token context window with reasoning, function calling, and structured outputs to power multi-step, tool-driven development workflows.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 1.4
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 4.4
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.26
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "רץ ב-Workers AI. בלי Workers Paid רק מהקרדיטים",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "@cf/moonshotai/kimi-k2.6",
+      "slug": "cf__moonshotai__kimi-k2.6",
+      "sector": "text",
+      "name": "kimi-k2.6",
+      "provider": "Workers AI",
+      "wai": true,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Kimi K2.6 is a frontier-scale open-source 1T parameter model with a 262.1k context window, multi-turn tool calling, vision inputs, and structured outputs for agentic workloads.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 0.95
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 4
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.16
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "רץ ב-Workers AI. בלי Workers Paid רק מהקרדיטים; קורא גם תמונות",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "@cf/moonshotai/kimi-k2.7-code",
+      "slug": "cf__moonshotai__kimi-k2.7-code",
+      "sector": "text",
+      "name": "kimi-k2.7-code",
+      "provider": "Workers AI",
+      "wai": true,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Kimi K2.7 is a frontier-scale open-source 1T parameter model with a 262.1k context window, multi-turn tool calling, vision inputs, and structured outputs for agentic workloads.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 0.95
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 4
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.19
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "רץ ב-Workers AI. בלי Workers Paid רק מהקרדיטים; מיועד לקוד",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "@cf/deepseek-ai/deepseek-v4-pro-0813",
+      "slug": "cf__deepseek-ai__deepseek-v4-pro-0813",
+      "sector": "text",
+      "name": "deepseek-v4-pro-0813",
+      "provider": "Workers AI",
+      "wai": true,
+      "live": true,
+      "task": "Text Generation",
+      "about": "DeepSeek V4 Pro is a high-capability reasoning model from DeepSeek with a one million token context window, built for long-horizon agentic workflows and complex, multi-step problem-solving",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 1.32
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 3.96
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.044
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "רץ ב-Workers AI. בלי Workers Paid רק מהקרדיטים; זול מגרסת ה-Gateway של אותו מודל",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "google/gemini-3.7-flash",
+      "slug": "google__gemini-3.7-flash",
+      "sector": "text",
+      "name": "Gemini 3.7 Flash",
+      "provider": "Google",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Gemini 3.7 Flash is a highly capable, natively multimodal reasoning model optimized for agentic workflows and real-world tasks.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 0.75
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 3.75
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.075
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "Flash מדור 3.7: מולטימודלי, עם חשיבה, לתהליכים",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "google/gemini-3.8-flash",
+      "slug": "google__gemini-3.8-flash",
+      "sector": "text",
+      "name": "Gemini 3.8 Flash",
+      "provider": "Google",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Our most intelligent Flash model, engineered for long-horizon software engineering, autonomous agents, and complex enterprise workflows.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 0.75
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.075
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 3.75
+       },
+       {
+        "label": "Default (per second)",
+        "usd": 0.75
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "ה-Flash החכם ביותר של Google: קוד ארוך וסוכנים",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "alibaba/qwen3.7-max",
+      "slug": "alibaba__qwen3.7-max",
+      "sector": "text",
+      "name": "Qwen 3.7 Max",
+      "provider": "Alibaba",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Alibaba's Qwen 3.7 Max is the largest and most capable model in the Qwen3.7 series, a next-generation flagship built for the agent-centric era with deep strengths in programming, office and productivity tasks, and long-t",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 1.25
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 3.75
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.25
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "הגדול בסדרת Qwen 3.7: תכנות ועבודת סוכנים",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "alibaba/qwen3.5-397b-a17b",
+      "slug": "alibaba__qwen3.5-397b-a17b",
+      "sector": "text",
+      "name": "Qwen 3.5 397B A17B",
+      "provider": "Alibaba",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Alibaba's Qwen 3.5 is a 397B-parameter mixture-of-experts model with 17B active parameters, offering strong reasoning capabilities with efficient inference.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 0.6
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 3.6
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "Qwen 3.5 ‏(MoE, ‏17B פעילים): חשיבה טובה בעלות נמוכה",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "google/gemini-3-flash",
+      "slug": "google__gemini-3-flash",
+      "sector": "text",
+      "name": "Gemini 3 Flash",
+      "provider": "Google",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Gemini 3 Flash is Google's fast multimodal model with frontier intelligence, superior search, and grounding capabilities.",
+      "price": [
+       {
+        "label": "Input <=200k (per 1M)",
+        "usd": 0.5
+       },
+       {
+        "label": "Cached input <=200k (per 1M)",
+        "usd": 0.05
+       },
+       {
+        "label": "Output <=200k (per 1M)",
+        "usd": 3
+       },
+       {
+        "label": "Input >200k (per 1M)",
+        "usd": 0.5
+       },
+       {
+        "label": "Cached input >200k (per 1M)",
+        "usd": 0.05
+       },
+       {
+        "label": "Output >200k (per 1M)",
+        "usd": 3
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "Flash מדור 3: מהיר, מולטימודלי, טוב בחיפוש",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "xai/grok-4.3",
+      "slug": "xai__grok-4.3",
+      "sector": "text",
+      "name": "Grok 4.3",
+      "provider": "xAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "xAI's Grok 4.3 model with a 1M-token context window and strong agentic tool calling with minimal hallucinations. Accepts text and image inputs, and supports function calling, structured outputs, and configurable reasonin",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 1.25
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 2.5
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.2
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "Grok 4.3: הקשר של מיליון, כלים, מעט הזיות",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     }
+    ],
+    "low": [
+     {
+      "id": "anthropic/claude-haiku-4.5",
+      "slug": "anthropic__claude-haiku-4.5",
+      "sector": "text",
+      "name": "Claude Haiku 4.5",
+      "provider": "Anthropic",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Claude Haiku 4.5 delivers similar levels of coding performance at one-third the cost and more than twice the speed of larger models.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 1
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 5
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.1
+       },
+       {
+        "label": "Cache creation (per 1M tokens)",
+        "usd": 1.25
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "anthropic",
+      "note": "המהיר והזול של Anthropic: קוד טוב בשליש מחיר",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "openai/gpt-4o",
+      "slug": "openai__gpt-4o",
+      "sector": "text",
+      "name": "GPT-4o",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "GPT-4o is OpenAI’s multimodal flagship, accepting text and images and responding quickly across a wide range of tasks.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 1.25
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 5
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.625
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "GPT-4o: טקסט ותמונות, מהיר; דור קודם",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "openai/gpt-5.4-mini",
+      "slug": "openai__gpt-5.4-mini",
+      "sector": "text",
+      "name": "GPT-5.4 mini",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "GPT-5.4 mini is a smaller, faster, and more cost-efficient version of GPT-5.4 for lightweight tasks.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 0.75
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 4.5
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.075
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "גרסה קטנה, מהירה וזולה של GPT-5.4",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "openai/o3-mini",
+      "slug": "openai__o3-mini",
+      "sector": "text",
+      "name": "o3-mini",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "o3-mini is the lightweight, low-cost reasoning variant of o3, well suited to quick analytical tasks at scale.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 1.1
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 4.4
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.55
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "o3 הקל והזול, לניתוח מהיר בכמות",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "openai/o4-mini",
+      "slug": "openai__o4-mini",
+      "sector": "text",
+      "name": "o4-mini",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "OpenAI's fast, lightweight reasoning model optimized for multi-step problem solving at lower cost.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 1.1
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 4.4
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.275
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "מודל חשיבה קל וזול לבעיות מרובות שלבים",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "google/gemini-2.5-flash",
+      "slug": "google__gemini-2.5-flash",
+      "sector": "text",
+      "name": "Gemini 2.5 Flash",
+      "provider": "Google",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Google's fast multimodal Gemini 2.5 model with strong reasoning and a 1M token context window.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 0.3
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 2.5
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.03
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "Flash מדור 2.5: מהיר, עם חשיבה והקשר של מיליון",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "google/gemini-3.5-flash-lite",
+      "slug": "google__gemini-3.5-flash-lite",
+      "sector": "text",
+      "name": "Gemini 3.5 Flash-Lite",
+      "provider": "Google",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Gemini 3.5 Flash-Lite is a low-latency, cost-effective multimodal model optimized for high-throughput, low-cost execution for subagent tasks and document parsing.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 0.3
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 2.5
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.03
+       },
+       {
+        "label": "Cache creation (per 1M tokens)",
+        "usd": 0.03
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "Flash-Lite מדור 3.5: זול מאוד, לכמויות ולפענוח מסמכים",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "openai/gpt-5-mini",
+      "slug": "openai__gpt-5-mini",
+      "sector": "text",
+      "name": "GPT-5 mini",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "GPT-5 Mini is the lightweight, low-cost variant of GPT-5, well suited to high-volume coding and reasoning tasks.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 0.25
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 2
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.025
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "GPT-5 הקל והזול, לקוד ולחשיבה בכמות",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "openai/gpt-4.1-mini",
+      "slug": "openai__gpt-4.1-mini",
+      "sector": "text",
+      "name": "GPT-4.1 mini",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Fast, affordable version of GPT-4.1 with a million-token context window.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 0.4
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 1.6
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.1
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "GPT-4.1 המהיר והזול, הקשר של מיליון",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "google/gemini-3.1-flash-lite",
+      "slug": "google__gemini-3.1-flash-lite",
+      "sector": "text",
+      "name": "Gemini 3.1 Flash Lite",
+      "provider": "Google",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Google's lightest and most cost-efficient Gemini model for high-throughput tasks.",
+      "price": [
+       {
+        "label": "Input <=200k (per 1M)",
+        "usd": 0.25
+       },
+       {
+        "label": "Cached input <=200k (per 1M)",
+        "usd": 0.03
+       },
+       {
+        "label": "Output <=200k (per 1M)",
+        "usd": 1.5
+       },
+       {
+        "label": "Input >200k (per 1M)",
+        "usd": 0.25
+       },
+       {
+        "label": "Cached input >200k (per 1M)",
+        "usd": 0.03
+       },
+       {
+        "label": "Output >200k (per 1M)",
+        "usd": 1.5
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "ה-Gemini הקל והזול ביותר, לכמויות גדולות",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "@cf/deepseek-ai/deepseek-v4-flash-0731",
+      "slug": "cf__deepseek-ai__deepseek-v4-flash-0731",
+      "sector": "text",
+      "name": "deepseek-v4-flash-0731",
+      "provider": "Workers AI",
+      "wai": true,
+      "live": true,
+      "task": "Text Generation",
+      "about": "\"DeepSeek-V4-Flash-0731 is the official release of DeepSeek-V4-Flash, superseding the preview version, with substantially enhanced agentic capabilities. \"",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 0.44
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 1.32
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.014
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "רץ ב-Workers AI. בלי Workers Paid רק מהקרדיטים; מהיר וזול",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "alibaba/qwen3.7-plus",
+      "slug": "alibaba__qwen3.7-plus",
+      "sector": "text",
+      "name": "Qwen 3.7 Plus",
+      "provider": "Alibaba",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Alibaba's Qwen 3.7 Plus is the cost-effective member of the Qwen3.7 series, pairing strong text capabilities with image and video understanding and full-stack agent-level intelligence for coding, tool use, and GUI-based ",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 0.32
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 1.28
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.064
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "החסכוני בסדרת Qwen 3.7: טקסט, וגם תמונה ווידאו כקלט",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "openai/gpt-5.4-nano",
+      "slug": "openai__gpt-5.4-nano",
+      "sector": "text",
+      "name": "GPT-5.4 nano",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "GPT-5.4 nano is OpenAI's smallest and fastest model, optimized for edge and low-latency use cases.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 0.2
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 1.25
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.02
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "הקטן והמהיר של OpenAI בדור 5.4",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "openai/gpt-5.6-luna",
+      "slug": "openai__gpt-5.6-luna",
+      "sector": "text",
+      "name": "GPT-5.6 Luna",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "GPT-5.6 Luna is an OpenAI GPT-5.6 model optimized for cost-sensitive workloads, using the Responses API for efficient text generation.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 0.2
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 1.2
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.02
+       },
+       {
+        "label": "Cache creation (per 1M tokens)",
+        "usd": 0.25
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "responses",
+      "note": "GPT-5.6 החסכוני, לטקסט בכמות",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "minimax/m2.7",
+      "slug": "minimax__m2.7",
+      "sector": "text",
+      "name": "MiniMax M2.7",
+      "provider": "MiniMax",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "MiniMax's M2.7 language model with multilingual capabilities.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 0.3
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 1.2
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.06
+       },
+       {
+        "label": "Cache creation (per 1M tokens)",
+        "usd": 0.375
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "MiniMax M2.7: מודל שפה רב-לשוני",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "openai/gpt-6-luna",
+      "slug": "openai__gpt-6-luna",
+      "sector": "text",
+      "name": "GPT-6 Luna",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "GPT-6 Luna is OpenAI's most efficient GPT-6 model, built for focused, high-volume tasks.",
+      "price": [
+       {
+        "label": "Short-context input (per 1M)",
+        "usd": 0.1
+       },
+       {
+        "label": "Short-context cached input (per 1M)",
+        "usd": 0.01
+       },
+       {
+        "label": "Short-context cache write (per 1M)",
+        "usd": 0.125
+       },
+       {
+        "label": "Short-context output (per 1M)",
+        "usd": 0.5
+       },
+       {
+        "label": "Long-context input (per 1M)",
+        "usd": 0.2
+       },
+       {
+        "label": "Long-context cached input (per 1M)",
+        "usd": 0.02
+       },
+       {
+        "label": "Long-context cache write (per 1M)",
+        "usd": 0.25
+       },
+       {
+        "label": "Long-context output (per 1M)",
+        "usd": 0.75
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "החסכוני של GPT-6, למשימות ממוקדות בכמות",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "@cf/zai-org/glm-5.3-flash",
+      "slug": "cf__zai-org__glm-5.3-flash",
+      "sector": "text",
+      "name": "glm-5.3-flash",
+      "provider": "Workers AI",
+      "wai": true,
+      "live": true,
+      "task": "Text Generation",
+      "about": "The first natively multimodal model in the GLM-5 series. With 320B total parameters and just 18B active parameters, it outperforms GLM-5.2 across benchmarks and real-world workloads at one-tenth the price, while approach",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 0.15
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 0.5
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.03
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "רץ ב-Workers AI. בלי Workers Paid רק מהקרדיטים; זול מאוד וקורא תמונות",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "google/gemini-2.5-flash-lite",
+      "slug": "google__gemini-2.5-flash-lite",
+      "sector": "text",
+      "name": "Gemini 2.5 Flash Lite",
+      "provider": "Google",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Google's lightest and most cost-efficient Gemini 2.5 model for high-throughput tasks.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 0.1
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 0.4
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.01
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "הקל והזול של דור 2.5",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "openai/gpt-4.1-nano",
+      "slug": "openai__gpt-4.1-nano",
+      "sector": "text",
+      "name": "GPT-4.1 nano",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "GPT-4.1 Nano is OpenAI’s smallest and cheapest GPT-4.1 variant, optimized for high-throughput, low-latency tasks.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 0.1
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 0.4
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.025
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "הקטן והזול של GPT-4.1",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "openai/gpt-5-nano",
+      "slug": "openai__gpt-5-nano",
+      "sector": "text",
+      "name": "GPT-5 nano",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "GPT-5 Nano is OpenAI’s smallest GPT-5 variant, optimized for low latency and cheap, high-throughput tasks.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 0.05
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 0.4
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.005
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "הקטן של GPT-5, מהיר וזול",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "openai/gpt-4o-mini",
+      "slug": "openai__gpt-4o-mini",
+      "sector": "text",
+      "name": "GPT-4o mini",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "GPT-4o Mini is the lightweight, low-cost variant of GPT-4o, well suited to high-volume tasks with multimodal inputs.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 0.075
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 0.3
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.0375
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "chat",
+      "note": "GPT-4o הקל והזול; דור קודם",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "typesafe/jev",
+      "slug": "typesafe__jev",
+      "sector": "text",
+      "name": "Jev",
+      "provider": "typesafe",
+      "wai": false,
+      "live": true,
+      "task": "Text Generation",
+      "about": "Jev is TypeSafe's structured evaluation model. It evaluates one state against typed Noul, Choice, and Score questions and returns calibrated answers with probabilities and confidence.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 0.042
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 0
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "schema",
+      "note": "מסווג שעונה על שאלות כן/לא על טקסט, לא צ'אט",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     }
+    ]
+   }
+  },
+  {
+   "id": "image",
+   "title": "תמונה",
+   "tiers": {
+    "top": [
+     {
+      "id": "google/nano-banana-pro",
+      "slug": "google__nano-banana-pro",
+      "sector": "image",
+      "name": "Nano Banana Pro",
+      "provider": "Google",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "Google's higher-quality image generation model with improved detail and prompt adherence.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 2
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 120
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "הכי צילומי באור ובחומר; עד 4K ועד 3 תמונות ייחוס",
+      "hasSchema": true,
+      "cover": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-pro/product-photography.png",
+      "demo": null
+     },
+     {
+      "id": "openai/gpt-image-2",
+      "slug": "openai__gpt-image-2",
+      "sector": "image",
+      "name": "GPT Image 2",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "\"OpenAI's next-generation image model that creates and edits images from text prompts, with support for multiple quality levels, sizes, and output formats. Note: transparent backgrounds are not supported — use openai/gpt",
+      "price": [
+       {
+        "label": "Cached input image (per 1M tokens)",
+        "usd": 2
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 1.25
+       },
+       {
+        "label": "Input image (per 1M tokens)",
+        "usd": 8
+       },
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 5
+       },
+       {
+        "label": "Output image (per 1M tokens)",
+        "usd": 30
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 10
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "טקסט קריא בתוך התמונה, ועריכה של תמונה קיימת",
+      "hasSchema": true,
+      "cover": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__gpt-image-2/simple-generation.png",
+      "demo": null
+     },
+     {
+      "id": "recraft/recraftv4-1-pro-vector",
+      "slug": "recraft__recraftv4-1-pro-vector",
+      "sector": "image",
+      "name": "Recraft V4.1 Pro SVG",
+      "provider": "Recraft",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "Generate detailed, high-resolution SVG vector graphics from text prompts with high aesthetic quality, fine geometry, scalable to any size for print and design work.",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.3
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "וקטור (SVG): לוגו, אייקונים ואיורים שנשארים חדים בכל גודל",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "black-forest-labs/flux-2-max",
+      "slug": "black-forest-labs__flux-2-max",
+      "sector": "image",
+      "name": "FLUX.2 [max]",
+      "provider": "Black Forest Labs",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "FLUX.2 [max] is Black Forest Labs' highest-quality image model — top editing consistency, strongest prompt following, and grounding search for visualizations of real-time information.",
+      "price": [
+       {
+        "label": "First output megapixel",
+        "usd": 0.07
+       },
+       {
+        "label": "Per additional output megapixel",
+        "usd": 0.03
+       },
+       {
+        "label": "Per input megapixel",
+        "usd": 0.03
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "צבע מדויק ומרקמים; עד 8 תמונות ייחוס",
+      "hasSchema": true,
+      "cover": "https://examples.aig.cloudflare.com/black-forest-labs/flux-2-max/high-resolution-scene.jpeg",
+      "demo": null
+     },
+     {
+      "id": "bytedance/seedream-5-pro",
+      "slug": "bytedance__seedream-5-pro",
+      "sector": "image",
+      "name": "Seedream 5 Pro",
+      "provider": "ByteDance",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "Seedream 5 Pro is ByteDance's high-quality image generation and editing model with text prompts, up to 10 reference images, and 1K, 2K, or explicit pixel-size output controls.",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.045
+       },
+       {
+        "label": "Per input image",
+        "usd": 0.03
+       },
+       {
+        "label": "Default (per second)",
+        "usd": 0.045
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "פרטים עדינים, מחיר קבוע לתמונה",
+      "hasSchema": true,
+      "cover": "https://examples.aig.cloudflare.com/bytedance/seedream-5-pro/mechanical-watch-0.jpeg",
+      "demo": null
+     },
+     {
+      "id": "openai/gpt-image-2.5-flare",
+      "slug": "openai__gpt-image-2.5-flare",
+      "sector": "image",
+      "name": "GPT Image 2.5 Flare",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "OpenAI's fastest high-quality everyday image generation model. It accepts text and image inputs and produces images with low, medium, high, xhigh, max, and auto quality settings.",
+      "price": [
+       {
+        "label": "Cached input image (per 1M tokens)",
+        "usd": 3
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 1.25
+       },
+       {
+        "label": "Input image (per 1M tokens)",
+        "usd": 8
+       },
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 5
+       },
+       {
+        "label": "Output image (per 1M tokens)",
+        "usd": 30
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "מודל התמונה המהיר של OpenAI, באיכות גבוהה; גם עריכה",
+      "hasSchema": true,
+      "cover": "https://examples.aig.cloudflare.com/openai/gpt-image-2.5-flare/commercial-product-scene.jpg",
+      "demo": null
+     },
+     {
+      "id": "openai/gpt-image-2.5-sunburst",
+      "slug": "openai__gpt-image-2.5-sunburst",
+      "sector": "image",
+      "name": "GPT Image 2.5 Sunburst",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "OpenAI's most capable image generation and editing model. It accepts text and image inputs and produces images with low, medium, high, xhigh, max, and auto quality settings.",
+      "price": [
+       {
+        "label": "Cached input image (per 1M tokens)",
+        "usd": 3
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 1.25
+       },
+       {
+        "label": "Input image (per 1M tokens)",
+        "usd": 8
+       },
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 5
+       },
+       {
+        "label": "Output image (per 1M tokens)",
+        "usd": 30
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "מודל התמונה החזק של OpenAI: יצירה ועריכה, עד איכות max",
+      "hasSchema": true,
+      "cover": "https://examples.aig.cloudflare.com/openai/gpt-image-2.5-sunburst/technical-editorial-illustration.png",
+      "demo": null
+     },
+     {
+      "id": "recraft/recraftv4-pro-vector",
+      "slug": "recraft__recraftv4-pro-vector",
+      "sector": "image",
+      "name": "Recraft V4 Pro SVG",
+      "provider": "Recraft",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "Generate detailed, production-ready SVG vector graphics from text prompts with fine geometry, scalable to any size for print and design work.",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.3
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "וקטור (SVG) לדור 4",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "recraft/recraftv4-pro",
+      "slug": "recraft__recraftv4-pro",
+      "sector": "image",
+      "name": "Recraft V4 Pro",
+      "provider": "Recraft",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "Recraft V4 Pro generates high-resolution, art-directed images at 2048px+ with strong composition, text rendering, and design taste. Built for print and production work.",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.25
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "עיצוב גרפי ברזולוציה גבוהה (2048px+), טקסט בתמונה, לדפוס",
+      "hasSchema": true,
+      "cover": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-pro/print-ready-illustration.png",
+      "demo": null
+     },
+     {
+      "id": "recraft/recraftv4-1-pro",
+      "slug": "recraft__recraftv4-1-pro",
+      "sector": "image",
+      "name": "Recraft V4.1 Pro",
+      "provider": "Recraft",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "Recraft V4.1 Pro generates high-resolution, art-directed images at 2048px+ tuned for high aesthetics, with strong composition, text rendering, and refined design taste. Built for print and production work.",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.25
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "איור ועיצוב גרפי, שליטה בסגנון",
+      "hasSchema": true,
+      "cover": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-pro/print-ready-illustration.png",
+      "demo": null
+     },
+     {
+      "id": "alibaba/qwen-image-3.0-pro",
+      "slug": "alibaba__qwen-image-3.0-pro",
+      "sector": "image",
+      "name": "Qwen Image 3.0 Pro",
+      "provider": "Alibaba",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "Alibaba's Qwen Image 3.0 Pro generates images from text prompts with a focus on complex layout generation, small-text precision, and multilingual font rendering. Supports up to 6 image variants per call, negative prompts",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.04
+       },
+       {
+        "label": "output size 1k",
+        "usd": 0.04
+       },
+       {
+        "label": "output size 2k",
+        "usd": 0.07
+       },
+       {
+        "label": "Default (per second)",
+        "usd": 0.04
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "קומפוזיציות מורכבות, טקסט קטן מדויק וכתב בשפות רבות",
+      "hasSchema": true,
+      "cover": "https://examples.aig.cloudflare.com/alibaba/qwen-image-3.0-pro/simple-generation.png",
+      "demo": null
+     },
+     {
+      "id": "krea/krea-2-large",
+      "slug": "krea__krea-2-large",
+      "sector": "image",
+      "name": "Krea 2 Large",
+      "provider": "krea",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "More than 2x the size of Medium, with softer post-training. Outputs are rawer, more textured, and more flexible — at its best, Large produces results Medium can't match. Strongest on photorealism, raw looks (motion blur,",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.06
+       },
+       {
+        "label": "Per image",
+        "usd": 0.06
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "Krea הגדול: גולמי ועשיר במרקם, גמיש בסגנון",
+      "hasSchema": true,
+      "cover": "https://examples.aig.cloudflare.com/krea/krea-2-large/default.png",
+      "demo": null
+     },
+     {
+      "id": "xai/grok-imagine-image-quality",
+      "slug": "xai__grok-imagine-image-quality",
+      "sector": "image",
+      "name": "Grok Imagine Image Quality",
+      "provider": "xAI",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "xAI's higher-fidelity text-to-image model optimized for sharper details, more accurate compositions, and stronger text rendering. Supports image editing via reference images and masks. Trades speed for quality compared t",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.05
+       },
+       {
+        "label": "Per input image",
+        "usd": 0.01
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "Grok Imagine באיכות הגבוהה: פרטים חדים וטקסט; גם עריכה",
+      "hasSchema": true,
+      "cover": "https://examples.aig.cloudflare.com/xai/grok-imagine-image-quality/simple-generation.jpeg",
+      "demo": null
+     }
+    ],
+    "mid": [
+     {
+      "id": "google/nano-banana-2",
+      "slug": "google__nano-banana-2",
+      "sector": "image",
+      "name": "Nano Banana 2",
+      "provider": "Google",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "Google's second-generation image generation model with improved quality and speed.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 0.5
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 60
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "Nano Banana מדור 2: איכות קרובה ל-Pro בחצי מחיר",
+      "hasSchema": true,
+      "cover": "https://examples.aig.cloudflare.com/google/nano-banana-2/futuristic-city.png",
+      "demo": null
+     },
+     {
+      "id": "bytedance/seedream-4.5",
+      "slug": "bytedance__seedream-4.5",
+      "sector": "image",
+      "name": "Seedream 4.5",
+      "provider": "ByteDance",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "Seedream 4.5 builds on 4.0 with multi-reference image support, batch generation, and sequential image generation.",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.04
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "כמה תמונות ייחוס, סדרות ורצף תמונות; מחיר קבוע",
+      "hasSchema": true,
+      "cover": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-4.5/simple-generation-0.jpeg",
+      "demo": null
+     },
+     {
+      "id": "openai/gpt-image-1.5",
+      "slug": "openai__gpt-image-1.5",
+      "sector": "image",
+      "name": "GPT Image 1.5",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "OpenAI's image generation model that creates and edits images from text prompts, supporting multiple quality levels and output sizes.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 5
+       },
+       {
+        "label": "Input image (per 1M tokens)",
+        "usd": 8
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 1.25
+       },
+       {
+        "label": "Cached input image (per 1M tokens)",
+        "usd": 2
+       },
+       {
+        "label": "Output image (per 1M tokens)",
+        "usd": 32
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 10
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "מודל התמונה הקודם של OpenAI: יצירה ועריכה",
+      "hasSchema": true,
+      "cover": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__gpt-image-1.5/simple-generation.png",
+      "demo": null
+     },
+     {
+      "id": "recraft/recraftv4-1-utility-pro-vector",
+      "slug": "recraft__recraftv4-1-utility-pro-vector",
+      "sector": "image",
+      "name": "Recraft V4.1 Utility Pro SVG",
+      "provider": "Recraft",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "Generate detailed, high-resolution SVG vector graphics from text prompts with a general-purpose model, scalable to any size for print and large-scale design work.",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.3
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "וקטור (SVG) מפורט ברזולוציה גבוהה, כללי",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "recraft/recraftv4-1-utility-pro",
+      "slug": "recraft__recraftv4-1-utility-pro",
+      "sector": "image",
+      "name": "Recraft V4.1 Utility Pro",
+      "provider": "Recraft",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "Recraft V4.1 Utility Pro is a general-purpose text-to-image model producing high-resolution 2048px+ output for a wide range of production and print use cases.",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.25
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "Recraft כללי ברזולוציה גבוהה, לייצור ולדפוס",
+      "hasSchema": true,
+      "cover": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-utility-pro/print-ready-illustration.png",
+      "demo": null
+     },
+     {
+      "id": "pruna/p-image-upscale",
+      "slug": "pruna__p-image-upscale",
+      "sector": "image",
+      "name": "P-Image-Upscale",
+      "provider": "Pruna AI",
+      "wai": false,
+      "live": true,
+      "task": "Image-to-Image",
+      "about": "Pruna's P-Image-Upscale increases image resolution using AI, targeting 1-128 megapixels with optional detail and realism enhancement for sharper, cleaner results.",
+      "price": [
+       {
+        "label": "Per image (1-4 MP)",
+        "usd": 0.005
+       },
+       {
+        "label": "Per image (5-8 MP)",
+        "usd": 0.01
+       },
+       {
+        "label": "Per image (9-16 MP)",
+        "usd": 0.02
+       },
+       {
+        "label": "Per image (17-32 MP)",
+        "usd": 0.04
+       },
+       {
+        "label": "Per image (33-64 MP)",
+        "usd": 0.06
+       },
+       {
+        "label": "Per image (65-128 MP)",
+        "usd": 0.12
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "הגדלת תמונה קיימת עד 32 מגה-פיקסל",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "black-forest-labs/flux-1-kontext-max",
+      "slug": "black-forest-labs__flux-1-kontext-max",
+      "sector": "image",
+      "name": "FLUX.1 Kontext [max]",
+      "provider": "Black Forest Labs",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "FLUX.1 Kontext [max] is Black Forest Labs' highest-quality Kontext model for text-to-image generation and context-aware image editing.",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.08
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "FLUX.1 Kontext באיכות הגבוהה: יצירה ועריכה לפי הקשר",
+      "hasSchema": true,
+      "cover": "https://examples.aig.cloudflare.com/black-forest-labs/flux-1-kontext-max/maximum-quality-generation.png",
+      "demo": null
+     },
+     {
+      "id": "recraft/recraftv4-vector",
+      "slug": "recraft__recraftv4-vector",
+      "sector": "image",
+      "name": "Recraft V4 SVG",
+      "provider": "Recraft",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "Generate production-ready SVG vector graphics from text prompts with clean geometry, structured layers, and editable paths.",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.08
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "וקטור (SVG) עם שכבות ונתיבים שאפשר לערוך",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "recraft/recraftv4-1-vector",
+      "slug": "recraft__recraftv4-1-vector",
+      "sector": "image",
+      "name": "Recraft V4.1 SVG",
+      "provider": "Recraft",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "Generate production-ready SVG vector graphics from text prompts with high aesthetic quality, clean geometry, structured layers, and editable paths.",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.08
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "וקטור (SVG) מדור 4.1, אסתטי, עם שכבות שאפשר לערוך",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "recraft/recraftv4-1-utility-vector",
+      "slug": "recraft__recraftv4-1-utility-vector",
+      "sector": "image",
+      "name": "Recraft V4.1 Utility SVG",
+      "provider": "Recraft",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "Generate production-ready SVG vector graphics from text prompts with a general-purpose model suited for a wide range of design and illustration tasks.",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.08
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "וקטור (SVG) כללי, לאיור ועיצוב יומיומי",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "black-forest-labs/flux-2-flex",
+      "slug": "black-forest-labs__flux-2-flex",
+      "sector": "image",
+      "name": "FLUX.2 [flex]",
+      "provider": "Black Forest Labs",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "FLUX.2 [flex] is Black Forest Labs' fine-grained control variant of FLUX.2 — exposes tunable inference steps, guidance, and prompt upsampling for typography-heavy and production workflows.",
+      "price": [
+       {
+        "label": "First output megapixel",
+        "usd": 0.05
+       },
+       {
+        "label": "Per additional output megapixel",
+        "usd": 0.05
+       },
+       {
+        "label": "Per input megapixel",
+        "usd": 0.05
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "FLUX.2 עם שליטה עדינה בצעדים ובהיצמדות; טוב לטיפוגרפיה",
+      "hasSchema": true,
+      "cover": "https://examples.aig.cloudflare.com/black-forest-labs/flux-2-flex/high-detail-generation.jpeg",
+      "demo": null
+     },
+     {
+      "id": "black-forest-labs/flux-1-kontext-pro",
+      "slug": "black-forest-labs__flux-1-kontext-pro",
+      "sector": "image",
+      "name": "FLUX.1 Kontext [pro]",
+      "provider": "Black Forest Labs",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "FLUX.1 Kontext [pro] creates and edits images from text prompts with strong character and style consistency.",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.04
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "עריכה ויצירה עם עקביות של דמות וסגנון",
+      "hasSchema": true,
+      "cover": "https://examples.aig.cloudflare.com/black-forest-labs/flux-1-kontext-pro/text-to-image.png",
+      "demo": null
+     },
+     {
+      "id": "xai/grok-imagine-image-2.0",
+      "slug": "xai__grok-imagine-image-2.0",
+      "sector": "image",
+      "name": "Grok Imagine Image 2.0",
+      "provider": "xAI",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "xAI's Grok Imagine Image 2.0 is a precise image generation and editing model for creative work, with strong instruction following, typography, layout, and reference-image preservation.",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.04
+       },
+       {
+        "label": "Per input image",
+        "usd": 0.01
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "יצירה ועריכה מדויקת: טיפוגרפיה, פריסה ותמונות ייחוס",
+      "hasSchema": true,
+      "cover": "https://examples.aig.cloudflare.com/xai/grok-imagine-image-2.0/simple-generation.jpg",
+      "demo": null
+     },
+     {
+      "id": "recraft/recraftv4",
+      "slug": "recraft__recraftv4",
+      "sector": "image",
+      "name": "Recraft V4",
+      "provider": "Recraft",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "Recraft V4 generates art-directed images with strong composition, accurate text rendering, and design taste built in. Fast and cost-efficient at standard resolution.",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.04
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "עיצוב גרפי עם טקסט מדויק, מהיר וזול ברזולוציה רגילה",
+      "hasSchema": true,
+      "cover": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4/simple-generation.png",
+      "demo": null
+     },
+     {
+      "id": "recraft/recraftv4-1",
+      "slug": "recraft__recraftv4-1",
+      "sector": "image",
+      "name": "Recraft V4.1",
+      "provider": "Recraft",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "Recraft V4.1 generates art-directed images tuned for high aesthetics, with strong composition, accurate text rendering, and refined design taste. Fast and cost-efficient at standard resolution.",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.04
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "Recraft 4.1: אסתטיקה גבוהה וטקסט מדויק, מהיר וזול",
+      "hasSchema": true,
+      "cover": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1/simple-generation.png",
+      "demo": null
+     },
+     {
+      "id": "recraft/recraftv4-1-utility",
+      "slug": "recraft__recraftv4-1-utility",
+      "sector": "image",
+      "name": "Recraft V4.1 Utility",
+      "provider": "Recraft",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "Recraft V4.1 Utility is a general-purpose text-to-image model balancing quality and flexibility for a wide range of everyday use cases at standard resolution.",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.04
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "Recraft כללי לשימוש יומיומי ברזולוציה רגילה",
+      "hasSchema": true,
+      "cover": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-1-utility/simple-generation.png",
+      "demo": null
+     },
+     {
+      "id": "bytedance/seedream-5-lite",
+      "slug": "bytedance__seedream-5-lite",
+      "sector": "image",
+      "name": "Seedream 5 Lite",
+      "provider": "ByteDance",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "Seedream 5 Lite is a lighter, faster version of the Seedream 5 family with multi-reference and batch generation support.",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.035
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "Seedream 5 הקל והמהיר, עם תמונות ייחוס וסדרות",
+      "hasSchema": true,
+      "cover": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-5-lite/simple-generation-0.jpeg",
+      "demo": null
+     },
+     {
+      "id": "black-forest-labs/flux-2-pro-preview",
+      "slug": "black-forest-labs__flux-2-pro-preview",
+      "sector": "image",
+      "name": "FLUX.2 [pro]",
+      "provider": "Black Forest Labs",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "FLUX.2 [pro] Preview is Black Forest Labs' recommended default for production image generation and editing — tracks the latest [pro] weights with strong multi-reference support.",
+      "price": [
+       {
+        "label": "First output megapixel",
+        "usd": 0.03
+       },
+       {
+        "label": "Per additional output megapixel",
+        "usd": 0.015
+       },
+       {
+        "label": "Per input megapixel",
+        "usd": 0.015
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "ברירת המחדל של BFL לייצור: יצירה ועריכה עם כמה ייחוסים",
+      "hasSchema": true,
+      "cover": "https://examples.aig.cloudflare.com/black-forest-labs/flux-2-pro-preview/simple-prompt.jpeg",
+      "demo": null
+     },
+     {
+      "id": "krea/krea-2-medium",
+      "slug": "krea__krea-2-medium",
+      "sector": "image",
+      "name": "Krea 2 Medium",
+      "provider": "krea",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "Smaller, faster, more cost-efficient. Extensive post-training makes outputs especially stable and consistent across generations. Strongest on illustration, anime, painting, and other expressive or artistic styles.",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.03
+       },
+       {
+        "label": "Per image",
+        "usd": 0.03
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "Krea הבינוני: יציב ועקבי, חזק באיור, אנימה וציור",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "alibaba/wan-2.6-image",
+      "slug": "alibaba__wan-2.6-image",
+      "sector": "image",
+      "name": "Wan 2.6 Image",
+      "provider": "Alibaba",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "Alibaba's Wan 2.6 text-to-image model generating images from text prompts with optional negative prompts and customizable dimensions.",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.03
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "Wan 2.6 לתמונות: תיאור, מה לא להראות, ומידות לבחירה",
+      "hasSchema": true,
+      "cover": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/alibaba__wan-2.6-image/simple-generation.png",
+      "demo": null
+     },
+     {
+      "id": "pruna/p-image-try-on",
+      "slug": "pruna__p-image-try-on",
+      "sector": "image",
+      "name": "P-Image Try-On",
+      "provider": "Pruna AI",
+      "wai": false,
+      "live": true,
+      "task": "Image-to-Image",
+      "about": "Pruna's P-Image Try-On virtually fits one or more garments onto a person's photo. Provide a photo of a person plus garment reference images and the model realistically dresses the person in the provided garments.",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.015
+       },
+       {
+        "label": "Per input image",
+        "usd": 0.008
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "הלבשה וירטואלית: בגד על דמות",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "pruna/p-image-edit",
+      "slug": "pruna__p-image-edit",
+      "sector": "image",
+      "name": "P-Image-Edit",
+      "provider": "Pruna AI",
+      "wai": false,
+      "live": true,
+      "task": "Image-to-Image",
+      "about": "Pruna's P-Image-Edit edits and composes 1-5 reference images with text instructions. It supports complex compositions, style transfers, and targeted edits with flexible output aspect ratios.",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.01
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "עריכת תמונה קיימת לפי הוראה",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     }
+    ],
+    "low": [
+     {
+      "id": "google/nano-banana",
+      "slug": "google__nano-banana",
+      "sector": "image",
+      "name": "Nano Banana",
+      "provider": "Google",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "Google's fast image generation model producing high-quality images from text prompts.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 0.3
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 30
+       },
+       {
+        "label": "Cached input (per 1M tokens)",
+        "usd": 0.03
+       },
+       {
+        "label": "Cache creation (per 1M tokens)",
+        "usd": 0.083333
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "Nano Banana הראשון: מהיר ואיכותי; דור קודם",
+      "hasSchema": true,
+      "cover": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/cozy-coffee-shop.png",
+      "demo": null
+     },
+     {
+      "id": "google/nano-banana-2-lite",
+      "slug": "google__nano-banana-2-lite",
+      "sector": "image",
+      "name": "Nano Banana 2 Lite",
+      "provider": "Google",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "Google's fastest Gemini image generation model for rapid image creation and iteration.",
+      "price": [
+       {
+        "label": "Input (per 1M tokens)",
+        "usd": 0.25
+       },
+       {
+        "label": "Output (per 1M tokens)",
+        "usd": 30
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "ה-Nano Banana המהיר ביותר, לאיטרציות מהירות",
+      "hasSchema": true,
+      "cover": "https://examples.aig.cloudflare.com/google/nano-banana-2-lite/concept-sketch.jpg",
+      "demo": null
+     },
+     {
+      "id": "recraft/recraftv3",
+      "slug": "recraft__recraftv3",
+      "sector": "image",
+      "name": "Recraft V3",
+      "provider": "Recraft",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "Recraft V3 is the previous-generation text-to-image model from Recraft, well-suited to design-quality compositions, brand-aware imagery, and accurate text rendering.",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.04
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "Recraft מהדור הקודם: עיצוב וטקסט בתמונה",
+      "hasSchema": true,
+      "cover": "https://examples.aig.cloudflare.com/recraft/recraftv3/simple-generation.png",
+      "demo": null
+     },
+     {
+      "id": "bytedance/seedream-4.0",
+      "slug": "bytedance__seedream-4.0",
+      "sector": "image",
+      "name": "Seedream 4.0",
+      "provider": "ByteDance",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "Seedream 4.0 is ByteDance's image creation model that combines text-to-image generation and image editing into a single architecture, offering fast, high-resolution output up to 4K.",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.03
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "Seedream 4.0: יצירה ועריכה במודל אחד, מהיר",
+      "hasSchema": true,
+      "cover": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-4.0/simple-generation.jpeg",
+      "demo": null
+     },
+     {
+      "id": "xai/grok-imagine-image",
+      "slug": "xai__grok-imagine-image",
+      "sector": "image",
+      "name": "Grok Imagine Image",
+      "provider": "xAI",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "xAI's Grok Imagine image model. Generates and edits images from text and reference-image inputs with configurable aspect ratio and resolution.",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.02
+       },
+       {
+        "label": "Per input image",
+        "usd": 0.002
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "Grok Imagine הבסיסי: יצירה ועריכה, יחס ורזולוציה לבחירה",
+      "hasSchema": true,
+      "cover": "https://examples.aig.cloudflare.com/xai/grok-imagine-image/simple-generation.jpeg",
+      "demo": null
+     },
+     {
+      "id": "krea/krea-2-medium-turbo",
+      "slug": "krea__krea-2-medium-turbo",
+      "sector": "image",
+      "name": "Krea 2 Medium Turbo",
+      "provider": "krea",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "The fastest Krea 2 model, built for low-cost iteration on expressive illustrations, style-driven concepts, and rapid visual exploration. Keeps the Krea 2 style system and expressive visual range but uses a distilled samp",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.015
+       },
+       {
+        "label": "Per image",
+        "usd": 0.015
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "ה-Krea המהיר והזול, לחיפוש סגנון מהיר",
+      "hasSchema": true,
+      "cover": "https://examples.aig.cloudflare.com/krea/krea-2-medium-turbo/default.png",
+      "demo": null
+     },
+     {
+      "id": "pruna/p-image",
+      "slug": "pruna__p-image",
+      "sector": "image",
+      "name": "P-Image",
+      "provider": "Pruna AI",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Image",
+      "about": "Pruna's P-Image is an ultra-fast text-to-image model with automatic prompt enhancement and 2-stage refinement, combining exceptional speed with high-quality output and flexible aspect ratios.",
+      "price": [
+       {
+        "label": "Per image",
+        "usd": 0.005
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "image",
+      "shape": "schema",
+      "note": "מהיר וזול מאוד, עם שיפור אוטומטי של התיאור",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     }
+    ]
+   }
+  },
+  {
+   "id": "video",
+   "title": "וידאו",
+   "tiers": {
+    "top": [
+     {
+      "id": "bytedance/seedance-2.0",
+      "slug": "bytedance__seedance-2.0",
+      "sector": "video",
+      "name": "Seedance 2.0",
+      "provider": "ByteDance",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Video",
+      "about": "ByteDance's next-generation video model with a unified multimodal architecture. Generates high-quality video with synchronized audio from text, images, video clips, and audio inputs. Supports multimodal references (up to",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.15
+       },
+       {
+        "label": "@480p video input (per second)",
+        "usd": 0.172
+       },
+       {
+        "label": "@720p video input (per second)",
+        "usd": 0.372
+       },
+       {
+        "label": "@1080p video input (per second)",
+        "usd": 0.914
+       },
+       {
+        "label": "@4k video input (per second)",
+        "usd": 1.866
+       },
+       {
+        "label": "@480p non-video input (per second)",
+        "usd": 0.07
+       },
+       {
+        "label": "@720p non-video input (per second)",
+        "usd": 0.15
+       },
+       {
+        "label": "@1080p non-video input (per second)",
+        "usd": 0.37
+       },
+       {
+        "label": "@4k non-video input (per second)",
+        "usd": 0.78
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "תנועה טבעית, 4–12 שניות, גם מתמונה ומסרטון ייחוס",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://examples.aig.cloudflare.com/bytedance/seedance-2.0/simple-video.mp4"
+     },
+     {
+      "id": "google/veo-3.1",
+      "slug": "google__veo-3.1",
+      "sector": "video",
+      "name": "Veo 3.1",
+      "provider": "Google",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Video",
+      "about": "Google's latest video generation model with improved quality, motion, and audio generation.",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.4
+       },
+       {
+        "label": "@720p (per second)",
+        "usd": 0.2
+       },
+       {
+        "label": "@1080p (per second)",
+        "usd": 0.2
+       },
+       {
+        "label": "@4k (per second)",
+        "usd": 0.4
+       },
+       {
+        "label": "@720p w/ audio (per second)",
+        "usd": 0.4
+       },
+       {
+        "label": "@1080p w/ audio (per second)",
+        "usd": 0.4
+       },
+       {
+        "label": "@4k w/ audio (per second)",
+        "usd": 0.6
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "וידאו עם קול, עד 4K; הסופי ברמה הגבוהה ביותר",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3.1/nature-documentary.mp4"
+     },
+     {
+      "id": "runwayml/gen-4.5",
+      "slug": "runwayml__gen-4.5",
+      "sector": "video",
+      "name": "RunwayML Gen-4.5",
+      "provider": "RunwayML",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Video",
+      "about": "RunwayML's video generation model supporting both text-to-video and image-to-video with customizable duration, aspect ratio, and content moderation controls.",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.12
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "Runway: וידאו מטקסט ומתמונה, משך ויחס לבחירה",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "bytedance/seedance-2.5",
+      "slug": "bytedance__seedance-2.5",
+      "sector": "video",
+      "name": "Seedance 2.5",
+      "provider": "ByteDance",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Video",
+      "about": "ByteDance's next-generation video model with a unified multimodal reference-to-video architecture. Generates video from text, up to 30 reference images, 10 reference videos, and 10 reference audio clips — including audio",
+      "price": [],
+      "zdr": false,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "הדור הבא של Seedance: עד 30 תמונות ייחוס, וידאו וקול כייחוס",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://examples.aig.cloudflare.com/bytedance/seedance-2.5/simple-video.mp4"
+     },
+     {
+      "id": "google/gemini-omni-1.1-flash",
+      "slug": "google__gemini-omni-1.1-flash",
+      "sector": "video",
+      "name": "Gemini Omni Flash 1.1",
+      "provider": "Google",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Video",
+      "about": "High-performance multimodal video generation and editing model with conversational controls and generated audio.",
+      "price": [
+       {
+        "label": "Input text (per 1M tokens)",
+        "usd": 1.5
+       },
+       {
+        "label": "Input image (per 1M tokens)",
+        "usd": 1.5
+       },
+       {
+        "label": "Input audio (per 1M tokens)",
+        "usd": 1.5
+       },
+       {
+        "label": "Input video (per 1M tokens)",
+        "usd": 1.5
+       },
+       {
+        "label": "Output text (per 1M tokens)",
+        "usd": 9
+       },
+       {
+        "label": "Reasoning (per 1M tokens)",
+        "usd": 9
+       },
+       {
+        "label": "Output video (per 1M tokens)",
+        "usd": 17.5
+       },
+       {
+        "label": "Default (per second)",
+        "usd": 1.5
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "וידאו עם קול, יצירה ועריכה בשיחה; לפי טוקנים",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://examples.aig.cloudflare.com/google/gemini-omni-1.1-flash/text-to-video.mp4"
+     },
+     {
+      "id": "minimax/hailuo-2.3",
+      "slug": "minimax__hailuo-2.3",
+      "sector": "video",
+      "name": "MiniMax Hailuo 2.3",
+      "provider": "MiniMax",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Video",
+      "about": "A high-fidelity video generation model optimized for realistic human motion, cinematic VFX, expressive characters, and strong prompt and style adherence across text-to-video and image-to-video workflows.",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.047
+       },
+       {
+        "label": "6s @768p",
+        "usd": 0.28
+       },
+       {
+        "label": "10s @768p",
+        "usd": 0.56
+       },
+       {
+        "label": "6s @1080p",
+        "usd": 0.49
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "תנועה אנושית ריאליסטית ואפקטים קולנועיים",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "black-forest-labs/flux-3-video",
+      "slug": "black-forest-labs__flux-3-video",
+      "sector": "video",
+      "name": "FLUX 3 Video",
+      "provider": "Black Forest Labs",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Video",
+      "about": "FLUX 3 Video is Black Forest Labs' video generation model. It generates video from a text prompt (t2v), animates one or more reference images (i2v), or continues an existing clip (v2v), with synchronized audio, up to fhd",
+      "price": [
+       {
+        "label": "hd",
+        "usd": 0.17
+       },
+       {
+        "label": "fhd",
+        "usd": 0.29
+       },
+       {
+        "label": "v2v hd",
+        "usd": 0.41
+       },
+       {
+        "label": "v2v fhd",
+        "usd": 0.53
+       },
+       {
+        "label": "hd draft",
+        "usd": 0.06
+       },
+       {
+        "label": "v2v hd draft",
+        "usd": 0.12
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "FLUX 3: וידאו מטקסט, מתמונות, או המשך של וידאו קיים",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://examples.aig.cloudflare.com/black-forest-labs/flux-3-video/text-to-video.mp4"
+     },
+     {
+      "id": "runwayml/aleph-2",
+      "slug": "runwayml__aleph-2",
+      "sector": "video",
+      "name": "RunwayML Aleph 2",
+      "provider": "RunwayML",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Video",
+      "about": "RunwayML's video editing model. Edit one frame to update your whole video, make changes across multiple shots, and work with up to 30 seconds of video. Supports keyframe-guided editing for precise control over specific m",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.336
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "עריכת וידאו קיים לפי הוראה",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     }
+    ],
+    "mid": [
+     {
+      "id": "google/veo-3.1-fast",
+      "slug": "google__veo-3.1-fast",
+      "sector": "video",
+      "name": "Veo 3.1 Fast",
+      "provider": "Google",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Video",
+      "about": "A faster version of Veo 3.1 optimized for lower latency while maintaining high-quality video and audio output.",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.08
+       },
+       {
+        "label": "@720p (per second)",
+        "usd": 0.08
+       },
+       {
+        "label": "@1080p (per second)",
+        "usd": 0.1
+       },
+       {
+        "label": "@4k (per second)",
+        "usd": 0.25
+       },
+       {
+        "label": "@720p w/ audio (per second)",
+        "usd": 0.1
+       },
+       {
+        "label": "@1080p w/ audio (per second)",
+        "usd": 0.12
+       },
+       {
+        "label": "@4k w/ audio (per second)",
+        "usd": 0.3
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "טיוטות וידאו: 8 שניות ב-720p בלי קול ב-$0.64",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3.1-fast/quick-demo.mp4"
+     },
+     {
+      "id": "google/gemini-omni-flash",
+      "slug": "google__gemini-omni-flash",
+      "sector": "video",
+      "name": "Gemini Omni Flash",
+      "provider": "Google",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Video",
+      "about": "Preview high-performance multimodal video generation and editing model with conversational controls and generated audio.",
+      "price": [
+       {
+        "label": "Input text (per 1M tokens)",
+        "usd": 1.5
+       },
+       {
+        "label": "Input image (per 1M tokens)",
+        "usd": 1.5
+       },
+       {
+        "label": "Input audio (per 1M tokens)",
+        "usd": 1.5
+       },
+       {
+        "label": "Input video (per 1M tokens)",
+        "usd": 1.5
+       },
+       {
+        "label": "Output text (per 1M tokens)",
+        "usd": 9
+       },
+       {
+        "label": "Reasoning (per 1M tokens)",
+        "usd": 9
+       },
+       {
+        "label": "Output video (per 1M tokens)",
+        "usd": 17.5
+       },
+       {
+        "label": "Default (per second)",
+        "usd": 1.5
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "Gemini Omni (תצוגה מקדימה): וידאו עם קול ועריכה בשיחה",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://examples.aig.cloudflare.com/google/gemini-omni-flash/underwater-reef.mp4"
+     },
+     {
+      "id": "lightricks/ltx-2-5-fast",
+      "slug": "lightricks__ltx-2-5-fast",
+      "sector": "video",
+      "name": "LTX-2.5 Fast",
+      "provider": "lightricks",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Video",
+      "about": "Lightricks LTX-2.5 Fast is a fast video generation model for text-to-video and image-to-video workflows, with synchronized audio, configurable duration, resolution, and frame rate.",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.09
+       },
+       {
+        "label": "@720p (per second)",
+        "usd": 0.09
+       },
+       {
+        "label": "@1080p (per second)",
+        "usd": 0.15
+       },
+       {
+        "label": "@2k (per second)",
+        "usd": 0.19
+       },
+       {
+        "label": "@4k (per second)",
+        "usd": 0.37
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "LTX מהיר: טקסט או תמונה לווידאו עם קול, עד 4K",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://examples.aig.cloudflare.com/lightricks/ltx-2-5-fast/text-to-video.mp4"
+     },
+     {
+      "id": "minimax/hailuo-2.3-fast",
+      "slug": "minimax__hailuo-2.3-fast",
+      "sector": "video",
+      "name": "MiniMax Hailuo 2.3 Fast",
+      "provider": "MiniMax",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Video",
+      "about": "A lower-latency version of Hailuo 2.3 that preserves core motion quality, visual consistency, and stylization while enabling faster iteration.",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.032
+       },
+       {
+        "label": "6s @768p",
+        "usd": 0.19
+       },
+       {
+        "label": "10s @768p",
+        "usd": 0.32
+       },
+       {
+        "label": "6s @1080p",
+        "usd": 0.33
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "Hailuo 2.3 מהיר יותר, אותה איכות תנועה",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "bytedance/seedance-2.0-fast",
+      "slug": "bytedance__seedance-2.0-fast",
+      "sector": "video",
+      "name": "Seedance 2.0 Fast",
+      "provider": "ByteDance",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Video",
+      "about": "Faster variant of ByteDance's Seedance 2.0 video model. Trades some quality for speed while sharing the same multimodal architecture. Supports text-to-video, image-to-video, native audio generation, multimodal references",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.12
+       },
+       {
+        "label": "@480p video input (per second)",
+        "usd": 0.132
+       },
+       {
+        "label": "@720p video input (per second)",
+        "usd": 0.286
+       },
+       {
+        "label": "@480p non-video input (per second)",
+        "usd": 0.06
+       },
+       {
+        "label": "@720p non-video input (per second)",
+        "usd": 0.12
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "Seedance 2.0 מהיר יותר, במעט פחות איכות",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://examples.aig.cloudflare.com/bytedance/seedance-2.0-fast/quick-video.mp4"
+     },
+     {
+      "id": "alibaba/wan-3.0-prime",
+      "slug": "alibaba__wan-3.0-prime",
+      "sector": "video",
+      "name": "Wan 3.0 Prime Video",
+      "provider": "Alibaba",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Video",
+      "about": "Alibaba's Wan 3.0 Prime text-to-video model. Generates cinematic videos from text prompts with adaptive aspect ratio, 480P, 720P, or 1080P resolution, and configurable duration.",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.068
+       },
+       {
+        "label": "@480p (per second)",
+        "usd": 0.068
+       },
+       {
+        "label": "@720p (per second)",
+        "usd": 0.14
+       },
+       {
+        "label": "@1080p (per second)",
+        "usd": 0.28
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "Wan 3.0 Prime: וידאו קולנועי מטקסט, עד 1080p",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://examples.aig.cloudflare.com/alibaba/wan-3.0-prime/adaptive-480p-text-to-video.mp4"
+     },
+     {
+      "id": "alibaba/wan-3.0",
+      "slug": "alibaba__wan-3.0",
+      "sector": "video",
+      "name": "Wan 3.0 Video",
+      "provider": "Alibaba",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Video",
+      "about": "Alibaba's Wan 3.0 text-to-video model. Generates cinematic videos from text prompts with adaptive aspect ratio, 480P, 720P, or 1080P resolution, and configurable duration.",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.05
+       },
+       {
+        "label": "@480p (per second)",
+        "usd": 0.05
+       },
+       {
+        "label": "@720p (per second)",
+        "usd": 0.1
+       },
+       {
+        "label": "@1080p (per second)",
+        "usd": 0.2
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "Wan 3.0: וידאו קולנועי מטקסט, עד 1080p",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://examples.aig.cloudflare.com/alibaba/wan-3.0/adaptive-480p-text-to-video.mp4"
+     },
+     {
+      "id": "alibaba/hh1.1-i2v",
+      "slug": "alibaba__hh1.1-i2v",
+      "sector": "video",
+      "name": "HappyHorse 1.1 I2V",
+      "provider": "Alibaba",
+      "wai": false,
+      "live": true,
+      "task": "Image-to-Video",
+      "about": "Alibaba's HappyHorse 1.1 image-to-video model. Animates a reference image with an optional text prompt, with smoother motion, natural skin textures, and improved close-up quality over 1.0. Supports 720P and 1080P output ",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.18
+       },
+       {
+        "label": "@720p (per second)",
+        "usd": 0.14
+       },
+       {
+        "label": "@1080p (per second)",
+        "usd": 0.18
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "HappyHorse 1.1: מנפיש תמונה, עור ותקריבים טבעיים",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://examples.aig.cloudflare.com/alibaba/hh1.1-i2v/simple-image-to-video.mp4"
+     },
+     {
+      "id": "alibaba/hh1.1-r2v",
+      "slug": "alibaba__hh1.1-r2v",
+      "sector": "video",
+      "name": "HappyHorse 1.1 R2V",
+      "provider": "Alibaba",
+      "wai": false,
+      "live": true,
+      "task": "Image-to-Video",
+      "about": "Alibaba's HappyHorse 1.1 reference-to-video model. Takes 1-9 reference images (characters and scenes) and a prompt that choreographs them into a single video, keeping each subject's identity consistent. Supports 720P and",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.18
+       },
+       {
+        "label": "@720p (per second)",
+        "usd": 0.14
+       },
+       {
+        "label": "@1080p (per second)",
+        "usd": 0.18
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "HappyHorse 1.1: עד 9 תמונות ייחוס (דמויות ומקומות) בסרטון אחד",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://examples.aig.cloudflare.com/alibaba/hh1.1-r2v/multi-image-reference.mp4"
+     },
+     {
+      "id": "alibaba/hh1.1-t2v",
+      "slug": "alibaba__hh1.1-t2v",
+      "sector": "video",
+      "name": "HappyHorse 1.1 T2V",
+      "provider": "Alibaba",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Video",
+      "about": "Alibaba's HappyHorse 1.1 text-to-video model. Generates videos from a text prompt with stronger dynamic expressiveness, better visual quality, and improved instruction following over 1.0. Configurable resolution, aspect ",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.18
+       },
+       {
+        "label": "@720p (per second)",
+        "usd": 0.14
+       },
+       {
+        "label": "@1080p (per second)",
+        "usd": 0.18
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "HappyHorse 1.1: וידאו מטקסט, תנועה דינמית",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://examples.aig.cloudflare.com/alibaba/hh1.1-t2v/simple-text-to-video.mp4"
+     },
+     {
+      "id": "vidu/q3-pro",
+      "slug": "vidu__q3-pro",
+      "sector": "video",
+      "name": "Vidu Q3 Pro",
+      "provider": "Vidu",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Video",
+      "about": "Vidu Q3 Pro is a high-quality video generation model supporting text-to-video, image-to-video, and start/end-frame-to-video workflows with audio and up to 16-second clips.",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.125
+       },
+       {
+        "label": "@540p (per second)",
+        "usd": 0.05
+       },
+       {
+        "label": "@720p (per second)",
+        "usd": 0.125
+       },
+       {
+        "label": "@1080p (per second)",
+        "usd": 0.15
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "Vidu Q3 Pro: טקסט, תמונה או פריים פתיחה וסיום, עם קול, עד 16 שניות",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "alibaba/wan-2.7-i2v",
+      "slug": "alibaba__wan-2.7-i2v",
+      "sector": "video",
+      "name": "Wan 2.7 I2V",
+      "provider": "Alibaba",
+      "wai": false,
+      "live": true,
+      "task": "Image-to-Video",
+      "about": "Alibaba's Wan 2.7 image-to-video model that generates videos from a reference image with optional text prompts. Supports 720P and 1080P output with durations from 2 to 15 seconds.",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.1
+       },
+       {
+        "label": "@720p (per second)",
+        "usd": 0.1
+       },
+       {
+        "label": "@1080p (per second)",
+        "usd": 0.15
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "Wan 2.7: מתמונה לווידאו, 720p או 1080p, ‏2–15 שניות",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://examples.aig.cloudflare.com/alibaba/wan-2.7-i2v/simple-image-to-video.mp4"
+     },
+     {
+      "id": "xai/grok-imagine-video-1.5-preview",
+      "slug": "xai__grok-imagine-video-1.5-preview",
+      "sector": "video",
+      "name": "Grok Imagine Video 1.5 Preview",
+      "provider": "xAI",
+      "wai": false,
+      "live": true,
+      "task": "Image-to-Video",
+      "about": "xAI's next-generation video generation model. Generates, edits, and extends videos from text and image inputs. Supports multiple aspect ratios and resolutions with improved quality over the previous generation.",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.08
+       },
+       {
+        "label": "@480p (per second)",
+        "usd": 0.08
+       },
+       {
+        "label": "@720p (per second)",
+        "usd": 0.14
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "Grok Imagine Video החדש: יצירה, עריכה והמשך של וידאו",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://examples.aig.cloudflare.com/xai/grok-imagine-video-1.5-preview/image-to-video.mp4"
+     },
+     {
+      "id": "minimax/h3",
+      "slug": "minimax__h3",
+      "sector": "video",
+      "name": "MiniMax H3",
+      "provider": "MiniMax",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Video",
+      "about": "A multimodal video generation model supporting text-to-video, first and last frame image-to-video, and reference-to-video generation with 768P and 2K output.",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.08
+       },
+       {
+        "label": "@768p (per second)",
+        "usd": 0.08
+       },
+       {
+        "label": "@2k (per second)",
+        "usd": 0.13
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "MiniMax H3: טקסט, פריים ראשון ואחרון, או ייחוס, עד 2K",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://examples.aig.cloudflare.com/minimax/h3/text-to-video-2k.mp4"
+     },
+     {
+      "id": "pixverse/v6",
+      "slug": "pixverse__v6",
+      "sector": "video",
+      "name": "Pixverse v6",
+      "provider": "PixVerse",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Video",
+      "about": "Pixverse v6 is the latest Pixverse video model with support for up to 15-second videos, customizable duration from 1 to 15 seconds, and audio generation.",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.06
+       },
+       {
+        "label": "@360p (per second)",
+        "usd": 0.025
+       },
+       {
+        "label": "@540p (per second)",
+        "usd": 0.035
+       },
+       {
+        "label": "@720p (per second)",
+        "usd": 0.045
+       },
+       {
+        "label": "@1080p (per second)",
+        "usd": 0.09
+       },
+       {
+        "label": "@360p w/ audio (per second)",
+        "usd": 0.035
+       },
+       {
+        "label": "@540p w/ audio (per second)",
+        "usd": 0.045
+       },
+       {
+        "label": "@720p w/ audio (per second)",
+        "usd": 0.06
+       },
+       {
+        "label": "@1080p w/ audio (per second)",
+        "usd": 0.115
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "Pixverse v6: עד 15 שניות, עם קול",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "black-forest-labs/flux-video-upscale",
+      "slug": "black-forest-labs__flux-video-upscale",
+      "sector": "video",
+      "name": "FLUX Video Upscale",
+      "provider": "Black Forest Labs",
+      "wai": false,
+      "live": true,
+      "task": "video-to-video",
+      "about": "FLUX Video Upscale increases video resolution with a precise mode for source-faithful results and a creative mode for stronger detail enhancement. It accepts clips up to 20 seconds and preserves audio.",
+      "price": [
+       {
+        "label": "Precise (per megapixel-second)",
+        "usd": 0.07
+       },
+       {
+        "label": "Creative (per megapixel-second)",
+        "usd": 0.1
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "הגדלת וידאו קיים",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://examples.aig.cloudflare.com/black-forest-labs/flux-video-upscale/precise-video-upscale.mp4"
+     },
+     {
+      "id": "minimax/h3-max",
+      "slug": "minimax__h3-max",
+      "sector": "video",
+      "name": "MiniMax H3 Max",
+      "provider": "MiniMax",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Video",
+      "about": "A fast multimodal video generation model supporting text-to-video and image-to-video generation at 480P and 768P.",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.05
+       },
+       {
+        "label": "@480p (per second)",
+        "usd": 0.05
+       },
+       {
+        "label": "@768p (per second)",
+        "usd": 0.08
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "H3 המהיר: טקסט או תמונה לווידאו, 480p או 768p",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://examples.aig.cloudflare.com/minimax/h3-max/balanced-text-to-video.mp4"
+     }
+    ],
+    "low": [
+     {
+      "id": "pixverse/v5.6",
+      "slug": "pixverse__v5.6",
+      "sector": "video",
+      "name": "Pixverse v5.6",
+      "provider": "PixVerse",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Video",
+      "about": "Pixverse v5.6 is a video generation model supporting text-to-video and image-to-video with audio generation, customizable aspect ratios, and up to 1080p output.",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.08
+       },
+       {
+        "label": "5s @360p",
+        "usd": 0.175
+       },
+       {
+        "label": "5s @360p w/ audio",
+        "usd": 0.4
+       },
+       {
+        "label": "8s @360p",
+        "usd": 0.35
+       },
+       {
+        "label": "8s @360p w/ audio",
+        "usd": 0.575
+       },
+       {
+        "label": "10s @360p",
+        "usd": 0.385
+       },
+       {
+        "label": "10s @360p w/ audio",
+        "usd": 0.61
+       },
+       {
+        "label": "5s @540p",
+        "usd": 0.175
+       },
+       {
+        "label": "5s @540p w/ audio",
+        "usd": 0.45
+       },
+       {
+        "label": "8s @540p",
+        "usd": 0.35
+       },
+       {
+        "label": "8s @540p w/ audio",
+        "usd": 0.575
+       },
+       {
+        "label": "10s @540p",
+        "usd": 0.385
+       },
+       {
+        "label": "10s @540p w/ audio",
+        "usd": 0.61
+       },
+       {
+        "label": "5s @720p",
+        "usd": 0.225
+       },
+       {
+        "label": "5s @720p w/ audio",
+        "usd": 0.4
+       },
+       {
+        "label": "8s @720p",
+        "usd": 0.45
+       },
+       {
+        "label": "8s @720p w/ audio",
+        "usd": 0.675
+       },
+       {
+        "label": "10s @720p",
+        "usd": 0.495
+       },
+       {
+        "label": "10s @720p w/ audio",
+        "usd": 0.72
+       },
+       {
+        "label": "5s @1080p",
+        "usd": 0.375
+       },
+       {
+        "label": "5s @1080p w/ audio",
+        "usd": 0.75
+       },
+       {
+        "label": "8s @1080p",
+        "usd": 0.75
+       },
+       {
+        "label": "8s @1080p w/ audio",
+        "usd": 0.975
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "Pixverse v5.6: טקסט או תמונה לווידאו עם קול, עד 1080p",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "alibaba/hh1-i2v",
+      "slug": "alibaba__hh1-i2v",
+      "sector": "video",
+      "name": "HappyHorse 1.0 I2V",
+      "provider": "Alibaba",
+      "wai": false,
+      "live": true,
+      "task": "Image-to-Video",
+      "about": "Alibaba's HappyHorse 1.0 image-to-video model. Animates a reference image with an optional text prompt. Supports 720P and 1080P output with durations from 3 to 15 seconds.",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.28
+       },
+       {
+        "label": "@720p (per second)",
+        "usd": 0.14
+       },
+       {
+        "label": "@1080p (per second)",
+        "usd": 0.28
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "HappyHorse 1.0: מנפיש תמונה; דור קודם",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/alibaba__hh1-i2v/simple-image-to-video.mp4"
+     },
+     {
+      "id": "alibaba/hh1-t2v",
+      "slug": "alibaba__hh1-t2v",
+      "sector": "video",
+      "name": "HappyHorse 1.0 T2V",
+      "provider": "Alibaba",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Video",
+      "about": "Alibaba's HappyHorse 1.0 text-to-video model. Generates videos from a text prompt with configurable resolution, aspect ratio, and duration (3-15s).",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.28
+       },
+       {
+        "label": "@720p (per second)",
+        "usd": 0.14
+       },
+       {
+        "label": "@1080p (per second)",
+        "usd": 0.28
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "HappyHorse 1.0: וידאו מטקסט; דור קודם",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/alibaba__hh1-t2v/simple-text-to-video.mp4"
+     },
+     {
+      "id": "bytedance/seedance-2.0-mini",
+      "slug": "bytedance__seedance-2.0-mini",
+      "sector": "video",
+      "name": "Seedance 2.0 Mini",
+      "provider": "ByteDance",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Video",
+      "about": "ByteDance's compact, cost-efficient video generation model from the Seedance 2.0 family. Supports text-to-video, image-to-video, reference video, and reference audio for background music. Ideal for high-volume workloads ",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.09
+       },
+       {
+        "label": "@480p video input (per second)",
+        "usd": 0.084
+       },
+       {
+        "label": "@720p video input (per second)",
+        "usd": 0.182
+       },
+       {
+        "label": "@480p non-video input (per second)",
+        "usd": 0.04
+       },
+       {
+        "label": "@720p non-video input (per second)",
+        "usd": 0.09
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "ה-Seedance הקטן והזול, עם ייחוס של וידאו וקול",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://examples.aig.cloudflare.com/bytedance/seedance-2.0-mini/simple-video.mp4"
+     },
+     {
+      "id": "xai/grok-imagine-video",
+      "slug": "xai__grok-imagine-video",
+      "sector": "video",
+      "name": "Grok Imagine Video",
+      "provider": "xAI",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Video",
+      "about": "xAI's video generation model. Generates, edits, and extends videos from text and image inputs with native synchronized audio including dialogue, sound effects, and music. Supports multiple creative modes (normal, fun, cu",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.05
+       },
+       {
+        "label": "@480p (per second)",
+        "usd": 0.05
+       },
+       {
+        "label": "@720p (per second)",
+        "usd": 0.07
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "Grok Imagine Video: וידאו עם דיבור, אפקטים ומוזיקה",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://examples.aig.cloudflare.com/xai/grok-imagine-video/simple-video.mp4"
+     },
+     {
+      "id": "vidu/q3-turbo",
+      "slug": "vidu__q3-turbo",
+      "sector": "video",
+      "name": "Vidu Q3 Turbo",
+      "provider": "Vidu",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Video",
+      "about": "Vidu Q3 Turbo is a faster version of Vidu Q3 optimized for lower latency video generation while maintaining audio support and up to 16-second clips.",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.06
+       },
+       {
+        "label": "@540p (per second)",
+        "usd": 0.04
+       },
+       {
+        "label": "@720p (per second)",
+        "usd": 0.06
+       },
+       {
+        "label": "@1080p (per second)",
+        "usd": 0.07
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "Vidu Q3 המהיר, עם קול, עד 16 שניות",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "pruna/p-video-animate",
+      "slug": "pruna__p-video-animate",
+      "sector": "video",
+      "name": "P-Video-Animate",
+      "provider": "Pruna AI",
+      "wai": false,
+      "live": true,
+      "task": "Image-to-Video",
+      "about": "Pruna's P-Video-Animate takes a source video and a subject reference image, then animates the referenced subject using the motion and audio from the source video.",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.03
+       },
+       {
+        "label": "@720p (per second)",
+        "usd": 0.03
+       },
+       {
+        "label": "@1080p (per second)",
+        "usd": 0.06
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "מעביר תנועה וקול מסרטון מקור אל דמות מתמונה",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://examples.aig.cloudflare.com/pruna/p-video-animate/motion-transfer.mp4"
+     },
+     {
+      "id": "pruna/p-video-replace",
+      "slug": "pruna__p-video-replace",
+      "sector": "video",
+      "name": "P-Video-Replace",
+      "provider": "Pruna AI",
+      "wai": false,
+      "live": true,
+      "task": "Image-to-Video",
+      "about": "Pruna's P-Video-Replace takes a source video and one or more identity reference images, then places the referenced person or people into the video while preserving the source motion and audio.",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.03
+       },
+       {
+        "label": "@720p (per second)",
+        "usd": 0.03
+       },
+       {
+        "label": "@1080p (per second)",
+        "usd": 0.06
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "מחליף אדם בסרטון קיים באדם מתמונת ייחוס",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://examples.aig.cloudflare.com/pruna/p-video-replace/character-swap.mp4"
+     },
+     {
+      "id": "pruna/p-video-avatar",
+      "slug": "pruna__p-video-avatar",
+      "sector": "video",
+      "name": "P-Video-Avatar",
+      "provider": "Pruna AI",
+      "wai": false,
+      "live": true,
+      "task": "Image-to-Video",
+      "about": "Pruna's P-Video-Avatar generates talking-head videos from a single portrait image driven by a text script or audio file, with multiple voices, languages, and output resolutions.",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.025
+       },
+       {
+        "label": "@720p (per second)",
+        "usd": 0.025
+       },
+       {
+        "label": "@1080p (per second)",
+        "usd": 0.045
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "דמות מדברת מתמונה",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://examples.aig.cloudflare.com/pruna/p-video-avatar/product-demo-greeting.mp4"
+     },
+     {
+      "id": "pruna/p-video",
+      "slug": "pruna__p-video",
+      "sector": "video",
+      "name": "P-Video",
+      "provider": "Pruna AI",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Video",
+      "about": "Pruna's P-Video is a premium video generation model supporting text-to-video, image-to-video, and audio-conditioned generation up to 1080p at 24 or 48 fps, with configurable duration up to 20 seconds.",
+      "price": [
+       {
+        "label": "Default (per second)",
+        "usd": 0.02
+       },
+       {
+        "label": "@720p (per second)",
+        "usd": 0.02
+       },
+       {
+        "label": "@1080p (per second)",
+        "usd": 0.04
+       },
+       {
+        "label": "@720p draft (per second)",
+        "usd": 0.005
+       },
+       {
+        "label": "@1080p draft (per second)",
+        "usd": 0.01
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "video",
+      "shape": "schema",
+      "note": "וידאו מטקסט, מתמונה או מקול, עד 1080p, גם טיוטה זולה",
+      "hasSchema": true,
+      "cover": null,
+      "demo": "https://examples.aig.cloudflare.com/pruna/p-video/neon-city-drift.mp4"
+     }
+    ]
+   }
+  },
+  {
+   "id": "voice",
+   "title": "הקראה",
+   "tiers": {
+    "top": [
+     {
+      "id": "elevenlabs/eleven-multilingual-v2",
+      "slug": "elevenlabs__eleven-multilingual-v2",
+      "sector": "voice",
+      "name": "Eleven Multilingual v2",
+      "provider": "ElevenLabs",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Speech",
+      "about": "ElevenLabs' multilingual text-to-speech model for generating natural speech across many languages with ElevenLabs voices.",
+      "price": [
+       {
+        "label": "Per character",
+        "usd": 0.0001
+       },
+       {
+        "label": "Default (per second)",
+        "usd": 0.0001
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "audio",
+      "shape": "schema",
+      "note": "הקראה רב-לשונית יציבה",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "elevenlabs/eleven-v3",
+      "slug": "elevenlabs__eleven-v3",
+      "sector": "voice",
+      "name": "Eleven v3",
+      "provider": "ElevenLabs",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Speech",
+      "about": "ElevenLabs' latest text-to-speech model for highly expressive, natural speech generation with advanced voice control.",
+      "price": [
+       {
+        "label": "Per character",
+        "usd": 0.0001
+       },
+       {
+        "label": "Default (per second)",
+        "usd": 0.0001
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "audio",
+      "shape": "schema",
+      "note": "ההקראה הכי אקספרסיבית; עברית: לבדוק כאן",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "google/gemini-3.1-flash-tts",
+      "slug": "google__gemini-3.1-flash-tts",
+      "sector": "voice",
+      "name": "Gemini 3.1 Flash TTS",
+      "provider": "Google",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Speech",
+      "about": "",
+      "price": [
+       {
+        "label": "Input audio (per 1M tokens)",
+        "usd": 3
+       },
+       {
+        "label": "Input text (per 1M tokens)",
+        "usd": 0.75
+       },
+       {
+        "label": "Output audio (per 1M tokens)",
+        "usd": 12
+       },
+       {
+        "label": "Output text (per 1M tokens)",
+        "usd": 4.5
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "audio",
+      "shape": "schema",
+      "note": "הקראה של Google, כמה דוברים בשיחה אחת",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "minimax/speech-2.8-hd",
+      "slug": "minimax__speech-2.8-hd",
+      "sector": "voice",
+      "name": "MiniMax Speech 2.8 HD",
+      "provider": "MiniMax",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Speech",
+      "about": "MiniMax Speech 2.8 HD focuses on studio-grade audio generation with emotion control, multilingual support (40+ languages), and voice cloning.",
+      "price": [
+       {
+        "label": "Per character",
+        "usd": 0.0001
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "audio",
+      "shape": "schema",
+      "note": "הקראה באיכות אולפן, שליטה ברגש, 40+ שפות ושכפול קול",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "inworld/tts-2",
+      "slug": "inworld__tts-2",
+      "sector": "voice",
+      "name": "Inworld TTS 2",
+      "provider": "Inworld",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Speech",
+      "about": "Inworld's most powerful and expressive text-to-speech model. Builds on TTS 1.5 with rich expressive speech, real-time latency, natural language steering (e.g. [whisper], [say excitedly]), and stronger multilingual suppor",
+      "price": [
+       {
+        "label": "Per character",
+        "usd": 0.000025
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "audio",
+      "shape": "schema",
+      "note": "ההקראה הכי אקספרסיבית של Inworld, עם הוראות כמו [whisper]",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     }
+    ],
+    "mid": [
+     {
+      "id": "minimax/speech-2.8-turbo",
+      "slug": "minimax__speech-2.8-turbo",
+      "sector": "voice",
+      "name": "MiniMax Speech 2.8 Turbo",
+      "provider": "MiniMax",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Speech",
+      "about": "MiniMax Speech 2.8 Turbo turns text into natural, expressive speech with voice cloning, emotion control, and 40+ language support at faster speeds.",
+      "price": [
+       {
+        "label": "Per character",
+        "usd": 0.00006
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "audio",
+      "shape": "schema",
+      "note": "הקראה טבעית ומהירה, שליטה ברגש, 40+ שפות",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "elevenlabs/eleven-flash-v2-5",
+      "slug": "elevenlabs__eleven-flash-v2-5",
+      "sector": "voice",
+      "name": "Eleven Flash v2.5",
+      "provider": "ElevenLabs",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Speech",
+      "about": "ElevenLabs' low-latency Flash v2.5 text-to-speech model for fast multilingual speech generation.",
+      "price": [
+       {
+        "label": "Per character",
+        "usd": 0.00005
+       },
+       {
+        "label": "Default (per second)",
+        "usd": 0.00005
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "audio",
+      "shape": "schema",
+      "note": "ElevenLabs המהיר, רב-לשוני, השהיה נמוכה",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "elevenlabs/eleven-turbo-v2-5",
+      "slug": "elevenlabs__eleven-turbo-v2-5",
+      "sector": "voice",
+      "name": "Eleven Turbo v2.5",
+      "provider": "ElevenLabs",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Speech",
+      "about": "ElevenLabs' Turbo v2.5 text-to-speech model balancing high-quality voice generation with low latency across 32 languages.",
+      "price": [
+       {
+        "label": "Per character",
+        "usd": 0.00005
+       },
+       {
+        "label": "Default (per second)",
+        "usd": 0.00005
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "audio",
+      "shape": "schema",
+      "note": "ElevenLabs באיזון בין איכות למהירות, 32 שפות",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "inworld/tts-1.5-max",
+      "slug": "inworld__tts-1.5-max",
+      "sector": "voice",
+      "name": "Inworld TTS 1.5 Max",
+      "provider": "Inworld",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Speech",
+      "about": "Highest-quality text-to-speech with under 200ms latency, emotion control, and 15-language support.",
+      "price": [
+       {
+        "label": "Per character",
+        "usd": 0.000035
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "audio",
+      "shape": "schema",
+      "note": "Inworld באיכות הגבוהה, פחות מ-200ms, שליטה ברגש",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "openai/tts-1-hd",
+      "slug": "openai__tts-1-hd",
+      "sector": "voice",
+      "name": "TTS-1 HD",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Speech",
+      "about": "OpenAI's high-definition text-to-speech model producing higher quality audio output.",
+      "price": [
+       {
+        "label": "Per character",
+        "usd": 0.00003
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "audio",
+      "shape": "schema",
+      "note": "ההקראה של OpenAI באיכות גבוהה יותר",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     }
+    ],
+    "low": [
+     {
+      "id": "xai/grok-tts",
+      "slug": "xai__grok-tts",
+      "sector": "voice",
+      "name": "Grok TTS",
+      "provider": "xAI",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Speech",
+      "about": "xAI's Grok text-to-speech model. Generates high-fidelity spoken audio in 5 expressive voices (eve, ara, rex, sal, leo) with 20+ supported languages. Supports inline speech tags for laughter, whispers, and pauses.",
+      "price": [
+       {
+        "label": "Per character",
+        "usd": 0.000015
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "audio",
+      "shape": "schema",
+      "note": "Grok: חמישה קולות, 20+ שפות",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "inworld/tts-1.5-mini",
+      "slug": "inworld__tts-1.5-mini",
+      "sector": "voice",
+      "name": "Inworld TTS 1.5 Mini",
+      "provider": "Inworld",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Speech",
+      "about": "Ultra-fast, cost-efficient text-to-speech with approximately 120ms latency and 15-language support.",
+      "price": [
+       {
+        "label": "Per character",
+        "usd": 0.000015
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "audio",
+      "shape": "schema",
+      "note": "Inworld הזול והמהיר מאוד, 15 שפות",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "openai/tts-1",
+      "slug": "openai__tts-1",
+      "sector": "voice",
+      "name": "TTS-1",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Text-to-Speech",
+      "about": "OpenAI's text-to-speech model optimized for real-time use with low latency.",
+      "price": [
+       {
+        "label": "Per character",
+        "usd": 0.000015
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "audio",
+      "shape": "schema",
+      "note": "ההקראה הבסיסית של OpenAI, לזמן אמת",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     }
+    ]
+   }
+  },
+  {
+   "id": "listen",
+   "title": "תמלול וקול",
+   "tiers": {
+    "top": [
+     {
+      "id": "assemblyai/universal-3.5-pro",
+      "slug": "assemblyai__universal-3.5-pro",
+      "sector": "listen",
+      "name": "AssemblyAI Universal-3.5 Pro",
+      "provider": "AssemblyAI",
+      "wai": false,
+      "live": true,
+      "task": "Automatic Speech Recognition",
+      "about": "AssemblyAI's Universal-3.5 Pro speech recognition model for fast, high-accuracy transcription.",
+      "price": [
+       {
+        "label": "Per audio minute",
+        "usd": 0.0035
+       },
+       {
+        "label": "Per minute (speaker diarization)",
+        "usd": 0.0003
+       },
+       {
+        "label": "Per minute (key terms)",
+        "usd": 0.00083
+       },
+       {
+        "label": "Per minute (medical)",
+        "usd": 0.0025
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "text",
+      "shape": "schema",
+      "note": "תמלול מקצועי עם זיהוי דוברים ומונחים",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "openai/gpt-4o-transcribe",
+      "slug": "openai__gpt-4o-transcribe",
+      "sector": "listen",
+      "name": "GPT-4o Transcribe",
+      "provider": "OpenAI",
+      "wai": false,
+      "live": true,
+      "task": "Automatic Speech Recognition",
+      "about": "A speech-to-text model that uses GPT-4o to transcribe audio with improved word error rate and better language recognition compared to original Whisper models.",
+      "price": [
+       {
+        "label": "Per audio minute",
+        "usd": 0.006
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "schema",
+      "note": "תמלול של OpenAI, $0.006 לדקה",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     }
+    ],
+    "mid": [
+     {
+      "id": "assemblyai/universal-3-pro",
+      "slug": "assemblyai__universal-3-pro",
+      "sector": "listen",
+      "name": "AssemblyAI Universal-3 Pro",
+      "provider": "AssemblyAI",
+      "wai": false,
+      "live": true,
+      "task": "Automatic Speech Recognition",
+      "about": "AssemblyAI's Universal 3 Pro speech recognition model for high-accuracy transcription.",
+      "price": [
+       {
+        "label": "Per audio minute",
+        "usd": 0.0035
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "schema",
+      "note": "תמלול מדויק של AssemblyAI; הדור הקודם",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     }
+    ],
+    "low": [
+     {
+      "id": "xai/grok-voice",
+      "slug": "xai__grok-voice",
+      "sector": "listen",
+      "name": "Grok Voice",
+      "provider": "xAI",
+      "wai": false,
+      "live": false,
+      "task": "websocket",
+      "about": "xAI's real-time voice conversation model with low-latency audio input and output streaming.",
+      "price": [
+       {
+        "label": "total audio minutes",
+        "usd": 0.05
+       },
+       {
+        "label": "input text messages",
+        "usd": 0.004
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "schema",
+      "note": "שיחה קולית בזמן אמת דרך WebSocket. מופיע כאן כדי שהרשימה תהיה מלאה, אבל אי אפשר להריץ אותו בבקשה אחת במעבדה",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     },
+     {
+      "id": "xai/grok-stt",
+      "slug": "xai__grok-stt",
+      "sector": "listen",
+      "name": "Grok STT",
+      "provider": "xAI",
+      "wai": false,
+      "live": true,
+      "task": "Automatic Speech Recognition",
+      "about": "xAI's Grok speech-to-text model. Transcribes audio files into text across 25 languages with word-level timestamps, multichannel transcription, speaker diarization, and key-term biasing.",
+      "price": [
+       {
+        "label": "Per audio minute",
+        "usd": 0.001667
+       },
+       {
+        "label": "input audio minutes streaming",
+        "usd": 0.003334
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "text",
+      "shape": "schema",
+      "note": "תמלול ב-25 שפות, חותמות זמן, זיהוי דוברים",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     }
+    ]
+   }
+  },
+  {
+   "id": "music",
+   "title": "מוזיקה",
+   "tiers": {
+    "top": [
+     {
+      "id": "elevenlabs/music-v2",
+      "slug": "elevenlabs__music-v2",
+      "sector": "music",
+      "name": "ElevenLabs Music v2",
+      "provider": "ElevenLabs",
+      "wai": false,
+      "live": true,
+      "task": "Music Generation",
+      "about": "ElevenLabs Music v2 composes songs and instrumental tracks from a prompt or detailed composition plan.",
+      "price": [
+       {
+        "label": "output audio seconds",
+        "usd": 0.0025
+       },
+       {
+        "label": "Default (per second)",
+        "usd": 0.0025
+       }
+      ],
+      "zdr": false,
+      "beta": false,
+      "out": "audio",
+      "shape": "schema",
+      "note": "מוזיקה מקורית לפי תיאור, לפי שנייה",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     }
+    ],
+    "mid": [
+     {
+      "id": "minimax/music-2.6",
+      "slug": "minimax__music-2.6",
+      "sector": "music",
+      "name": "MiniMax Music 2.6",
+      "provider": "MiniMax",
+      "wai": false,
+      "live": true,
+      "task": "Music Generation",
+      "about": "MiniMax's music generation model that creates full-length songs with vocals from text prompts and lyrics, or instrumental tracks. Supports BPM/key control and auto-generated lyrics.",
+      "price": [
+       {
+        "label": "Per track",
+        "usd": 0.15
+       },
+       {
+        "label": "Per lyrics generation",
+        "usd": 0.01
+       }
+      ],
+      "zdr": true,
+      "beta": false,
+      "out": "audio",
+      "shape": "schema",
+      "note": "שיר שלם עם מילים, $0.15 לרצועה",
+      "hasSchema": true,
+      "cover": null,
+      "demo": null
+     }
+    ],
+    "low": []
+   }
+  }
  ]
 }

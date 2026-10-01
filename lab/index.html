@@ -165,12 +165,17 @@
   <!-- paid -->
   <section class="pane" id="p-paid" aria-labelledby="h-paid" hidden>
    <h1 id="h-paid">מודלים בתשלום</h1>
-   <p class="lead">המודלים המובילים, כולם מאותה יתרה: הקרדיטים של Cloudflare. לפני כל הרצה רואים כמה היא תעלה בערך, ואחריה את המחיר האמיתי מהיומן של Cloudflare.</p>
-   <div class="seg" id="pgSeg" role="tablist"></div>
-   <fieldset class="picks" id="pgPicks"><legend>מודלים</legend></fieldset>
-   <div id="pgForm"></div>
-   <div class="actions"><button class="go" id="pgGo" type="button">הרצה</button><span class="est" id="pgEst"></span></div>
-   <div id="pgOut" class="cols"></div>
+   <p class="lead" id="pdLead">כל המודלים בתשלום שיש ב-Cloudflare, כולם מאותה יתרה של קרדיטים. בכל תחום הם מחולקים למובחרים, בינוניים וחלשים. לפני כל הרצה מוצג כמה היא תעלה בערך, ואחריה המחיר האמיתי מהיומן של Cloudflare.</p>
+   <details class="why" id="pdWhy"><summary>איך נקבע הדירוג</summary><p></p></details>
+   <div class="seg" id="pdSeg" role="tablist" aria-label="תחום"></div>
+   <div class="pdbar">
+    <label class="pdq"><span class="sr">חיפוש</span><input id="pdQ" type="search" placeholder="חיפוש: שם, יצרן, יכולת" autocomplete="off"></label>
+    <label class="pdsel"><span class="sr">יצרן</span><select id="pdProv"></select></label>
+    <label class="pdsel"><span class="sr">סדר</span><select id="pdSort"><option value="tier">לפי הדירוג</option><option value="cheap">מהזול ליקר</option><option value="dear">מהיקר לזול</option></select></label>
+    <span class="pdcount" id="pdCount" aria-live="polite"></span>
+   </div>
+   <div id="pdTiers"></div>
+   <div class="tray" id="pdTray" hidden><span id="pdTrayTxt"></span><button class="go" type="button" id="pdCmp">השוואה</button><button class="ghost" type="button" id="pdClear">ניקוי</button></div>
   </section>
 
   <!-- budget -->
@@ -225,6 +230,28 @@
  </form>
 </div>
 
+<dialog class="sheet" id="pdSheet" aria-labelledby="pdName">
+ <form method="dialog" class="sheethead"><div><p class="prov" id="pdProvName"></p><h2 id="pdName"></h2><p class="mid" id="pdId" dir="ltr"></p></div><button class="x" value="close" aria-label="סגירה">✕</button></form>
+ <div class="sheetbody">
+  <div class="facts" id="pdFacts"></div>
+  <div class="exs" id="pdExs"></div>
+  <div class="vrow" id="pdVariant"></div>
+  <form id="pdForm" class="pdform" novalidate></form>
+  <details class="json" id="pdJsonBox"><summary>הבקשה המדויקת (JSON)</summary><textarea id="pdJson" class="mono" rows="10" dir="ltr" spellcheck="false"></textarea><p class="hint">אפשר לערוך כאן ישירות. אחרי עריכה, ההרצה שולחת את ה-JSON הזה במקום הטופס.</p><button class="ghost" type="button" id="pdJsonReset">חזרה לטופס</button></details>
+  <div class="actions sticky"><button class="go" id="pdGo" type="button">הרצה</button><span class="est" id="pdEst" aria-live="polite"></span></div>
+  <div class="breakdown" id="pdLines"></div>
+  <div id="pdOut" class="outs"></div>
+ </div>
+</dialog>
+<dialog class="sheet wide" id="pcSheet" aria-labelledby="pcTitle">
+ <form method="dialog" class="sheethead"><div><p class="prov">השוואה</p><h2 id="pcTitle"></h2></div><button class="x" value="close" aria-label="סגירה">✕</button></form>
+ <div class="sheetbody">
+  <div id="pcForm" class="pdform"></div>
+  <div class="actions sticky"><button class="go" id="pcGo" type="button">הרצה בכולם</button><span class="est" id="pcEst" aria-live="polite"></span></div>
+  <div id="pcOut" class="cols"></div>
+ </div>
+</dialog>
 <script src="app.js"></script>
+<script type="module" src="paid.js"></script>
 </body>
 </html>

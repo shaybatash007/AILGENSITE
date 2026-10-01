@@ -4,6 +4,8 @@
 // api.cloudflare.com, or CLOUDFLARE_API_TOKEN); everything else is the code that deploys.
 //   node cloud/dev.mjs serve <surface> [--port 8788] [--key <lab passcode>]     the surface + its /api routes on localhost
 //   node cloud/dev.mjs call <surface> <route> '<json body>' [--key ...] [--out f]   one POST, the answer printed (and saved)
+//   --mock-paid   answer gateway calls here, in each provider's own shape, with the catalog's own example media, after a short
+//                 wait: the lab's paid tab end to end with nothing spent (the answers are not the models')
 import fs from 'node:fs';
 import path from 'node:path';
 import http from 'node:http';
@@ -20,10 +22,30 @@ if (!s || !s.functions) { console.error('usage: node cloud/dev.mjs serve|call <s
 const ACC = process.env.CLOUDFLARE_ACCOUNT_ID || cfg.cloudflare.accountId;
 
 let neurons = 0;
+const MOCK = argv.includes('--mock-paid');
+async function mockPaid(model, input) {
+  const P = JSON.parse(fs.readFileSync(path.join(ROOT, 'lab/paid.json'), 'utf8'));
+  const m = P.groups.flatMap(g => Object.values(g.tiers).flat()).find(x => x.id === model);
+  if (!m) throw new Error(`${model}: not in the gateway catalog`);
+  if (JSON.stringify(input).includes('__mock_fail__')) throw new Error('mock: the provider refused this input (400)');
+  await new Promise(r => setTimeout(r, 600 + Math.random() * 900));
+  const ex = JSON.parse(fs.readFileSync(path.join(ROOT, 'lab/schemas', m.slug + '.json'), 'utf8')).examples.find(e => e.media);
+  const said = 'תשובת דמה מהמריץ המקומי (' + model + '): בלי קריאה למודל ובלי עלות.';
+  const usage = { prompt_tokens: 120, completion_tokens: 240 };
+  if (m.out === 'text') {
+    if (m.shape === 'anthropic') return { id: 'mock', type: 'message', role: 'assistant', content: [{ type: 'text', text: said }], usage: { input_tokens: 120, output_tokens: 240 } };
+    if (m.shape === 'responses') return { id: 'mock', object: 'response', output_text: said, output: [{ type: 'message', content: [{ type: 'output_text', text: said }] }], usage: { input_tokens: 120, output_tokens: 240 } };
+    if (m.sector === 'listen') return { text: said };
+    return { id: 'mock', object: 'chat.completion', choices: [{ index: 0, message: { role: 'assistant', content: said } }], usage };
+  }
+  if (m.id === 'minimax/h3') return { state: 'Completed', result: { task: { status: 'succeeded', content: { url: ex && ex.media } } } };
+  return { state: 'Completed', gatewayMetadata: { keySource: 'Unified' }, result: { [m.out]: ex ? ex.media : null } };
+}
 const AI = {
   aiGatewayLogId: null,
   gateway: () => ({ async getLog() { return null; } }),   // no gateway log here: the lab falls back to its estimate
   async run(model, input, opts) {
+    if (opts && opts.gateway && MOCK) return mockPaid(model, input);
     // the credits path goes through an AI Gateway with Unified Billing; here only when DEV_GATEWAY_OK=1 says the gateway exists
     if (opts && opts.gateway && !process.env.DEV_GATEWAY_OK) throw new Error(`gateway ${opts.gateway.id}: not reachable from the local runner (set DEV_GATEWAY_OK=1 once it exists)`);
     let init;

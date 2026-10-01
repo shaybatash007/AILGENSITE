@@ -13,11 +13,11 @@ const BEST_TEXT = '@cf/openai/gpt-oss-120b', VISION_EXTRA = ['@cf/mistralai/mist
 /* ---------- the server ---------- */
 // route: 'free' (the free daily allocation) or 'credits' (the AI Gateway credits, recorded against the budget)
 let FALLBACK = store.get('labFallback') === '1', BUDGET = null;
-async function call(model, input, kind, route) {
+async function call(model, input, kind, route, extra) {
   let r, j;
   route = route || (model.startsWith('@cf/') ? 'free' : 'credits');
   try {
-    r = await fetch('/api/run', { method: 'POST', headers: { 'content-type': 'application/json', 'x-lab-key': KEY }, body: JSON.stringify({ model, input, kind, route, fallback: FALLBACK }) });
+    r = await fetch('/api/run', { method: 'POST', headers: { 'content-type': 'application/json', 'x-lab-key': KEY }, body: JSON.stringify({ model, input, kind, route, fallback: FALLBACK, ...(extra || {}) }) });
     j = await r.json();
   } catch (e) { return { ok: false, error: r ? 'HTTP ' + r.status : 'אין חיבור לשרת המעבדה' }; }
   if (r.status === 401 || r.status === 423) { lock(j); return { ok: false, error: j.error }; }
@@ -275,16 +275,14 @@ const VERDICT = { best: 'מומלץ', ok: 'עובד', weak: 'חלש', down: 'ל�
 const TRY = { chat: 'text', 'chat-vision': 'text', flux2: 'image', 'image-json': 'image', image: 'image', translate: 'translate', embed: 'search', asr: 'speech', tts: 'speech', 'vision-bytes': 'vision' };
 function renderModels() {
   const q = $('#mQ').value.trim().toLowerCase(), task = $('#mTask').value, paid = $('#mPaid').value;
-  const list = CAT.models.filter(m => (!task || m.task === task) && (!paid || (paid === 'paid' ? m.paid : !m.paid)) && (!q || (m.name + ' ' + m.about + ' ' + (m.note?.note || '')).toLowerCase().includes(q)));
+  // a Workers AI model that needs Workers Paid is listed once, with the paid catalog (paid.js)
+  const list = CAT.models.filter(m => !(window.LABPAID && m.paid) && (!task || m.task === task) && (!paid || (paid === 'paid' ? m.paid : !m.paid)) && (!q || (m.name + ' ' + m.about + ' ' + (m.note?.note || '')).toLowerCase().includes(q)));
   $('#mList').innerHTML = list.map(m => `<div class="mrow"><div><div class="n">${esc(short(m.name))}</div><div class="t">${esc(m.task)}${m.context ? ' · ' + (m.context / 1000).toFixed(0) + 'K' : ''}${m.vision ? ' · ראייה' : ''}${m.tools ? ' · כלים' : ''}${m.beta ? ' · בטא' : ''}</div></div>
    <div>${m.paid ? '<span class="badge b-paid">בתשלום</span>' : ''}${m.note ? `<span class="badge b-${esc(m.note.verdict)}">${esc(VERDICT[m.note.verdict] || m.note.verdict)}</span>` : ''}<p dir="ltr" style="text-align:left">${esc(m.about)}</p>${m.note ? `<p class="note">${esc(m.note.note)}</p>` : ''}${m.price ? `<div class="price">${esc(m.price)}</div>` : ''}</div>
    <div>${!m.paid && TRY[m.how] ? `<button class="try" type="button" data-m="${esc(m.name)}" data-tab="${TRY[m.how]}">לנסות</button>` : !m.paid ? `<button class="try" type="button" data-m="${esc(m.name)}" data-tab="raw">JSON</button>` : ''}</div></div>`).join('') || '<p class="lead">אין מודלים שמתאימים לסינון.</p>';
-  if (PAID && paid !== 'free') {   // the gateway catalog: paid from the credits, through the lab's budget
-    const rows = PAID.groups.flatMap(g => g.models.filter(m => !m.id.startsWith('@cf/') && (!task || task === 'gateway') && (!q || (m.id + ' ' + m.name + ' ' + m.note).toLowerCase().includes(q))).map(m => `<div class="mrow"><div><div class="n">${esc(m.id)}</div><div class="t">${esc(g.title)} · AI Gateway</div></div><div><span class="badge b-paid">בתשלום · קרדיטים</span><p class="note">${esc(m.note)}</p></div><div><button class="try" type="button" data-pg="${g.id}" data-m="${esc(m.id)}">לנסות</button></div></div>`));
-    $('#mList').insertAdjacentHTML('beforeend', rows.join(''));
-    $$('#mList .try[data-pg]').forEach(b => b.onclick = () => { show('paid'); pgGroup(b.dataset.pg); $$('#pgPicks input').forEach(i => { i.checked = i.value === b.dataset.m; }); pgEstimate(); scrollTo({ top: 0 }); });
-  }
-  $$('#mList .try:not([data-pg])').forEach(b => b.onclick = () => openWith(b.dataset.m, b.dataset.tab));
+  // the paid catalog's rows come from paid.js (one list for both tabs)
+  if (window.LABPAID && paid !== 'free') window.LABPAID.rows($('#mList'), { q, task });
+  $$('#mList .try[data-m]').forEach(b => b.onclick = () => openWith(b.dataset.m, b.dataset.tab));
 }
 function openWith(model, tab) {
   show(tab);
@@ -309,76 +307,6 @@ async function renderBench() {
     return `<section class="bench"><h2>${esc(t.title)}</h2><p class="setup">${esc(t.setup)}</p>${t.correct ? `<p class="correct">התשובה הנכונה: ${esc(t.correct)}</p>` : ''}${body}</section>`;
   }).join('');
 }
-
-/* ---------- paid models: one balance, a price before and after every run ---------- */
-let PAID = null, PG = 'text';
-const PM = id => PAID.groups.flatMap(g => g.models.map(m => ({ ...m, group: g.id }))).find(m => m.id === id);
-// the price before a run (the server uses the same rules; the real price comes from the gateway's log)
-function before(p, input) {
-  if (p.per === 'image') { const k = input.image_size || input.resolution || input.quality || 'any'; return p.est[k] ?? Object.values(p.est)[0]; }
-  if (p.per === 'megapixel') { const mp = Math.max(1, ((input.width || 1024) * (input.height || 1024)) / 1e6); return p.price.firstMp + Math.max(0, Math.ceil(mp) - 1) * p.price.nextMp; }
-  if (p.per === 'second') { const s = parseInt(input.duration, 10) || 5, r = p.rate[input.resolution] ?? Object.values(p.rate)[0]; return s * (r + (input.generate_audio && p.audio ? p.audio : 0)); }
-  if (p.per === 'char') return String(input.text || '').length * p.rate;
-  if (p.price) { const inTok = Math.ceil(((input.__chars || 0) + 40) / 3.2), outTok = input.__max || 800; return (inTok * p.price.in + outTok * p.price.out) / 1e6; }
-  return 0;
-}
-const RATIO_PX = { '1:1': [1024, 1024], '16:9': [1344, 768], '9:16': [768, 1344], '4:5': [896, 1120], '3:4': [880, 1184], '21:9': [1536, 656] };
-const GPT_SIZE = r => (r === '1:1' ? '1024x1024' : ['16:9', '21:9'].includes(r) ? '1536x1024' : '1024x1536');
-function paidInput(p, v) {
-  const f = p.fmt;
-  if (PG === 'text') {
-    const msgs = [...(v.sys ? [{ role: 'system', content: v.sys }] : []), { role: 'user', content: v.msg }], meta = { __chars: (v.sys + v.msg).length, __max: v.max };
-    if (f === 'anthropic') return { input: { messages: [{ role: 'user', content: v.msg }], max_tokens: v.max, ...(v.sys ? { system: v.sys } : {}) }, meta };
-    if (f === 'gemini') return { input: { contents: [{ role: 'user', parts: [{ text: v.msg }] }], ...(v.sys ? { systemInstruction: { parts: [{ text: v.sys }] } } : {}), generationConfig: { maxOutputTokens: v.max } }, meta };
-    return { input: p.id.startsWith('@cf/') ? { messages: msgs, max_tokens: v.max } : { messages: msgs, max_completion_tokens: v.max }, meta };
-  }
-  if (PG === 'image') {
-    const [w, h] = RATIO_PX[v.ratio] || [1024, 1024], big = v.size === '4K' ? 2 : v.size === '2K' ? 1.41 : 1;
-    if (f === 'nano-pro') return { input: { prompt: v.prompt, aspect_ratio: v.ratio, output_format: 'png', image_size: v.size } };
-    if (f === 'nano-2') return { input: { prompt: v.prompt, aspect_ratio: v.ratio, output_format: 'png', resolution: v.size } };
-    if (f === 'gpt-image') return { input: { prompt: v.prompt, size: GPT_SIZE(v.ratio), quality: v.quality, output_format: 'png' } };
-    if (f === 'flux-max') return { input: { prompt: v.prompt, width: Math.round(w * big / 16) * 16, height: Math.round(h * big / 16) * 16, output_format: 'png' } };
-    if (f === 'seedream') return { input: { prompt: v.prompt, aspect_ratio: v.ratio, size: v.size === '4K' ? '4K' : '2K' } };
-  }
-  if (PG === 'video') {
-    if (f === 'veo') return { input: { prompt: v.prompt, duration: v.dur + 's', aspect_ratio: v.ratio, resolution: v.res === '480p' ? '720p' : v.res, generate_audio: v.audio } };
-    if (f === 'seedance') return { input: { prompt: v.prompt, duration: +v.dur, resolution: v.res, aspect_ratio: v.ratio, generate_audio: v.audio } };
-  }
-  if (PG === 'voice') return { input: { text: v.text, voice_id: v.voice, language_code: v.lang || undefined, output_format: 'mp3_44100_128' } };
-  return { input: {} };
-}
-const FORMS = {
-  text: `<label>הוראות (system)<textarea id="pgSys" rows="2" placeholder="למשל: ענו בעברית, בקצרה."></textarea></label><label>הודעה<textarea id="pgMsg" rows="4"></textarea></label><div class="row3"><label>אורך מרבי (טוקנים)<input id="pgMax" type="number" min="16" max="8000" value="800"></label></div>`,
-  image: `<label>בקשה (באנגלית עובד הכי טוב)<textarea id="pgPrompt" rows="3" placeholder="Top-down editorial photograph of an empty travertine surface in late-afternoon window light…"></textarea></label><div class="row3"><label>יחס<select id="pgRatio"><option>1:1</option><option selected>16:9</option><option>9:16</option><option>4:5</option><option>3:4</option><option>21:9</option></select></label><label>גודל<select id="pgSize"><option>1K</option><option selected>2K</option><option>4K</option></select></label><label>איכות (GPT Image)<select id="pgQ"><option>low</option><option selected>medium</option><option>high</option></select></label></div>`,
-  video: `<label>בקשה<textarea id="pgPrompt" rows="3" placeholder="A dusty-rose satin ribbon lies straight, then slowly lifts at one end into a soft curl. Static camera."></textarea></label><div class="row3"><label>משך (שניות)<select id="pgDur"><option>4</option><option selected>6</option><option>8</option></select></label><label>רזולוציה<select id="pgRes"><option>480p</option><option selected>720p</option><option>1080p</option></select></label><label>יחס<select id="pgRatio"><option selected>16:9</option><option>9:16</option><option>1:1</option></select></label></div><label class="tog" style="font-size:14px;margin-bottom:14px"><input type="checkbox" id="pgAudio"> עם קול</label>`,
-  voice: `<label>טקסט<textarea id="pgText" rows="3">שלום, זו הקראה לדוגמה מהמעבדה של AILGEN.</textarea></label><div class="row3"><label>קול (voice_id של ElevenLabs)<input id="pgVoice" value="JBFqnCBsd6RMkjVDRZzb" dir="ltr"></label><label>שפה<select id="pgLang"><option value="he" selected>עברית</option><option value="en">אנגלית</option><option value="ar">ערבית</option><option value="">זיהוי אוטומטי</option></select></label></div>`,
-};
-const val = id => { const e = $('#' + id); return e ? (e.type === 'checkbox' ? e.checked : e.value) : undefined; };
-const pgVals = () => ({ sys: (val('pgSys') || '').trim(), msg: (val('pgMsg') || '').trim(), max: +val('pgMax') || 800, prompt: (val('pgPrompt') || '').trim(), ratio: val('pgRatio'), size: val('pgSize'), quality: val('pgQ'), dur: val('pgDur'), res: val('pgRes'), audio: !!val('pgAudio'), text: (val('pgText') || '').trim(), voice: (val('pgVoice') || '').trim(), lang: val('pgLang') });
-function pgEstimate() {
-  const v = pgVals(), ms = picked($('#pgPicks')).map(PM).filter(Boolean);
-  const sum = ms.reduce((a, p) => { const { input, meta } = paidInput(p, v); return a + before(p, { ...input, ...(meta || {}) }); }, 0);
-  $('#pgEst').textContent = ms.length ? `${PG === 'text' ? 'עד ' : 'כ-'}${money(sum)} להרצה${ms.length > 1 ? ` (${ms.length} מודלים)` : ''}${BUDGET ? ` · נשארו ${money(BUDGET.budget - BUDGET.spent, 2)}` : ''}` : '';
-  return sum;
-}
-function pgGroup(id) {
-  PG = id; const g = PAID.groups.find(x => x.id === id);
-  $$('#pgSeg button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.g === id)));
-  const fs = $('#pgPicks'); fs.innerHTML = '<legend>מודלים</legend>';
-  const one = id === 'video' || id === 'voice';
-  fs.insertAdjacentHTML('beforeend', g.models.map((m, i) => `<label class="pick" title="${esc(m.note)}"><input type="checkbox" value="${esc(m.id)}"${i === 0 ? ' checked' : ''}>${esc(m.name)} <small>${esc(m.note.split(';')[0])}</small></label>`).join(''));
-  fs.onchange = e => { if (one && e.target.checked) $$('input', fs).forEach(i => { if (i !== e.target) i.checked = false; }); if (!one && $$('input:checked', fs).length > 4) e.target.checked = false; pgEstimate(); };
-  $('#pgForm').innerHTML = FORMS[id]; $('#pgForm').oninput = pgEstimate; $('#pgForm').onchange = pgEstimate; pgEstimate();
-}
-$('#pgGo').onclick = () => busy($('#pgGo'), async () => {
-  const v = pgVals(), ms = picked($('#pgPicks')).map(PM).filter(Boolean); if (!ms.length) return;
-  if ((PG === 'text' && !v.msg) || ((PG === 'image' || PG === 'video') && !v.prompt) || (PG === 'voice' && !v.text)) return $('#pgForm textarea')?.focus();
-  const est = pgEstimate();
-  if (est > 1 && !confirm(`ההרצה תעלה כ-${money(est, 2)} מהתקציב. להמשיך?`)) return;
-  $('#pgOut').innerHTML = '';
-  await Promise.all(ms.map(async p => { const c = card($('#pgOut'), p.name); const { input } = paidInput(p, v); fill(c, await call(p.id, input, '', 'credits')); }));
-  renderBudget(true);
-});
 
 /* ---------- budget ---------- */
 async function budgetCall(body) {
@@ -414,11 +342,12 @@ async function renderBudget(quiet) {
 $('#bgSave').onclick = async () => { const b = await budgetCall({ set: +$('#bgIn').value }); $('#bgMsg').textContent = b && b.ledger ? 'נשמר.' : 'לא ניתן לשמור: אין היכן לשמור — היומן המרכזי עדיין לא מחובר (הוראות בתחתית הטאב).'; renderBudget(); };
 $('#bgReset').onclick = async () => { if (!confirm('לאפס את ההוצאה ולהתחיל ספירה חדשה? ההרצות הקודמות נשמרות כהיסטוריה.')) return; await budgetCall({ reset: true }); $('#bgMsg').textContent = 'ההוצאה אופסה.'; renderBudget(); };
 
+/* ---------- what paid.js (the paid catalog, a module) uses from here ---------- */
+window.LAB = { call, card, fill, defaultRender, costLabel, money, esc, show, busy, renderBudget, renderModels, get budget() { return BUDGET; }, get key() { return KEY; } };
+
 /* ---------- start ---------- */
 (async () => {
-  [CAT, PAID] = await Promise.all([fetch('models.json').then(r => r.json()), fetch('paid.json').then(r => r.json())]);
-  $('#pgSeg').innerHTML = PAID.groups.map(g => `<button type="button" role="tab" data-g="${g.id}">${esc(g.title)}</button>`).join('');
-  $$('#pgSeg button').forEach(b => b.onclick = () => pgGroup(b.dataset.g)); pgGroup('text');
+  CAT = await fetch('models.json').then(r => r.json());
   $('#plan').textContent = `${CAT.free} מודלים חינמיים מתוך ${CAT.count} · ${CAT.plan} · נמדד ${CAT.measuredOn}`;
   $('#mLead').textContent = `${CAT.count} מודלים בחשבון, ${CAT.free} מהם בחינם. ההערות הן מה שהסטודיו מדד בפועל.`;
   fillSelect($('#tModel'), free(['chat', 'chat-vision']), BEST_TEXT);
@@ -432,7 +361,7 @@ $('#bgReset').onclick = async () => { if (!confirm('לאפס את ההוצאה �
   fillPicks($('#sePicks'), free('embed'), ['@cf/baai/bge-m3']);
   $('#iPicks').addEventListener('change', updCost); updCost();
   const tasks = [...new Set(CAT.models.map(m => m.task))].sort();
-  $('#mTask').insertAdjacentHTML('beforeend', tasks.map(t => `<option>${esc(t)}</option>`).join('') + '<option value="gateway">AI Gateway (בתשלום)</option>');
+  $('#mTask').insertAdjacentHTML('beforeend', tasks.map(t => `<option>${esc(t)}</option>`).join('') + '<option value="gateway">בתשלום: כל הקטלוג</option>');
   renderModels(); renderBench();
   const tab = location.hash.slice(1); if (tab && $('#p-' + tab)) show(tab);
   if (!KEY) lock(); else { const r = await fetch('/api/ping', { method: 'POST', headers: { 'x-lab-key': KEY } }).catch(() => null); if (r && r.ok) { $('#logout').hidden = false; renderBudget(true); } else lock(r ? await r.json().catch(() => null) : null); }

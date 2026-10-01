@@ -28,6 +28,8 @@ node cloud/dev.mjs serve ailgen --port 8790            # http://localhost:8790/s
 node cloud/dev.mjs serve lab --port 8791 --key test    # the lab, passcode "test"
 node cloud/context.mjs edencosmetic                    # rebuild Lotti's facts after the catalog or the site changes
 node cloud/lab/catalog.mjs                             # refresh the lab's model list (free)
+node cloud/lab/catalog-paid.mjs                        # refresh the paid catalog from Cloudflare's model pages (free)
+node cloud/dev.mjs serve lab --port 8791 --key test --mock-paid   # the paid tab end to end, with mocked answers, nothing spent
 ```
 
 `dev.mjs` runs the same function code, with `env.AI` calling the Workers AI REST API. The key comes from the environment's
@@ -46,6 +48,26 @@ credential for `api.cloudflare.com`, or from `CLOUDFLARE_API_TOKEN`.
 - **Shared allocation.** The free allocation (10,000 neurons a day) is shared by Lotti, the studio demo, the lab and the studio's own
   drafts. On the Free plan, running out means errors until 00:00 UTC, never a bill. The pages then fall back to fixed answers.
 - **Measured models only.** A route uses a model the lab has measured for that job (`lab/bench.json`, `cloud/lab/notes.json`).
+
+## The lab's paid catalog
+
+- **Every paid model, end to end.** `cloud/lab/catalog-paid.mjs` reads Cloudflare's own model catalog
+  (`developers.cloudflare.com/ai/models/`): every third-party model the gateway bills from the credits, plus the Workers AI models
+  that need Workers Paid (the lab's account runs them only from the credits). For each model it keeps the id, the task, the price
+  list, the input schema and the page's own examples. It writes `lab/paid.json` (by sector and tier) and `lab/schemas/<slug>.json`.
+- **Tiers per sector: top, mid, low.** `cloud/lab/tiers.json` holds the reviewed tier of every model, the reason (`why`), a Hebrew
+  note per model, and the order inside a tier. A model Cloudflare adds later falls back to the word rules there (Pro/Max → top,
+  Mini/Nano/Lite/Turbo → low) until it is reviewed. A model the lab measured moves by its result.
+- **One form per model, from its schema.** The page builds the form from the model's input schema: variants (`oneOf`, e.g. text,
+  image or video to video), enums, numbers, media (upload, link, or a result from this session), and the rest under "more
+  settings". The four chat formats (OpenAI chat, OpenAI Responses, Anthropic, Gemini) share one chat form with a running thread.
+  The exact JSON is shown and can be edited.
+- **One price, before and after.** `lab/price.js` computes a call's price from the price list and the exact input (tokens, per
+  image, per megapixel, per second by resolution and audio, per clip, per character, per minute, per track). The page shows it
+  with its breakdown before a run; the server (`run.js`) uses the same code for the budget gate and as the cost until the
+  gateway's log has one. `POST /api/run` with `dry: true` checks the model, the price and the budget without calling anything.
+- **Compare.** Up to four models of one sector take one brief; each gets it in its own format (its own first example as the base,
+  the brief's values in the fields it calls by those names, at the nearest value its schema allows).
 
 ## The lab's budget
 

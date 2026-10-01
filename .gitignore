@@ -38,3 +38,6 @@ _site/
 cloud/*/wrangler.toml
 cloud/*/.wrangler/
 _deploy/
+
+# AILGEN Lab: the cached catalog pages
+cloud/lab/.cache/
