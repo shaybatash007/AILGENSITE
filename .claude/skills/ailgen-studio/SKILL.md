@@ -240,6 +240,7 @@ Set up `evolve.json` and take the baseline snapshot, so new products, prices, st
 | `scripts/imagegen.mjs` | Generated candidates per concept on vendor-neutral routes (Cloudflare free drafts, fal, Gemini, OpenAI, stub); probe, bake-off, references, dry run, budget, ledger |
 | `scripts/glrender.mjs` | The free visual layer: render WebGL shaders and Three.js scenes to stills and draft films (SwiftShader, identical on every machine) |
 | `scripts/matte.py` | AI matting for hard product photos (rembg + BiRefNet, MIT, CPU): alpha only, pixels proven kept |
+| `scripts/cfai.mjs` | Cloudflare Workers AI from the studio: any catalog model (text, vision, translation, speech, embeddings) with one token; `--verify`, `--models` |
 | `scripts/film-site.mjs` | Film a live site on a virtual clock: smooth 30 fps footage of WebGL, canvas and CSS motion from a shot list (scroll targets, pointer paths) |
 | `scripts/grade.py` | Brand colour grade for approved plates (Lab transfer, ΔE before/after); colour-swatch references |
 | `scripts/regions.mjs` | Design critique shots: every region alone, desktop and phone, before and after |

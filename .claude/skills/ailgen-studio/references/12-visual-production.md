@@ -85,6 +85,27 @@ terms do not suit client work); Hugging Face serverless inference (needs a token
 open-weight diffusion or video models locally (no GPU in the cloud container; CPU generation of a 4B model is minutes per
 image). Headless Chromium renders WebGL through SwiftShader, so every machine gets identical pixels, just slower than a GPU.
 
+## Cloudflare Workers AI: what one free token gives the studio (checked 2026-10-01)
+
+One token (Workers AI Read + Edit) in the environment, and the account ID (not a secret, in `surfaces.json`). No payment
+method: 10,000 neurons a day on every plan, reset at 00:00 UTC; above that $0.011 per 1,000 neurons on Workers Paid ($5 a
+month), and on the Free plan calls fail until the reset. Cloudflare does not train on what is sent. Measured per call:
+
+| Job | Model | Free a day | Tool |
+|---|---|---|---|
+| Image drafts | `@cf/black-forest-labs/flux-2-klein-4b` (26.05 neurons per 512 tile) | about 95 at 1 MP | `imagegen.mjs` route `draft` |
+| Best free image | `@cf/black-forest-labs/flux-2-dev` (37.5 neurons per tile per step, references, editing) | about 2 at 1 MP | `final` (after the paid routes), `bakeoff` |
+| Fast, many | `flux-1-schnell` (4.8 per tile + 9.6 per step) | about 170 | `--use` |
+| Text, strongest free | `@cf/openai/gpt-oss-120b`, `@cf/meta/llama-3.3-70b-instruct-fp8-fast` | about 50k output tokens on the 70B | `cfai.mjs --run` |
+| Text, most per neuron | `@cf/qwen/qwen3-30b-a3b-fp8` (30,475 neurons per M output) | about 330k output tokens | `cfai.mjs --run` |
+| Vision | `@cf/meta/llama-4-scout-17b-16e-instruct` (multimodal), `llama-3.2-11b-vision-instruct` | | `cfai.mjs --image` |
+| Hebrew translation, speech, search | `m2m100-1.2b`, `whisper-large-v3-turbo`, `bge-m3` (multilingual embeddings) | | `cfai.mjs` |
+
+Paid only (Workers Paid or AI Gateway credits): Kimi K2.6 / K2.7-code, GLM-5.2 / 5.3, DeepSeek V4. Workers AI has no video model;
+video through Cloudflare is xAI Grok Imagine on AI Gateway unified billing (credits plus a 5% fee, 480p/720p), below the
+1080p of Veo 3.1 and Kling 3.0 on fal, so the film routes stay on fal. The studio's own words and judgement stay with Claude;
+these models carry volume (drafts, translation checks, embeddings for a site search, transcripts).
+
 ## Choosing a model: vendor-neutral routing (checked 2026-09-30)
 
 No provider is the default by habit. Every job names an ordered route of `provider:model` in `concepts.json`

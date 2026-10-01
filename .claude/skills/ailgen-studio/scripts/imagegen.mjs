@@ -7,7 +7,8 @@
 //   node imagegen.mjs --project projects/<slug> --concept field --ref a.png,b.png    reference images (composition, light, colour swatch)
 //   node imagegen.mjs ... --use fal:fal-ai/flux-2-pro                               one route, explicitly
 // Providers and their keys (environment variables, set in the environment settings, never in chat or code):
-//   cloudflare  CLOUDFLARE_ACCOUNT_ID + CLOUDFLARE_API_TOKEN   Workers AI; 10,000 neurons a day free (FLUX.2 [klein] 4B, Apache 2.0)
+//   cloudflare  CLOUDFLARE_API_TOKEN (+ the account ID, from the environment or surfaces.json)   Workers AI; 10,000 neurons a day free:
+//               FLUX.2 [klein] 4B (~95 images a day), FLUX.2 [dev] (best free quality, ~2 a day), FLUX.2 [klein] 9B, FLUX.1 [schnell]
 //   fal         FAL_KEY                                        one key for Nano Banana Pro, FLUX.2 [pro], Seedream 4.5, Veo 3.1, Kling 3.0
 //   gemini      GEMINI_API_KEY (or GOOGLE_API_KEY)             Gemini 3 Pro Image / 3.1 Flash Image, Veo 3.1 (billing required)
 //   openai      OPENAI_API_KEY                                 gpt-image-2
@@ -27,6 +28,8 @@ const a = parseArgs(), ROOT = repoRoot();
 if (!a.project) { console.error('usage: node imagegen.mjs --project projects/<slug> (--probe | --concept <id|all>) [--ratio r] [--n k] [--tier draft|final] [--bakeoff] [--use provider:model] [--ref a.png,b.png] [--brand key] [--dry]'); process.exit(2); }
 const PROJ = path.resolve(ROOT, a.project), VIS = path.join(PROJ, 'visual');
 const CFG = JSON.parse(fs.readFileSync(path.join(VIS, 'concepts.json'), 'utf8'));
+// the Cloudflare account ID is not a secret: it may come from surfaces.json at the repository root; the token only from the environment
+try { const sj = JSON.parse(fs.readFileSync(path.join(ROOT, 'surfaces.json'), 'utf8')); if (!process.env.CLOUDFLARE_ACCOUNT_ID && sj.cloudflare && sj.cloudflare.accountId) process.env.CLOUDFLARE_ACCOUNT_ID = sj.cloudflare.accountId; } catch (_) {}
 const env = process.env, has = {
   cloudflare: !!((env.CLOUDFLARE_ACCOUNT_ID || env.CF_ACCOUNT_ID) && (env.CLOUDFLARE_API_TOKEN || env.CF_API_TOKEN)),
   fal: !!(env.FAL_KEY || env.FAL_API_KEY), gemini: !!(env.GEMINI_API_KEY || env.GOOGLE_API_KEY), openai: !!env.OPENAI_API_KEY, stub: true,
@@ -65,6 +68,7 @@ function costOf(p, model, ratio, size, nRefs = 0) {
     if (/flux-2-klein-4b/.test(model)) return tiles * 0.000287 + nRefs * 0.000059;
     if (/flux-1-schnell/.test(model)) return tiles * 0.0000528 + 4 * 0.0001056;
     if (/flux-2-klein-9b/.test(model)) return 0.015 + Math.max(0, Math.ceil(MP) - 1) * 0.002;
+    if (/flux-2-dev/.test(model)) return tiles * (37.5 * 25 * 0.011 / 1000) + nRefs * (18.75 * 25 * 0.011 / 1000);   // per tile per step, ~25 steps
     return tiles * 0.007;
   }
   if (p === 'fal') {
