@@ -87,8 +87,13 @@ for (const url of urls) {
 }
 console.log(`  ${models.length} models read · ${models.filter(m => m.schema).length} with an input schema`);
 
-// tiers: the reviewed list in tiers.json wins; anything new falls back to the rule (newest flagship words → top, light words → low)
+// tiers: the arsenal decides (cloud/lab/arsenal/knowledge/: a measured quality band per sector, or the junk pool with its rule);
+// a model the arsenal does not know yet falls back to the reviewed list in tiers.json, then to the rule (flagship words → top, light words → low)
 const T = JSON.parse(fs.readFileSync(path.join(ROOT, 'cloud/lab/tiers.json'), 'utf8'));
+const KN = Object.assign({}, ...(await Promise.all(['text', 'image', 'video', 'audio', 'utility'].map(n => import(path.join(ROOT, 'cloud/lab/arsenal/knowledge', n + '.mjs'))))).map(x => Object.values(x)[0]));
+const AR = fs.existsSync(path.join(ROOT, 'lab/arsenal.json')) ? JSON.parse(fs.readFileSync(path.join(ROOT, 'lab/arsenal.json'), 'utf8')).models : {};
+const quality = id => { const q = AR[id]?.measured || {}; return q.aa?.index ?? (q.t2i ? q.t2i.elo / 25 : q.edit ? q.edit.elo / 25 : q.t2v ? q.t2v.elo / 25 : q.i2v ? (q.i2v.elo - 120) / 25 : q.tts ? q.tts.elo / 25 : q.stt ? 60 - q.stt.wer : q.music ? 40 : 0); };
+const tierOf = m => { const k = KN[m.id]; if (k) return k.junk ? 'junk' : (k.tier === 'free' ? 'low' : k.tier); return T.override[m.id] || ruleTier(m); };
 const ruleTier = m => {
   const n = m.id.toLowerCase();
   if (T.low.some(w => n.includes(w))) return 'low';
@@ -118,17 +123,17 @@ const shape = s => {   // how the lab talks to the model: chat formats get one s
 };
 fs.mkdirSync(path.join(ROOT, 'lab/schemas'), { recursive: true });
 const SECTORS = [['text', 'טקסט'], ['image', 'תמונה'], ['video', 'וידאו'], ['voice', 'הקראה'], ['listen', 'תמלול וקול'], ['music', 'מוזיקה'], ['other', 'אחר']];
-const groups = SECTORS.map(([id, title]) => ({ id, title, tiers: { top: [], mid: [], low: [] } }));
+const groups = SECTORS.map(([id, title]) => ({ id, title, tiers: { top: [], mid: [], low: [], junk: [] } }));
 for (const m of models) {
-  const tier = T.override[m.id] || ruleTier(m), g = groups.find(x => x.id === m.sector);
+  const tier = tierOf(m), g = groups.find(x => x.id === m.sector), k = KN[m.id];
   if (m.schema) fs.writeFileSync(path.join(ROOT, 'lab/schemas', m.slug + '.json'), JSON.stringify({ id: m.id, shape: shape(m.schema), schema: m.schema, examples: m.examples }));
   // a model the lab cannot run in one request (a realtime WebSocket session) is listed, marked, and never sent
   const live = !(m.schema && m.schema.properties && Object.keys(m.schema.properties).join() === 'websocket');
-  g.tiers[tier].push({ id: m.id, slug: m.slug, sector: m.sector, name: m.title, provider: m.id.startsWith('@cf/') ? 'Workers AI' : m.provider, wai: m.id.startsWith('@cf/'), live, task: m.task, about: m.description.slice(0, 220), price: m.price, zdr: m.zdr, beta: m.beta, out: outKind(m), shape: shape(m.schema), note: T.notes[m.id] || null, hasSchema: !!m.schema, cover: /vector/.test(m.id) ? null : (m.examples.find(x => x.media && /\.(png|jpe?g|webp|gif)$/.test(x.media)) || {}).media || null, demo: (m.examples.find(x => x.media && /\.(mp4|webm)$/.test(x.media)) || {}).media || null });
+  g.tiers[tier].push({ id: m.id, slug: m.slug, sector: m.sector, name: m.title, provider: m.id.startsWith('@cf/') ? 'Workers AI' : m.provider, wai: m.id.startsWith('@cf/'), live, task: m.task, about: m.description.slice(0, 220), price: m.price, zdr: m.zdr, beta: m.beta, out: outKind(m), shape: shape(m.schema), note: k && k.junk ? null : T.notes[m.id] || null, junk: k && k.junk ? { rule: k.junk, why: k.why, instead: k.instead || [] } : null, keepBy: k && k.keepBy || null, hasSchema: !!m.schema, cover: /vector/.test(m.id) ? null : (m.examples.find(x => x.media && /\.(png|jpe?g|webp|gif)$/.test(x.media)) || {}).media || null, demo: (m.examples.find(x => x.media && /\.(mp4|webm)$/.test(x.media)) || {}).media || null });
 }
-// inside a tier, the stronger first: reviewed order, then price (the provider's own positioning)
+// inside a tier, the stronger first: the measured quality (the arsenal's boards), then the price (the provider's own positioning)
 const top = p => Math.max(0, ...p.map(x => x.usd));
-for (const g of groups) for (const k of ['top', 'mid', 'low']) g.tiers[k].sort((a, b) => (T.order.indexOf(b.id) >= 0) - (T.order.indexOf(a.id) >= 0) || top(b.price) - top(a.price) || a.name.localeCompare(b.name));
+for (const g of groups) for (const k of ['top', 'mid', 'low', 'junk']) g.tiers[k].sort((a, b) => quality(b.id) - quality(a.id) || top(b.price) - top(a.price) || a.name.localeCompare(b.name));
 const out = { checked: new Date().toISOString().slice(0, 10), source: `${BASE}/ai/models/`, creditFee: 0.05, count: models.length, tiersWhy: T.why, groups: groups.filter(g => Object.values(g.tiers).some(l => l.length)) };
 fs.writeFileSync(path.join(ROOT, 'lab/paid.json'), JSON.stringify(out, null, 1));
-for (const g of out.groups) console.log(`  ${g.id.padEnd(7)} top ${g.tiers.top.length} · mid ${g.tiers.mid.length} · low ${g.tiers.low.length}`);
+for (const g of out.groups) console.log(`  ${g.id.padEnd(7)} top ${g.tiers.top.length} · mid ${g.tiers.mid.length} · low ${g.tiers.low.length} · junk ${g.tiers.junk.length}`);

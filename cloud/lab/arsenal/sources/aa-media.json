@@ -1,0 +1,1913 @@
+{
+ "read": "2026-10-02",
+ "about": "Artificial Analysis arenas: Elo from blind human preference votes (higher is better; compare only inside one board). stt: word error rate % (lower is better).",
+ "boards": {
+  "textToImage": {
+   "url": "https://artificialanalysis.ai/image/leaderboard/text-to-image",
+   "rows": [
+    {
+     "rank": 1,
+     "name": "GPT Image 2.5 Sunburst (max)",
+     "creator": "OpenAI",
+     "elo": 1196.5,
+     "votes": 14023,
+     "released": "2026-09-08",
+     "ci": 9,
+     "price": 210.72
+    },
+    {
+     "rank": 2,
+     "name": "GPT Image 2.5 Flare (max)",
+     "creator": "OpenAI",
+     "elo": 1189.8,
+     "votes": 13393,
+     "released": "2026-09-08",
+     "ci": 9,
+     "price": 210.72
+    },
+    {
+     "rank": 3,
+     "name": "GPT Image 2 (high)",
+     "creator": "OpenAI",
+     "elo": 1171.6,
+     "votes": 15346,
+     "released": "2026-04-21",
+     "ci": 9,
+     "price": 211
+    },
+    {
+     "rank": 4,
+     "name": "Grok Imagine Image 2.0",
+     "creator": "SpaceXAI",
+     "elo": 1155.2,
+     "votes": 6879,
+     "released": "2026-08-07",
+     "ci": 11,
+     "price": 60
+    },
+    {
+     "rank": 5,
+     "name": "MAI-Image-2.6",
+     "creator": "Microsoft AI",
+     "elo": 1149.7,
+     "votes": 9136,
+     "released": "2026-08-10",
+     "ci": 10,
+     "price": 38.9
+    },
+    {
+     "rank": 6,
+     "name": "Nano Banana 2 (Gemini 3.1 Flash Image)",
+     "creator": "Google",
+     "elo": 1124.7,
+     "votes": 18454,
+     "released": "2026-02-26",
+     "ci": 8,
+     "price": 67
+    },
+    {
+     "rank": 7,
+     "name": "Muse Image",
+     "creator": "Meta",
+     "elo": 1113.7,
+     "votes": 8408,
+     "released": "2026-07-07",
+     "ci": 9,
+     "price": 10
+    },
+    {
+     "rank": 8,
+     "name": "GPT Image 1.5 (high)",
+     "creator": "OpenAI",
+     "elo": 1107.1,
+     "votes": 14933,
+     "released": "2025-12-16",
+     "ci": 8,
+     "price": 133
+    },
+    {
+     "rank": 9,
+     "name": "MAI-Image-2.6-Flash",
+     "creator": "Microsoft AI",
+     "elo": 1104.9,
+     "votes": 5897,
+     "released": "2026-09-04",
+     "ci": 9,
+     "price": 19.5
+    },
+    {
+     "rank": 10,
+     "name": "MAI-Image-2.5",
+     "creator": "Microsoft AI",
+     "elo": 1103.7,
+     "votes": 15164,
+     "released": "2026-06-02",
+     "ci": 8,
+     "price": 48.128
+    },
+    {
+     "rank": 11,
+     "name": "Nano Banana Pro (Gemini 3 Pro Image)",
+     "creator": "Google",
+     "elo": 1101.2,
+     "votes": 17037,
+     "released": "2025-11-20",
+     "ci": 8,
+     "price": 134
+    },
+    {
+     "rank": 13,
+     "name": "Nano Banana 2 Lite (Gemini 3.1 Flash Lite Image)",
+     "creator": "Google",
+     "elo": 1095.8,
+     "votes": 17078,
+     "released": "2026-06-30",
+     "ci": 8,
+     "price": 33.6
+    },
+    {
+     "rank": 14,
+     "name": "Qwen-Image-3.0-Pro",
+     "creator": "Alibaba",
+     "elo": 1089.3,
+     "votes": 6353,
+     "released": "2026-07-21",
+     "ci": 10,
+     "price": 40
+    },
+    {
+     "rank": 15,
+     "name": "Seedream 5.0 Pro",
+     "creator": "ByteDance Seed",
+     "elo": 1080.9,
+     "votes": 12963,
+     "released": "2026-07-08",
+     "ci": 8,
+     "price": 90
+    },
+    {
+     "rank": 17,
+     "name": "grok-imagine-image-quality",
+     "creator": "SpaceXAI",
+     "elo": 1045,
+     "votes": 18986,
+     "released": "2026-05-06",
+     "ci": 7,
+     "price": 50
+    },
+    {
+     "rank": 21,
+     "name": "Seedream 4.0",
+     "creator": "ByteDance Seed",
+     "elo": 1028.7,
+     "votes": 5567,
+     "released": "2025-09-08",
+     "ci": 9,
+     "price": 30
+    },
+    {
+     "rank": 22,
+     "name": "FLUX.2 [flex]",
+     "creator": "Black Forest Labs",
+     "elo": 1027.6,
+     "votes": 6182,
+     "released": "2025-11-25",
+     "ci": 9,
+     "price": 60
+    },
+    {
+     "rank": 23,
+     "name": "Wan 2.6 Image",
+     "creator": "Alibaba",
+     "elo": 1026.3,
+     "votes": 5304,
+     "released": "2025-12-17",
+     "ci": 9,
+     "price": 30
+    },
+    {
+     "rank": 24,
+     "name": "Krea 2 Large",
+     "creator": "Krea",
+     "elo": 1025.7,
+     "votes": 16692,
+     "released": "2026-05-26",
+     "ci": 7,
+     "price": 60
+    },
+    {
+     "rank": 25,
+     "name": "Seedream 4.5",
+     "creator": "ByteDance Seed",
+     "elo": 1022.8,
+     "votes": 6615,
+     "released": "2025-12-05",
+     "ci": 9,
+     "price": 40
+    },
+    {
+     "rank": 26,
+     "name": "Recraft V4.1 Utility",
+     "creator": "Recraft",
+     "elo": 1022.6,
+     "votes": 7751,
+     "released": "2026-05-14",
+     "ci": 8,
+     "price": 35
+    },
+    {
+     "rank": 27,
+     "name": "FLUX.2 [max]",
+     "creator": "Black Forest Labs",
+     "elo": 1020.6,
+     "votes": 12111,
+     "released": "2025-12-16",
+     "ci": 8,
+     "price": 70
+    },
+    {
+     "rank": 28,
+     "name": "Krea 2 Medium Turbo",
+     "creator": "Krea",
+     "elo": 1020.1,
+     "votes": 6210,
+     "released": "2026-06-03",
+     "ci": 9,
+     "price": 15
+    },
+    {
+     "rank": 30,
+     "name": "grok-imagine-image",
+     "creator": "SpaceXAI",
+     "elo": 1019.1,
+     "votes": 6497,
+     "released": "2026-01-28",
+     "ci": 9,
+     "price": 20
+    },
+    {
+     "rank": 31,
+     "name": "Recraft V4.1 Utility Pro",
+     "creator": "Recraft",
+     "elo": 1018.1,
+     "votes": 17519,
+     "released": "2026-05-14",
+     "ci": 7,
+     "price": 210
+    },
+    {
+     "rank": 35,
+     "name": "Krea 2 Medium",
+     "creator": "Krea",
+     "elo": 1012.3,
+     "votes": 16521,
+     "released": "2026-05-26",
+     "ci": 7,
+     "price": 30
+    },
+    {
+     "rank": 37,
+     "name": "Seedream 5.0 Lite",
+     "creator": "ByteDance Seed",
+     "elo": 1010.9,
+     "votes": 5574,
+     "released": "2026-02-13",
+     "ci": 9,
+     "price": 35
+    },
+    {
+     "rank": 41,
+     "name": "FLUX.2 [pro]",
+     "creator": "Black Forest Labs",
+     "elo": 1003.6,
+     "votes": 11756,
+     "released": "2025-11-25",
+     "ci": 8,
+     "price": 30
+    },
+    {
+     "rank": 42,
+     "name": "FLUX.2 [dev]",
+     "creator": "Black Forest Labs",
+     "elo": 1000,
+     "votes": 20353,
+     "released": "2025-11-25",
+     "ci": 0,
+     "price": 12
+    },
+    {
+     "rank": 51,
+     "name": "Recraft V4.1",
+     "creator": "Recraft",
+     "elo": 990.1,
+     "votes": 6303,
+     "released": "2026-05-14",
+     "ci": 9,
+     "price": 35
+    },
+    {
+     "rank": 56,
+     "name": "Recraft V4 Pro",
+     "creator": "Recraft",
+     "elo": 986,
+     "votes": 5648,
+     "released": "2026-02-17",
+     "ci": 9,
+     "price": 250
+    },
+    {
+     "rank": 57,
+     "name": "Nano Banana (Gemini 2.5 Flash Image)",
+     "creator": "Google",
+     "elo": 986,
+     "votes": 5223,
+     "released": "2025-08-26",
+     "ci": 9,
+     "price": 39
+    },
+    {
+     "rank": 59,
+     "name": "Recraft V4.1 Pro",
+     "creator": "Recraft",
+     "elo": 985.2,
+     "votes": 6216,
+     "released": "2026-05-14",
+     "ci": 9,
+     "price": 210
+    },
+    {
+     "rank": 62,
+     "name": "Recraft V4",
+     "creator": "Recraft",
+     "elo": 983.3,
+     "votes": 5474,
+     "released": "2026-02-17",
+     "ci": 9,
+     "price": 40
+    },
+    {
+     "rank": 82,
+     "name": "FLUX.2 [klein] 9B",
+     "creator": "Black Forest Labs",
+     "elo": 940.7,
+     "votes": 11520,
+     "released": "2026-01-15",
+     "ci": 8,
+     "price": 15
+    },
+    {
+     "rank": 84,
+     "name": "FLUX.1 Kontext [max]",
+     "creator": "Black Forest Labs",
+     "elo": 933.8,
+     "votes": 5253,
+     "released": "2025-05-29",
+     "ci": 9,
+     "price": 80
+    },
+    {
+     "rank": 98,
+     "name": "FLUX.1 Kontext [pro]",
+     "creator": "Black Forest Labs",
+     "elo": 909.4,
+     "votes": 4314,
+     "released": "2025-05-20",
+     "ci": 7,
+     "price": 40
+    },
+    {
+     "rank": 100,
+     "name": "Lucid Origin Fast",
+     "creator": "Leonardo.Ai",
+     "elo": 901.5,
+     "votes": 5192,
+     "released": "2025-08-05",
+     "ci": 7,
+     "price": 17.94
+    },
+    {
+     "rank": 109,
+     "name": "P-Image",
+     "creator": "Pruna AI",
+     "elo": 885.4,
+     "votes": 4255,
+     "released": "2025-12-02",
+     "ci": 8,
+     "price": 5
+    },
+    {
+     "rank": 121,
+     "name": "Recraft V3",
+     "creator": "Recraft",
+     "elo": 867.8,
+     "votes": 7348,
+     "released": "2024-10-30",
+     "ci": 7,
+     "price": 40
+    },
+    {
+     "rank": 123,
+     "name": "FLUX.2 [klein] 4B",
+     "creator": "Black Forest Labs",
+     "elo": 863.3,
+     "votes": 6702,
+     "released": "2026-01-15",
+     "ci": 9,
+     "price": 14
+    },
+    {
+     "rank": 138,
+     "name": "Phoenix 1.0 Fast",
+     "creator": "Leonardo.Ai",
+     "elo": 822.7,
+     "votes": 4990,
+     "released": "2024-12-18",
+     "ci": 8,
+     "price": 19.43
+    },
+    {
+     "rank": 142,
+     "name": "FLUX.1 [schnell]",
+     "creator": "Black Forest Labs",
+     "elo": 802.3,
+     "votes": 11377,
+     "released": "2024-08-02",
+     "ci": 7,
+     "price": 3
+    },
+    {
+     "rank": 158,
+     "name": "SDXL Lightning",
+     "creator": "Bytedance",
+     "elo": 719.4,
+     "votes": 11478,
+     "released": "2024-02-21",
+     "ci": 9,
+     "price": 1.9
+    },
+    {
+     "rank": 163,
+     "name": "Stable Diffusion XL 1.0",
+     "creator": "Stability.ai",
+     "elo": 677.6,
+     "votes": 11633,
+     "released": "2023-07-23",
+     "ci": 9,
+     "price": 9.04
+    }
+   ]
+  },
+  "imageEditing": {
+   "url": "https://artificialanalysis.ai/image/leaderboard/editing",
+   "rows": [
+    {
+     "rank": 1,
+     "name": "GPT Image 2.5 Sunburst (max)",
+     "creator": "OpenAI",
+     "elo": 1182.4,
+     "votes": 17899,
+     "released": "2026-09-08",
+     "ci": 8,
+     "price": 210.72
+    },
+    {
+     "rank": 2,
+     "name": "GPT Image 2.5 Flare (max)",
+     "creator": "OpenAI",
+     "elo": 1162.4,
+     "votes": 18643,
+     "released": "2026-09-08",
+     "ci": 8,
+     "price": 210.72
+    },
+    {
+     "rank": 3,
+     "name": "MAI-Image-2.6",
+     "creator": "Microsoft AI",
+     "elo": 1136.8,
+     "votes": 15488,
+     "released": "2026-08-10",
+     "ci": 8,
+     "price": 38.9
+    },
+    {
+     "rank": 4,
+     "name": "MAI-Image-2.6-Flash",
+     "creator": "Microsoft AI",
+     "elo": 1125.1,
+     "votes": 10693,
+     "released": "2026-09-04",
+     "ci": 8,
+     "price": 19.5
+    },
+    {
+     "rank": 5,
+     "name": "GPT Image 2 (high)",
+     "creator": "OpenAI",
+     "elo": 1122.3,
+     "votes": 14114,
+     "released": "2026-04-21",
+     "ci": 8,
+     "price": 211
+    },
+    {
+     "rank": 6,
+     "name": "Muse Image",
+     "creator": "Meta",
+     "elo": 1118,
+     "votes": 12272,
+     "released": "2026-07-07",
+     "ci": 8,
+     "price": 10
+    },
+    {
+     "rank": 7,
+     "name": "MAI-Image-2.5",
+     "creator": "Microsoft AI",
+     "elo": 1112.7,
+     "votes": 12849,
+     "released": "2026-06-02",
+     "ci": 8,
+     "price": 48.128
+    },
+    {
+     "rank": 8,
+     "name": "Nano Banana 2 (Gemini 3.1 Flash Image)",
+     "creator": "Google",
+     "elo": 1108,
+     "votes": 15644,
+     "released": "2026-02-26",
+     "ci": 8,
+     "price": 67
+    },
+    {
+     "rank": 9,
+     "name": "MAI-Image-2.5-Pro",
+     "creator": "Microsoft AI",
+     "elo": 1107.9,
+     "votes": 14733,
+     "released": "2026-07-23",
+     "ci": 8,
+     "price": 108.544
+    },
+    {
+     "rank": 10,
+     "name": "Grok Imagine Image 2.0",
+     "creator": "SpaceXAI",
+     "elo": 1106.8,
+     "votes": 7308,
+     "released": "2026-08-07",
+     "ci": 9,
+     "price": 60
+    },
+    {
+     "rank": 11,
+     "name": "Seedream 5.0 Pro",
+     "creator": "ByteDance Seed",
+     "elo": 1106.4,
+     "votes": 12701,
+     "released": "2026-07-08",
+     "ci": 8,
+     "price": 90
+    },
+    {
+     "rank": 12,
+     "name": "GPT Image 1.5 (high)",
+     "creator": "OpenAI",
+     "elo": 1102.2,
+     "votes": 13076,
+     "released": "2025-12-16",
+     "ci": 8,
+     "price": 133
+    },
+    {
+     "rank": 13,
+     "name": "Nano Banana Pro (Gemini 3 Pro Image)",
+     "creator": "Google",
+     "elo": 1099.1,
+     "votes": 14671,
+     "released": "2025-11-20",
+     "ci": 8,
+     "price": 134
+    },
+    {
+     "rank": 16,
+     "name": "grok-imagine-image-quality",
+     "creator": "SpaceXAI",
+     "elo": 1084.5,
+     "votes": 7844,
+     "released": "2026-05-06",
+     "ci": 8,
+     "price": 50
+    },
+    {
+     "rank": 17,
+     "name": "Qwen-Image-3.0-Pro",
+     "creator": "Alibaba",
+     "elo": 1075.6,
+     "votes": 12856,
+     "released": "2026-07-21",
+     "ci": 8,
+     "price": 40
+    },
+    {
+     "rank": 19,
+     "name": "grok-imagine-image",
+     "creator": "SpaceXAI",
+     "elo": 1070.9,
+     "votes": 5473,
+     "released": "2026-01-28",
+     "ci": 9,
+     "price": 20
+    },
+    {
+     "rank": 24,
+     "name": "Seedream 5.0 Lite",
+     "creator": "ByteDance Seed",
+     "elo": 1058,
+     "votes": 5784,
+     "released": "2026-02-13",
+     "ci": 9,
+     "price": 35
+    },
+    {
+     "rank": 26,
+     "name": "Nano Banana 2 Lite (Gemini 3.1 Flash Lite Image)",
+     "creator": "Google",
+     "elo": 1044.6,
+     "votes": 7158,
+     "released": "2026-06-30",
+     "ci": 8,
+     "price": 33.6
+    },
+    {
+     "rank": 30,
+     "name": "Wan 2.6 Image",
+     "creator": "Alibaba",
+     "elo": 1038.1,
+     "votes": 5594,
+     "released": "2025-12-17",
+     "ci": 9,
+     "price": 30
+    },
+    {
+     "rank": 31,
+     "name": "Seedream 4.5",
+     "creator": "ByteDance Seed",
+     "elo": 1036.1,
+     "votes": 4834,
+     "released": "2025-12-05",
+     "ci": 9,
+     "price": 40
+    },
+    {
+     "rank": 36,
+     "name": "Seedream 4.0",
+     "creator": "ByteDance Seed",
+     "elo": 1013.4,
+     "votes": 6355,
+     "released": "2025-09-08",
+     "ci": 8,
+     "price": 30
+    },
+    {
+     "rank": 37,
+     "name": "FLUX.2 [klein] 9B",
+     "creator": "Black Forest Labs",
+     "elo": 1013.3,
+     "votes": 6365,
+     "released": "2026-01-15",
+     "ci": 8,
+     "price": 17
+    },
+    {
+     "rank": 41,
+     "name": "FLUX.2 [pro]",
+     "creator": "Black Forest Labs",
+     "elo": 1006.1,
+     "votes": 7700,
+     "released": "2025-11-25",
+     "ci": 7,
+     "price": 45
+    },
+    {
+     "rank": 42,
+     "name": "FLUX.2 [flex]",
+     "creator": "Black Forest Labs",
+     "elo": 1005.4,
+     "votes": 5768,
+     "released": "2025-11-25",
+     "ci": 7,
+     "price": 120
+    },
+    {
+     "rank": 45,
+     "name": "FLUX.2 [dev]",
+     "creator": "Black Forest Labs",
+     "elo": 1000,
+     "votes": 8246,
+     "released": "2025-11-25",
+     "ci": 0,
+     "price": 24
+    },
+    {
+     "rank": 49,
+     "name": "FLUX.2 [max]",
+     "creator": "Black Forest Labs",
+     "elo": 995.6,
+     "votes": 6162,
+     "released": "2025-12-16",
+     "ci": 9,
+     "price": 140
+    },
+    {
+     "rank": 50,
+     "name": "Nano Banana (Gemini 2.5 Flash Image)",
+     "creator": "Google",
+     "elo": 985.8,
+     "votes": 4582,
+     "released": "2025-08-26",
+     "ci": 9,
+     "price": 39
+    },
+    {
+     "rank": 53,
+     "name": "P-Image-Edit",
+     "creator": "Pruna AI",
+     "elo": 980.3,
+     "votes": 4582,
+     "released": "2025-11-28",
+     "ci": 9,
+     "price": 10
+    },
+    {
+     "rank": 61,
+     "name": "FLUX.2 [klein] 4B",
+     "creator": "Black Forest Labs",
+     "elo": 948,
+     "votes": 6753,
+     "released": "2026-01-15",
+     "ci": 7,
+     "price": 15
+    },
+    {
+     "rank": 70,
+     "name": "FLUX.1 Kontext [pro]",
+     "creator": "Black Forest Labs",
+     "elo": 911.7,
+     "votes": 7446,
+     "released": "2025-05-20",
+     "ci": 7,
+     "price": 40
+    }
+   ]
+  },
+  "textToVideo": {
+   "url": "https://artificialanalysis.ai/video/leaderboard/text-to-video",
+   "rows": [
+    {
+     "rank": 1,
+     "name": "Wan 3.0",
+     "creator": "Alibaba",
+     "elo": 1157.1,
+     "votes": 7575,
+     "released": "2026-08-19",
+     "ci": 9,
+     "price": 12
+    },
+    {
+     "rank": 2,
+     "name": "Utopai X (based on MiniMax H3)",
+     "creator": "Utopai Studios",
+     "elo": 1149.9,
+     "votes": 5871,
+     "released": "2026-09-30",
+     "ci": 10,
+     "price": 34.12
+    },
+    {
+     "rank": 3,
+     "name": "Dreamina Seedance 2.5",
+     "creator": "ByteDance Seed",
+     "elo": 1143.6,
+     "votes": 7526,
+     "released": "2026-07-31",
+     "ci": 9,
+     "price": 34.12
+    },
+    {
+     "rank": 4,
+     "name": "MiniMax H3 (768p)",
+     "creator": "MiniMax",
+     "elo": 1138.9,
+     "votes": 7496,
+     "released": "2026-07-30",
+     "ci": 9,
+     "price": 4.8
+    },
+    {
+     "rank": 5,
+     "name": "MiniMax H3 Max (based on MiniMax H3)",
+     "creator": "Fal",
+     "elo": 1133.7,
+     "votes": 5510,
+     "released": "2026-08-26",
+     "ci": 11,
+     "price": 4.8
+    },
+    {
+     "rank": 6,
+     "name": "FLUX 3",
+     "creator": "Black Forest Labs",
+     "elo": 1127.2,
+     "votes": 5982,
+     "released": "2026-07-23",
+     "ci": 9,
+     "price": 17.4
+    },
+    {
+     "rank": 7,
+     "name": "Dreamina Seedance 2.0",
+     "creator": "ByteDance Seed",
+     "elo": 1117.4,
+     "votes": 5712,
+     "released": "2026-03-18",
+     "ci": 9,
+     "price": 22.45
+    },
+    {
+     "rank": 8,
+     "name": "Gemini Omni Flash 1.1",
+     "creator": "Google",
+     "elo": 1116.6,
+     "votes": 7801,
+     "released": "2026-08-28",
+     "ci": 9,
+     "price": 9.12
+    },
+    {
+     "rank": 9,
+     "name": "SkyReels V4",
+     "creator": "Skywork AI",
+     "elo": 1072.5,
+     "votes": 5477,
+     "released": "2026-03-18",
+     "ci": 9,
+     "price": 21
+    },
+    {
+     "rank": 10,
+     "name": "Agnes-Video-2.5",
+     "creator": "Sapiens AI",
+     "elo": 1060.5,
+     "votes": 3884,
+     "released": "2026-08-22",
+     "ci": 10,
+     "price": 2.4
+    },
+    {
+     "rank": 11,
+     "name": "grok-imagine-video-1.5",
+     "creator": "SpaceXAI",
+     "elo": 1046.2,
+     "votes": 3886,
+     "released": "2026-05-30",
+     "ci": 10,
+     "price": 15
+    },
+    {
+     "rank": 12,
+     "name": "HappyHorse-1.1",
+     "creator": "Alibaba-ATH",
+     "elo": 1044.6,
+     "votes": 5840,
+     "released": "2026-06-22",
+     "ci": 9,
+     "price": 10.8
+    },
+    {
+     "rank": 14,
+     "name": "HappyHorse-1.0",
+     "creator": "Alibaba-ATH",
+     "elo": 1026.1,
+     "votes": 3700,
+     "released": "2026-04-07",
+     "ci": 10,
+     "price": 14.4
+    },
+    {
+     "rank": 17,
+     "name": "PixVerse V6",
+     "creator": "PixVerse",
+     "elo": 987.3,
+     "votes": 2741,
+     "released": "2026-03-23",
+     "ci": 11,
+     "price": 6.9
+    },
+    {
+     "rank": 18,
+     "name": "Veo 3.1",
+     "creator": "Google",
+     "elo": 967.8,
+     "votes": 2857,
+     "released": "2026-01-30",
+     "ci": 11,
+     "price": 24
+    },
+    {
+     "rank": 19,
+     "name": "Veo 3.1 Fast",
+     "creator": "Google",
+     "elo": 961.3,
+     "votes": 3595,
+     "released": "2026-01-30",
+     "ci": 10,
+     "price": 7.2
+    },
+    {
+     "rank": 21,
+     "name": "LTX-2.5 Fast",
+     "creator": "Lightricks",
+     "elo": 950.1,
+     "votes": 2797,
+     "released": "2026-08-11",
+     "ci": 11,
+     "price": 7.8
+    },
+    {
+     "rank": 24,
+     "name": "Vidu Q3 Pro",
+     "creator": "Vidu",
+     "elo": 940.9,
+     "votes": 3423,
+     "released": "2026-01-30",
+     "ci": 10,
+     "price": 7.2
+    },
+    {
+     "rank": 25,
+     "name": "Runway Gen-4.5 (720p)",
+     "creator": "Runway",
+     "elo": 919.5,
+     "votes": 2933,
+     "released": "2025-12-01",
+     "ci": 12,
+     "price": 7.2
+    },
+    {
+     "rank": 26,
+     "name": "Vidu Q3 Turbo",
+     "creator": "Vidu",
+     "elo": 912.5,
+     "votes": 3144,
+     "released": "2026-02-09",
+     "ci": 11,
+     "price": 3.9
+    },
+    {
+     "rank": 32,
+     "name": "P-Video",
+     "creator": "Pruna AI",
+     "elo": 818,
+     "votes": 3002,
+     "released": "2026-02-26",
+     "ci": 13,
+     "price": 2.4
+    }
+   ]
+  },
+  "imageToVideo": {
+   "url": "https://artificialanalysis.ai/video/leaderboard/image-to-video",
+   "rows": [
+    {
+     "rank": 1,
+     "name": "Bach 1.0 Pro",
+     "creator": "Video Rebirth",
+     "elo": 1361.9,
+     "votes": 5568,
+     "released": "2026-09-29",
+     "ci": 11,
+     "price": 7.2
+    },
+    {
+     "rank": 2,
+     "name": "Vimoo 1.0",
+     "creator": "Vimoo",
+     "elo": 1358.1,
+     "votes": 5326,
+     "released": "2026-09-28",
+     "ci": 15,
+     "price": 3
+    },
+    {
+     "rank": 3,
+     "name": "Kling 2.5 Turbo 1080p",
+     "creator": "KlingAI",
+     "elo": 1298.6,
+     "votes": 6653,
+     "released": "2025-09-23",
+     "ci": 9,
+     "price": 4.2
+    },
+    {
+     "rank": 4,
+     "name": "Kling O1 Pro (December)",
+     "creator": "KlingAI",
+     "elo": 1280.8,
+     "votes": 665,
+     "released": "2025-12-01",
+     "ci": 24,
+     "price": 10.08
+    },
+    {
+     "rank": 5,
+     "name": "PixVerse V5",
+     "creator": "PixVerse",
+     "elo": 1276.6,
+     "votes": 5123,
+     "released": "2025-08-26",
+     "ci": 9,
+     "price": 6.4
+    },
+    {
+     "rank": 6,
+     "name": "PixVerse V5.5",
+     "creator": "PixVerse",
+     "elo": 1275,
+     "votes": 3932,
+     "released": "2025-12-03",
+     "ci": 10,
+     "price": 6.4
+    },
+    {
+     "rank": 7,
+     "name": "Cosmos3-Super-Image2Video-4Step",
+     "creator": "NVIDIA",
+     "elo": 1273.1,
+     "votes": 2814,
+     "released": "2026-07-31",
+     "ci": 11,
+     "price": 10.08
+    },
+    {
+     "rank": 8,
+     "name": "Avenger 0.5 Pro",
+     "creator": "Video Rebirth",
+     "elo": 1269.9,
+     "votes": 3909,
+     "released": "2025-10-16",
+     "ci": 11,
+     "price": 4.2
+    },
+    {
+     "rank": 9,
+     "name": "Runway Gen-4.5 (720p)",
+     "creator": "Runway",
+     "elo": 1265.1,
+     "votes": 3554,
+     "released": "2025-12-01",
+     "ci": 10,
+     "price": 7.2
+    },
+    {
+     "rank": 10,
+     "name": "Kling 2.6 Standard (January)",
+     "creator": "KlingAI",
+     "elo": 1264.9,
+     "votes": 4100,
+     "released": "2026-01-13",
+     "ci": 10,
+     "price": 2.52
+    },
+    {
+     "rank": 11,
+     "name": "Hailuo 2.3 Fast",
+     "creator": "MiniMax",
+     "elo": 1256.7,
+     "votes": 4864,
+     "released": "2025-10-28",
+     "ci": 10,
+     "price": 1
+    },
+    {
+     "rank": 12,
+     "name": "Hailuo 2.3",
+     "creator": "MiniMax",
+     "elo": 1255,
+     "votes": 6602,
+     "released": "2025-10-28",
+     "ci": 9,
+     "price": 2.8
+    },
+    {
+     "rank": 27,
+     "name": "MiniMax H3 Max (based on MiniMax H3)",
+     "creator": "Fal",
+     "elo": 1195.4,
+     "votes": 5894,
+     "released": "2026-08-26",
+     "ci": 9,
+     "price": 4.8
+    },
+    {
+     "rank": 29,
+     "name": "MiniMax H3",
+     "creator": "MiniMax",
+     "elo": 1180.6,
+     "votes": 7284,
+     "released": "2026-07-30",
+     "ci": 8,
+     "price": 7.8
+    },
+    {
+     "rank": 31,
+     "name": "Gemini Omni Flash",
+     "creator": "Google",
+     "elo": 1177.7,
+     "votes": 12327,
+     "released": "2026-05-19",
+     "ci": 7,
+     "price": 6
+    },
+    {
+     "rank": 33,
+     "name": "Dreamina Seedance 2.0 720p",
+     "creator": "ByteDance Seed",
+     "elo": 1176.4,
+     "votes": 15721,
+     "released": "2026-03-18",
+     "ci": 7,
+     "price": 9.07
+    },
+    {
+     "rank": 37,
+     "name": "Wan 3.0",
+     "creator": "Alibaba",
+     "elo": 1163.7,
+     "votes": 9302,
+     "released": "2026-08-19",
+     "ci": 8,
+     "price": 12
+    },
+    {
+     "rank": 42,
+     "name": "P-Video",
+     "creator": "Pruna AI",
+     "elo": 1129.8,
+     "votes": 3803,
+     "released": "2026-02-26",
+     "ci": 11,
+     "price": 1.2
+    },
+    {
+     "rank": 44,
+     "name": "HappyHorse-1.1",
+     "creator": "Alibaba-ATH",
+     "elo": 1104.3,
+     "votes": 13085,
+     "released": "2026-06-22",
+     "ci": 7,
+     "price": 9.9
+    },
+    {
+     "rank": 46,
+     "name": "grok-imagine-video-1.5",
+     "creator": "SpaceXAI",
+     "elo": 1098.4,
+     "votes": 5267,
+     "released": "2026-05-30",
+     "ci": 8,
+     "price": 8.4
+    },
+    {
+     "rank": 49,
+     "name": "HappyHorse-1.0",
+     "creator": "Alibaba-ATH",
+     "elo": 1082.6,
+     "votes": 7458,
+     "released": "2026-04-07",
+     "ci": 7,
+     "price": 13.2
+    },
+    {
+     "rank": 50,
+     "name": "Veo 3.1",
+     "creator": "Google",
+     "elo": 1082.1,
+     "votes": 7040,
+     "released": "2026-01-30",
+     "ci": 7,
+     "price": 24
+    },
+    {
+     "rank": 51,
+     "name": "Wan 2.7",
+     "creator": "Alibaba",
+     "elo": 1077.3,
+     "votes": 4571,
+     "released": "2026-04-25",
+     "ci": 8,
+     "price": 9
+    },
+    {
+     "rank": 52,
+     "name": "grok-imagine-video",
+     "creator": "SpaceXAI",
+     "elo": 1072.4,
+     "votes": 14371,
+     "released": "2026-01-27",
+     "ci": 7,
+     "price": 4.2
+    },
+    {
+     "rank": 54,
+     "name": "PixVerse V6",
+     "creator": "PixVerse",
+     "elo": 1070.1,
+     "votes": 7027,
+     "released": "2026-03-23",
+     "ci": 7,
+     "price": 6.9
+    },
+    {
+     "rank": 56,
+     "name": "Veo 3.1 Fast",
+     "creator": "Google",
+     "elo": 1065.9,
+     "votes": 14688,
+     "released": "2026-01-30",
+     "ci": 6,
+     "price": 9
+    },
+    {
+     "rank": 57,
+     "name": "Vidu Q3 Pro",
+     "creator": "Vidu",
+     "elo": 1055.5,
+     "votes": 15230,
+     "released": "2026-01-30",
+     "ci": 6,
+     "price": 9.6
+    },
+    {
+     "rank": 79,
+     "name": "PixVerse V5.6",
+     "creator": "PixVerse",
+     "elo": 963.3,
+     "votes": 4534,
+     "released": "2026-02-25",
+     "ci": 8,
+     "price": 4.32
+    }
+   ]
+  },
+  "videoEditing": {
+   "url": "https://artificialanalysis.ai/video/leaderboard/video-editing",
+   "rows": [
+    {
+     "rank": 1,
+     "name": "Wan 3.0",
+     "creator": "Alibaba",
+     "elo": 1188.2,
+     "votes": 5255,
+     "released": "2026-08-19",
+     "ci": 7,
+     "price": 12
+    },
+    {
+     "rank": 2,
+     "name": "MiniMax H3",
+     "creator": "MiniMax",
+     "elo": 1131.6,
+     "votes": 12043,
+     "released": "2026-07-30",
+     "ci": 6,
+     "price": 7.8
+    },
+    {
+     "rank": 3,
+     "name": "Gemini Omni Flash",
+     "creator": "Google",
+     "elo": 1125.2,
+     "votes": 14815,
+     "released": "2026-05-19",
+     "ci": 5,
+     "price": 6
+    },
+    {
+     "rank": 4,
+     "name": "HappyHorse-1.0",
+     "creator": "Alibaba-ATH",
+     "elo": 1089.1,
+     "votes": 21673,
+     "released": "2026-04-07",
+     "ci": 5,
+     "price": 27.04
+    },
+    {
+     "rank": 5,
+     "name": "Wan 2.7",
+     "creator": "Alibaba",
+     "elo": 1076.9,
+     "votes": 17988,
+     "released": "2026-04-25",
+     "ci": 5,
+     "price": 16.9
+    },
+    {
+     "rank": 6,
+     "name": "Dreamina Seedance 2.0 720p",
+     "creator": "ByteDance Seed",
+     "elo": 1034.2,
+     "votes": 21507,
+     "released": "2026-03-18",
+     "ci": 5,
+     "price": 5.57
+    },
+    {
+     "rank": 7,
+     "name": "Aleph 2.0",
+     "creator": "Runway",
+     "elo": 1011.5,
+     "votes": 19183,
+     "released": "2026-05-21",
+     "ci": 5,
+     "price": 16.8
+    },
+    {
+     "rank": 8,
+     "name": "Kling 3.0 Omni 1080p (Pro)",
+     "creator": "KlingAI",
+     "elo": 1000,
+     "votes": 17447,
+     "released": "2026-02-04",
+     "ci": 0,
+     "price": 10.91
+    },
+    {
+     "rank": 9,
+     "name": "Kling O1 Pro (January)",
+     "creator": "KlingAI",
+     "elo": 995.7,
+     "votes": 3369,
+     "released": "2026-01-13",
+     "ci": 10,
+     "price": 10.08
+    },
+    {
+     "rank": 10,
+     "name": "SkyReels V4",
+     "creator": "Skywork AI",
+     "elo": 953.4,
+     "votes": 14441,
+     "released": "2026-03-18",
+     "ci": 6,
+     "price": 37.5
+    }
+   ]
+  },
+  "tts": {
+   "url": "https://artificialanalysis.ai/text-to-speech/leaderboard/provider-voice",
+   "rows": [
+    {
+     "rank": 1,
+     "name": "Eleven v4",
+     "creator": "ElevenLabs",
+     "elo": 1319.8,
+     "votes": 1803,
+     "released": "2026-09-28",
+     "ci": 18,
+     "price": 80
+    },
+    {
+     "rank": 2,
+     "name": "Qwen-Audio-3.1-TTS-Plus",
+     "creator": "Alibaba",
+     "elo": 1291.2,
+     "votes": 1349,
+     "released": "2026-09-24",
+     "ci": 18,
+     "price": 19.31
+    },
+    {
+     "rank": 3,
+     "name": "Sonic 3.6",
+     "creator": "Cartesia",
+     "elo": 1273.2,
+     "votes": 2093,
+     "released": "2026-08-17",
+     "ci": 16,
+     "price": 49
+    },
+    {
+     "rank": 4,
+     "name": "Gemini 3.8 Flash TTS",
+     "creator": "Google",
+     "elo": 1272.3,
+     "votes": 2330,
+     "released": "2026-09-23",
+     "ci": 16,
+     "price": 16.49
+    },
+    {
+     "rank": 5,
+     "name": "Qwen-Audio-3.0-TTS-Plus",
+     "creator": "Alibaba",
+     "elo": 1258.8,
+     "votes": 1747,
+     "released": "2026-09-15",
+     "ci": 16,
+     "price": 19.31
+    },
+    {
+     "rank": 6,
+     "name": "Realtime TTS-2",
+     "creator": "Inworld",
+     "elo": 1246.9,
+     "votes": 1513,
+     "released": "2026-08-31",
+     "ci": 17,
+     "price": 20.83
+    },
+    {
+     "rank": 7,
+     "name": "Gemini 3.8 Flash-Lite TTS",
+     "creator": "Google",
+     "elo": 1239.5,
+     "votes": 2294,
+     "released": "2026-09-23",
+     "ci": 15,
+     "price": 11.03
+    },
+    {
+     "rank": 8,
+     "name": "Simba 3.2",
+     "creator": "SpeechifyAI",
+     "elo": 1238.5,
+     "votes": 2669,
+     "released": "2026-07-01",
+     "ci": 13,
+     "price": 6.58
+    },
+    {
+     "rank": 9,
+     "name": "Luna TTS",
+     "creator": "VUI Labs",
+     "elo": 1225.9,
+     "votes": 2804,
+     "released": "2026-06-18",
+     "ci": 13,
+     "price": 15
+    },
+    {
+     "rank": 10,
+     "name": "Realtime TTS-2 Flash",
+     "creator": "Inworld",
+     "elo": 1209.1,
+     "votes": 1943,
+     "released": "2026-08-25",
+     "ci": 15,
+     "price": 10.42
+    },
+    {
+     "rank": 13,
+     "name": "Gemini 3.1 Flash TTS",
+     "creator": "Google",
+     "elo": 1204.6,
+     "votes": 3622,
+     "released": "2026-04-15",
+     "ci": 12,
+     "price": 18.31
+    },
+    {
+     "rank": 17,
+     "name": "Eleven v3",
+     "creator": "ElevenLabs",
+     "elo": 1171.5,
+     "votes": 4481,
+     "released": "2026-02-02",
+     "ci": 11,
+     "price": 100
+    },
+    {
+     "rank": 19,
+     "name": "Speech 2.8 HD",
+     "creator": "MiniMax",
+     "elo": 1170,
+     "votes": 4560,
+     "released": "2026-02-14",
+     "ci": 11,
+     "price": 100
+    },
+    {
+     "rank": 21,
+     "name": "Speech 2.8 Turbo",
+     "creator": "MiniMax",
+     "elo": 1151.8,
+     "votes": 4426,
+     "released": "2026-02-14",
+     "ci": 11,
+     "price": 60
+    },
+    {
+     "rank": 25,
+     "name": "SpaceXAI TTS",
+     "creator": "SpaceXAI",
+     "elo": 1132.3,
+     "votes": 1315,
+     "released": "2026-03-16",
+     "ci": 15,
+     "price": 15
+    },
+    {
+     "rank": 34,
+     "name": "TTS-1 HD",
+     "creator": "OpenAI",
+     "elo": 1101.9,
+     "votes": 3518,
+     "released": "2023-11-06",
+     "ci": 12,
+     "price": 30
+    },
+    {
+     "rank": 37,
+     "name": "Turbo v2.5",
+     "creator": "ElevenLabs",
+     "elo": 1096.1,
+     "votes": 6786,
+     "released": "2024-07-19",
+     "ci": 11,
+     "price": 50
+    },
+    {
+     "rank": 39,
+     "name": "Multilingual v2",
+     "creator": "ElevenLabs",
+     "elo": 1092,
+     "votes": 7234,
+     "released": "2023-08-22",
+     "ci": 10,
+     "price": 100
+    },
+    {
+     "rank": 40,
+     "name": "TTS-1",
+     "creator": "OpenAI",
+     "elo": 1089,
+     "votes": 6078,
+     "released": "2023-11-06",
+     "ci": 11,
+     "price": 15
+    },
+    {
+     "rank": 46,
+     "name": "Flash v2.5",
+     "creator": "ElevenLabs",
+     "elo": 1076.3,
+     "votes": 5643,
+     "released": "2024-12-18",
+     "ci": 11,
+     "price": 50
+    }
+   ]
+  },
+  "musicInstrumental": {
+   "url": "https://artificialanalysis.ai/music/leaderboard/instrumental",
+   "rows": [
+    {
+     "rank": 1,
+     "name": "Suno v6",
+     "creator": "Suno",
+     "elo": 1140.1,
+     "votes": 2118,
+     "released": "2026-09-09",
+     "ci": 15,
+     "price": null
+    },
+    {
+     "rank": 2,
+     "name": "Suno v6-mini",
+     "creator": "Suno",
+     "elo": 1109.2,
+     "votes": 2228,
+     "released": "2026-09-09",
+     "ci": 15,
+     "price": null
+    },
+    {
+     "rank": 3,
+     "name": "Mureka V9",
+     "creator": "Mureka",
+     "elo": 1081.1,
+     "votes": 2236,
+     "released": "2026-03-27",
+     "ci": 14,
+     "price": null
+    },
+    {
+     "rank": 4,
+     "name": "Mureka V9.5",
+     "creator": "Mureka",
+     "elo": 1080.5,
+     "votes": 2195,
+     "released": "2026-08-31",
+     "ci": 15,
+     "price": null
+    },
+    {
+     "rank": 5,
+     "name": "Lyria 3 Pro",
+     "creator": "Google",
+     "elo": 1078.3,
+     "votes": 2227,
+     "released": "2026-03-25",
+     "ci": 14,
+     "price": null
+    },
+    {
+     "rank": 6,
+     "name": "Lyria 3.5",
+     "creator": "Google",
+     "elo": 1076.3,
+     "votes": 2214,
+     "released": "2026-07-29",
+     "ci": 14,
+     "price": null
+    },
+    {
+     "rank": 7,
+     "name": "Eleven Music",
+     "creator": "ElevenLabs",
+     "elo": 1020.8,
+     "votes": 2106,
+     "released": "2025-08-05",
+     "ci": 14,
+     "price": null
+    },
+    {
+     "rank": 8,
+     "name": "Stable Audio 3 Large",
+     "creator": "Stability.ai",
+     "elo": 1016.5,
+     "votes": 2186,
+     "released": "2026-05-20",
+     "ci": 14,
+     "price": null
+    },
+    {
+     "rank": 9,
+     "name": "Eleven Music v2",
+     "creator": "ElevenLabs",
+     "elo": 1010.1,
+     "votes": 2161,
+     "released": "2026-05-27",
+     "ci": 14,
+     "price": null
+    },
+    {
+     "rank": 10,
+     "name": "MiniMax Music 2.5+",
+     "creator": "MiniMax",
+     "elo": 1005.2,
+     "votes": 2166,
+     "released": "2026-03-04",
+     "ci": 14,
+     "price": null
+    },
+    {
+     "rank": 11,
+     "name": "MiniMax Music 2.6",
+     "creator": "MiniMax",
+     "elo": 1002.2,
+     "votes": 2162,
+     "released": "2026-04-10",
+     "ci": 14,
+     "price": null
+    }
+   ]
+  },
+  "musicVocals": {
+   "url": "https://artificialanalysis.ai/music/leaderboard/vocals",
+   "rows": [
+    {
+     "rank": 1,
+     "name": "Suno v6",
+     "creator": "Suno",
+     "elo": 1141.8,
+     "votes": 2077,
+     "released": "2026-09-09",
+     "ci": 15,
+     "price": null
+    },
+    {
+     "rank": 2,
+     "name": "Suno v6-mini",
+     "creator": "Suno",
+     "elo": 1116.3,
+     "votes": 2158,
+     "released": "2026-09-09",
+     "ci": 15,
+     "price": null
+    },
+    {
+     "rank": 3,
+     "name": "Mureka V9.5",
+     "creator": "Mureka",
+     "elo": 1103,
+     "votes": 2112,
+     "released": "2026-08-31",
+     "ci": 15,
+     "price": null
+    },
+    {
+     "rank": 4,
+     "name": "Mureka V9",
+     "creator": "Mureka",
+     "elo": 1052,
+     "votes": 2140,
+     "released": "2026-03-27",
+     "ci": 14,
+     "price": null
+    },
+    {
+     "rank": 5,
+     "name": "Lyria 3.5",
+     "creator": "Google",
+     "elo": 1051.6,
+     "votes": 2155,
+     "released": "2026-07-29",
+     "ci": 14,
+     "price": null
+    },
+    {
+     "rank": 6,
+     "name": "Lyria 3 Pro",
+     "creator": "Google",
+     "elo": 1046.1,
+     "votes": 2168,
+     "released": "2026-03-25",
+     "ci": 14,
+     "price": null
+    },
+    {
+     "rank": 7,
+     "name": "Eleven Music v2.5",
+     "creator": "ElevenLabs",
+     "elo": 1012.2,
+     "votes": 2252,
+     "released": "2026-09-11",
+     "ci": 14,
+     "price": null
+    },
+    {
+     "rank": 8,
+     "name": "Eleven Music",
+     "creator": "ElevenLabs",
+     "elo": 1000.8,
+     "votes": 2177,
+     "released": "2025-08-05",
+     "ci": 14,
+     "price": null
+    },
+    {
+     "rank": 9,
+     "name": "Eleven Music v2",
+     "creator": "ElevenLabs",
+     "elo": 1000.7,
+     "votes": 2263,
+     "released": "2026-05-27",
+     "ci": 14,
+     "price": null
+    },
+    {
+     "rank": 10,
+     "name": "MiniMax Music 2.6",
+     "creator": "MiniMax",
+     "elo": 1000.7,
+     "votes": 2257,
+     "released": "2026-04-10",
+     "ci": 14,
+     "price": null
+    }
+   ]
+  },
+  "stt": {
+   "url": "https://artificialanalysis.ai/speech-to-text/non-streaming",
+   "rows": [
+    {
+     "rank": 1,
+     "name": "Fun-Realtime-ASR-preview",
+     "provider": "Alibaba Cloud",
+     "wer": 1.7,
+     "speedFactor": 21,
+     "usdPer1000Minutes": 0
+    },
+    {
+     "rank": 2,
+     "name": "MAI-Transcribe-2",
+     "provider": "Microsoft AI",
+     "wer": 2,
+     "speedFactor": 374.7,
+     "usdPer1000Minutes": 1.67
+    },
+    {
+     "rank": 3,
+     "name": "Scribe v2",
+     "provider": "ElevenLabs",
+     "wer": 2.2,
+     "speedFactor": 88.1,
+     "usdPer1000Minutes": 3.67
+    },
+    {
+     "rank": 4,
+     "name": "Grok Voice Transcribe 2.0",
+     "provider": "SpaceXAI",
+     "wer": 2.3,
+     "speedFactor": 175.5,
+     "usdPer1000Minutes": 1.67
+    },
+    {
+     "rank": 5,
+     "name": "MAI-Transcribe-1.5",
+     "provider": "Microsoft AI",
+     "wer": 2.4,
+     "speedFactor": 194.2,
+     "usdPer1000Minutes": 6
+    },
+    {
+     "rank": 6,
+     "name": "Smallest AI Pulse Pro",
+     "provider": "Smallest.ai",
+     "wer": 2.4,
+     "speedFactor": 254,
+     "usdPer1000Minutes": 4
+    },
+    {
+     "rank": 7,
+     "name": "MAI-Transcribe-1",
+     "provider": "Microsoft AI",
+     "wer": 2.6,
+     "speedFactor": 68.7,
+     "usdPer1000Minutes": 6
+    },
+    {
+     "rank": 8,
+     "name": "Gemini 3.5 Transcribe",
+     "provider": "Google",
+     "wer": 2.6,
+     "speedFactor": 88.3,
+     "usdPer1000Minutes": 5
+    },
+    {
+     "rank": 9,
+     "name": "Gemini 3.1 Pro Preview (High)",
+     "provider": "Google",
+     "wer": 2.8,
+     "speedFactor": 7.2,
+     "usdPer1000Minutes": 18.15
+    },
+    {
+     "rank": 10,
+     "name": "Voxtral Small",
+     "provider": "Mistral",
+     "wer": 2.8,
+     "speedFactor": 64.8,
+     "usdPer1000Minutes": 4
+    },
+    {
+     "rank": 13,
+     "name": "Universal-3 Pro",
+     "provider": "AssemblyAI",
+     "wer": 3.1,
+     "speedFactor": 96.2,
+     "usdPer1000Minutes": 3.5
+    },
+    {
+     "rank": 27,
+     "name": "GPT-4o Transcribe",
+     "provider": "OpenAI",
+     "wer": 4,
+     "speedFactor": 36.3,
+     "usdPer1000Minutes": 6
+    },
+    {
+     "rank": 39,
+     "name": "Whisper Large v3 Turbo",
+     "provider": "Groq",
+     "wer": 4.6,
+     "speedFactor": 150.5,
+     "usdPer1000Minutes": 0.67
+    },
+    {
+     "rank": 48,
+     "name": "Nova-3",
+     "provider": "Deepgram",
+     "wer": 5.2,
+     "speedFactor": 569.1,
+     "usdPer1000Minutes": 4.3
+    }
+   ]
+  }
+ }
+}

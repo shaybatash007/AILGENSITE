@@ -11,7 +11,9 @@ skill-orchestrator), copied under `references/skills/`, and ships the tools unde
 
 Multi-engine AI jobs (a film from a brief, a campaign, voice, music, comparisons) are flows in AI UNIFIED, the lab's flow studio at
 ailgen-lab.pages.dev ("זרימות"). Run them with `node cloud/lab/unified.mjs` (`references/17-ai-unified.md`): price first, `--yes`
-with a `--max-usd` cap, the lab's budget and ledger on every call, flows and runs saved where the owner sees them.
+with a `--max-usd` cap, the lab's budget and ledger on every call, flows and runs saved where the owner sees them. Every engine is
+picked from the arsenal (`references/18-arsenal.md`, `unified.mjs pick <job>` / `profile <id>`): 231 models profiled with independent
+measurements and filter stars, 96 old or dominated ones in a junk pool that runs only with `--junk`.
 
 Anything only the owner can grant (a key, a token permission, an environment variable, network access, a connector, billing, a
 GitHub secret) goes through the `fastconfig` skill (`.claude/skills/fastconfig/`): probe first, do what the access allows, then one

@@ -4,6 +4,7 @@
    the server), and the real cost comes back from the gateway's log. */
 import { estimate, label } from './price.js';
 import { variantsOf, vlabel, PRIORITY, field, bestVariant as bestOf, chatCaps as capsOf, chatParams, buildChat, exampleText as exText, briefInput, isChatShape } from './schema.js';
+import { MOD, starsHTML, profileHTML, measureLine, openProfile } from './arsenal.js';
 
 const L = window.LAB, $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const esc = L.esc, store = { get(k) { try { return localStorage.getItem(k); } catch { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch {} } };
@@ -11,9 +12,10 @@ const PAID = await fetch('paid.json').then(r => r.json());
 const ALL = PAID.groups.flatMap(g => Object.entries(g.tiers).flatMap(([tier, list]) => list.map((m, i) => ({ ...m, group: g.id, tier, rank: i }))));
 const BY = Object.fromEntries(ALL.map(m => [m.id, m]));
 const TIERS = [
-  ['top', 'מובחרים', 'מודל הדגל של כל יצרן: האיכות הגבוהה ביותר, והמחיר בהתאם.'],
-  ['mid', 'בינוניים', 'מאוזנים: איכות גבוהה במחיר נמוך יותר, או הדגל של הדור הקודם.'],
-  ['low', 'חלשים', 'זולים ומהירים: Lite, Mini, Nano ו-Turbo, דורות קודמים וכלי עזר. מתאימים למשימות פשוטות ולכמויות.'],
+  ['top', 'מובחרים', 'הצמרת במדידה בלתי תלויה בתחום: טקסט במדד האינטליגנציה של Artificial Analysis 43 ומעלה, תמונה, וידאו וקול בראש הארנות.'],
+  ['mid', 'בינוניים', 'איכות טובה במדידה, לרוב במחיר נמוך יותר, או יכולת שאין לאחרים.'],
+  ['low', 'חלשים וזולים', 'נמוכים יותר במדידה, טיוטות וכלי עזר: לכמויות, לבדיקות מהירות ולמשימות פשוטות.'],
+  ['junk', 'מאגר הפסולת', 'ישנים שיש להם תחליף טוב יותר באותו מחיר או זול יותר, מודלים שמודל אחר של אותו יצרן עושה טוב מהם, ומודלים שלא רצים כאן. נשארים להרצה כשבוחרים אותם במפורש.'],
 ];
 const TIER_NAME = Object.fromEntries(TIERS.map(([k, t]) => [k, t]));
 const SECTOR_LEAD = {
@@ -75,12 +77,16 @@ const badges = m => [
   m.live === false ? '<span class="badge b-down">לא רץ כאן</span>' : '',
 ].join('');
 function cardHTML(m) {
-  const text = m.note || m.about, he = !!m.note;
+  if (m.tier === 'junk') return `<article class="mc jk" data-id="${esc(m.id)}"><div class="mch"><span class="pv">${esc(m.provider)}</span><span class="bd"><span class="badge b-junk">${esc(m.junk ? m.junk.rule : 'פסולת')}</span></span></div>
+   <h3><button type="button" class="open" data-open="${esc(m.id)}">${esc(m.name)}</button></h3><p class="nt">${esc(m.junk ? m.junk.why : '')}</p>
+   ${m.junk && m.junk.instead.length ? `<p class="inst">במקומו: ${m.junk.instead.map(r => `<button type="button" class="plink" data-open="${esc(r)}" dir="ltr">${esc((BY[r] || MOD[r] || { name: r }).name)}</button>`).join(' ')}</p>` : ''}
+   <div class="mcf"><span class="pr">${esc(brief(m))}</span></div></article>`;
+  const text = m.note || m.about, he = !!m.note, ms = MOD[m.id] ? measureLine(MOD[m.id]) : '';
   return `<article class="mc${m.live === false ? ' off' : ''}" data-id="${esc(m.id)}">
    ${m.cover ? `<div class="cov"><img src="${esc(m.cover)}" alt="" loading="lazy" decoding="async"></div>` : m.demo ? `<div class="cov vid"><span>▶ סרטון לדוגמה</span></div>` : ['image', 'video'].includes(m.group) ? `<div class="cov ph"><span dir="ltr">${esc(m.provider)}</span></div>` : ''}
-   <div class="mch"><span class="pv">${esc(m.provider)}</span><span class="bd">${badges(m)}</span></div>
+   <div class="mch"><span class="pv">${esc(m.provider)}</span><span class="bd">${starsHTML(m.id)}${badges(m)}</span></div>
    <h3><button type="button" class="open" data-open="${esc(m.id)}">${esc(m.name)}</button></h3>
-   <p class="nt"${he ? '' : ' dir="ltr"'}>${esc(text.length > 150 ? text.slice(0, 147) + '…' : text)}</p>
+   <p class="nt"${he ? '' : ' dir="ltr"'}>${esc(text.length > 150 ? text.slice(0, 147) + '…' : text)}</p>${ms ? `<p class="ms">${esc(ms)}</p>` : ''}
    <div class="mcf"><span class="pr">${esc(brief(m))}</span>${m.live === false ? '' : `<label class="cmp"><input type="checkbox" data-cmp="${esc(m.id)}"${PICKED.has(m.id) ? ' checked' : ''}> להשוואה</label>`}</div>
   </article>`;
 }
@@ -95,14 +101,17 @@ function renderProv() {
 function render() {
   const q = $('#pdQ').value.trim().toLowerCase(), prov = $('#pdProv').value, sort = $('#pdSort').value;
   let shown = 0;
+  const starsOf = m => MOD[m.id]?.stars?.n ?? -1;
   $('#pdTiers').innerHTML = `<p class="slead">${esc(SECTOR_LEAD[SECTOR] || '')}</p>` + TIERS.map(([t, title, why]) => {
-    let list = ALL.filter(m => m.group === SECTOR && m.tier === t && (!prov || m.provider === prov) && (!q || hay(m).includes(q)));
-    if (sort !== 'tier') list = list.slice().sort((a, b) => sort === 'cheap' ? refPrice(a) - refPrice(b) : refPrice(b) - refPrice(a));
-    shown += list.length;
-    return `<section class="tier t-${t}" aria-labelledby="tier-${t}"><header><h2 id="tier-${t}">${title} <span>${list.length}</span></h2><p>${why}</p></header>
-     ${list.length ? `<div class="mgrid">${list.map(cardHTML).join('')}</div>` : '<p class="empty">אין כאן מודלים שמתאימים לחיפוש.</p>'}</section>`;
+    let list = ALL.filter(m => m.group === SECTOR && m.tier === t && (!prov || m.provider === prov) && (!q || hay(m).includes(q)) && (sort !== 'loose' || starsOf(m) >= 1));
+    if (sort === 'cheap' || sort === 'dear') list = list.slice().sort((a, b) => sort === 'cheap' ? refPrice(a) - refPrice(b) : refPrice(b) - refPrice(a));
+    if (sort === 'loose') list = list.slice().sort((a, b) => starsOf(b) - starsOf(a));
+    if (t !== 'junk') shown += list.length;
+    const body = `${list.length ? `<div class="mgrid">${list.map(cardHTML).join('')}</div>` : '<p class="empty">אין כאן מודלים שמתאימים לחיפוש.</p>'}`;
+    if (t === 'junk') return list.length ? `<details class="tier t-junk"${q ? ' open' : ''}><summary><h2 id="tier-junk">${title} <span>${list.length}</span></h2></summary><p class="jwhy">${why}</p>${body}</details>` : '';
+    return `<section class="tier t-${t}" aria-labelledby="tier-${t}"><header><h2 id="tier-${t}">${title} <span>${list.length}</span></h2><p>${why}</p></header>${body}</section>`;
   }).join('');
-  const total = ALL.filter(m => m.group === SECTOR).length;
+  const total = ALL.filter(m => m.group === SECTOR && m.tier !== 'junk').length;
   $('#pdCount').textContent = shown === total ? `${total} מודלים` : `${shown} מתוך ${total}`;
   $$('#pdTiers [data-open]').forEach(b => b.onclick = () => open(b.dataset.open));
   $$('#pdTiers .cov').forEach(c => c.onclick = () => open(c.closest('.mc').dataset.id));
@@ -180,8 +189,9 @@ async function open(id, opts = {}) {
   $('#pdName').textContent = m.name; $('#pdId').textContent = m.id;
   const sample = m.demo ? `<figure class="sample"><video src="${esc(m.demo)}" controls muted playsinline preload="none"></video><figcaption>דוגמה מהקטלוג של Cloudflare</figcaption></figure>`
     : m.cover ? `<figure class="sample"><img src="${esc(m.cover)}" alt="" loading="lazy"><figcaption>דוגמה מהקטלוג של Cloudflare</figcaption></figure>` : '';
-  $('#pdFacts').innerHTML = `<div class="fgrid"><div>${m.note ? `<p class="fnote">${esc(m.note)}</p>` : ''}<p class="fabout" dir="ltr">${esc(m.about)}</p><p class="flinks">${badges(m)}<a href="${esc(docs(m.id))}" target="_blank" rel="noopener">הדף של המודל ב-Cloudflare ↗</a></p>${sample}</div>
+  $('#pdFacts').innerHTML = (MOD[m.id] ? `<details class="pprof"${m.tier === 'junk' ? ' open' : ''}><summary>הפרופיל המלא: כוח, חולשה, עברית, מסנן, מדידות ${starsHTML(m.id)}</summary>${profileHTML(m.id)}</details>` : '') + `<div class="fgrid"><div>${m.note ? `<p class="fnote">${esc(m.note)}</p>` : ''}<p class="fabout" dir="ltr">${esc(m.about)}</p><p class="flinks">${badges(m)}<a href="${esc(docs(m.id))}" target="_blank" rel="noopener">הדף של המודל ב-Cloudflare ↗</a></p>${sample}</div>
    <table class="tbl ptbl"><caption class="sr">מחירון</caption><thead><tr><th>מחירון של Cloudflare</th><th>$</th></tr></thead><tbody>${(m.price || []).map(p => `<tr><td dir="ltr">${esc(p.label)}</td><td class="n">${esc(String(p.usd))}</td></tr>`).join('') || '<tr><td colspan="2">אין מחיר מפורסם: המחיר יופיע אחרי ההרצה, מהיומן</td></tr>'}</tbody></table></div>`;
+  $$('#pdFacts [data-prof]').forEach(b => b.onclick = () => { if (BY[b.dataset.prof]) open(b.dataset.prof); else openProfile(b.dataset.prof); });
   $('#pdExs').innerHTML = ''; $('#pdVariant').innerHTML = ''; $('#pdForm').innerHTML = '<div class="wait">טוען את סכמת הקלט…</div>'; $('#pdOut').innerHTML = ''; $('#pdLines').innerHTML = ''; $('#pdEst').textContent = '';
   $('#pdJsonBox').open = false; $('#pdGo').disabled = m.live === false;
   if (!sheet.open) sheet.showModal();
@@ -423,14 +433,14 @@ window.LABPAID = {
     if (!list.length) return;
     $$('.lead', into).forEach(p => p.remove());
     into.insertAdjacentHTML('beforeend', list.map(m => `<div class="mrow"><div><div class="n">${esc(m.id)}</div><div class="t">${esc(PAID.groups.find(g => g.id === m.group).title)} · ${esc(TIER_NAME[m.tier])} · ${esc(m.provider)}</div></div>
-     <div><span class="badge b-paid">בתשלום · קרדיטים</span>${badges(m)}${m.note ? `<p class="note">${esc(m.note)}</p>` : ''}<p dir="ltr" style="text-align:left">${esc(m.about)}</p><div class="price">${esc(brief(m))}</div></div>
+     <div><span class="badge b-paid">בתשלום · קרדיטים</span>${m.tier === 'junk' ? '<span class="badge b-junk">מאגר הפסולת</span>' : ''}${starsHTML(m.id)}${badges(m)}${m.note ? `<p class="note">${esc(m.note)}</p>` : ''}<p dir="ltr" style="text-align:left">${esc(m.about)}</p><div class="price">${esc(brief(m))}</div></div>
      <div><button class="try" type="button" data-pd="${esc(m.id)}">פתיחה</button></div></div>`).join(''));
     $$('[data-pd]', into).forEach(b => b.onclick = () => window.LABPAID.open(b.dataset.pd));
   },
 };
 
 /* ---------- start ---------- */
-$('#pdLead').textContent = `${PAID.count} מודלים בתשלום, כל מה שיש בקטלוג של Cloudflare (נבדק ${PAID.checked}), וכולם מאותה יתרה של קרדיטים. בכל תחום הם מחולקים למובחרים, בינוניים וחלשים. לפני כל הרצה מוצג כמה היא תעלה, ואחריה המחיר האמיתי מהיומן של Cloudflare.`;
+$('#pdLead').textContent = `${PAID.count} מודלים בתשלום, כל מה שיש בקטלוג של Cloudflare (נבדק ${PAID.checked}), וכולם מאותה יתרה של קרדיטים. בכל תחום הם מחולקים לפי איכות שנמדדה באופן בלתי תלוי (מובחרים, בינוניים, חלשים), ומאגר הפסולת סגור בסוף. ★ מסמן את הפחות מצונזרים. לפני כל הרצה מוצג כמה היא תעלה, ואחריה המחיר האמיתי מהיומן של Cloudflare.`;
 $('#pdWhy p').textContent = PAID.tiersWhy;
 renderSeg(); renderProv(); render();
 L.renderModels();

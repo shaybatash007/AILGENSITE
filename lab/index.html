@@ -42,6 +42,7 @@
   <button type="button" data-tab="paid"><i>09</i>מודלים בתשלום</button>
   <button type="button" data-tab="budget"><i>10</i>תקציב</button>
   <p class="navh">ידע</p>
+  <button type="button" data-tab="arsenal" class="ub"><i>★</i>ארסנל</button>
   <button type="button" data-tab="models"><i>11</i>מודלים</button>
   <button type="button" data-tab="bench"><i>12</i>תוצאות</button>
  </nav>
@@ -174,11 +175,26 @@
    <div class="pdbar">
     <label class="pdq"><span class="sr">חיפוש</span><input id="pdQ" type="search" placeholder="חיפוש: שם, יצרן, יכולת" autocomplete="off"></label>
     <label class="pdsel"><span class="sr">יצרן</span><select id="pdProv"></select></label>
-    <label class="pdsel"><span class="sr">סדר</span><select id="pdSort"><option value="tier">לפי הדירוג</option><option value="cheap">מהזול ליקר</option><option value="dear">מהיקר לזול</option></select></label>
+    <label class="pdsel"><span class="sr">סדר</span><select id="pdSort"><option value="tier">לפי הדירוג</option><option value="cheap">מהזול ליקר</option><option value="dear">מהיקר לזול</option><option value="loose">רק הפחות מצונזרים (★)</option></select></label>
     <span class="pdcount" id="pdCount" aria-live="polite"></span>
    </div>
    <div id="pdTiers"></div>
    <div class="tray" id="pdTray" hidden><span id="pdTrayTxt"></span><button class="go" type="button" id="pdCmp">השוואה</button><button class="ghost" type="button" id="pdClear">ניקוי</button></div>
+  </section>
+
+  <!-- arsenal -->
+  <section class="pane" id="p-arsenal" aria-labelledby="h-arsenal" hidden>
+   <h1 id="h-arsenal">הארסנל</h1>
+   <p class="lead" id="arLead"></p>
+   <details class="why"><summary>הכללים: כוכבים ומאגר הפסולת</summary><div id="arRules" class="arrules"></div></details>
+   <div class="seg" id="arSeg" role="tablist" aria-label="תחום"></div>
+   <div class="ajobs" id="arJobs" aria-label="עבודה"></div>
+   <div class="pdbar">
+    <label class="pdq"><span class="sr">חיפוש</span><input id="arQ" type="search" placeholder="חיפוש: שם, יצרן, יכולת" autocomplete="off"></label>
+    <label class="tgl"><input type="checkbox" id="arLoose"> רק עם כוכבים (הפחות מצונזרים)</label>
+    <label class="tgl"><input type="checkbox" id="arJunk"> לפתוח את מאגר הפסולת</label>
+   </div>
+   <div id="arBody"></div>
   </section>
 
   <!-- AI UNIFIED -->
@@ -283,6 +299,8 @@
 </dialog>
 <script src="app.js"></script>
 <dialog class="sheet" id="uDlg" aria-labelledby="uDlgT"><form method="dialog" class="sheethead"><div><p class="prov">AI UNIFIED</p><h2 id="uDlgT"></h2></div><button class="x" value="close" aria-label="סגירה">✕</button></form><div class="sheetbody" id="uDlgB"></div></dialog>
+<dialog class="sheet" id="arDlg" aria-labelledby="arDlgT"><form method="dialog" class="sheethead"><div><p class="prov" id="arDlgP"></p><h2 id="arDlgT"></h2><p class="mid" id="arDlgId" dir="ltr"></p></div><button class="x" value="close" aria-label="סגירה">✕</button></form><div class="sheetbody" id="arDlgB"></div></dialog>
+<script type="module" src="arsenal.js"></script>
 <script type="module" src="paid.js"></script>
 <script type="module" src="unified/ui.js"></script>
 </body>

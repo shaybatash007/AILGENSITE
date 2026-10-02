@@ -278,11 +278,12 @@ function renderModels() {
   // a Workers AI model that needs Workers Paid is listed once, with the paid catalog (paid.js)
   const list = CAT.models.filter(m => !(window.LABPAID && m.paid) && (!task || m.task === task) && (!paid || (paid === 'paid' ? m.paid : !m.paid)) && (!q || (m.name + ' ' + m.about + ' ' + (m.note?.note || '')).toLowerCase().includes(q)));
   $('#mList').innerHTML = list.map(m => `<div class="mrow"><div><div class="n">${esc(short(m.name))}</div><div class="t">${esc(m.task)}${m.context ? ' · ' + (m.context / 1000).toFixed(0) + 'K' : ''}${m.vision ? ' · ראייה' : ''}${m.tools ? ' · כלים' : ''}${m.beta ? ' · בטא' : ''}</div></div>
-   <div>${m.paid ? '<span class="badge b-paid">בתשלום</span>' : ''}${m.note ? `<span class="badge b-${esc(m.note.verdict)}">${esc(VERDICT[m.note.verdict] || m.note.verdict)}</span>` : ''}<p dir="ltr" style="text-align:left">${esc(m.about)}</p>${m.note ? `<p class="note">${esc(m.note.note)}</p>` : ''}${m.price ? `<div class="price">${esc(m.price)}</div>` : ''}</div>
-   <div>${!m.paid && TRY[m.how] ? `<button class="try" type="button" data-m="${esc(m.name)}" data-tab="${TRY[m.how]}">לנסות</button>` : !m.paid ? `<button class="try" type="button" data-m="${esc(m.name)}" data-tab="raw">JSON</button>` : ''}</div></div>`).join('') || '<p class="lead">אין מודלים שמתאימים לסינון.</p>';
+   <div>${m.paid ? '<span class="badge b-paid">בתשלום</span>' : ''}${window.LABARSENAL && window.LABARSENAL.isJunk(m.name) ? '<span class="badge b-junk">מאגר הפסולת</span>' : ''}${window.LABARSENAL ? window.LABARSENAL.starsHTML(m.name) : ''}${m.note ? `<span class="badge b-${esc(m.note.verdict)}">${esc(VERDICT[m.note.verdict] || m.note.verdict)}</span>` : ''}<p dir="ltr" style="text-align:left">${esc(m.about)}</p>${m.note ? `<p class="note">${esc(m.note.note)}</p>` : ''}${m.price ? `<div class="price">${esc(m.price)}</div>` : ''}</div>
+   <div>${!m.paid && TRY[m.how] ? `<button class="try" type="button" data-m="${esc(m.name)}" data-tab="${TRY[m.how]}">לנסות</button>` : !m.paid ? `<button class="try" type="button" data-m="${esc(m.name)}" data-tab="raw">JSON</button>` : ''}${window.LABARSENAL && window.LABARSENAL.MOD[m.name] ? `<button class="try ghost" type="button" data-prof="${esc(m.name)}">פרופיל</button>` : ''}</div></div>`).join('') || '<p class="lead">אין מודלים שמתאימים לסינון.</p>';
   // the paid catalog's rows come from paid.js (one list for both tabs)
   if (window.LABPAID && paid !== 'free') window.LABPAID.rows($('#mList'), { q, task });
   $$('#mList .try[data-m]').forEach(b => b.onclick = () => openWith(b.dataset.m, b.dataset.tab));
+  $$('#mList [data-prof]').forEach(b => b.onclick = () => window.LABARSENAL.openProfile(b.dataset.prof));
 }
 function openWith(model, tab) {
   show(tab);
@@ -343,7 +344,7 @@ $('#bgSave').onclick = async () => { const b = await budgetCall({ set: +$('#bgIn
 $('#bgReset').onclick = async () => { if (!confirm('לאפס את ההוצאה ולהתחיל ספירה חדשה? ההרצות הקודמות נשמרות כהיסטוריה.')) return; await budgetCall({ reset: true }); $('#bgMsg').textContent = 'ההוצאה אופסה.'; renderBudget(); };
 
 /* ---------- what paid.js (the paid catalog, a module) uses from here ---------- */
-window.LAB = { call, card, fill, defaultRender, costLabel, money, esc, show, busy, renderBudget, renderModels, get budget() { return BUDGET; }, get key() { return KEY; } };
+window.LAB = { call, card, fill, defaultRender, costLabel, money, esc, show, busy, renderBudget, renderModels, openWith: id => { const m = CAT && CAT.models.find(x => x.name === id); openWith(id, m && TRY[m.how] || 'raw'); }, get budget() { return BUDGET; }, get key() { return KEY; } };
 
 /* ---------- start ---------- */
 (async () => {
@@ -355,7 +356,7 @@ window.LAB = { call, card, fill, defaultRender, costLabel, money, esc, show, bus
   fillSelect($('#rModel'), CAT.models.filter(m => !m.paid), BEST_TEXT);
   fillSelect($('#sModel'), free(['asr', 'raw']).filter(m => /Speech Recognition/.test(m.task)), '@cf/openai/whisper-large-v3-turbo');
   fillSelect($('#ttsModel'), free('tts'), '@cf/deepgram/aura-2-en');
-  fillPicks($('#cPicks'), free(['chat', 'chat-vision']), [BEST_TEXT, '@cf/meta/llama-3.3-70b-instruct-fp8-fast', '@cf/meta/llama-4-scout-17b-16e-instruct'], 4);
+  fillPicks($('#cPicks'), free(['chat', 'chat-vision']), [BEST_TEXT, '@cf/mistralai/mistral-small-3.1-24b-instruct', '@cf/meta/llama-4-scout-17b-16e-instruct'], 4);
   fillPicks($('#iPicks'), CAT.models.filter(m => ['flux2', 'image-json', 'image'].includes(m.how)), ['@cf/black-forest-labs/flux-2-klein-4b']);
   fillPicks($('#vPicks'), CAT.models.filter(m => !m.paid && (m.how === 'chat-vision' || m.how === 'vision-bytes' || VISION_EXTRA.includes(m.name))), ['@cf/meta/llama-4-scout-17b-16e-instruct']);
   fillPicks($('#sePicks'), free('embed'), ['@cf/baai/bge-m3']);

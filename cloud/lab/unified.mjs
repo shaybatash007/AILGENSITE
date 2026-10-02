@@ -11,7 +11,10 @@
 //   node cloud/lab/unified.mjs check|estimate <ref> [--set ...]  problems, and the price before anything runs
 //   node cloud/lab/unified.mjs run <ref> [--set node.key=value ...] [--max-usd N] [--yes] [--out dir] [--no-record]
 //   node cloud/lab/unified.mjs call <model> '<json input>' [--yes]   one model, one call
-//   node cloud/lab/unified.mjs models [--sector video] [--tier top] [--q veo]
+//   node cloud/lab/unified.mjs models [--sector video] [--tier top] [--q veo] [--loose] [--junk]   the catalog, with filter stars
+//   node cloud/lab/unified.mjs pick <job> [--sector image] [--free] [--loose] [--n 5]   the arsenal's ranked shortlist for a job
+//   node cloud/lab/unified.mjs profile <model>                  a model's full profile: lineage, power, weakness, Hebrew, stars, numbers
+//   node cloud/lab/unified.mjs arsenal                          the arsenal at a glance: counts, rules, every job
 //   node cloud/lab/unified.mjs budget [--set 100]
 // <ref>: a saved flow id, a template id, or a .json file. --set brief.text="..." sets a node's value: text for a text input, url
 // (a link or a local file) for a media input, model for a model node, and any other key goes into the model's request.
@@ -47,6 +50,14 @@ const FREEJ = JSON.parse(fs.readFileSync(path.join(ROOT, 'lab/models.json'), 'ut
 const CATALOG = new Map();
 for (const g of PAID.groups) for (const [tier, list] of Object.entries(g.tiers)) list.forEach((m, rank) => CATALOG.set(m.id, { ...m, group: g.id, tier, rank }));
 for (const m of FREEJ.models) if (!m.paid && freeRunnable(m)) CATALOG.set(m.name, { id: m.name, name: m.name.replace(/^@cf\//, ''), free: true, how: m.how, reasoning: m.reasoning, out: FREE_OUT[m.how], tier: 'free', group: FREE_OUT[m.how] });
+
+/* ---------- the arsenal (lab/arsenal.json): profiles, stars, the junk pool, the shortlist per job ---------- */
+const ARS = fs.existsSync(path.join(ROOT, 'lab/arsenal.json')) ? JSON.parse(fs.readFileSync(path.join(ROOT, 'lab/arsenal.json'), 'utf8')) : { models: {}, jobs: {} };
+const AM = ARS.models, STARS = n => n == null ? '·' : n ? '★'.repeat(n) : '-';
+const junkNote = id => { const a = AM[id]; return a && a.verdict === 'junk' ? `${a.rule} ${ARS.rules[a.rule].name}: ${a.why}${a.instead.length ? ` → ${a.instead.join(', ')}` : ''}` : null; };
+function junkCheck(f) {   // a flow that uses a junk model still runs, but the director is told what to use instead
+  for (const n of f.nodes || []) if (n.type === 'model' && junkNote(n.data?.model)) console.log(`  ⚠ ${n.id}: ${n.data.model} is in the junk pool (${junkNote(n.data.model)})`);
+}
 
 /* ---------- the lab's API ---------- */
 async function post(route, body) {
@@ -138,9 +149,9 @@ else if (cmd === 'save') {
   const r = await post('flows', { op: 'save', flow: f, by: 'agent' }); if (!r.ok) die(r.hint || r.error);
   console.log(`  saved "${f.name}" as ${r.id} · open it in the lab: ${LAB}/#unified → זרימות וריצות`);
 }
-else if (cmd === 'check' || cmd === 'estimate') { const f = await resolve(ref); if (!(await plan(f))) process.exit(1); }
+else if (cmd === 'check' || cmd === 'estimate') { const f = await resolve(ref); junkCheck(f); if (!(await plan(f))) process.exit(1); }
 else if (cmd === 'run') {
-  const f = await resolve(ref), e = await plan(f); if (!e) process.exit(1);
+  const f = await resolve(ref); junkCheck(f); const e = await plan(f); if (!e) process.exit(1);
   if ((e.total > 0 || e.unknown) && !has('--yes')) { console.log('  a paid run: add --yes to run it (the run stops at --max-usd, default 1.5 × the estimate)'); process.exit(2); }
   const cap = flag('--max-usd') != null ? +flag('--max-usd') : e.total ? Math.max(0.5, +(e.total * 1.5).toFixed(2)) : null;
   console.log(`  running · cap ${cap == null ? 'none' : usd(cap)}`);
@@ -166,6 +177,7 @@ else if (cmd === 'run') {
 }
 else if (cmd === 'call') {
   const m = CATALOG.get(ref); if (!m) die(`no model "${ref}" (node cloud/lab/unified.mjs models --q ...)`);
+  if (junkNote(m.id) && !has('--junk')) die(`${m.id} is in the junk pool: ${junkNote(m.id)}. Add --junk to call it anyway.`);
   let input; try { input = JSON.parse(extra || '{}'); } catch (er) { die('input is not JSON: ' + er.message); }
   const e = m.free ? { usd: 0, kind: 'free' } : priceOf(m, input);
   console.log(`  ${m.id} · ${m.free ? 'free' : label(e)}`);
@@ -178,9 +190,44 @@ else if (cmd === 'models') {
   const std = { text: { messages: [{ role: 'user', content: 'x'.repeat(4000) }], max_tokens: 1000 }, image: { prompt: 'x', aspect_ratio: '1:1' }, video: { prompt: 'x', duration: 5, resolution: '720p', generate_audio: false }, voice: { text: 'x'.repeat(1000) }, music: { prompt: 'x', music_length_ms: 60000 } };
   for (const m of CATALOG.values()) {
     if ((sector && m.group !== sector) || (tier && m.tier !== tier) || (q && !(m.id + ' ' + m.name + ' ' + (m.note || '')).toLowerCase().includes(q))) continue;
+    const a = AM[m.id];
+    if (a && a.verdict === 'junk' && !has('--junk') && tier !== 'junk') continue;
+    if (has('--loose') && !(a && a.stars?.n >= 1)) continue;
     const e = m.free ? null : priceOf(m, std[m.group] || {}, { seconds: 60 });
-    console.log(`  ${m.id.padEnd(44)} ${String(m.tier).padEnd(4)} ${(KIND_NAME[m.out] || m.out || '').padEnd(6)} ${m.free ? 'free' : label(e)}  ${m.note || ''}`);
+    console.log(`  ${m.id.padEnd(44)} ${String(m.tier).padEnd(4)} ${STARS(a?.stars?.n).padEnd(3)} ${(KIND_NAME[m.out] || m.out || '').padEnd(6)} ${m.free ? 'free' : label(e)}  ${a && a.verdict === 'junk' ? '[junk ' + a.rule + '] ' : ''}${m.note || ''}`);
   }
+}
+else if (cmd === 'profile') {
+  const a = AM[ref] || Object.values(AM).find(x => x.id.endsWith('/' + ref) || x.name.toLowerCase() === String(ref || '').toLowerCase()); if (!a) die(`no profile for "${ref}"`);
+  const q = a.measured || {}, line = (k, v) => v && console.log(`  ${k.padEnd(12)} ${v}`);
+  console.log(`\n  ${a.name}  (${a.id})  ${a.maker} · ${a.sector} · ${a.verdict === 'junk' ? 'JUNK ' + a.rule : a.tier}${a.keepBy ? ' (kept by exception)' : ''} · released ${a.released || '?'}`);
+  if (a.verdict === 'junk') { line('junk', `${ARS.rules[a.rule].name}: ${a.why}`); line('instead', a.instead.join(', ')); }
+  line('lineage', a.lineage); line('power', a.power); line('weakness', a.weak); line('hebrew', a.hebrew);
+  line('filter', `${STARS(a.stars.n)} ${a.stars.n == null ? 'unrated' : ''} ${a.stars.why} (${a.stars.conf})`);
+  line('typical', a.price?.usd != null ? `${usd(a.price.usd)} for ${a.price.unit}` : 'no published price');
+  line('jobs', a.jobs.join(', '));
+  for (const t of a.tips) line('tip', t);
+  for (const t of a.gotchas) line('gotcha', t);
+  if (q.aa) line('AA index', `${q.aa.index}${q.aa.estimated ? ' (est.)' : ''} · non-hallucination ${q.aa.nonHallucination} · ${q.aa.tokensPerSecond || '?'} tok/s`);
+  if (q.cw) line('EQ-Bench', `#${q.cw.rank} · ${q.cw.elo} · slop ${q.cw.slop}`);
+  if (q.speech) line('SpeechMap', `${q.speech.complete}% complete · ${q.speech.denial}% denied`);
+  for (const k of ['t2i', 'edit', 't2v', 'i2v', 'vedit', 'tts']) if (q[k]) line('arena ' + k, `#${q[k].rank} · ${q[k].elo}`);
+  if (q.stt) line('STT WER', q.stt.wer + '%'); if (q.music) line('music', `instrumental ${q.music.instrumental ?? '-'} · vocals ${q.music.vocals ?? '-'}`);
+  line('sources', a.sources.map(s => ARS.sources[s]?.url).filter(Boolean).join(' '));
+}
+else if (cmd === 'pick') {
+  if (!ref) die('pick <job>: ' + Object.keys(ARS.jobs).join(', '));
+  const key = ARS.jobs[ref] ? ref : Object.keys(ARS.jobs).find(k => k.endsWith(':' + ref) && (!flag('--sector') || k.startsWith(flag('--sector') + ':')));
+  const j = ARS.jobs[key]; if (!j) die(`no job "${ref}". Jobs: ${Object.keys(ARS.jobs).join(', ')}`);
+  console.log(`  ${key} · ${j.text} · ranked by ${j.by}`);
+  const list = j.models.map(id => AM[id]).filter(a => (!has('--free') || !a.paid) && (!has('--loose') || a.stars?.n >= 1)).slice(0, +flag('--n') || 8);
+  for (const a of list) { const q = a.measured || {}; const ms = q.aa ? `AA ${q.aa.index}` : q.cw ? `cw ${q.cw.elo}` : q.t2i ? `t2i ${q.t2i.elo}` : q.edit ? `edit ${q.edit.elo}` : q.t2v ? `t2v ${q.t2v.elo}` : q.i2v ? `i2v ${q.i2v.elo}` : q.vedit ? `vedit ${q.vedit.elo}` : q.tts ? `tts ${q.tts.elo}` : q.stt ? `wer ${q.stt.wer}%` : '';
+    console.log(`  ${a.id.padEnd(46)} ${STARS(a.stars?.n).padEnd(3)} ${(a.paid ? a.tier : 'free').padEnd(4)} ${usd(a.price?.usd).padStart(8)}  ${ms}`); }
+}
+else if (cmd === 'arsenal') {
+  const c = ARS.count; console.log(`  ${c.total} models · kept ${c.keep} (${c.keptByException} by exception) · junk ${c.junk} ${JSON.stringify(c.byRule)} · built ${ARS.built}`);
+  console.log(`  stars among the kept: ★★★ ${c.stars[3]} · ★★ ${c.stars[2]} · ★ ${c.stars[1]} · strict ${c.stars[0]} · unrated ${c.unrated}`);
+  for (const [k, j] of Object.entries(ARS.jobs)) if (j.models.length) console.log(`  ${k.padEnd(18)} ${j.models.slice(0, 3).map(id => AM[id].name).join(' · ')}`);
 }
 else if (cmd === 'budget') { const r = await post('budget', flag('--set') != null ? { set: +flag('--set') } : {}); console.log(r.ledger ? `  spent ${usd(r.spent)} of ${usd(r.budget)} · left ${usd(r.left)} · ${r.calls} paid calls` : '  the ledger is not bound: no running total'); for (const m of (r.byModel || []).slice(0, 12)) console.log(`   ${m.model.padEnd(44)} ${usd(m.usd).padStart(8)} · ${m.calls}`); }
 else { console.log(fs.readFileSync(fileURLToPath(import.meta.url), 'utf8').split('\n').slice(1, 22).map(l => l.replace(/^\/\/ ?/, '')).join('\n')); process.exit(cmd ? 1 : 0); }

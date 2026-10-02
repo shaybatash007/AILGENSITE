@@ -61,7 +61,7 @@ node cloud/lab/unified.mjs estimate launch-film --set brief.text="…"   # the p
 node cloud/lab/unified.mjs save launch-film --id eden-film --name "…" --set brief.text="…"   # into the lab, marked [Claude]
 node cloud/lab/unified.mjs run eden-film --yes --max-usd 2             # runs; outputs to projects/_unified/out/<flow>-<time>/
 node cloud/lab/unified.mjs flows | runs | get <id> | budget            # what the owner and the agent saved and ran
-node cloud/lab/unified.mjs call google/nano-banana-pro '{"prompt":"…"}' --yes   # one call
+node cloud/lab/unified.mjs call google/nano-banana-2 '{"prompt":"…"}' --yes   # one call
 ```
 
 - **Access**: `LAB_PASSCODE` in the session's environment, set by the owner in the environment's settings and never pasted into a chat. `LAB_URL` points elsewhere. `--local` talks to `node cloud/dev.mjs serve lab --port 8791 --key test --mock-paid --mock-free`, which runs every flow with nothing spent.
@@ -77,10 +77,12 @@ node cloud/lab/unified.mjs call google/nano-banana-pro '{"prompt":"…"}' --yes 
 
 ## Rules
 
-- **Price, then run.** For a run over $1 the agent states the plan and the price before `--yes`. Larger jobs run a cheap draft first: `veo-3.1-fast` at 720p without audio, `nano-banana-2` before `nano-banana-pro`.
-- **Measured models first.**
-  - A model the lab has measured goes before one it has not (`cloud/lab/notes.json`, the bench).
-  - Within a sector, the tier is the starting choice.
+- **Price, then run.** For a run over $1 the agent states the plan and the price before `--yes`. Larger jobs run a cheap draft first: `minimax/h3-max` at 480p or `veo-3.1-fast` at 720p without audio, `nano-banana-2-lite` before `nano-banana-2` or `gpt-image-2.5-sunburst`.
+- **Measured models first, from the arsenal.**
+  - `node cloud/lab/unified.mjs pick <job>` is the starting choice: the kept models ranked by an independent measurement for that job
+    (reference 18). `profile <id>` before committing a flow to a model: its weakness and gotchas often decide.
+  - The junk pool stays out of flows (the CLI refuses it without `--junk`, `check` and `run` warn on it); templates use kept models only.
+  - A model the lab has measured goes before one it has not (`cloud/lab/notes.json`, the bench, `cloud/lab/arsenal/measured.json`).
   - The result decides.
 - **Product pixels are never generated** (reference 12): flows make atmosphere, motion, voice and music, never a client's product.
   At most five generated concepts per site, each approved before publishing, with the visitor-language label where an image could be read as documentary.

@@ -1,0 +1,889 @@
+{
+ "read": "2026-10-02",
+ "url": "https://speechmap.ai/models/",
+ "about": "SpeechMap: share of controversial-speech requests answered in full (complete), evasively, or refused (denial). Higher complete = less filtered.",
+ "rows": [
+  {
+   "rank": 1,
+   "model": "stealth/sherlock-dash-alpha",
+   "released": "2025-11-15",
+   "complete": 100,
+   "evasive": 0,
+   "denial": 0,
+   "error": 0
+  },
+  {
+   "rank": 2,
+   "model": "stealth/sherlock-think-alpha",
+   "released": "2025-11-15",
+   "complete": 98.8,
+   "evasive": 0.1,
+   "denial": 1.1,
+   "error": 0
+  },
+  {
+   "rank": 3,
+   "model": "x-ai/grok-4-07-09",
+   "released": "2025-07-12",
+   "complete": 98.3,
+   "evasive": 0.4,
+   "denial": 1.1,
+   "error": 0.1
+  },
+  {
+   "rank": 4,
+   "model": "x-ai/grok-4.20-beta-reasoning",
+   "released": "2026-03-12",
+   "complete": 98.2,
+   "evasive": 0.2,
+   "denial": 1.6,
+   "error": 0
+  },
+  {
+   "rank": 5,
+   "model": "mistralai/mistral-large-2512",
+   "released": "2025-12-02",
+   "complete": 98.2,
+   "evasive": 1,
+   "denial": 0.8,
+   "error": 0
+  },
+  {
+   "rank": 6,
+   "model": "x-ai/grok-4-fast-non-reasoning-20251029",
+   "released": "2025-10-29",
+   "complete": 98,
+   "evasive": 0.1,
+   "denial": 1.9,
+   "error": 0
+  },
+  {
+   "rank": 7,
+   "model": "x-ai/grok-4.1-fast",
+   "released": "2025-11-19",
+   "complete": 97.9,
+   "evasive": 0.1,
+   "denial": 2,
+   "error": 0
+  },
+  {
+   "rank": 8,
+   "model": "stealth/sonoma-dusk-alpha",
+   "released": "2025-09-05",
+   "complete": 97.8,
+   "evasive": 0,
+   "denial": 2.2,
+   "error": 0
+  },
+  {
+   "rank": 9,
+   "model": "x-ai/grok-3-beta",
+   "released": "2025-02-17",
+   "complete": 96.1,
+   "evasive": 2,
+   "denial": 1.9,
+   "error": 0
+  },
+  {
+   "rank": 10,
+   "model": "x-ai/grok-2-1212",
+   "released": "2024-08-14",
+   "complete": 95.9,
+   "evasive": 1.7,
+   "denial": 2.4,
+   "error": 0
+  },
+  {
+   "rank": 19,
+   "model": "x-ai/grok-4.5",
+   "released": "2026-07-08",
+   "complete": 93.1,
+   "evasive": 0.9,
+   "denial": 5.8,
+   "error": 0.2
+  },
+  {
+   "rank": 36,
+   "model": "mistralai/mistral-small-2503",
+   "released": "2025-03-17",
+   "complete": 89.8,
+   "evasive": 6.6,
+   "denial": 3.7,
+   "error": 0
+  },
+  {
+   "rank": 41,
+   "model": "google/gemini-2.5-pro-preview-06-05",
+   "released": "2025-06-05",
+   "complete": 89,
+   "evasive": 0.8,
+   "denial": 9.3,
+   "error": 0.8
+  },
+  {
+   "rank": 42,
+   "model": "google/gemini-3.1-flash-lite",
+   "released": "2026-05-08",
+   "complete": 88.4,
+   "evasive": 4.3,
+   "denial": 7,
+   "error": 0.2
+  },
+  {
+   "rank": 44,
+   "model": "x-ai/grok-4.3-reasoning",
+   "released": "2026-05-01",
+   "complete": 87.9,
+   "evasive": 2.8,
+   "denial": 9.2,
+   "error": 0
+  },
+  {
+   "rank": 48,
+   "model": "google/gemini-2.5-flash-preview-09-2025",
+   "released": "2025-09-25",
+   "complete": 87.7,
+   "evasive": 0.9,
+   "denial": 10.7,
+   "error": 0.7
+  },
+  {
+   "rank": 49,
+   "model": "google/gemini-3.5-flash",
+   "released": "2026-05-19",
+   "complete": 87.5,
+   "evasive": 3.1,
+   "denial": 9.1,
+   "error": 0.2
+  },
+  {
+   "rank": 51,
+   "model": "qwen/qwen3-30b-a3b",
+   "released": "2025-04-28",
+   "complete": 87.4,
+   "evasive": 4.2,
+   "denial": 8.4,
+   "error": 0
+  },
+  {
+   "rank": 52,
+   "model": "google/gemini-3.6-flash",
+   "released": "2026-07-21",
+   "complete": 87.2,
+   "evasive": 1.2,
+   "denial": 11.2,
+   "error": 0.4
+  },
+  {
+   "rank": 56,
+   "model": "google/gemma-4-26b-a4b-it-reasoning",
+   "released": "2026-04-02",
+   "complete": 86.6,
+   "evasive": 0.8,
+   "denial": 12.7,
+   "error": 0
+  },
+  {
+   "rank": 58,
+   "model": "google/gemini-3.8-flash",
+   "released": "2026-09-02",
+   "complete": 86.1,
+   "evasive": 1.8,
+   "denial": 11.7,
+   "error": 0.4
+  },
+  {
+   "rank": 60,
+   "model": "z-ai/glm-4.7-flash",
+   "released": "2026-01-19",
+   "complete": 85.9,
+   "evasive": 1.4,
+   "denial": 12.7,
+   "error": 0
+  },
+  {
+   "rank": 61,
+   "model": "google/gemini-3.7-flash",
+   "released": "2026-08-13",
+   "complete": 85.8,
+   "evasive": 3.5,
+   "denial": 9.9,
+   "error": 0.8
+  },
+  {
+   "rank": 63,
+   "model": "google/gemini-3-flash-preview-thinking",
+   "released": "2025-12-17",
+   "complete": 85.4,
+   "evasive": 3.5,
+   "denial": 10.7,
+   "error": 0.4
+  },
+  {
+   "rank": 65,
+   "model": "google/gemini-3.5-flash-lite",
+   "released": "2026-07-21",
+   "complete": 84.9,
+   "evasive": 1.3,
+   "denial": 13.3,
+   "error": 0.5
+  },
+  {
+   "rank": 70,
+   "model": "openai/gpt-4o-mini-2024-07-18",
+   "released": "2024-07-18",
+   "complete": 84.5,
+   "evasive": 4.1,
+   "denial": 11.4,
+   "error": 0
+  },
+  {
+   "rank": 74,
+   "model": "qwen/qwq-32b",
+   "released": "2025-03-06",
+   "complete": 83.9,
+   "evasive": 3.6,
+   "denial": 12,
+   "error": 0.5
+  },
+  {
+   "rank": 76,
+   "model": "x-ai/grok-4.6",
+   "released": "2026-08-12",
+   "complete": 83.6,
+   "evasive": 1.2,
+   "denial": 15.1,
+   "error": 0
+  },
+  {
+   "rank": 79,
+   "model": "anthropic/claude-opus-5.5",
+   "released": "2026-09-22",
+   "complete": 82.8,
+   "evasive": 2.2,
+   "denial": 12.7,
+   "error": 2.3
+  },
+  {
+   "rank": 89,
+   "model": "x-ai/grok-4.3",
+   "released": "2026-05-01",
+   "complete": 79.1,
+   "evasive": 1.7,
+   "denial": 19.2,
+   "error": 0
+  },
+  {
+   "rank": 103,
+   "model": "z-ai/glm-5.2",
+   "released": "2026-06-16",
+   "complete": 77.8,
+   "evasive": 2.4,
+   "denial": 19.9,
+   "error": 0
+  },
+  {
+   "rank": 111,
+   "model": "google/gemini-2.5-flash-lite",
+   "released": "2025-07-22",
+   "complete": 76.7,
+   "evasive": 1.2,
+   "denial": 21.7,
+   "error": 0.4
+  },
+  {
+   "rank": 113,
+   "model": "google/gemma-4-26b-a4b-it",
+   "released": "2026-04-02",
+   "complete": 76.3,
+   "evasive": 0.4,
+   "denial": 23.3,
+   "error": 0
+  },
+  {
+   "rank": 129,
+   "model": "openai/gpt-4.1-mini-2025-04-14",
+   "released": "2025-04-14",
+   "complete": 72.6,
+   "evasive": 14.5,
+   "denial": 12.9,
+   "error": 0
+  },
+  {
+   "rank": 131,
+   "model": "anthropic/claude-fable-5.1",
+   "released": "2026-09-01",
+   "complete": 72.4,
+   "evasive": 1.4,
+   "denial": 15.1,
+   "error": 11.1
+  },
+  {
+   "rank": 134,
+   "model": "deepseek/deepseek-v4-pro-0813-reasoning",
+   "released": "2026-08-13",
+   "complete": 72,
+   "evasive": 0.3,
+   "denial": 27.6,
+   "error": 0.1
+  },
+  {
+   "rank": 138,
+   "model": "z-ai/glm-5.3",
+   "released": "2026-08-18",
+   "complete": 71.5,
+   "evasive": 3.3,
+   "denial": 25.1,
+   "error": 0.1
+  },
+  {
+   "rank": 139,
+   "model": "anthropic/claude-opus-4.7",
+   "released": "2026-04-16",
+   "complete": 71.5,
+   "evasive": 5.5,
+   "denial": 19.8,
+   "error": 3.2
+  },
+  {
+   "rank": 147,
+   "model": "deepseek/deepseek-v4-flash-0731-reasoning",
+   "released": "2026-07-31",
+   "complete": 70.2,
+   "evasive": 1.5,
+   "denial": 28.1,
+   "error": 0.1
+  },
+  {
+   "rank": 149,
+   "model": "meta-llama/llama-4-scout",
+   "released": "2025-04-05",
+   "complete": 70.1,
+   "evasive": 10.8,
+   "denial": 19.1,
+   "error": 0
+  },
+  {
+   "rank": 153,
+   "model": "openai/o3-mini",
+   "released": "2025-01-31",
+   "complete": 69.3,
+   "evasive": 1.1,
+   "denial": 29.6,
+   "error": 0
+  },
+  {
+   "rank": 158,
+   "model": "openai/gpt-4.1-2025-04-14",
+   "released": "2025-04-14",
+   "complete": 68.4,
+   "evasive": 3,
+   "denial": 28.6,
+   "error": 0
+  },
+  {
+   "rank": 160,
+   "model": "openai/gpt-6-astra",
+   "released": "2026-09-04",
+   "complete": 68.2,
+   "evasive": 10,
+   "denial": 21.7,
+   "error": 0.1
+  },
+  {
+   "rank": 169,
+   "model": "stealth/union-alpha",
+   "released": "2026-09-16",
+   "complete": 66.8,
+   "evasive": 5.7,
+   "denial": 27.5,
+   "error": 0
+  },
+  {
+   "rank": 174,
+   "model": "moonshotai/kimi-k3",
+   "released": "2026-07-16",
+   "complete": 65.9,
+   "evasive": 3.3,
+   "denial": 30.1,
+   "error": 0.6
+  },
+  {
+   "rank": 178,
+   "model": "z-ai/glm-5.3-flash",
+   "released": "2026-08-26",
+   "complete": 65.4,
+   "evasive": 3.3,
+   "denial": 28.9,
+   "error": 2.4
+  },
+  {
+   "rank": 179,
+   "model": "qwen/qwen3.8-max-0902",
+   "released": "2026-09-03",
+   "complete": 65.3,
+   "evasive": 2.1,
+   "denial": 29.8,
+   "error": 2.8
+  },
+  {
+   "rank": 182,
+   "model": "anthropic/claude-fable-5",
+   "released": "2026-06-09",
+   "complete": 64.8,
+   "evasive": 5,
+   "denial": 27.9,
+   "error": 2.4
+  },
+  {
+   "rank": 185,
+   "model": "openai/gpt-4.1-nano-2025-04-14",
+   "released": "2025-04-14",
+   "complete": 64.5,
+   "evasive": 1.8,
+   "denial": 33.7,
+   "error": 0
+  },
+  {
+   "rank": 188,
+   "model": "x-ai/grok-4.7",
+   "released": "2026-09-21",
+   "complete": 64.1,
+   "evasive": 1.4,
+   "denial": 34.4,
+   "error": 0.1
+  },
+  {
+   "rank": 189,
+   "model": "openai/gpt-6-sol",
+   "released": "2026-09-22",
+   "complete": 64,
+   "evasive": 13.2,
+   "denial": 22.7,
+   "error": 0.1
+  },
+  {
+   "rank": 193,
+   "model": "openai/gpt-6-luna",
+   "released": "2026-09-22",
+   "complete": 63.4,
+   "evasive": 9.1,
+   "denial": 27.4,
+   "error": 0.1
+  },
+  {
+   "rank": 196,
+   "model": "x-ai/grok-4.20-beta",
+   "released": "2026-03-12",
+   "complete": 62.6,
+   "evasive": 1.1,
+   "denial": 36.3,
+   "error": 0
+  },
+  {
+   "rank": 202,
+   "model": "moonshotai/kimi-k2.6-thinking",
+   "released": "2026-04-20",
+   "complete": 61.7,
+   "evasive": 1.4,
+   "denial": 36.9,
+   "error": 0
+  },
+  {
+   "rank": 207,
+   "model": "openai/gpt-5",
+   "released": "2025-08-07",
+   "complete": 61.5,
+   "evasive": 2.5,
+   "denial": 35.9,
+   "error": 0
+  },
+  {
+   "rank": 209,
+   "model": "openai/o4-mini-2025-04-16",
+   "released": "2025-04-16",
+   "complete": 60.9,
+   "evasive": 0.4,
+   "denial": 38.6,
+   "error": 0
+  },
+  {
+   "rank": 212,
+   "model": "meta-llama/llama-3.3-70b-instruct",
+   "released": "2024-12-05",
+   "complete": 60.7,
+   "evasive": 14.5,
+   "denial": 24.8,
+   "error": 0
+  },
+  {
+   "rank": 217,
+   "model": "openai/o3-2025-04-16",
+   "released": "2025-04-16",
+   "complete": 60.2,
+   "evasive": 0.4,
+   "denial": 39.4,
+   "error": 0
+  },
+  {
+   "rank": 220,
+   "model": "openai/gpt-4o-2024-11-20",
+   "released": "2024-11-20",
+   "complete": 60.1,
+   "evasive": 8.3,
+   "denial": 31.6,
+   "error": 0
+  },
+  {
+   "rank": 223,
+   "model": "google/gemini-3.1-pro-preview",
+   "released": "2026-02-19",
+   "complete": 59.9,
+   "evasive": 8.8,
+   "denial": 30.9,
+   "error": 0.4
+  },
+  {
+   "rank": 230,
+   "model": "anthropic/claude-opus-5",
+   "released": "2026-07-24",
+   "complete": 59.1,
+   "evasive": 10.1,
+   "denial": 30,
+   "error": 0.8
+  },
+  {
+   "rank": 232,
+   "model": "deepseek/deepseek-v4-pro-0813",
+   "released": "2026-08-13",
+   "complete": 58.3,
+   "evasive": 6.5,
+   "denial": 35.2,
+   "error": 0
+  },
+  {
+   "rank": 243,
+   "model": "qwen/qwen3-max",
+   "released": "2025-09-05",
+   "complete": 56.9,
+   "evasive": 2.5,
+   "denial": 40.5,
+   "error": 0.1
+  },
+  {
+   "rank": 244,
+   "model": "openai/gpt-5-nano",
+   "released": "2025-08-07",
+   "complete": 56,
+   "evasive": 9.7,
+   "denial": 34.2,
+   "error": 0
+  },
+  {
+   "rank": 247,
+   "model": "openai/gpt-5-mini",
+   "released": "2025-08-07",
+   "complete": 55.6,
+   "evasive": 3.9,
+   "denial": 40.5,
+   "error": 0
+  },
+  {
+   "rank": 262,
+   "model": "openai/gpt-5.6-luna",
+   "released": "2026-07-09",
+   "complete": 52.4,
+   "evasive": 7.7,
+   "denial": 39.9,
+   "error": 0
+  },
+  {
+   "rank": 268,
+   "model": "anthropic/claude-opus-4.5",
+   "released": "2025-11-24",
+   "complete": 50.8,
+   "evasive": 18,
+   "denial": 31.1,
+   "error": 0.1
+  },
+  {
+   "rank": 270,
+   "model": "qwen/qwen3.7-max",
+   "released": "2026-05-21",
+   "complete": 50.6,
+   "evasive": 1.2,
+   "denial": 48.3,
+   "error": 0
+  },
+  {
+   "rank": 271,
+   "model": "minimax/minimax-m3-reasoning",
+   "released": "2026-06-01",
+   "complete": 50.5,
+   "evasive": 5,
+   "denial": 44.5,
+   "error": 0
+  },
+  {
+   "rank": 275,
+   "model": "anthropic/claude-opus-4.6",
+   "released": "2026-02-05",
+   "complete": 49.8,
+   "evasive": 12.1,
+   "denial": 37,
+   "error": 1.1
+  },
+  {
+   "rank": 278,
+   "model": "minimax/minimax-m2.7",
+   "released": "2026-03-18",
+   "complete": 49.2,
+   "evasive": 3,
+   "denial": 47.8,
+   "error": 0
+  },
+  {
+   "rank": 288,
+   "model": "deepseek/deepseek-v4-flash-0731",
+   "released": "2026-07-31",
+   "complete": 46.8,
+   "evasive": 3.4,
+   "denial": 49.7,
+   "error": 0
+  },
+  {
+   "rank": 289,
+   "model": "deepseek/deepseek-v4-pro",
+   "released": "2026-04-24",
+   "complete": 46.8,
+   "evasive": 3.6,
+   "denial": 49.6,
+   "error": 0
+  },
+  {
+   "rank": 293,
+   "model": "qwen/qwen3.8-27b-reasoning",
+   "released": "2026-08-14",
+   "complete": 46.3,
+   "evasive": 5.8,
+   "denial": 47.9,
+   "error": 0
+  },
+  {
+   "rank": 296,
+   "model": "thinkingmachines/inkling-64k-reasoning",
+   "released": "2026-07-15",
+   "complete": 45.9,
+   "evasive": 2.7,
+   "denial": 51.4,
+   "error": 0
+  },
+  {
+   "rank": 297,
+   "model": "openai/gpt-5.6-sol",
+   "released": "2026-07-09",
+   "complete": 45.8,
+   "evasive": 10.8,
+   "denial": 43.3,
+   "error": 0
+  },
+  {
+   "rank": 307,
+   "model": "openai/gpt-5.6-terra",
+   "released": "2026-07-09",
+   "complete": 44.2,
+   "evasive": 9.8,
+   "denial": 45.9,
+   "error": 0
+  },
+  {
+   "rank": 313,
+   "model": "anthropic/claude-opus-4.8",
+   "released": "2026-05-28",
+   "complete": 43.4,
+   "evasive": 30.5,
+   "denial": 25.7,
+   "error": 0.4
+  },
+  {
+   "rank": 316,
+   "model": "thinkingmachines/inkling-64k",
+   "released": "2026-07-15",
+   "complete": 42.7,
+   "evasive": 8.2,
+   "denial": 49.1,
+   "error": 0
+  },
+  {
+   "rank": 317,
+   "model": "nvidia/nemotron-3-super-120b-a12b",
+   "released": "2026-03-11",
+   "complete": 42.5,
+   "evasive": 2.7,
+   "denial": 54.8,
+   "error": 0
+  },
+  {
+   "rank": 323,
+   "model": "anthropic/claude-sonnet-5",
+   "released": "2026-06-30",
+   "complete": 40.9,
+   "evasive": 23.3,
+   "denial": 35.4,
+   "error": 0.4
+  },
+  {
+   "rank": 324,
+   "model": "qwen/qwen3.7-plus",
+   "released": "2026-06-02",
+   "complete": 40.8,
+   "evasive": 4.2,
+   "denial": 55,
+   "error": 0
+  },
+  {
+   "rank": 330,
+   "model": "openai/gpt-5.5",
+   "released": "2026-04-23",
+   "complete": 40.1,
+   "evasive": 8.1,
+   "denial": 51.8,
+   "error": 0
+  },
+  {
+   "rank": 336,
+   "model": "qwen/qwen3.8-27b",
+   "released": "2026-08-14",
+   "complete": 38.5,
+   "evasive": 5,
+   "denial": 56.5,
+   "error": 0
+  },
+  {
+   "rank": 341,
+   "model": "qwen/qwen3.5-397b-a17b",
+   "released": "2026-02-16",
+   "complete": 37.4,
+   "evasive": 3.8,
+   "denial": 57.2,
+   "error": 1.7
+  },
+  {
+   "rank": 346,
+   "model": "openai/gpt-oss-120b",
+   "released": "2025-08-05",
+   "complete": 36.3,
+   "evasive": 0.3,
+   "denial": 63.3,
+   "error": 0
+  },
+  {
+   "rank": 351,
+   "model": "openai/gpt-5.1",
+   "released": "2025-11-13",
+   "complete": 35.5,
+   "evasive": 5.2,
+   "denial": 59.3,
+   "error": 0
+  },
+  {
+   "rank": 362,
+   "model": "moonshotai/kimi-k2.6",
+   "released": "2026-04-20",
+   "complete": 33,
+   "evasive": 5.2,
+   "denial": 61.8,
+   "error": 0
+  },
+  {
+   "rank": 366,
+   "model": "anthropic/claude-sonnet-4.5",
+   "released": "2025-09-29",
+   "complete": 32.3,
+   "evasive": 15,
+   "denial": 52.6,
+   "error": 0.1
+  },
+  {
+   "rank": 368,
+   "model": "openai/gpt-5.4-nano",
+   "released": "2026-03-17",
+   "complete": 32.2,
+   "evasive": 7.2,
+   "denial": 60.6,
+   "error": 0
+  },
+  {
+   "rank": 377,
+   "model": "openai/gpt-5.4-mini",
+   "released": "2026-03-17",
+   "complete": 29.4,
+   "evasive": 9.2,
+   "denial": 61.4,
+   "error": 0
+  },
+  {
+   "rank": 379,
+   "model": "anthropic/claude-sonnet-4.6",
+   "released": "2026-02-18",
+   "complete": 29.1,
+   "evasive": 23.3,
+   "denial": 47.4,
+   "error": 0.3
+  },
+  {
+   "rank": 382,
+   "model": "openai/gpt-5.4",
+   "released": "2026-03-05",
+   "complete": 28.6,
+   "evasive": 10.5,
+   "denial": 60.9,
+   "error": 0
+  },
+  {
+   "rank": 384,
+   "model": "minimax/minimax-m3",
+   "released": "2026-06-01",
+   "complete": 27,
+   "evasive": 4.8,
+   "denial": 68.2,
+   "error": 0
+  },
+  {
+   "rank": 385,
+   "model": "openai/gpt-oss-20b",
+   "released": "2025-08-05",
+   "complete": 26.8,
+   "evasive": 1.5,
+   "denial": 71.7,
+   "error": 0
+  },
+  {
+   "rank": 398,
+   "model": "anthropic/claude-haiku-4.5",
+   "released": "2025-10-15",
+   "complete": 20.8,
+   "evasive": 29.7,
+   "denial": 49.5,
+   "error": 0
+  },
+  {
+   "rank": 401,
+   "model": "meta-llama/llama-3.2-11b-vision-instruct",
+   "released": "2024-09-25",
+   "complete": 19,
+   "evasive": 12.7,
+   "denial": 68.3,
+   "error": 0
+  },
+  {
+   "rank": 402,
+   "model": "meta-llama/llama-3.1-8b-instruct",
+   "released": "2024-07-23",
+   "complete": 16.4,
+   "evasive": 9.8,
+   "denial": 73.8,
+   "error": 0
+  }
+ ]
+}

@@ -7,6 +7,7 @@ import { TEMPLATES } from './templates.js';
 import { compose } from './compose.js';
 import { label } from '../price.js';
 import { PAID, ALL, brief, TIER_NAME, SESSION, configure } from '../paid.js';
+import { MOD, isJunk } from '../arsenal.js';
 
 const L = window.LAB, $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)], esc = L.esc;
 const store = { get(k) { try { return localStorage.getItem(k); } catch { return null; } }, set(k, v) { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch {} } };
@@ -19,7 +20,8 @@ const SECT = { text: 'text', image: 'image', audio: 'voice' };
 const FREE = FREEJ.models.filter(m => !m.paid && freeRunnable(m)).map(m => ({ id: m.name, name: m.name.replace(/^@cf\//, ''), provider: 'Workers AI · חינם', free: true, how: m.how, reasoning: m.reasoning, out: FREE_OUT[m.how],
   group: m.how === 'asr' ? 'listen' : SECT[FREE_OUT[m.how]] || 'text', tier: 'free', note: m.note && m.note.note, best: m.note && m.note.verdict === 'best' }));
 const CATALOG = new Map([...ALL.map(m => [m.id, m]), ...FREE.map(m => [m.id, m])]);
-const SECTORS = [['all', 'הכול'], ...PAID.groups.map(g => [g.id, g.title]), ['free', 'חינמי']];
+const SECTORS = [['all', 'הכול'], ...PAID.groups.map(g => [g.id, g.title]), ['free', 'חינמי'], ['junk', 'מאגר הפסולת']];
+const star = id => { const n = MOD[id]?.stars?.n; return n ? '★'.repeat(n) + ' ' : ''; };
 
 /* ---------- the host the engine runs in: this page ---------- */
 async function fetchBlob(v) {
@@ -233,10 +235,11 @@ function library() {
     const items = list.filter(([t, , name]) => !q || ((name || TYPES[t].title) + ' ' + TYPES[t].about).toLowerCase().includes(q));
     return items.length ? `<h3>${title}</h3>${items.map(([t, d, name]) => `<button class="ulib-i c-${cat}" draggable="true" data-type="${t}" data-data="${esc(JSON.stringify(d))}"><span class="uic">${ICON[t]}</span><span><b>${esc(name || TYPES[t].title)}</b><small>${esc(TYPES[t].about)}</small></span></button>`).join('')}` : '';
   }).join('');
-  const models = [...ALL, ...FREE].filter(m => m.live !== false && (LIBSECT === 'all' || (LIBSECT === 'free' ? m.free : !m.free && m.group === LIBSECT)) && (!q || (m.id + ' ' + m.name + ' ' + m.provider + ' ' + (m.note || '')).toLowerCase().includes(q)));
-  const order = { top: 0, mid: 1, low: 2, free: 3 };
+  // the junk pool stays out of the library unless asked for (its own chip): the director picks from the arsenal
+  const models = [...ALL, ...FREE].filter(m => m.live !== false && (LIBSECT === 'junk' ? isJunk(m.id) : !isJunk(m.id) && (LIBSECT === 'all' || (LIBSECT === 'free' ? m.free : !m.free && m.group === LIBSECT))) && (!q || (m.id + ' ' + m.name + ' ' + m.provider + ' ' + (m.note || '')).toLowerCase().includes(q)));
+  const order = { top: 0, mid: 1, low: 2, free: 3, junk: 4 };
   models.sort((a, b) => (order[a.tier] - order[b.tier]) || (a.rank || 0) - (b.rank || 0));
-  $('#uLibList').innerHTML = basic + `<h3>מודלים <small>${models.length}</small></h3>` + models.slice(0, 220).map(m => `<button class="ulib-i c-ai k-${m.out}" draggable="true" data-type="model" data-data="${esc(JSON.stringify({ model: m.id }))}" title="${esc(m.note || m.about || '')}"><span class="uic">✦</span><span><b dir="ltr">${esc(m.name)}</b><small>${esc(m.free ? 'חינם' : TIER_NAME[m.tier])} · ${esc(KIND_NAME[m.out] || '')} · ${esc(m.free ? m.provider : brief(m))}</small></span></button>`).join('');
+  $('#uLibList').innerHTML = basic + `<h3>מודלים <small>${models.length}</small></h3>` + models.slice(0, 220).map(m => `<button class="ulib-i c-ai k-${m.out}" draggable="true" data-type="model" data-data="${esc(JSON.stringify({ model: m.id }))}" title="${esc(m.note || m.about || '')}"><span class="uic">✦</span><span><b dir="ltr">${esc(m.name)}</b><small>${esc(star(m.id))}${esc(m.free ? 'חינם' : TIER_NAME[m.tier])} · ${esc(KIND_NAME[m.out] || '')} · ${esc(m.free ? m.provider : brief(m))}</small></span></button>`).join('');
   $('#uLibSeg').innerHTML = SECTORS.map(([id, t]) => `<button type="button" data-s="${id}" aria-pressed="${id === LIBSECT}">${esc(t)}</button>`).join('');
 }
 $('#uLibQ').addEventListener('input', library);
@@ -304,8 +307,9 @@ function modelPanel(n) {
     <p class="hint">${linked.length ? '' : 'אין עדיין חיבורים לצומת הזה. '}שקע עם * הוא חובה.</p>`;
 }
 function pickerHTML(kind) {
-  const list = [...ALL, ...FREE].filter(m => m.live !== false && (!kind || m.out === kind)).sort((a, b) => ({ top: 0, mid: 1, low: 2, free: 3 }[a.tier] - { top: 0, mid: 1, low: 2, free: 3 }[b.tier]));
-  return `<input id="uiPickQ" type="search" placeholder="חיפוש מודל" dir="auto"><div class="uipick">${list.map(m => `<button type="button" data-m="${esc(m.id)}"><b dir="ltr">${esc(m.name)}</b><small>${esc(m.free ? 'חינם' : TIER_NAME[m.tier])} · ${esc(m.free ? '' : brief(m))}</small></button>`).join('')}</div>`;
+  const rank = { top: 0, mid: 1, low: 2, free: 3, junk: 4 };
+  const list = [...ALL, ...FREE].filter(m => m.live !== false && !isJunk(m.id) && (!kind || m.out === kind)).sort((a, b) => rank[a.tier] - rank[b.tier]);
+  return `<input id="uiPickQ" type="search" placeholder="חיפוש מודל" dir="auto"><div class="uipick">${list.map(m => `<button type="button" data-m="${esc(m.id)}"><b dir="ltr">${esc(m.name)}</b><small>${esc(star(m.id))}${esc(m.free ? 'חינם' : TIER_NAME[m.tier])} · ${esc(m.free ? '' : brief(m))}</small></button>`).join('')}</div>`;
 }
 function resultsPanel(n, r) {
   const items = r.items || [];
